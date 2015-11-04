@@ -20,7 +20,7 @@
 	
 	    <!-- Bootstrap core CSS -->
 	    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-	    	<link href="/Public/Admin/css/login.css" rel="stylesheet" /> 
+    	<link href="/Public/Admin/css/login.css" rel="stylesheet" /> 
   	</head>
 	<body>
 		<div class="container">
@@ -114,6 +114,7 @@
 							checkTip.text(data.info.substr(1));
 							//刷新验证码
 							refreshverify();
+							verifyInput.val("");
 							switch(errorCode) {
 								case 1:	// 用户名或密码不正确
 									usernameInput.focus().select();
@@ -122,7 +123,7 @@
 									passwordInput.val("").focus();
 									break;
 								default:
-									verifyInput.val("").focus();
+								verifyInput.focus();
 									break;
 							}
 						}

@@ -10,4 +10,6 @@ return array(
     'DB_PREFIX' => 'yyg_', // 数据库表前缀 
 	//'配置项'=>'配置值'
 	'LAYOUT_ON'=>	true, // 启用布局
+	
+	'VAR_SESSION_ID'			=> 'session_id', // 修复unloadfiy插件无法传递session_id的bug
 );
