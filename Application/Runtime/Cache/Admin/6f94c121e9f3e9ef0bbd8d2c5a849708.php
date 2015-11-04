@@ -45,6 +45,16 @@
 				</div>
 			</div>
 		</nav>
+		
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+   	 	<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
@@ -85,21 +95,53 @@
 
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1><?php echo ($title); ?></h1>
- 			我是内容
+			<h1><?php echo ($title); ?></h1> <div class="nav">
+	<button type="button" class="btn btn-primary navbar-btn">添加栏目</button>
+</div>
+<table id="categoryTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>栏目名称</th>
+			<th>键值</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr cid="<?php echo ($category["cid"]); ?>">
+			<td><?php echo ($category["name"]); ?></td>
+			<td><?php echo ($category["key"]); ?></td>
+			<td>
+				<button type="button" class="edit btn btn-warning btn-sm">编辑</button>
+				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+			</td>
+		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+		$("#categoryTable").on("click",".delete", function(evt) {
+			$("#modalConfim").modal();
+		});
+	});
+</script>
+		</div>
+	</div>
+</div>
+<div id="modalConfim" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				Hello world!
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn">确定</button>
+				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+			</div>
 		</div>
 	</div>
 </div>
 		
-		<!-- Bootstrap core JavaScript
-			================================================== -->
-		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-   	 	<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
    	 	
    	 	<footer>
 			<div class="container">

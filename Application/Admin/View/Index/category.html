@@ -1,0 +1,31 @@
+<div class="nav">
+	<button type="button" class="btn btn-primary navbar-btn">添加栏目</button>
+</div>
+<table id="categoryTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>栏目名称</th>
+			<th>键值</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="data" id="category">
+		<tr cid="{$category.cid}">
+			<td>{$category.name}</td>
+			<td>{$category.key}</td>
+			<td>
+				<button type="button" class="edit btn btn-warning btn-sm">编辑</button>
+				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+			</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+		$("#categoryTable").on("click",".delete", function(evt) {
+			$("#modalConfim").modal();
+		});
+	});
+</script>
