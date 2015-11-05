@@ -1,21 +1,21 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class CategoryController extends Controller {
+class BrandController extends Controller {
 	public function index() {
-		$db = M('category');
-		$list = $db->select();
+		$db = D("brand");
+        $list = $db->relation(true)->select();
 		if($list != false) {
 			$this->assign('list',$list);// 模板变量赋值
 		}
-		$this->assign('title', '栏目管理');
+		$this->assign('title', '品牌管理');
 		$this->display();
 	}
 	
-	public function remove($cid = 0) {
-		$db = M('category');
-		$ret = $db->delete($cid);
-		if($ret > -1) {
+	public function remove($bid = 0) {
+		$db = M('brand');
+		$ret = $db->delete($bid);
+		if($ret != false) {
 			$this->success('操作成功');
 		} else {
 			$this->error('数据错误');
@@ -24,7 +24,7 @@ class CategoryController extends Controller {
 	
 	public function add($name = null, $key = null) {
 		if(IS_POST) {
-			$db = M('category');
+			$db = M('brand');
 			$data['name'] = $name;
 			$data['key'] = $key;
 			if($db->add($data) != false) {
@@ -35,7 +35,7 @@ class CategoryController extends Controller {
 			
 		} else {
 			$this->assign('action', U('add'));
-			$this->assign('title', '添加栏目');
+			$this->assign('title', '添加品牌');
 			$this->display();
 		}
 	}

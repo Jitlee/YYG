@@ -97,22 +97,24 @@
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1><?php echo ($title); ?></h1>
 			 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加栏目</a>
+	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加品牌</a>
 </div>
-<table id="categoryTable" class="table table-bordered">
+<table id="brandTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>栏目名称</th>
-			<th>键值</th>
+			<th>品牌名称</th>
+			<th>所属栏目</th>
 			<th style="width:130px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
-			<td><?php echo ($category["name"]); ?></td>
-			<td><?php echo ($category["key"]); ?></td>
-			<td cid="<?php echo ($category["cid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
+		<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$brand): $mod = ($i % 2 );++$i;?><tr>
+			<td><?php echo ($brand["name"]); ?></td>
+			<td>
+				<?php if(is_array($brand["categories"])): $i = 0; $__LIST__ = $brand["categories"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><mark style="margin-left:5px"><?php echo ($category["name"]); ?></mark><?php endforeach; endif; else: echo "" ;endif; ?>
+			</td>
+			<td bid="<?php echo ($brand["bid"]); ?>">
+				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($brand["bid"]); ?>'>编辑</a>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
 		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -120,28 +122,29 @@
 </table>
 <script type="text/javascript">
 	$(function(){
-		$("#categoryTable").on("click",".delete", function(evt) {
+		$("#brandTable").on("click",".delete", function(evt) {
 			var ths = $(this);
-			var cid = ths.parent().attr("cid");
+			var bid = ths.parent().attr("bid");
 			var tr = ths.closest("tr");
 			UI.confirm("是否删除", {
 				ok: function() {
-					remove(tr, cid);
+					remove(tr, bid);
 				}
 			});
 		});
 		
-		function remove(tr, cid) {
-			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
+		function remove(tr, bid) {
+			$.post("<?php echo U('remove','','');?>/" + bid, null, function(data) {
 				if(data.status) {
 					tr.remove();
 				} else {
-					alert(data.info);
+					$("#tips").text(data.info);
 				}
 			}, "json");
 		}
 	});
 </script>
+			 <p id="tips" class="check-tips text-danger"></p>
 		</div>
 	</div>
 </div>

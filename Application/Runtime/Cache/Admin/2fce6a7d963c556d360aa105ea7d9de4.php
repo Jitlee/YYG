@@ -96,52 +96,17 @@
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1><?php echo ($title); ?></h1>
-			 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加栏目</a>
-</div>
-<table id="categoryTable" class="table table-bordered">
-	<thead>
-		<tr>
-			<th>栏目名称</th>
-			<th>键值</th>
-			<th style="width:130px">操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
-			<td><?php echo ($category["name"]); ?></td>
-			<td><?php echo ($category["key"]); ?></td>
-			<td cid="<?php echo ($category["cid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-			</td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
-	</tbody>
-</table>
-<script type="text/javascript">
-	$(function(){
-		$("#categoryTable").on("click",".delete", function(evt) {
-			var ths = $(this);
-			var cid = ths.parent().attr("cid");
-			var tr = ths.closest("tr");
-			UI.confirm("是否删除", {
-				ok: function() {
-					remove(tr, cid);
-				}
-			});
-		});
-		
-		function remove(tr, cid) {
-			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
-				if(data.status) {
-					tr.remove();
-				} else {
-					alert(data.info);
-				}
-			}, "json");
-		}
-	});
-</script>
+			 <!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+
+			 <p id="tips" class="check-tips text-danger"></p>
 		</div>
 	</div>
 </div>

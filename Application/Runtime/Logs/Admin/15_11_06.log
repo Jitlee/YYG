@@ -1,0 +1,328 @@
+[ 2015-11-06T00:00:10+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000216s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000275s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000306s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0063s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0065s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0005s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='4' [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000084s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000150s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011283s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011343s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000143s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000172s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000436s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000468s ]
+
+[ 2015-11-06T00:00:12+08:00 ] ::1 /index.php/Admin/Brand/remove/undefined
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000266s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000323s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000359s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0031s ]
+SQL: DELETE FROM `yyg_brand` WHERE `bid` = 0 [ RunTime:0.0002s ]
+
+[ 2015-11-06T00:02:10+08:00 ] ::1 /index.php/Admin/Brand/remove/undefined
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000037s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000949s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000679s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000776s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0036s ]
+SQL: DELETE FROM `yyg_brand` WHERE `bid` = 0 [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0071s ]
+SQL: SHOW COLUMNS FROM `yyg_category_has_brand` [ RunTime:0.0030s ]
+SQL: DELETE FROM `yyg_category_has_brand` WHERE `bid` = 0 [ RunTime:0.0002s ]
+
+[ 2015-11-06T00:02:13+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000295s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0031s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0003s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0033s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0003s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='4' [ RunTime:0.0002s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000120s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000208s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.037442s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.037505s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.003449s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003519s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004180s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004266s ]
+
+[ 2015-11-06T00:02:17+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000356s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000731s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000806s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0045s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:02:41+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000417s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000403s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000454s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0039s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:02:43+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000210s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000357s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000392s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0062s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:03:32+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000249s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000350s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000389s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0063s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0034s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0007s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='4' [ RunTime:0.0010s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000102s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000223s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019143s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019234s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.004192s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.004310s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003903s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003987s ]
+
+[ 2015-11-06T00:03:35+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000294s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000403s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000455s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0036s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:03:55+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000584s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000911s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001103s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0040s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0046s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0013s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='4' [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000072s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000117s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008842s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008894s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000126s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000151s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000348s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000381s ]
+
+[ 2015-11-06T00:03:57+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000242s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000869s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000932s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0088s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:04:29+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000387s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000801s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000881s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0069s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0005s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0062s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0004s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='4' [ RunTime:0.0003s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000064s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000115s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017197s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017242s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001433s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001478s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000597s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000666s ]
+
+[ 2015-11-06T00:04:32+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000498s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000338s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000376s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0070s ]
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+ERR: 1451:Cannot delete or update a parent row: a foreign key constraint fails (`yygdb`.`yyg_category_has_brand`, CONSTRAINT `fk_yyg_category_has_yyg_brand_yyg_brand` FOREIGN KEY (`bid`) REFERENCES `yyg_brand` (`bid`) ON DELETE NO ACTION ON UPDATE NO ACTION)
+ [ SQL语句 ] : DELETE FROM `yyg_brand` WHERE `bid` = 4
+
+[ 2015-11-06T00:05:37+08:00 ] ::1 /index.php/Admin/Brand/remove/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000063s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003969s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004102s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004218s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0044s ]
+SQL: DELETE FROM `yyg_brand` WHERE `bid` = 4 [ RunTime:0.0041s ]
+
+[ 2015-11-06T00:05:42+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000231s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000298s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000331s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0061s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0004s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0066s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0004s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000065s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000111s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020035s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020088s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001672s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001725s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003714s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003773s ]
+
+[ 2015-11-06T00:06:43+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000241s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000329s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000370s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0064s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0002s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0067s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='3' [ RunTime:0.0005s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000065s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000125s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008725s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008789s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000148s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000181s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000469s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000528s ]
+
+[ 2015-11-06T00:09:12+08:00 ] ::1 /index.php/Admin/Brand/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003809s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003726s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003815s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000082s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000159s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020394s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020481s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000444s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000507s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003975s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004050s ]
+

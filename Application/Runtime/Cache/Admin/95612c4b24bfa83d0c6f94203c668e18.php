@@ -96,52 +96,56 @@
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1><?php echo ($title); ?></h1>
-			 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加栏目</a>
-</div>
-<table id="categoryTable" class="table table-bordered">
-	<thead>
-		<tr>
-			<th>栏目名称</th>
-			<th>键值</th>
-			<th style="width:130px">操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
-			<td><?php echo ($category["name"]); ?></td>
-			<td><?php echo ($category["key"]); ?></td>
-			<td cid="<?php echo ($category["cid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-			</td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
-	</tbody>
-</table>
+			 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post">
+	<input type="hidden" name="cid" value="<?php echo ($data["cid"]); ?>" /> 
+	<div class="form-group">
+		<label for="inputName" class="col-sm-2 control-label">栏目名称</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="栏目名称" value="<?php echo ($data["name"]); ?>">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputKey" class="col-sm-2 control-label">栏目代码</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="key" id="inputKey" placeholder="栏目代码" value="<?php echo ($data["key"]); ?>">
+		</div>
+	</div>
+	<div class="form-group">
+		<p id="checkTips" class="check-tips text-danger"></p>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary"> 提交 </button>
+			<a type="submit" class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
+		</div>
+	</div>
+</form>
+
 <script type="text/javascript">
-	$(function(){
-		$("#categoryTable").on("click",".delete", function(evt) {
-			var ths = $(this);
-			var cid = ths.parent().attr("cid");
-			var tr = ths.closest("tr");
-			UI.confirm("是否删除", {
-				ok: function() {
-					remove(tr, cid);
-				}
-			});
-		});
-		
-		function remove(tr, cid) {
-			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
-				if(data.status) {
-					tr.remove();
-				} else {
-					alert(data.info);
-				}
-			}, "json");
-		}
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
 	});
-</script>
+	 //刷新验证码
+	$(function() {
+		
+		$("form").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
+	
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+	});
+	</script>
 		</div>
 	</div>
 </div>

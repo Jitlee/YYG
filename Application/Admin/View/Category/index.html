@@ -1,5 +1,5 @@
 <div class="nav">
-	<button type="button" class="btn btn-primary navbar-btn">添加栏目</button>
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加栏目</a>
 </div>
 <table id="categoryTable" class="table table-bordered">
 	<thead>
@@ -10,12 +10,12 @@
 		</tr>
 	</thead>
 	<tbody>
-		<volist name="data" id="category">
+		<volist name="list" id="category">
 		<tr>
 			<td>{$category.name}</td>
 			<td>{$category.key}</td>
 			<td cid="{$category.cid}">
-				<button type="button" class="edit btn btn-warning btn-sm">编辑</button>
+				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$category.cid}'>编辑</a>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
 		</tr>
@@ -40,7 +40,7 @@
 				if(data.status) {
 					tr.remove();
 				} else {
-					alert(data.info);
+					$("#tips").text(data.info);
 				}
 			}, "json");
 		}

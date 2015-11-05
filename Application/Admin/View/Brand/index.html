@@ -1,0 +1,52 @@
+<div class="nav">
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加品牌</a>
+</div>
+<table id="brandTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>品牌名称</th>
+			<th>所属栏目</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="list" id="brand">
+		<tr>
+			<td>{$brand.name}</td>
+			<td>
+				<volist name="brand.categories" id="category">
+					<mark style="margin-left:5px">{$category.name}</mark>
+				</volist>
+			</td>
+			<td bid="{$brand.bid}">
+				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$brand.bid}'>编辑</a>
+				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+			</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+		$("#brandTable").on("click",".delete", function(evt) {
+			var ths = $(this);
+			var bid = ths.parent().attr("bid");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, bid);
+				}
+			});
+		});
+		
+		function remove(tr, bid) {
+			$.post("{:U('remove','','')}/" + bid, null, function(data) {
+				if(data.status) {
+					tr.remove();
+				} else {
+					$("#tips").text(data.info);
+				}
+			}, "json");
+		}
+	});
+</script>
