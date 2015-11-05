@@ -11,10 +11,10 @@
 	</thead>
 	<tbody>
 		<volist name="data" id="category">
-		<tr cid="{$category.cid}">
+		<tr>
 			<td>{$category.name}</td>
 			<td>{$category.key}</td>
-			<td>
+			<td cid="{$category.cid}">
 				<button type="button" class="edit btn btn-warning btn-sm">编辑</button>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
@@ -25,7 +25,24 @@
 <script type="text/javascript">
 	$(function(){
 		$("#categoryTable").on("click",".delete", function(evt) {
-			$("#modalConfim").modal();
+			var ths = $(this);
+			var cid = ths.parent().attr("cid");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, cid);
+				}
+			});
 		});
+		
+		function remove(tr, cid) {
+			$.post("{:U('remove','','')}/" + cid, null, function(data) {
+				if(data.status) {
+					tr.remove();
+				} else {
+					alert(data.info);
+				}
+			}, "json");
+		}
 	});
 </script>

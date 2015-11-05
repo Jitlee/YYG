@@ -107,10 +107,10 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr cid="<?php echo ($category["cid"]); ?>">
+		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
 			<td><?php echo ($category["name"]); ?></td>
 			<td><?php echo ($category["key"]); ?></td>
-			<td>
+			<td cid="<?php echo ($category["cid"]); ?>">
 				<button type="button" class="edit btn btn-warning btn-sm">编辑</button>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
@@ -120,23 +120,36 @@
 <script type="text/javascript">
 	$(function(){
 		$("#categoryTable").on("click",".delete", function(evt) {
-			$("#modalConfim").modal();
+			var ths = $(this);
+			var cid = ths.parent().attr("cid");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, cid);
+				}
+			});
 		});
+		
+		function remove(tr, cid) {
+			tr.remove();
+			alert(cid + "已删除");
+		}
 	});
 </script>
 		</div>
 	</div>
 </div>
-<div id="modalConfim" class="modal fade" tabindex="-1" role="dialog">
+<script type="text/javascript" src="/Public/Admin/js/modal.js"></script>
+<div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
 			<div class="modal-body">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				Hello world!
+				<h4 id="modalConfirmContent"></h4>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn">确定</button>
-				<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+				<button id="modalConfirmCancelButton" type="button" class="btn cancel" data-dismiss="modal">取消</button>
+				<button id="modalConfirmOKButton" type="button" class="btn btn-primary ok" data-dismiss="modal">确定</button>
 			</div>
 		</div>
 	</div>

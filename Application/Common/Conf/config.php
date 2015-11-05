@@ -12,4 +12,7 @@ return array(
 	'LAYOUT_ON'=>	true, // 启用布局
 	
 	'VAR_SESSION_ID'			=> 'session_id', // 修复unloadfiy插件无法传递session_id的bug
+	
+	'URL_PARAMS_BIND'       	=>  true, // URL变量绑定到操作方法作为参数
+	'URL_PARAMS_BIND_TYPE'		=> 1,  // 设置参数绑定按照变量顺序绑定
 );

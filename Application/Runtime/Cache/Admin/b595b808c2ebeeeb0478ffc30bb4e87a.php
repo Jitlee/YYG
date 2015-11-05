@@ -45,6 +45,16 @@
 				</div>
 			</div>
 		</nav>
+		
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+   	 	<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
@@ -85,21 +95,26 @@
 
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1><?php echo ($title); ?></h1>
- 			我是内容
+			<h1><?php echo ($title); ?></h1> 我是内容
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/Public/Admin/js/modal.js"></script>
+<div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 id="modalConfirmContent"></h4>
+			</div>
+			<div class="modal-footer">
+				<button id="modalConfirmCancelButton" type="button" class="btn cancel" data-dismiss="modal">取消</button>
+				<button id="modalConfirmOKButton" type="button" class="btn btn-primary ok" data-dismiss="modal">确定</button>
+			</div>
 		</div>
 	</div>
 </div>
 		
-		<!-- Bootstrap core JavaScript
-			================================================== -->
-		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		
-		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-   	 	<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
    	 	
    	 	<footer>
 			<div class="container">
