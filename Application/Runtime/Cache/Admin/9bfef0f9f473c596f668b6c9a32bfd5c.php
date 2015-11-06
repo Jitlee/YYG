@@ -108,7 +108,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($data)): $i = 0; $__LIST__ = $data;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
+		<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
 			<td><?php echo ($category["name"]); ?></td>
 			<td><?php echo ($category["key"]); ?></td>
 			<td cid="<?php echo ($category["cid"]); ?>">
@@ -136,12 +136,13 @@
 				if(data.status) {
 					tr.remove();
 				} else {
-					alert(data.info);
+					$("#tips").text(data.info);
 				}
 			}, "json");
 		}
 	});
 </script>
+			 <p id="tips" class="check-tips text-danger"></p>
 		</div>
 	</div>
 </div>

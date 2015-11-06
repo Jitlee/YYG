@@ -96,16 +96,83 @@
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h1><?php echo ($title); ?></h1>
-			 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
-</html>
+			 <form id="addForm" class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post">
+	<input type="hidden" name="cid" value="<?php echo ($bid); ?>" /> 
+	<div class="form-group">
+		<label for="inputName" class="col-sm-2 control-label">名称</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="名称名称" value="<?php echo ($data["name"]); ?>">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputName" class="col-sm-2 control-label">图标</label>
+		<div class="col-sm-10">
+			<a id="thumbButton" type="button" class="btn btn-default thumb">
+		      <img src="<?php echo ($thumb); ?>" onerror="this.src='/Public/Admin/images/favicon.png'" alt="点击选择上传图标">
+		    </a>
+			<span class="label label-info">点击图标可以上传品牌缩略图</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary"> 提交 </button>
+			<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
+		</div>
+	</div>
+</form>
 
+
+<form id="uploadForm" action="/index.php/Admin/Brand/upload" enctype="multipart/form-data"  style="visibility: hidden" method="post">
+	<input id="thumbInput" type="file" name="file" accept="image/*" />
+</form>
+<script type="text/javascript" src="/Public/Admin/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	$(function() {
+		
+		var uploadForm = $("#uploadForm");
+		var thumbInput = $("#thumbInput").change(function(evt) {
+			uploadForm.submit();
+		});
+		$("#thumbButton").click(function(){
+			thumbInput.click();
+		});
+		
+		uploadForm.submit(function() {
+			var self = $(this);
+			$.ajaxFileUpload({
+                url: self.attr("action"), //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'thumbInput', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status){  //服务器成功响应处理函数
+                    
+                }, error: function (data, status, e) { //服务器响应失败处理函数
+                    
+                }
+            });
+		});
+		
+		$("#addForm").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
+	
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#tips").text(data.info);
+				}
+			}
+		});
+	});
+	</script>
 			 <p id="tips" class="check-tips text-danger"></p>
 		</div>
 	</div>

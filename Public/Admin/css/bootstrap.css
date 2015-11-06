@@ -149,3 +149,13 @@ body {
 .table>thead>tr>th,.table>tbody>tr>td { 
 	vertical-align: middle;
 }
+
+.thumb {
+	padding:1px;
+}
+
+.thumb img {
+	height: 30px;
+    width: 30px;
+    margin: 1px;
+}
