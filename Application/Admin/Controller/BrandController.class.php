@@ -2,6 +2,8 @@
 namespace Admin\Controller;
 use Think\Controller;
 class BrandController extends Controller {
+	const ROOT_PATH = '/Uploads/brands/';
+	
 	public function index() {
 		$db = D("brand");
         $list = $db->relation(true)->select();
@@ -15,6 +17,7 @@ class BrandController extends Controller {
 	public function remove($bid = 0) {
 		$db = M('brand');
 		$ret = $db->delete($bid);
+		$this->deleteRelations($bid);
 		if($ret != false) {
 			$this->success('操作成功');
 		} else {
@@ -22,62 +25,97 @@ class BrandController extends Controller {
 		}
 	}
 	
-	public function add($name = null, $key = null) {
+	public function add() {
 		if(IS_POST) {
 			$db = M('brand');
-			$data['name'] = $name;
-			$data['key'] = $key;
-			if($db->add($data) != false) {
-				$this->success('操作成功', U('Category/index'));
+			$db->create();
+			$result = $db->add();
+			if($result != false) {
+				$bid = $result;
+				$this->deleteRelations($bid);
+				$this->success('操作成功', U('index'));
 			} else {
 				$this->error('数据错误');
 			}
 			
 		} else {
-			$this->assign('action', U('add'));
+			$cdb = M('category');
+			$categories = $cdb->select();
+			$this->assign('allCategories', $categories);
+			$this->assign('action', U('add', '', ''));
 			$this->assign('title', '添加品牌');
 			$this->display();
 		}
 	}
 	
-	public function edit($cid = null, $name = null, $key = null) {
+	public function edit($bid = null) {
 		if(IS_POST) {
-			$db = M('category');
-			$data['cid'] = $cid;
-			$data['name'] = $name;
-			$data['key'] = $key;
-			if($db->save($data) != false) {
-				$this->success('操作成功', U('Category/index'));
-			} else {
-				$this->error('数据错误');
-			}
+			$db = M('brand');
+			$db->create();
+			$db->save();
+			$this->deleteRelations($_POST['bid']);
+			$this->success('操作成功', U('index'));
 		} else {
-			$db = M('category');
-			$data = $db->find($id);
-			if($data != false) {
-				$this->assign('data', $data);
-			}
-			$this->assign('action', U('edit'));
-			$this->assign('title', '修改栏目');
+			$cdb = M('category');
+			$categories = $cdb->select();
+			$this->assign('allCategories', $categories);
+			
+			// 加载数据
+			$db = D('brand');
+			$data = $db->relation(true)->find($bid);
+			$this->assign('data', $data);
+			
+			$this->assign('isAllCategories', count($categories) == count($data["categories"]));
+			
+			$this->assign('action', U('edit', '', ''));
+			$this->assign('title', '编辑品牌');
 			$this->display('add');
 		}
 	}
 	
+	private function deleteRelations($bid = null) {
+		$hasdb = M('categoryHasBrand');
+		$deleteData["bid"] = $bid;
+		$categories = $_POST['categories'];
+		$hasdb->where($deleteData)->delete();
+		foreach($categories as $cid) {
+			$hasdb = M('categoryHasBrand');
+			$hasData["bid"] = $bid;
+			$hasData["cid"] = $cid;
+			$hasdb->add($hasData);
+		}
+	}
+	
 	public function upload() {
-		$upload = new \Think\Upload();// 实例化上传类
-	    $upload->maxSize   =     3145728 ;// 设置附件上传大小
-	    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-	    $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-	    $upload->savePath  =     'Brands'; // 设置附件上传（子）目录
-//	    import('Org/Util/String');
-//	    import('Think.ORG.Util.String');
-	    $upload->saveName  =     \Org\Util\String::uuid(); // 
-	    // 上传文件 
-	    $info   =   $upload->upload();
-	    if(!$info) {// 上传错误提示错误信息
-	        $this->error($upload->getError());
-	    }else{// 上传成功
-	        $this->success('上传成功！');
-	    }
+		if (!empty($_FILES)) {
+			$config = array(
+			    'maxSize'    =>    3145728,
+			    'rootPath'   =>    '.' . self::ROOT_PATH,
+			    'savePath'   =>    '',
+			    'saveName'   =>    array('uniqid',''),
+			    'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
+			    'autoSub'    =>    true,
+			    'subName'    =>    array('date','Ymd'),
+			);
+	
+			$upload = new \Think\Upload($config);// 实例化上传类
+			
+		    // 上传文件 
+		    $info   =   $upload->upload();
+		    if($info != false) {// 上传成功
+		    		$returnData["status"] = 0;
+				$returnData["url"] = self::ROOT_PATH . $info['Filedata']['savepath'] . $info['Filedata']['savename'];
+				$returnData["key"] = encode($info['Filedata']['savepath'] . $info['Filedata']['savename']);
+		        $this->ajaxReturn($returnData, "JSON");
+		    }else{// 上传错误提示错误信息
+		    		$returnData["status"] = -1;
+		    		$returnData["info"] = $upload->getError();
+		        $this->ajaxReturn($returnData, "JSON");
+		    }
+		}
+	}
+	
+	public function removefile($name) {
+		del_dir_or_file('.' . self::ROOT_PATH . decode($name));
 	}
 }

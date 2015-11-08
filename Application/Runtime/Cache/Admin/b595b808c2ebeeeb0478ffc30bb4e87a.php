@@ -26,7 +26,7 @@
 
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
-	     	<div class="container-fluid">
+			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
@@ -38,23 +38,35 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-text">admin</p></li>
+						<li>
+							<p class="navbar-text">admin</p>
+						</li>
 						<li><a href="#">修改密码</a></li>
 						<li><a href="#">帮助</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		
+		<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+			<li role="presentation"><a>系统管理</a></li>
+			<li role="presentation" class="active"><a>商品管理</a></li>
+			<li role="presentation"><a>内容管理</a></li>
+			<li role="presentation"><a>界面管理</a></li>
+			<li role="presentation"><a>云应用</a></li>
+		</ul>
+
 		<!-- Bootstrap core JavaScript
 			================================================== -->
 		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-		
+
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-   	 	<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+		
+		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
+		<script src="/Public/Admin/js/app.js"></script>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar">
@@ -67,10 +79,10 @@
 				<a class="nav-sidebar-selected">添加商品</a>
 			</li>
 			<li>
-				<a>管理商品</a>
+				<a>商品列表</a>
 			</li>
 			<li>
-				<a>栏目管理</a>
+				<a>商品分类</a>
 			</li>
 			<li>
 				<a>品牌管理</a>
@@ -95,11 +107,12 @@
 
 		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1><?php echo ($title); ?></h1> 我是内容
+			<h1><?php echo ($title); ?></h1>
+			 我是内容
+			 <p id="tips" class="check-tips text-danger"></p>
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="/Public/Admin/js/modal.js"></script>
 <div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
@@ -114,12 +127,40 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		var modalConfirmCancelButton = $("#modalConfirmCancelButton");
+		var modalConfirmOKButton = $("#modalConfirmOKButton");
+		var modalConfirmContent = $("#modalConfirmContent");
+		var modalConfirm = $("#modalConfirm");
+		var ui = window.UI|| (window.UI = {});
+		var cancel = null;
+		var ok = null;
 		
-   	 	
-   	 	<footer>
-			<div class="container">
-				<p class="navbar-text">&copy;2015 </p>
-			</div>
-   	 	</footer>
+		modalConfirmOKButton.click(function() {
+			if(ok) {
+				ok();
+				ok = null;
+			}
+		});
+		
+		modalConfirmCancelButton.click(function() {
+			if(cancel) {
+				cancel();
+				cancel = null;
+			}
+		});
+		
+		ui.confirm = function(text, options){
+			modalConfirmContent.text(text);
+			if(options){
+				ok = options.ok;
+				cancel = options.cancel;
+			}
+			modalConfirm.modal();
+		};
+	});
+</script>
+		
 	</body>
 </html>

@@ -10,6 +10,6 @@ class BrandModel extends RelationModel{
             'foreign_key'			=> 'bid',
             'relation_foreign_key' 	=> 'cid',
             'relation_table'			=> 'yyg_category_has_brand',
-            ),
-        );
+        ),
+    );
 }

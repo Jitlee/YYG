@@ -26,7 +26,7 @@
 
 	<body>
 		<nav class="navbar navbar-inverse navbar-fixed-top">
-	     	<div class="container-fluid">
+			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
@@ -38,20 +38,32 @@
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
 					<ul class="nav navbar-nav navbar-right">
-						<li><p class="navbar-text">admin</p></li>
+						<li>
+							<p class="navbar-text">admin</p>
+						</li>
 						<li><a href="#">修改密码</a></li>
 						<li><a href="#">帮助</a></li>
 					</ul>
 				</div>
 			</div>
 		</nav>
-		
+		<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+			<li role="presentation"><a>系统管理</a></li>
+			<li role="presentation" class="active"><a>商品管理</a></li>
+			<li role="presentation"><a>内容管理</a></li>
+			<li role="presentation"><a>界面管理</a></li>
+			<li role="presentation"><a>云应用</a></li>
+		</ul>
+
 		<!-- Bootstrap core JavaScript
 			================================================== -->
 		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 		<script src="__JQ__"></script>
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 		<script src="__B_JS__"></script>
-		
+
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-   	 	<script src="__IE10_BUG__"></script>
+		<script src="__IE10_BUG__"></script>
+		
+		<script src="__JS__/jquery.maxlength.min.js"></script>
+		<script src="__JS__/app.js"></script>

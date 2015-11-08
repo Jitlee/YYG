@@ -1,0 +1,36 @@
+<div class="nav">
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加商品</a>
+</div>
+<table id="goodTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>商品标题</th>
+			<th>所属栏目</th>
+			<th>已参与/总参</th>
+			<th>单价/元</th>
+			<th>期数/最大期数</th>
+			<th>人气商品</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<volist name="list" id="good">
+		<tr>
+			<td>{$good.title}</td>
+			<td>{$good.category.name}</td>
+			<td>{$good.canyurenshu}/{$good.shengyurenshu}</td>
+			<td>{$good.danjia}</td>
+			<td>{$good.qishu}/{$good.maxqishu}</td>
+			<td>{$good.renqi}</td>
+			<td cid="{$good.gid}">
+				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$good.gid}'>编辑</a>
+				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('history','','')}/{$good.gid}'>查看往期</a>
+			</td>
+		</tr>
+		</volist>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+	});
+</script>

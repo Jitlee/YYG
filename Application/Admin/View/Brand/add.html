@@ -1,18 +1,56 @@
 <form id="addForm" class="form-horizontal" action="{$action}" role="form" method="post">
-	<input type="hidden" name="cid" value="{$bid}" /> 
+	<if condition="$data.bid gt 0">
+		<input id="bidHidden" type="hidden" name="bid" value="{$data.bid}" />
+	</if>
 	<div class="form-group">
 		<label for="inputName" class="col-sm-2 control-label">名称</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" name="name" id="inputName" placeholder="名称名称" value="{$data.name}">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="品牌名称" value="{$data.name}">
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="inputName" class="col-sm-2 control-label">图标</label>
+		<label for="thumbButton" class="col-sm-2 control-label">图标</label>
 		<div class="col-sm-10">
-			<a id="thumbButton" type="button" class="btn btn-default thumb">
-		      <img src="{$thumb}" onerror="this.src='__IMG__/favicon.png'" alt="点击选择上传图标">
-		    </a>
-			<span class="label label-info">点击图标可以上传品牌缩略图</span>
+			<button id="thumbButton" type="button" class="btn btn-default" style="padding: 0;">
+				<img src="{$data.thumb|default='__IMG__/favicon.png'}" class="img-thumbnail thumb" alt="缩略图" />
+			</button>
+			<input class="hidden" id="inputThumb" name="thumb" value="{$data.thumb}" />
+			<span id="thumbTips" class="label label-info" thumb="{$data.thumb}">点击图标可以上传品牌缩略图</span>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="categoryButton" class="col-sm-2 control-label">
+			所属栏目
+		</label>
+		<div class="btn-group">
+			<button id="categoryButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				添加栏目 <span class="caret"></span>
+			</button>
+			<ul id="categoryMenus" class="dropdown-menu">
+				<volist name="allCategories" id="c">
+					<li cid="{$c.cid}"><a>{$c.name}</a></li>
+				</volist>
+			</ul>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">
+		</label>
+		<div class="col-sm-10">
+			<div class="panel panel-default">
+				<button id="categoyCloseButtonTemplate" type="button" class="hidden btn btn-default" aria-label="Close">
+					<span>确定</span>&nbsp;<span aria-hidden="true">&times;</span>
+					<input class="hidden" />
+				</button>
+				<div id="categoryBody" class="panel-body">
+					<volist name="data.categories" id="c">
+						<button type="button" class="btn btn-default" aria-label="Close">
+							<span>{$c.name}</span>&nbsp;<span aria-hidden="true">&times;</span>
+							<input class="hidden" name="categories[]" value="{$c.cid}" />
+						</button>
+					</volist>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">
@@ -22,49 +60,34 @@
 		</div>
 	</div>
 </form>
-
-
-<form id="uploadForm" action="__URL__/upload" enctype="multipart/form-data"  style="visibility: hidden" method="post">
-	<input id="thumbInput" type="file" name="file" accept="image/*" />
-</form>
-<script type="text/javascript" src="__JS__/ajaxfileupload.js"></script>
+<include file="Public:upload" />
 <script type="text/javascript">
-	 //表单提交
+
+	//表单提交
 	$(document).ajaxStart(function() {
 		$("button:submit").attr("disabled", true);
 	}).ajaxStop(function() {
 		$("button:submit").attr("disabled", false);
 	});
 	$(function() {
-		
-		var uploadForm = $("#uploadForm");
-		var thumbInput = $("#thumbInput").change(function(evt) {
-			uploadForm.submit();
+		var thumbButton = $("#thumbButton").click(function(){
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton).attr("src", url);
+						$("input", thumbButton.parent()).val(url);
+					}
+				}
+			});
 		});
-		$("#thumbButton").click(function(){
-			thumbInput.click();
-		});
+				
 		
-		uploadForm.submit(function() {
-			var self = $(this);
-			$.ajaxFileUpload({
-                url: self.attr("action"), //用于文件上传的服务器端请求地址
-                secureuri: false, //是否需要安全协议，一般设置为false
-                fileElementId: 'thumbInput', //文件上传域的ID
-                dataType: 'json', //返回值类型 一般设置为json
-                success: function (data, status){  //服务器成功响应处理函数
-                    
-                }, error: function (data, status, e) { //服务器响应失败处理函数
-                    
-                }
-            });
-		});
-		
+		// 提交数据
 		$("#addForm").submit(function() {
 			var self = $(this);
 			$.post(self.attr("action"), self.serialize(), success, "json");
 			return false;
-	
 			function success(data) {
 				if (data.status) {
 					window.location.href = data.url;
@@ -73,5 +96,43 @@
 				}
 			}
 		});
+		
+		
+		// 添加栏目
+		var categoyCloseButtonTemplate = $("#categoyCloseButtonTemplate");
+		var categoryMenus = $("#categoryMenus").on("click", "[cid]", function(evt) {
+			var self = $(this);
+			var cid = self.attr("cid");
+			var cname = self.text();
+			self.toggle();
+			var categoryButton = categoyCloseButtonTemplate.clone()
+				.removeAttr("id")
+				.removeClass("hidden")
+				.appendTo(categoryBody);
+			$("span:first-child", categoryButton).text(cname);
+			$("input", categoryButton).val(cid).attr("name", "categories[]");
+			
+			if($("li:visible", categoryMenus).length == 0) {
+				$("#categoryButton").attr("disabled", true);
+			}
+		});
+		
+		// 移除栏目
+		var categoryBody = $("#categoryBody").on("click", ".btn", function(evt) {
+			var self = $(this);
+			var cid = $("input", self).val();
+			self.remove();
+			$("[cid=" + cid + "]", categoryMenus).toggle();
+			$("#categoryButton").attr("disabled", false);
+		});
+		
+		// 编辑模式初始化添加栏目列表状态
+		if($("#bidHidden").val()) {
+			categoryBody.children().each(function() {
+				var self = $(this);
+				var cid = $("input", self).val();
+				$("[cid=" + cid + "]", categoryMenus).toggle();
+			});
+		}
 	});
-	</script>
+</script>

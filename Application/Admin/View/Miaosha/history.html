@@ -1,0 +1,28 @@
+<table id="historyTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>商品标题</th>
+			<th>所属栏目</th>
+			<th>已参与/总参</th>
+			<th>单价/元</th>
+			<th>期数/最大期数</th>
+			<th>人气商品</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="good">
+		<tr>
+			<td>第({$good.qishu})期{$goods.title}</td>
+			<td>{$goods.category.name}</td>
+			<td>{$good.canyurenshu}/{$good.shengyurenshu}</td>
+			<td>{$good.danjia}</td>
+			<td>{$good.qishu}/{$goods.maxqishu}</td>
+			<td><if condition="$good.renqi eq 1">人气</if></td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+	});
+</script>

@@ -1,4 +1,3 @@
-<script type="text/javascript" src="__JS__/modal.js"></script>
 <div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">
 		<div class="modal-content">
@@ -13,3 +12,37 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	$(function(){
+		var modalConfirmCancelButton = $("#modalConfirmCancelButton");
+		var modalConfirmOKButton = $("#modalConfirmOKButton");
+		var modalConfirmContent = $("#modalConfirmContent");
+		var modalConfirm = $("#modalConfirm");
+		var ui = window.UI|| (window.UI = {});
+		var cancel = null;
+		var ok = null;
+		
+		modalConfirmOKButton.click(function() {
+			if(ok) {
+				ok();
+				ok = null;
+			}
+		});
+		
+		modalConfirmCancelButton.click(function() {
+			if(cancel) {
+				cancel();
+				cancel = null;
+			}
+		});
+		
+		ui.confirm = function(text, options){
+			modalConfirmContent.text(text);
+			if(options){
+				ok = options.ok;
+				cancel = options.cancel;
+			}
+			modalConfirm.modal();
+		};
+	});
+</script>

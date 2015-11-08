@@ -60,6 +60,9 @@ class Html extends TagLib{
             case 'KINDEDITOR':
                 $parseStr   =  '<script type="text/javascript" src="__ROOT__/Public/Js/KindEditor/kindeditor.js"></script><script type="text/javascript"> KE.show({ id : \''.$id.'\'  ,urlType : "absolute"});</script><textarea id="'.$id.'" style="'.$style.'" name="'.$name.'" >'.$content.'</textarea>';
                 break;
+            case 'UEDITOR':
+                $parseStr   =  "\n".'<script type="text/javascript" charset="utf-8" src="__ROOT__/Public/UEditor/ueditor.config.js"></script>'."\n".'<script type="text/javascript" charset="utf-8" src="__ROOT__/Public/UEditor/ueditor.all.js"></script>'."\n".'<script type="text/plain" id="'.$id.'" name="'.$name.'" style="'.$style.'">'.$content.'</script>'."\n".'<script type="text/javascript">var ue_'.$id.' = UE.getEditor("'.$id.'");</script>'."\n";
+                break;
             default :
                 $parseStr  =  '<textarea id="'.$id.'" style="'.$style.'" name="'.$name.'" >'.$content.'</textarea>';
         }
