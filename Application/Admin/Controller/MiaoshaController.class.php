@@ -23,7 +23,7 @@ class MiaoshaController extends GoodsBaseController {
 		$mmap['$gid'] = $gid;
 		$list = $mdb->where($mmap)->order('qishu desc')->select();
 		$this->assign('list', $list);
-		
+		$this->assign("pid", "gdmgr");
 		$this->assign("title", "往期");
 		$this->display();
 	}

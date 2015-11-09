@@ -47,13 +47,6 @@
 				</div>
 			</div>
 		</nav>
-		<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
-			<li role="presentation"><a>系统管理</a></li>
-			<li role="presentation" class="active"><a>商品管理</a></li>
-			<li role="presentation"><a>内容管理</a></li>
-			<li role="presentation"><a>界面管理</a></li>
-			<li role="presentation"><a>云应用</a></li>
-		</ul>
 
 		<!-- Bootstrap core JavaScript
 			================================================== -->
@@ -67,48 +60,84 @@
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
 		<script src="/Public/Admin/js/app.js"></script>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
-			
-<ul class="nav-sidebar">
-	<li>
-		<a>商品管理</a>
-		<ul>
-			<li>
-				<a class="nav-sidebar-selected">添加商品</a>
-			</li>
-			<li>
-				<a>商品列表</a>
-			</li>
-			<li>
-				<a>商品分类</a>
-			</li>
-			<li>
-				<a>品牌管理</a>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<a>用户管理</a>
-		<ul>
-			<li>
-				<a>添加用户</a>
-			</li>
-			<li>
-				<a>管理用户</a>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<a>关于</a>
-	</li>
+<div class="body">
+	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+	<li id="sysmgr"><a>系统管理</a></li>
+	<li id="gdmgr"><a>商品管理</a></li>
+	<li id="mbmgr"><a>会员管理</a></li>
 </ul>
+<div id="subNavTabs">
+	<ul id="s_sysmgr" class="nav-sidebar hidden">
+		<li id="usrmgr">
+			<a>管理员管理</a>
+			<ul>
+				<li id="usrlst"><a>管理员列表</a></li>
+				<li id="addusr"><a>添加管理员</a></li>
+				<li id="chagpwd"><a>修改密码</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_gdmgr" class="nav-sidebar hidden">
+		<li id="msmgr">
+			<a>秒杀商品管理</a>
+			<ul>
+				<li id="mslst"><a href="/index.php/Admin/Miaosha/../Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/..//Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="cmgr">
+			<a>分类管理</a>
+			<ul>
+				<li id="clist"><a href="/index.php/Admin/Miaosha/../Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/Miaosha/../Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/Miaosha/../Brand/add">添加品牌</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_mbmgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>会员管理</a>
+			<ul>
+				<li id="mblst"><a>会员列表</a></li>
+				<li id="fdmb"><a>查找会员</a></li>
+				<li id="addmb"><a>添加会员</a></li>
+				<li id="vcrcd"><a>充值记录</a></li>
+				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="nav-sidebar-footer">
+	</div>
+</div>
 
-		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1><?php echo ($title); ?></h1>
-			 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post">
+<script type="text/javascript">
+$(function() {
+	var mainNavTabs = $("#mainNavTabs");
+	var subNavTabs = $("#subNavTabs");
+	
+	$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>", mainNavTabs).addClass("active");
+	$("#s_<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>", subNavTabs).removeClass("hidden");
+	<?php if(isset($mid)): ?>$("#<?php echo ($mid); ?>", subNavTabs).addClass("active");<?php endif; ?>
+	
+	var pid = "<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>";
+	mainNavTabs.on("click", "li", function() {
+		var _pid = $(this).attr("id");
+		if(_pid != pid) {
+			if(pid) {
+				$("#" + pid, mainNavTabs).removeClass("active");
+				$("#s_" + pid, subNavTabs).addClass("hidden");
+			}
+			pid = _pid;
+			$("#" + pid, mainNavTabs).addClass("active");
+			$("#s_" + pid, subNavTabs).removeClass("hidden");
+		}
+	});
+});
+</script>
+
+	<div class="main">
+		<h1><?php echo ($title); ?></h1>
+		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post">
 	<?php if($data["gid"] > 0): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 
 	<table class="table">
@@ -488,9 +517,9 @@
 				});
 	});
 </script>
-			 <p id="tips" class="check-tips text-danger"></p>
-		</div>
+		 <p id="tips" class="check-tips text-danger"></p>
 	</div>
+	<div class="clear"></div>
 </div>
 <div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">

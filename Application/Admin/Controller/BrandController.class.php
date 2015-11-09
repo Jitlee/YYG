@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class BrandController extends Controller {
+class BrandController extends CommonController {
 	const ROOT_PATH = '/Uploads/brands/';
 	
 	public function index() {
@@ -11,6 +11,8 @@ class BrandController extends Controller {
 			$this->assign('list',$list);// 模板变量赋值
 		}
 		$this->assign('title', '品牌管理');
+		$this->assign('pid', 'gdmgr');
+		$this->assign('mid', 'blist');
 		$this->display();
 	}
 	
@@ -43,6 +45,8 @@ class BrandController extends Controller {
 			$categories = $cdb->select();
 			$this->assign('allCategories', $categories);
 			$this->assign('action', U('add', '', ''));
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', 'addb');
 			$this->assign('title', '添加品牌');
 			$this->display();
 		}
@@ -68,6 +72,8 @@ class BrandController extends Controller {
 			$this->assign('isAllCategories', count($categories) == count($data["categories"]));
 			
 			$this->assign('action', U('edit', '', ''));
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', 'addb');
 			$this->assign('title', '编辑品牌');
 			$this->display('add');
 		}

@@ -22,11 +22,11 @@ class PublicController extends Controller {
 			$data['username'] = $username;
 			$admin = $db->where($data)->find();
 			if(!$admin) {
-				$this->error('1帐号不存在或被禁用');
+				$this->ajaxReturn('1帐号不存在或被禁用');
 			}
 			
 			if($admin['password'] != md5($password)) {
-				$this->error('2密码不正确');
+				$this->ajaxReturn('2密码不正确');
 			}
 			
 			$data = array(
@@ -38,11 +38,12 @@ class PublicController extends Controller {
 			$db->save($data);
 			
 			$auth = array(
-				'uid'			=> $user['uid'],
-				'login_time'		=> $user['login_time'],
+				'uid'			=> $data['uid'],
+				'login_time'		=> $data['login_time'],
 			);
 			session('admin', $auth);
-			$this->success('登陆成功', U('Index/index'));
+//			echo dump(session('admin'));
+			$this->success('登陆成功', U('Index/index', '', ''));
 		} else if(is_login()) {
 			$this->redirect("Index/index");
 		} else {

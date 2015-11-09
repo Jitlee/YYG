@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Think\Controller;
-class CategoryController extends Controller {
+class CategoryController extends CommonController {
 	public function index() {
 		$db = M('category');
 		$list = $db->select();
@@ -9,6 +9,8 @@ class CategoryController extends Controller {
 			$this->assign('list',$list);// 模板变量赋值
 		}
 		$this->assign('title', '商品分类');
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', 'clist');
 		$this->display();
 	}
 	
@@ -43,6 +45,8 @@ class CategoryController extends Controller {
 			}
 		} else {
 			$this->assign('action', U('add', '', ''));
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', 'addc');
 			$this->assign('title', '添加商品分类');
 			$this->display();
 		}
@@ -60,6 +64,8 @@ class CategoryController extends Controller {
 			$this->assign('data', $data);
 			$this->assign('action', U('edit', '', ''));
 			$this->assign('title', '修改商品分类');
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', 'addc');
 			$this->display('add');
 		}
 	}

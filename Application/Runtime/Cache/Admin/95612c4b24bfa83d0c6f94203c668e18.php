@@ -47,13 +47,6 @@
 				</div>
 			</div>
 		</nav>
-		<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
-			<li role="presentation"><a>系统管理</a></li>
-			<li role="presentation" class="active"><a>商品管理</a></li>
-			<li role="presentation"><a>内容管理</a></li>
-			<li role="presentation"><a>界面管理</a></li>
-			<li role="presentation"><a>云应用</a></li>
-		</ul>
 
 		<!-- Bootstrap core JavaScript
 			================================================== -->
@@ -67,48 +60,84 @@
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
 		<script src="/Public/Admin/js/app.js"></script>
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
-			
-<ul class="nav-sidebar">
-	<li>
-		<a>商品管理</a>
-		<ul>
-			<li>
-				<a class="nav-sidebar-selected">添加商品</a>
-			</li>
-			<li>
-				<a>商品列表</a>
-			</li>
-			<li>
-				<a>商品分类</a>
-			</li>
-			<li>
-				<a>品牌管理</a>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<a>用户管理</a>
-		<ul>
-			<li>
-				<a>添加用户</a>
-			</li>
-			<li>
-				<a>管理用户</a>
-			</li>
-		</ul>
-	</li>
-	<li>
-		<a>关于</a>
-	</li>
+<div class="body">
+	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+	<li id="sysmgr"><a>系统管理</a></li>
+	<li id="gdmgr"><a>商品管理</a></li>
+	<li id="mbmgr"><a>会员管理</a></li>
 </ul>
+<div id="subNavTabs">
+	<ul id="s_sysmgr" class="nav-sidebar hidden">
+		<li id="usrmgr">
+			<a>管理员管理</a>
+			<ul>
+				<li id="usrlst"><a>管理员列表</a></li>
+				<li id="addusr"><a>添加管理员</a></li>
+				<li id="chagpwd"><a>修改密码</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_gdmgr" class="nav-sidebar hidden">
+		<li id="msmgr">
+			<a>秒杀商品管理</a>
+			<ul>
+				<li id="mslst"><a href="/index.php/Admin/Category/../Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin/Category/..//Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="cmgr">
+			<a>分类管理</a>
+			<ul>
+				<li id="clist"><a href="/index.php/Admin/Category/../Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/Category/../Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/Category/../Brand/add">添加品牌</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_mbmgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>会员管理</a>
+			<ul>
+				<li id="mblst"><a>会员列表</a></li>
+				<li id="fdmb"><a>查找会员</a></li>
+				<li id="addmb"><a>添加会员</a></li>
+				<li id="vcrcd"><a>充值记录</a></li>
+				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="nav-sidebar-footer">
+	</div>
+</div>
 
-		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h1><?php echo ($title); ?></h1>
-			 <form class="form-horizontal" role="form" method="post">
+<script type="text/javascript">
+$(function() {
+	var mainNavTabs = $("#mainNavTabs");
+	var subNavTabs = $("#subNavTabs");
+	
+	$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>", mainNavTabs).addClass("active");
+	$("#s_<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>", subNavTabs).removeClass("hidden");
+	<?php if(isset($mid)): ?>$("#<?php echo ($mid); ?>", subNavTabs).addClass("active");<?php endif; ?>
+	
+	var pid = "<?php echo ((isset($pid) && ($pid !== ""))?($pid):'sysmgr'); ?>";
+	mainNavTabs.on("click", "li", function() {
+		var _pid = $(this).attr("id");
+		if(_pid != pid) {
+			if(pid) {
+				$("#" + pid, mainNavTabs).removeClass("active");
+				$("#s_" + pid, subNavTabs).addClass("hidden");
+			}
+			pid = _pid;
+			$("#" + pid, mainNavTabs).addClass("active");
+			$("#s_" + pid, subNavTabs).removeClass("hidden");
+		}
+	});
+});
+</script>
+
+	<div class="main">
+		<h1><?php echo ($title); ?></h1>
+		 <form class="form-horizontal" role="form" method="post">
 	<?php if($data["cid"] > 0): ?><input type="hidden" name="cid" value="<?php echo ($data["cid"]); ?>" /><?php endif; ?>
 	<div class="form-group">
 		<label for="inputName" class="col-sm-2 control-label">分类名称</label>
@@ -132,7 +161,125 @@
 		</div>
 	</div>
 </form>
+<div id="modalUpload" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 id="modelUploadTitle" class="modal-title">图片上传</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					最多上传
+					<span id="modelUploadLimitLabel" class="label label-info">1</span> 个附件,单文件最大
+					<span class="label label-info">488KB</span> 类型:
+					<span class="label label-info"> *.png;*.jpg;*.gif;*.jpeg;</span>
+				</p>
+				<input id="modalUploadFile" type="file" name="file" accept="image/*" />
+				<div id="uploadPreviewImageTemplate" class="hidden col-xs-4 col-md-3">
+					<a href="#" class="thumbnail">
+						<img alt=""/>
+						<button type="button" class="btn btn-link">删除</button>
+					</a>
+				</div>
+				<div id="uploadPreviewBody" class="row">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="modalUploadCancelButton" type="button" class="btn cancel" data-dismiss="modal">取消</button>
+				<button id="modalUploadOKButton" type="button" class="btn btn-primary ok" data-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+<link href="/Public/Admin/css/uploadify.css" rel="stylesheet">
+<script src='/Public/Static/js/jquery.uploadify.min.js'></script>
+<script type="text/javascript">
+	$(function() {
+		var modalUploadCancelButton = $("#modalUploadCancelButton");
+		var modelUploadLimitLabel = $("#modelUploadLimitLabel");
+		var modalUploadOKButton = $("#modalUploadOKButton");
+		var modelUploadTitle = $("#modelUploadTitle");
+		var modalUpload = $("#modalUpload");
+		var ui = window.UI || (window.UI = {});
+		var cancel = null;
+		var ok = null;
+		var files = [];
+		modalUploadCancelButton.click(function() {
+			if (cancel) {
+				cancel();
+				cancel = null;
+			}
+		});
+		modalUploadOKButton.click(function() {
+			if (ok) {
+				ok(files);
+				ok = null;
+			}
+		});
+		var uploadify = $("#modalUploadFile");
+		var uploadPreviewImageTemplate = $("#uploadPreviewImageTemplate");
+		var uploadPreviewBody = $("#uploadPreviewBody").on("click", "button", function() {
+			var self = $(this);
+			var url = self.attr("url");
+			var key = self.attr("key");
+			$.post("<?php echo U('removefile','','');?>/" + key);
+			self.closest("div").remove();
+			var num = files.length;
+			while(num--) {
+				if(files[num].url == url) {
+					files.splice(num, 1);
+					break;
+				}
+			}
+		});
 
+		function initUploadify(options) {
+			files.length = 0;
+			var data = uploadify.data("uploadify");
+			if (data) {
+				$("#modalUploadFile").uploadify("destroy");
+				uploadPreviewBody.empty();
+			}
+			uploadify.uploadify({
+				swf: "/Public/Static/swf/uploadify.swf",
+				buttonText: '选择文件上传',
+				multi: options.limit > 1,
+				uploadLimit: options.limit,
+				removeCompleted: true,
+				fileTypeDesc : "图片文件",
+        			fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
+				uploader: "<?php echo U('upload','','');?>",
+				onUploadSuccess: function(file, data) {
+					var data = JSON.parse(data);
+					if (data && data.status == 0) {
+						files.push(data);
+						var previewImage = uploadPreviewImageTemplate
+							.clone()
+							.removeAttr("id")
+							.removeClass("hidden");
+						uploadPreviewBody.append(previewImage);
+						
+						$(".btn",previewImage).attr("key", data.key);
+						$(".btn",previewImage).attr("url", data.url);
+						$("img",previewImage).attr("src", data.url);
+					}
+				}
+			});
+		}
+		ui.upload = function(title, options) {
+			if (options) {
+				modelUploadTitle.text(title);
+				modelUploadLimitLabel.text(options.limit||1);
+				options.limit = options.limit||1;
+				initUploadify(options);
+				ok = options.ok;
+				cancel = options.cancel;
+			}
+			modalUpload.modal();
+		};
+	});
+</script>
 <script type="text/javascript">
 	 //表单提交
 	$(document).ajaxStart(function() {
@@ -158,9 +305,9 @@
 		});
 	});
 	</script>
-			 <p id="tips" class="check-tips text-danger"></p>
-		</div>
+		 <p id="tips" class="check-tips text-danger"></p>
 	</div>
+	<div class="clear"></div>
 </div>
 <div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
 	<div class="modal-dialog modal-sm">

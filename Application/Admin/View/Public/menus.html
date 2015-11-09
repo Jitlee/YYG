@@ -1,0 +1,75 @@
+<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+	<li id="sysmgr"><a>系统管理</a></li>
+	<li id="gdmgr"><a>商品管理</a></li>
+	<li id="mbmgr"><a>会员管理</a></li>
+</ul>
+<div id="subNavTabs">
+	<ul id="s_sysmgr" class="nav-sidebar hidden">
+		<li id="usrmgr">
+			<a>管理员管理</a>
+			<ul>
+				<li id="usrlst"><a>管理员列表</a></li>
+				<li id="addusr"><a>添加管理员</a></li>
+				<li id="chagpwd"><a>修改密码</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_gdmgr" class="nav-sidebar hidden">
+		<li id="msmgr">
+			<a>秒杀商品管理</a>
+			<ul>
+				<li id="mslst"><a href="__URL__/../Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="__URL__/..//Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="cmgr">
+			<a>分类管理</a>
+			<ul>
+				<li id="clist"><a href="__URL__/../Category">商品分类列表</a></li>
+				<li id="blist"><a href="__URL__/../Brand">品牌管理</a></li>
+				<li id="addb"><a href="__URL__/../Brand/add">添加品牌</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_mbmgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>会员管理</a>
+			<ul>
+				<li id="mblst"><a>会员列表</a></li>
+				<li id="fdmb"><a>查找会员</a></li>
+				<li id="addmb"><a>添加会员</a></li>
+				<li id="vcrcd"><a>充值记录</a></li>
+				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="nav-sidebar-footer">
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	var mainNavTabs = $("#mainNavTabs");
+	var subNavTabs = $("#subNavTabs");
+	
+	$("#{$pid|default='sysmgr'}", mainNavTabs).addClass("active");
+	$("#s_{$pid|default='sysmgr'}", subNavTabs).removeClass("hidden");
+	<present name="mid">
+	$("#{$mid}", subNavTabs).addClass("active");
+	</present>
+	
+	var pid = "{$pid|default='sysmgr'}";
+	mainNavTabs.on("click", "li", function() {
+		var _pid = $(this).attr("id");
+		if(_pid != pid) {
+			if(pid) {
+				$("#" + pid, mainNavTabs).removeClass("active");
+				$("#s_" + pid, subNavTabs).addClass("hidden");
+			}
+			pid = _pid;
+			$("#" + pid, mainNavTabs).addClass("active");
+			$("#s_" + pid, subNavTabs).removeClass("hidden");
+		}
+	});
+});
+</script>

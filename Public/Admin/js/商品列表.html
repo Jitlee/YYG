@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)http://localhost:7777/index.php/Admin/Miaosha -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<!--<link rel="icon" href="../../favicon.ico">-->
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+		<title>商品列表</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="./商品列表_files/bootstrap.min.css" rel="stylesheet">
+		<link href="./商品列表_files/bootstrap.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="http://localhost:7777/index.php/Admin/Miaosha#">后台管理系统</a>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<p class="navbar-text">admin</p>
+						</li>
+						<li><a href="http://localhost:7777/index.php/Admin/Miaosha#">修改密码</a></li>
+						<li><a href="http://localhost:7777/index.php/Admin/Miaosha#">帮助</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Bootstrap core JavaScript
+			================================================== -->
+		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+		<script src="./商品列表_files/jquery.min.js"></script>
+		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+		<script src="./商品列表_files/bootstrap.min.js"></script>
+
+		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+		<script src="./商品列表_files/ie10-viewport-bug-workaround.js"></script>
+		
+		<script src="./商品列表_files/jquery.maxlength.min.js"></script>
+		<script src="./商品列表_files/app.js"></script>
+<div class="body">
+	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
+	<li id="sysmgr"><a>系统管理</a></li>
+	<li id="gdmgr" class="active"><a>商品管理</a></li>
+	<li id="mbmgr"><a>会员管理</a></li>
+</ul>
+<div id="subNavTabs">
+	<ul id="s_sysmgr" class="nav-sidebar hidden">
+		<li id="usrmgr">
+			<a>管理员管理</a>
+			<ul>
+				<li id="usrlst"><a>管理员列表</a></li>
+				<li id="addusr"><a>添加管理员</a></li>
+				<li id="chagpwd"><a>修改密码</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_gdmgr" class="nav-sidebar">
+		<li id="msmgr">
+			<a>秒杀商品管理</a>
+			<ul>
+				<li id="mslst" class="active"><a href="./商品列表_files/商品列表.html">秒杀商品列表</a></li>
+				<li id="addms"><a href="http://localhost:7777/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="cmgr">
+			<a>分类管理</a>
+			<ul>
+				<li id="clist"><a href="http://localhost:7777/index.php/Admin/Category">商品分类列表</a></li>
+				<li id="blist"><a href="http://localhost:7777/index.php/Admin/Brand">品牌管理</a></li>
+				<li id="addb"><a href="http://localhost:7777/index.php/Admin/Brand/add">添加品牌</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_mbmgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>会员管理</a>
+			<ul>
+				<li id="mblst"><a>会员列表</a></li>
+				<li id="fdmb"><a>查找会员</a></li>
+				<li id="addmb"><a>添加会员</a></li>
+				<li id="vcrcd"><a>充值记录</a></li>
+				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="nav-sidebar-footer">a
+  
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	var mainNavTabs = $("#mainNavTabs");
+	var subNavTabs = $("#subNavTabs");
+	
+	$("#gdmgr", mainNavTabs).addClass("active");
+	$("#s_gdmgr", subNavTabs).removeClass("hidden");
+	$("#mslst", subNavTabs).addClass("active");
+	
+	var pid = "gdmgr";
+	mainNavTabs.on("click", "li", function() {
+		var _pid = $(this).attr("id");
+		if(_pid != pid) {
+			$("#" + pid, mainNavTabs).removeClass("active");
+			$("#s_" + pid, subNavTabs).addClass("hidden");
+			pid = _pid;
+			$("#" + pid, mainNavTabs).addClass("active");
+			$("#s_" + pid, subNavTabs).removeClass("hidden");
+		}
+	});
+});
+</script>
+
+	<div class="main">
+		<h1>商品列表</h1>
+		 <div class="nav">
+	<a type="button" href="http://localhost:7777/index.php/Admin/Miaosha/add" class="btn btn-primary navbar-btn">添加商品</a>
+</div>
+<table id="goodTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>商品标题</th>
+			<th>所属栏目</th>
+			<th>已参与/总参</th>
+			<th>单价/元</th>
+			<th>期数/最大期数</th>
+			<th>人气商品</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>iPhone 6s Plus</td>
+			<td>手机数码1</td>
+			<td>0/0</td>
+			<td>1</td>
+			<td>1/100</td>
+			<td>1</td>
+			<td cid="12">
+				<a type="button" class="edit btn btn-warning btn-sm" href="http://localhost:7777/index.php/Admin/Miaosha/edit/12">编辑</a>
+				<a type="button" class="edit btn btn-warning btn-sm" href="http://localhost:7777/index.php/Admin/Miaosha/history/12">查看往期</a>
+			</td>
+		</tr>	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+	});
+</script>
+		 <p id="tips" class="check-tips text-danger"></p>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="modalConfirm" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-body">
+				<button type="button" class="close" data-dismiss="modal">×</button>
+				<h4 id="modalConfirmContent"></h4>
+			</div>
+			<div class="modal-footer">
+				<button id="modalConfirmCancelButton" type="button" class="btn cancel" data-dismiss="modal">取消</button>
+				<button id="modalConfirmOKButton" type="button" class="btn btn-primary ok" data-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var modalConfirmCancelButton = $("#modalConfirmCancelButton");
+		var modalConfirmOKButton = $("#modalConfirmOKButton");
+		var modalConfirmContent = $("#modalConfirmContent");
+		var modalConfirm = $("#modalConfirm");
+		var ui = window.UI|| (window.UI = {});
+		var cancel = null;
+		var ok = null;
+		
+		modalConfirmOKButton.click(function() {
+			if(ok) {
+				ok();
+				ok = null;
+			}
+		});
+		
+		modalConfirmCancelButton.click(function() {
+			if(cancel) {
+				cancel();
+				cancel = null;
+			}
+		});
+		
+		ui.confirm = function(text, options){
+			modalConfirmContent.text(text);
+			if(options){
+				ok = options.ok;
+				cancel = options.cancel;
+			}
+			modalConfirm.modal();
+		};
+	});
+</script>
+		
+	
+</body></html>
