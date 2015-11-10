@@ -11,7 +11,7 @@
  Target Server Version : 50505
  File Encoding         : utf-8
 
- Date: 11/09/2015 00:08:58 AM
+ Date: 11/11/2015 01:38:51 AM
 */
 
 SET NAMES utf8;
@@ -26,19 +26,20 @@ CREATE TABLE `yyg_admin` (
   `username` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `password` char(32) COLLATE utf8_bin DEFAULT NULL COMMENT '密码',
   `email` varchar(45) COLLATE utf8_bin DEFAULT NULL,
-  `time` datetime DEFAULT NULL COMMENT '创建修改时间',
+  `role` tinyint(2) DEFAULT '0' COMMENT '角色:0:普通管理员，1，超级管理员',
+  `time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建修改时间',
   `login_time` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
   `login_ip` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '最后一次登陆ip',
   `login` int(11) DEFAULT '0',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='管理员';
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='管理员';
 
 -- ----------------------------
 --  Records of `yyg_admin`
 -- ----------------------------
 BEGIN;
-INSERT INTO `yyg_admin` VALUES ('1', 'admin', '7fef6171469e80d32c0559f88b377245', null, null, '0000-00-00 00:00:00', '127.0.0.1', '4');
+INSERT INTO `yyg_admin` VALUES ('1', 'admin', '7fef6171469e80d32c0559f88b377245', 'www.wpj@163.com', '1', null, '2015-11-11 01:21:34', '0.0.0.0', '22'), ('2', 'wanpinjia', 'c4ca4238a0b923820dcc509a6f75849b', 'www.wpj@163.com', '1', '2015-11-10 23:42:23', '2015-11-11 01:35:12', '0.0.0.0', '4'), ('4', '2', '2', '', '0', '2015-11-11 00:30:10', null, null, '0'), ('5', '3', '3', '', '0', '2015-11-11 00:30:14', null, null, '0'), ('6', '4', '4', '', '0', '2015-11-11 00:30:18', null, null, '0'), ('7', '5', '5', '', '0', '2015-11-11 00:30:21', null, null, '0'), ('8', '6', '6', '', '0', '2015-11-11 00:30:24', null, null, '0'), ('9', '7', '7', '', '0', '2015-11-11 00:30:28', null, null, '0'), ('10', '8', '8', '', '0', '2015-11-11 00:30:32', null, null, '0'), ('11', '9', '9', '', '0', '2015-11-11 00:30:36', null, null, '0'), ('12', '10', '10', '', '0', '2015-11-11 00:30:43', null, null, '0'), ('13', '11', '11', '', '0', '2015-11-11 00:30:48', null, null, '0'), ('14', '12', '12', '', '0', '2015-11-11 00:30:52', null, null, '0'), ('15', '12', '13', '', '0', '2015-11-11 00:30:57', null, null, '0'), ('16', '123', '1', '', '0', '2015-11-11 00:31:03', null, null, '0'), ('17', '1', '1', '', '0', '2015-11-11 00:31:08', null, null, '0'), ('18', '1', '1', '', '0', '2015-11-11 00:31:12', null, null, '0'), ('19', '1', '1', '', '0', '2015-11-11 00:31:16', null, null, '0'), ('20', '2', '2', '', '0', '2015-11-11 00:31:24', null, null, '0'), ('21', '3', '3', '', '0', '2015-11-11 00:31:28', null, null, '0'), ('22', '4', '4', '', '0', '2015-11-11 00:31:32', null, null, '0'), ('23', '5', '5', '', '0', '2015-11-11 00:31:36', null, null, '0');
 COMMIT;
 
 -- ----------------------------
@@ -52,7 +53,7 @@ CREATE TABLE `yyg_brand` (
   `url` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '链接地址',
   `sort` varchar(45) COLLATE utf8_bin DEFAULT NULL COMMENT '排序字段',
   PRIMARY KEY (`bid`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='品牌管理';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='品牌管理';
 
 -- ----------------------------
 --  Records of `yyg_brand`
@@ -80,7 +81,7 @@ CREATE TABLE `yyg_category` (
 --  Records of `yyg_category`
 -- ----------------------------
 BEGIN;
-INSERT INTO `yyg_category` VALUES ('4', null, null, '手机数码1', 'shouji', null, null), ('5', null, null, '电脑办公', 'computer', null, null), ('6', null, null, '家电用器', 'jiadian', null, null), ('7', null, null, '钟表首饰', 'shoushi', null, null), ('8', null, null, '化妆个护', 'huazhuang', null, null), ('9', null, null, '其他商品', 'qita', null, null), ('10', null, null, '111', '111', null, null);
+INSERT INTO `yyg_category` VALUES ('4', null, null, '手机数码', 'shouji', null, null), ('5', null, null, '电脑办公', 'computer', null, null), ('6', null, null, '家电用器', 'jiadian', null, null), ('7', null, null, '钟表首饰', 'shoushi', null, null), ('8', null, null, '化妆个护', 'huazhuang', null, null), ('9', null, null, '其他商品', 'qita', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -136,7 +137,7 @@ CREATE TABLE `yyg_goods` (
   `sort` int(11) DEFAULT '0' COMMENT '排序',
   `time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '时间',
   PRIMARY KEY (`gid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品列表';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品列表';
 
 -- ----------------------------
 --  Records of `yyg_goods`
@@ -166,13 +167,6 @@ CREATE TABLE `yyg_goods_images` (
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `yyg_goods_images`
--- ----------------------------
-BEGIN;
-INSERT INTO `yyg_goods_images` VALUES ('51', '12', '/Uploads/Goods/20151108/563f69342224f.jpeg', 'McjxApxhNpTExMDgvNTYzZjY5MzQyMjI0Zi5qcGVn'), ('52', '12', '/Uploads/Goods/20151108/563f693439b82.png', 'McjxApxhNpTExMDgvNTYzZjY5MzQzOWI4Mi5wbmcO0O0O'), ('53', '12', '/Uploads/Goods/20151108/563f693451e00.jpeg', 'McjxApxhNpTExMDgvNTYzZjY5MzQ1MWUwMC5qcGVn'), ('54', '12', '/Uploads/Goods/20151108/563f693466d94.jpeg', 'McjxApxhNpTExMDgvNTYzZjY5MzQ2NmQ5NC5qcGVn'), ('55', '12', '/Uploads/Goods/20151108/563f693478971.jpeg', 'McjxApxhNpTExMDgvNTYzZjY5MzQ3ODk3MS5qcGVn'), ('56', '12', '/Uploads/Goods/20151108/563f6934917fc.jpeg', 'McjxApxhNpTExMDgvNTYzZjY5MzQ5MTdmYy5qcGVn');
-COMMIT;
-
--- ----------------------------
 --  Table structure for `yyg_miaosha`
 -- ----------------------------
 DROP TABLE IF EXISTS `yyg_miaosha`;
@@ -197,7 +191,7 @@ CREATE TABLE `yyg_miaosha` (
   UNIQUE KEY `id_UNIQUE` (`mid`),
   KEY `fk_yyg_miaosha_yyg_goods_idx` (`gid`),
   CONSTRAINT `fk_yyg_miaosha_goods_gid` FOREIGN KEY (`gid`) REFERENCES `yyg_goods` (`gid`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='秒杀专区';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='秒杀专区';
 
 -- ----------------------------
 --  Records of `yyg_miaosha`

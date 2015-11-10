@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">帮助</a></li>
+						<li><a href="/index.php/Admin/Index/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -59,6 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
@@ -68,14 +69,14 @@
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/Index/../User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/Index/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/Index/../User/change">修改密码</a></li>
 			</ul>
-		</li>
+		</li><?php endif; ?>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">

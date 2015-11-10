@@ -1,0 +1,37 @@
+<nav>
+  <ul class="pagination">
+  	<if condition="$minPageNum eq 1">
+    <li class="disabled">
+      <span aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </span>
+    </li>
+  	<else/>
+    <li>
+      <a href="__CONTROLLER__/index/{$pageSize}/{$minPageNum-1}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+  	</if>
+    <for start="$minPageNum" end="$pageNum">
+    		<li><a href="__CONTROLLER__/Index/{$pageSize}/{$i}" style="color:#008000">{$i}</a></li>
+	</for>
+	<li class="active"><a>{$pageNum}</a></li>
+    <for start="$pageNum+1" end="$maxPageNum">
+    		<li><a href="__CONTROLLER__/index/{$pageSize}/{$i}" style="color:red">{$i}</a></li>
+	</for>
+	<if condition="$maxPageNum eq $pageCount">
+    <li class="disabled">
+      <span aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </span>
+    </li>
+  	<else/>
+    <li>
+      <a href="__CONTROLLER__/index/{$pageSize}/{$maxPageNum}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  	</if>
+  </ul>
+</nav>

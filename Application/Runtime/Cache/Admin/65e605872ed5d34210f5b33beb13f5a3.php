@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">帮助</a></li>
+						<li><a href="/index.php/Admin/User/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
-		<script src="/Public/Admin/js/validator.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
@@ -69,29 +69,29 @@
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/User/../User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/User/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/User/../User/change">修改密码</a></li>
 			</ul>
-		</li>
+		</li><?php endif; ?>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
 			<a>秒杀商品管理</a>
 			<ul>
-				<li id="mslst"><a href="/index.php/Admin/Category/../Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin/Category/..//Miaosha/add">添加秒杀商品</a></li>
+				<li id="mslst"><a href="/index.php/Admin/User/../Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin/User/..//Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="cmgr">
 			<a>分类管理</a>
 			<ul>
-				<li id="clist"><a href="/index.php/Admin/Category/../Category">商品分类列表</a></li>
-				<li id="blist"><a href="/index.php/Admin/Category/../Brand">品牌管理</a></li>
-				<li id="addb"><a href="/index.php/Admin/Category/../Brand/add">添加品牌</a></li>
+				<li id="clist"><a href="/index.php/Admin/User/../Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/User/../Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/User/../Brand/add">添加品牌</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -139,42 +139,82 @@ $(function() {
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
 		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加分类</a>
+	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加管理员</a>
 </div>
-<table id="categoryTable" class="table table-bordered">
+<table id="adminTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>分类名称</th>
-			<th>键值</th>
-			<th style="width:130px">操作</th>
+			<th>用户名</th>
+			<th>所属角色</th>
+			<th>Email</th>
+			<th>最后登陆IP</th>
+			<th>最后登陆时间</th>
+			<th>历史登陆次数</th>
+			<th style="width:150px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
-			<td><?php echo ($category["name"]); ?></td>
-			<td><?php echo ($category["key"]); ?></td>
-			<td cid="<?php echo ($category["cid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-			</td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
+		<?php if(is_array($list)): foreach($list as $key=>$admin): ?><tr>
+				<td><?php echo ($admin["username"]); ?></td>
+				<td>
+					<?php if($admin["role"] == 1): ?>超级管理员
+						<?php else: ?>管理员<?php endif; ?>
+				</td>
+				<td><?php echo ($admin["email"]); ?></td>
+				<td><?php echo ($admin["login_ip"]); ?></td>
+				<td><?php echo ($admin["login_time"]); ?></td>
+				<td><?php echo ($admin["login"]); ?></td>
+				<td uid="<?php echo ($admin["uid"]); ?>">
+					<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($admin["uid"]); ?>'>编辑</a>
+					<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+				</td>
+			</tr><?php endforeach; endif; ?>
 	</tbody>
 </table>
+<nav>
+  <ul class="pagination">
+  	<?php if($minPageNum == 1): ?><li class="disabled">
+      <span aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </span>
+    </li>
+  	<?php else: ?>
+    <li>
+      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li><?php endif; ?>
+    <?php $__FOR_START_1553001335__=$minPageNum;$__FOR_END_1553001335__=$pageNum;for($i=$__FOR_START_1553001335__;$i < $__FOR_END_1553001335__;$i+=1){ ?><li><a href="/index.php/Admin/User/Index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
+	<li class="active"><a><?php echo ($pageNum); ?></a></li>
+    <?php $__FOR_START_1385252440__=$pageNum+1;$__FOR_END_1385252440__=$maxPageNum;for($i=$__FOR_START_1385252440__;$i < $__FOR_END_1385252440__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+	<?php if($maxPageNum == $pageCount): ?><li class="disabled">
+      <span aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </span>
+    </li>
+  	<?php else: ?>
+    <li>
+      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li><?php endif; ?>
+  </ul>
+</nav>
 <script type="text/javascript">
 	$(function(){
-		$("#categoryTable").on("click",".delete", function(evt) {
+		$("#adminTable").on("click",".delete", function(evt) {
 			var ths = $(this);
-			var cid = ths.parent().attr("cid");
+			var uid = ths.parent().attr("uid");
 			var tr = ths.closest("tr");
 			UI.confirm("是否删除", {
 				ok: function() {
-					remove(tr, cid);
+					remove(tr, uid);
 				}
 			});
 		});
 		
-		function remove(tr, cid) {
-			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
+		function remove(tr, uid) {
+			$.post("<?php echo U('remove','','');?>/" + uid, null, function(data) {
 				if(data.status) {
 					tr.remove();
 				} else {

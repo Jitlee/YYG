@@ -1,0 +1,60 @@
+<div class="nav">
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加管理员</a>
+</div>
+<table id="adminTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>用户名</th>
+			<th>所属角色</th>
+			<th>Email</th>
+			<th>最后登陆IP</th>
+			<th>最后登陆时间</th>
+			<th>历史登陆次数</th>
+			<th style="width:150px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="admin">
+			<tr>
+				<td>{$admin.username}</td>
+				<td>
+					<if condition="$admin.role eq 1">超级管理员
+						<else />管理员</if>
+				</td>
+				<td>{$admin.email}</td>
+				<td>{$admin.login_ip}</td>
+				<td>{$admin.login_time}</td>
+				<td>{$admin.login}</td>
+				<td uid="{$admin.uid}">
+					<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$admin.uid}'>编辑</a>
+					<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+				</td>
+			</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$(function(){
+		$("#adminTable").on("click",".delete", function(evt) {
+			var ths = $(this);
+			var uid = ths.parent().attr("uid");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, uid);
+				}
+			});
+		});
+		
+		function remove(tr, uid) {
+			$.post("{:U('remove','','')}/" + uid, null, function(data) {
+				if(data.status) {
+					tr.remove();
+				} else {
+					$("#tips").text(data.info);
+				}
+			}, "json");
+		}
+	});
+</script>

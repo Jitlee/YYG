@@ -3,10 +3,8 @@ namespace Admin\Controller;
 use Think\Controller;
 
 class CommonController extends Controller {
-	public function _initialize() {
-		define('UID', is_login());
-		
-		if(!UID) {
+	protected function _initialize() {
+		if(!is_login()) {
 			$this->redirect('Public/login');
 		}
 	}

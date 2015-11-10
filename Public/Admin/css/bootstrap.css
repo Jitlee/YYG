@@ -12,6 +12,10 @@ body {
 	border-bottom: #B2E2FA 1px solid;
 }
 
+r{
+	color:red;
+}
+
 /*
  * Global add-ons
  */
@@ -64,7 +68,7 @@ body {
 .main {
 	padding: 0px 10px;
 	margin-left: 300px;
-	min-height: 1000px;
+	min-height: 800px;
 }
 .main .page-header {
 	margin-top: 0;

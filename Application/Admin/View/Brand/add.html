@@ -1,11 +1,11 @@
-<form id="addForm" class="form-horizontal" action="{$action}" role="form" method="post">
-	<if condition="$data.bid gt 0">
+<form id="addForm" class="form-horizontal" action="{$action}" role="form" method="post" data-toggle="validator">
+	<present name="data.bid">
 		<input id="bidHidden" type="hidden" name="bid" value="{$data.bid}" />
-	</if>
+	</present>
 	<div class="form-group">
 		<label for="inputName" class="col-sm-2 control-label">名称</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" name="name" id="inputName" placeholder="品牌名称" value="{$data.name}">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="品牌名称" value="{$data.name}" required>
 		</div>
 	</div>
 	<div class="form-group">
@@ -27,9 +27,9 @@
 				添加栏目 <span class="caret"></span>
 			</button>
 			<ul id="categoryMenus" class="dropdown-menu">
-				<volist name="allCategories" id="c">
+				<foreach name="allCategories" item="c">
 					<li cid="{$c.cid}"><a>{$c.name}</a></li>
-				</volist>
+				</foreach>
 			</ul>
 		</div>
 	</div>
@@ -40,15 +40,15 @@
 			<div class="panel panel-default">
 				<button id="categoyCloseButtonTemplate" type="button" class="hidden btn btn-default" aria-label="Close">
 					<span>确定</span>&nbsp;<span aria-hidden="true">&times;</span>
-					<input class="hidden" />
+					<input class="hidden form-control"/>
 				</button>
 				<div id="categoryBody" class="panel-body">
-					<volist name="data.categories" id="c">
+					<foreach name="data.categories" item="c">
 						<button type="button" class="btn btn-default" aria-label="Close">
 							<span>{$c.name}</span>&nbsp;<span aria-hidden="true">&times;</span>
 							<input class="hidden" name="categories[]" value="{$c.cid}" />
 						</button>
-					</volist>
+					</foreach>
 				</div>
 			</div>
 		</div>

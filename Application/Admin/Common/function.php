@@ -5,6 +5,9 @@ function is_login() {
 	if(empty($admin)) {
 		return 0;
 	} else {
-		return $admin['uid'];
+		define('UID', $admin['uid']);
+		define('ROLE', $admin['role']);
+		define('EMAIL', $admin['email']);
+		return 1;
 	}
 }

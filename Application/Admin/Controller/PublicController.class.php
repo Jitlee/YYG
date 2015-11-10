@@ -22,17 +22,17 @@ class PublicController extends Controller {
 			$data['username'] = $username;
 			$admin = $db->where($data)->find();
 			if(!$admin) {
-				$this->ajaxReturn('1帐号不存在或被禁用');
+				$this->error('1帐号不存在或被禁用');
 			}
 			
 			if($admin['password'] != md5($password)) {
-				$this->ajaxReturn('2密码不正确');
+				$this->error('2密码不正确');
 			}
 			
 			$data = array(
 				'uid'			=> $admin['uid'],
 				'login'			=> array('exp', '`login` + 1'),
-				'login_time'		=> NOW_TIME,
+				'login_time'		=> date('y-m-d-h-i-s'),
 				'login_ip'		=> get_client_ip(),
 			);
 			$db->save($data);
@@ -40,6 +40,8 @@ class PublicController extends Controller {
 			$auth = array(
 				'uid'			=> $data['uid'],
 				'login_time'		=> $data['login_time'],
+				'role'			=> $admin['role'],
+				'email'			=> $admin['email'],
 			);
 			session('admin', $auth);
 //			echo dump(session('admin'));
@@ -93,6 +95,17 @@ class PublicController extends Controller {
 		    }
 		}
 	}
+	
+	/* 退出登录 */
+    public function logout(){
+        if(is_login()){
+			session('user', null);
+            session('[destroy]');
+            $this->success('退出成功！', U('login', '', ''));
+        } else {
+            $this->redirect('login');
+        }
+    }
 	
 	public function ueditup() {
 		header("Content-Type: text/html; charset=utf-8");

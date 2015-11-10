@@ -59,6 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
+		<script src="/Public/Admin/js/validator.min.js"></script>
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
@@ -137,18 +138,12 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" role="form" method="post">
+		 <form class="form-horizontal" role="form" method="post" data-toggle="validator">
 	<?php if($data["cid"] > 0): ?><input type="hidden" name="cid" value="<?php echo ($data["cid"]); ?>" /><?php endif; ?>
 	<div class="form-group">
 		<label for="inputName" class="col-sm-2 control-label">分类名称</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" name="name" id="inputName" placeholder="分类名称" value="<?php echo ($data["name"]); ?>">
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputKey" class="col-sm-2 control-label">分类代码</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" name="key" id="inputKey" placeholder="分类代码" value="<?php echo ($data["key"]); ?>">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="分类名称" value="<?php echo ($data["name"]); ?>" required>
 		</div>
 	</div>
 	<div class="form-group">

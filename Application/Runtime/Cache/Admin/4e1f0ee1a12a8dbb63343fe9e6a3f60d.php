@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">帮助</a></li>
+						<li><a href="/index.php/Admin/User/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -69,29 +69,29 @@
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/User/../User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/User/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/User/../User/change">修改密码</a></li>
 			</ul>
-		</li>
+		</li><?php endif; ?>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
 			<a>秒杀商品管理</a>
 			<ul>
-				<li id="mslst"><a href="/index.php/Admin/Brand/../Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin/Brand/..//Miaosha/add">添加秒杀商品</a></li>
+				<li id="mslst"><a href="/index.php/Admin/User/../Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin/User/..//Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="cmgr">
 			<a>分类管理</a>
 			<ul>
-				<li id="clist"><a href="/index.php/Admin/Brand/../Category">商品分类列表</a></li>
-				<li id="blist"><a href="/index.php/Admin/Brand/../Brand">品牌管理</a></li>
-				<li id="addb"><a href="/index.php/Admin/Brand/../Brand/add">添加品牌</a></li>
+				<li id="clist"><a href="/index.php/Admin/User/../Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/User/../Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/User/../Brand/add">添加品牌</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -138,54 +138,37 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form id="addForm" class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post" data-toggle="validator">
-	<?php if($data["bid"] > 0): ?><input id="bidHidden" type="hidden" name="bid" value="<?php echo ($data["bid"]); ?>" /><?php endif; ?>
+		 <form class="form-horizontal" role="form" method="post" data-toggle="validator">
+	<?php if(isset($data["uid"])): ?><input type="hidden" name="uid" value="<?php echo ($data["uid"]); ?>" /><?php endif; ?>
 	<div class="form-group">
-		<label for="inputName" class="col-sm-2 control-label">名称</label>
+		<label for="inputName" class="col-sm-2 control-label">用户名</label>
 		<div class="col-sm-10">
-			<input type="text" class="form-control" name="name" id="inputName" placeholder="品牌名称" value="<?php echo ($data["name"]); ?>" required>
+			<input type="text" class="form-control" name="username" id="inputName" placeholder="请输入用户名" value="<?php echo ($data["username"]); ?>" required>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="thumbButton" class="col-sm-2 control-label">图标</label>
+		<label for="inputPassword" class="col-sm-2 control-label">密码</label>
 		<div class="col-sm-10">
-			<button id="thumbButton" type="button" class="btn btn-default" style="padding: 0;">
-				<img src="<?php echo ((isset($data["thumb"]) && ($data["thumb"] !== ""))?($data["thumb"]):'/Public/Admin/images/favicon.png'); ?>" class="img-thumbnail thumb" alt="缩略图" />
-			</button>
-			<input class="hidden" id="inputThumb" name="thumb" value="<?php echo ($data["thumb"]); ?>" />
-			<span id="thumbTips" class="label label-info" thumb="<?php echo ($data["thumb"]); ?>">点击图标可以上传品牌缩略图</span>
+			<input type="password" class="form-control" name="password" id="inputPassword" placeholder="******"  <?php if(!isset($data["uid"])): ?>required<?php endif; ?>>
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="categoryButton" class="col-sm-2 control-label">
-			所属栏目
-		</label>
-		<div class="btn-group">
-			<button id="categoryButton" <?php if($isAllCategories): ?>disabled="true"<?php endif; ?> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				添加栏目 <span class="caret"></span>
-			</button>
-			<ul id="categoryMenus" class="dropdown-menu">
-				<?php if(is_array($allCategories)): $i = 0; $__LIST__ = $allCategories;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$c): $mod = ($i % 2 );++$i;?><li cid="<?php echo ($c["cid"]); ?>"><a><?php echo ($c["name"]); ?></a></li><?php endforeach; endif; else: echo "" ;endif; ?>
-			</ul>
+		<label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
+		<div class="col-sm-10">
+			<input type="email" class="form-control" name="email" id="inputEmail" placeholder="请输电子邮箱" value="<?php echo ($data["email"]); ?>"/>
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">
-		</label>
+		<label for="inputRole" class="col-sm-2 control-label">所属角色</label>
 		<div class="col-sm-10">
-			<div class="panel panel-default">
-				<button id="categoyCloseButtonTemplate" type="button" class="hidden btn btn-default" aria-label="Close">
-					<span>确定</span>&nbsp;<span aria-hidden="true">&times;</span>
-					<input class="hidden form-control"/>
-				</button>
-				<div id="categoryBody" class="panel-body">
-					<?php if(is_array($data["categories"])): $i = 0; $__LIST__ = $data["categories"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$c): $mod = ($i % 2 );++$i;?><button type="button" class="btn btn-default" aria-label="Close">
-							<span><?php echo ($c["name"]); ?></span>&nbsp;<span aria-hidden="true">&times;</span>
-							<input class="hidden" name="categories[]" value="<?php echo ($c["cid"]); ?>" />
-						</button><?php endforeach; endif; else: echo "" ;endif; ?>
-				</div>
-			</div>
+			<select class="form-control" name="role" id="inputRole" required>
+				<option value="0" <?php if($data["role"] == 0): ?>selected<?php endif; ?>>管理员</option>
+				<option value="1" <?php if($data["role"] == 1): ?>selected<?php endif; ?>>超级管理员</option>
+			</select>
 		</div>
+	</div>
+	<div class="form-group">
+		<p id="checkTips" class="check-tips text-danger"></p>
 	</div>
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
@@ -314,80 +297,30 @@ $(function() {
 	});
 </script>
 <script type="text/javascript">
-
-	//表单提交
+	 //表单提交
 	$(document).ajaxStart(function() {
 		$("button:submit").attr("disabled", true);
 	}).ajaxStop(function() {
 		$("button:submit").attr("disabled", false);
 	});
+	 //刷新验证码
 	$(function() {
-		var thumbButton = $("#thumbButton").click(function(){
-			UI.upload("上传缩略图", {
-				ok: function(files) {
-					if (files.length > 0) {
-						var url = files[0].url;
-						$("img", thumbButton).attr("src", url);
-						$("input", thumbButton.parent()).val(url);
-					}
-				}
-			});
-		});
-				
 		
-		// 提交数据
-		$("#addForm").submit(function() {
+		$("form").submit(function() {
 			var self = $(this);
-			$.post(self.attr("action"), self.serialize(), success, "json");
+			$.post('<?php echo ($action); ?>', self.serialize(), success, "json");
 			return false;
+	
 			function success(data) {
 				if (data.status) {
 					window.location.href = data.url;
 				} else {
-					$("#tips").text(data.info);
+					$("#checkTips").text(data.info);
 				}
 			}
 		});
-		
-		
-		// 添加栏目
-		var categoyCloseButtonTemplate = $("#categoyCloseButtonTemplate");
-		var categoryMenus = $("#categoryMenus").on("click", "[cid]", function(evt) {
-			var self = $(this);
-			var cid = self.attr("cid");
-			var cname = self.text();
-			self.toggle();
-			var categoryButton = categoyCloseButtonTemplate.clone()
-				.removeAttr("id")
-				.removeClass("hidden")
-				.appendTo(categoryBody);
-			$("span:first-child", categoryButton).text(cname);
-			$("input", categoryButton).val(cid).attr("name", "categories[]");
-			
-			if($("li:visible", categoryMenus).length == 0) {
-				$("#categoryButton").attr("disabled", true);
-			}
-		});
-		
-		// 移除栏目
-		var categoryBody = $("#categoryBody").on("click", ".btn", function(evt) {
-			var self = $(this);
-			var cid = $("input", self).val();
-			self.remove();
-			$("[cid=" + cid + "]", categoryMenus).toggle();
-			$("#categoryButton").attr("disabled", false);
-		});
-		
-		// 编辑模式初始化添加栏目列表状态
-		if($("#bidHidden").val()) {
-			categoryBody.children().each(function() {
-				var self = $(this);
-				var cid = $("input", self).val();
-				$("[cid=" + cid + "]", categoryMenus).toggle();
-			});
-		}
 	});
-</script>
+	</script>
 		 <p id="tips" class="check-tips text-danger"></p>
 	</div>
 	<div class="clear"></div>

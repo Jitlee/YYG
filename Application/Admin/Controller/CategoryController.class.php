@@ -20,20 +20,6 @@ class CategoryController extends CommonController {
 		$this->ajaxReturn($data["brands"],'JSON');
 	}
 	
-	public function remove($cid = 0) {
-		$db = M('category');
-		$ret = $db->delete($cid);
-		
-		$hasdb = M('categoryHasBrand');
-		$deleteData["cid"] = $cid;
-		$hasdb->delete($deleteData);
-		if($ret > -1) {
-			$this->success('操作成功');
-		} else {
-			$this->error('数据错误');
-		}
-	}
-	
 	public function add() {
 		if(IS_POST) {
 			$db = M('category');
@@ -52,7 +38,7 @@ class CategoryController extends CommonController {
 		}
 	}
 	
-	public function edit() {
+	public function edit($cid = null) {
 		if(IS_POST) {
 			$db = M('category');
 			$db->create();
@@ -60,13 +46,27 @@ class CategoryController extends CommonController {
 			$this->success('操作成功', U('Category/index'));
 		} else {
 			$db = M('category');
-			$data = $db->find($id);
+			$data = $db->find($cid);
 			$this->assign('data', $data);
 			$this->assign('action', U('edit', '', ''));
 			$this->assign('title', '修改商品分类');
 			$this->assign('pid', 'gdmgr');
 			$this->assign('mid', 'addc');
 			$this->display('add');
+		}
+	}
+	
+	public function remove($cid = null) {
+		$db = M('category');
+		$ret = $db->delete($cid);
+		
+		$hasdb = M('categoryHasBrand');
+		$deleteData["cid"] = $cid;
+		$hasdb->delete($deleteData);
+		if($ret > -1) {
+			$this->success('操作成功');
+		} else {
+			$this->error('数据错误');
 		}
 	}
 }

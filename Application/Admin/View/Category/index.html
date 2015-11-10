@@ -10,7 +10,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<volist name="list" id="category">
+		<foreach name="list" item="category">
 		<tr>
 			<td>{$category.name}</td>
 			<td>{$category.key}</td>
@@ -19,7 +19,7 @@
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
 		</tr>
-		</volist>
+		</foreach>
 	</tbody>
 </table>
 <script type="text/javascript">

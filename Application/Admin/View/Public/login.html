@@ -106,8 +106,8 @@
 						if (data.status) {
 							window.location.href = data.url;
 						} else {
-							var errorCode = Number(data);
-							checkTip.text(data.substr(1));
+							var errorCode = Number(data.info);
+							checkTip.text(data.info.substr(1));
 							//刷新验证码
 							refreshverify();
 							verifyInput.val("");

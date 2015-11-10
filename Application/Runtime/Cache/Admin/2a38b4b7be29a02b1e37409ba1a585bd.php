@@ -59,6 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">

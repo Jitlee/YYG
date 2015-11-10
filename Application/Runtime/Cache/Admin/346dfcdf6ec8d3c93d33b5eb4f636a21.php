@@ -59,6 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
@@ -71,9 +72,9 @@
 		<li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/Miaosha/../User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/Miaosha/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/Miaosha/../User/change">修改密码</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -137,38 +138,38 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post">
-	<?php if($data["gid"] > 0): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
+		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 
 	<table class="table">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="categorySelect" class="control-label">所属分类</label>
+				<label for="categorySelect" class="control-label"><r>*</r>所属分类</label>
 			</td>
 			<td>
-				<select id="categorySelect" class="form-control" name="cid">
+				<select id="categorySelect" class="form-control" name="cid" required>
 					<option>==请选择栏目==</option>
-					<?php if(is_array($allCategories)): $i = 0; $__LIST__ = $allCategories;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$c): $mod = ($i % 2 );++$i;?><option value="<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+					<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><option value="<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></option><?php endforeach; endif; ?>
 				</select>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="brandSelect" class="control-label">所属品牌</label>
+				<label for="brandSelect" class="control-label"><r>*</r>所属品牌</label>
 			</td>
 			<td>
-				<select id="brandSelect" class="form-control" name="bid">
+				<select id="brandSelect" class="form-control" name="bid" required>
 					<option>==请选择品牌==</option>
-					<?php if(is_array($allBrands)): $i = 0; $__LIST__ = $allBrands;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$b): $mod = ($i % 2 );++$i;?><option value="<?php echo ($b["bid"]); ?>"><?php echo ($b["name"]); ?></option><?php endforeach; endif; else: echo "" ;endif; ?>
+					<?php if(is_array($allBrands)): foreach($allBrands as $key=>$b): ?><option value="<?php echo ($b["bid"]); ?>"><?php echo ($b["name"]); ?></option><?php endforeach; endif; ?>
 				</select>
 			</td>
 		</tr>
 		<tr>
 			<td class="form-inline col-sm-2 control-label">
-				<label for="inputTitle" class="control-label">商品标题</label>
+				<label for="inputTitle" class="control-label"><r>*</r>商品标题</label>
 			</td>
 			<td>
-				<input class="form-control" id="inputTitle" name="title" value="<?php echo ($data["title"]); ?>" />
+				<input class="form-control" id="inputTitle" name="title" value="<?php echo ($data["title"]); ?>"  required/>
 			</td>
 		</tr>
 		<tr>
@@ -189,28 +190,28 @@ $(function() {
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputZongjia" class="control-label">商品总价</label>
+				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
 			</td>
 			<td>
-				<input class="form-control" style="width:100px" id="inputZongjia" name="money" value="<?php echo ($data["money"]); ?>" />
+				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="<?php echo ($data["money"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputDanjia" class="control-label">商品单价</label>
+				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
 			</td>
 			<td>
-				<input class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ($data["danjia"]); ?>" />
+				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ($data["danjia"]); ?>" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputMaxQishu" class="control-label">最大期数</label>
+				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
 			</td>
 			<td>
-				<input class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ($data["maxqishu"]); ?>" />
+				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ($data["maxqishu"]); ?>" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
 			</td>
 		</tr>
@@ -246,14 +247,14 @@ $(function() {
 							</a>
 						</div>
 						<div id="imagesBody" class="row">
-							<?php if(is_array($images)): $i = 0; $__LIST__ = $images;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$image): $mod = ($i % 2 );++$i;?><div class="col-xs-6 col-md-3">
+							<?php if(is_array($images)): foreach($images as $key=>$image): ?><div class="col-xs-6 col-md-3">
 									<a class="thumbnail">
 										<img alt="" src="<?php echo ($image["image_url"]); ?>" />
 										<input type="hidden" class="hidden _file" name="imageUrls[]" value="<?php echo ($image["image_url"]); ?>" />
 										<input type="hidden" class="hidden _key" name="imageKeys[]" value="<?php echo ($image["image_key"]); ?>" />
 										<button type="button" class="btn btn-link">删除</button>
 									</a>
-								</div><?php endforeach; endif; else: echo "" ;endif; ?>
+								</div><?php endforeach; endif; ?>
 						</div>
 					</div>
 				</div>
@@ -506,7 +507,7 @@ $(function() {
 					imagesButton.attr("disabled", false);
 				}); 
 				
-				<?php if($data["gid"] > 0): ?>// 设置下拉框选中
+				<?php if(isset($$data["gid"])): ?>// 设置下拉框选中
 					categorySelect.val("<?php echo ($data["cid"]); ?>").change();
 					brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
 				

@@ -5,14 +5,16 @@
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
+		<if condition="ROLE eq 1">
 		<li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="__URL__/../User">管理员列表</a></li>
+				<li id="addusr"><a href="__URL__/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="__URL__/../User/change">修改密码</a></li>
 			</ul>
 		</li>
+		</if>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
