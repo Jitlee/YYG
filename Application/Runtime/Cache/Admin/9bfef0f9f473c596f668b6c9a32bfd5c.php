@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">帮助</a></li>
+						<li><a href="/index.php/Admin/Category/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -59,39 +59,40 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
-		<script src="/Public/Admin/js/validator.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
 	<li id="sysmgr"><a>系统管理</a></li>
 	<li id="gdmgr"><a>商品管理</a></li>
 	<li id="mbmgr"><a>会员管理</a></li>
+	<li id="uimgr"><a>界面管理</a></li>
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/User/change">修改密码</a></li>
 			</ul>
-		</li>
+		</li><?php endif; ?>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
 			<a>秒杀商品管理</a>
 			<ul>
-				<li id="mslst"><a href="/index.php/Admin/Category/../Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin/Category/..//Miaosha/add">添加秒杀商品</a></li>
+				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="cmgr">
 			<a>分类管理</a>
 			<ul>
-				<li id="clist"><a href="/index.php/Admin/Category/../Category">商品分类列表</a></li>
-				<li id="blist"><a href="/index.php/Admin/Category/../Brand">品牌管理</a></li>
-				<li id="addb"><a href="/index.php/Admin/Category/../Brand/add">添加品牌</a></li>
+				<li id="clist"><a href="/index.php/Admin/Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/Brand/add">添加品牌</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -104,6 +105,14 @@
 				<li id="addmb"><a>添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_uimgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>界面管理</a>
+			<ul>
+				<li id="wxhdlist"><a href="/index.php/Admin/Slide">微信幻灯管理</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -141,40 +150,42 @@ $(function() {
 		 <div class="nav">
 	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加分类</a>
 </div>
-<table id="categoryTable" class="table table-bordered">
+<table id="slideTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>分类名称</th>
-			<th>键值</th>
+			<th>id</th>
+			<th>名称</th>
+			<th>链接</th>
 			<th style="width:130px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><tr>
-			<td><?php echo ($category["name"]); ?></td>
-			<td><?php echo ($category["key"]); ?></td>
-			<td cid="<?php echo ($category["cid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
+		<?php if(is_array($list)): foreach($list as $key=>$slide): ?><tr>
+			<td><?php echo ($slide["id"]); ?></td>
+			<td><?php echo ($slide["name"]); ?></td>
+			<td><?php echo ($slide["link"]); ?></td>
+			<td id="<?php echo ($slide["id"]); ?>">
+				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($slide["id"]); ?>'>编辑</a>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
-		</tr><?php endforeach; endif; else: echo "" ;endif; ?>
+		</tr><?php endforeach; endif; ?>
 	</tbody>
 </table>
 <script type="text/javascript">
 	$(function(){
-		$("#categoryTable").on("click",".delete", function(evt) {
+		$("#slideTable").on("click",".delete", function(evt) {
 			var ths = $(this);
-			var cid = ths.parent().attr("cid");
+			var id = ths.parent().attr("id");
 			var tr = ths.closest("tr");
 			UI.confirm("是否删除", {
 				ok: function() {
-					remove(tr, cid);
+					remove(tr, id);
 				}
 			});
 		});
 		
-		function remove(tr, cid) {
-			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
+		function remove(tr, id) {
+			$.post("<?php echo U('remove','','');?>/" + id, null, function(data) {
 				if(data.status) {
 					tr.remove();
 				} else {

@@ -4,16 +4,16 @@
 <table id="categoryTable" class="table table-bordered">
 	<thead>
 		<tr>
+			<th style="width:48px"></th>
 			<th>分类名称</th>
-			<th>键值</th>
 			<th style="width:130px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
 		<foreach name="list" item="category">
 		<tr>
+			<td><img class="thumbnail" style="padding: 1px;margin: 0; width: 30px;" src="{$category.thumb|default='__IMG__/favicon.png'}" /></td>
 			<td>{$category.name}</td>
-			<td>{$category.key}</td>
 			<td cid="{$category.cid}">
 				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$category.cid}'>编辑</a>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>

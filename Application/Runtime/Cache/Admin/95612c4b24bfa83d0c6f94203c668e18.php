@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="#">帮助</a></li>
+						<li><a href="/index.php/Admin/Category/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -59,7 +59,7 @@
 		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 		
 		<script src="/Public/Admin/js/jquery.maxlength.min.js"></script>
-		<script src="/Public/Admin/js/validator.min.js"></script>
+		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
 	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
@@ -69,14 +69,14 @@
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a>管理员列表</a></li>
-				<li id="addusr"><a>添加管理员</a></li>
-				<li id="chagpwd"><a>修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/Category/../User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/Category/../User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/Category/../User/change">修改密码</a></li>
 			</ul>
-		</li>
+		</li><?php endif; ?>
 	</ul>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
@@ -139,11 +139,21 @@ $(function() {
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
 		 <form class="form-horizontal" role="form" method="post" data-toggle="validator">
-	<?php if($data["cid"] > 0): ?><input type="hidden" name="cid" value="<?php echo ($data["cid"]); ?>" /><?php endif; ?>
+	<?php if(isset($data["cid"])): ?><input type="hidden" name="cid" value="<?php echo ($data["cid"]); ?>" /><?php endif; ?>
 	<div class="form-group">
 		<label for="inputName" class="col-sm-2 control-label">分类名称</label>
 		<div class="col-sm-10">
 			<input type="text" class="form-control" name="name" id="inputName" placeholder="分类名称" value="<?php echo ($data["name"]); ?>" required>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="thumbButton" class="col-sm-2 control-label">图标</label>
+		<div class="col-sm-10">
+			<button id="thumbButton" type="button" class="btn btn-default" style="padding: 0;">
+				<img src="<?php echo ((isset($data["thumb"]) && ($data["thumb"] !== ""))?($data["thumb"]):'/Public/Admin/images/favicon.png'); ?>" class="img-thumbnail thumb" alt="缩略图" />
+			</button>
+			<input class="hidden" id="inputThumb" name="thumb" value="<?php echo ($data["thumb"]); ?>" />
+			<span id="thumbTips" class="label label-info" thumb="<?php echo ($data["thumb"]); ?>">点击图标可以上传品牌缩略图</span>
 		</div>
 	</div>
 	<div class="form-group">
@@ -284,6 +294,17 @@ $(function() {
 	});
 	 //刷新验证码
 	$(function() {
+		var thumbButton = $("#thumbButton").click(function(){
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton).attr("src", url);
+						$("input", thumbButton.parent()).val(url);
+					}
+				}
+			});
+		});
 		
 		$("form").submit(function() {
 			var self = $(this);
