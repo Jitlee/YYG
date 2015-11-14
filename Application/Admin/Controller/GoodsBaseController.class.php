@@ -2,7 +2,7 @@
 namespace Admin\Controller;
 use Think\Controller;
 abstract class GoodsBaseController extends CommonController {
-	const ROOT_PATH = '/Uploads/Goods/';
+	protected $ROOT_PATH = '/Uploads/Goods/';
 	
 	protected $goodsType = 1;
 	
@@ -119,38 +119,5 @@ abstract class GoodsBaseController extends CommonController {
 			$imgdata['image_key'] = $keys[$i];
 			$imgdb->add($imgdata);
 		}
-	}
-	
-	public function upload() {
-		if (!empty($_FILES)) {
-			$config = array(
-			    'maxSize'    =>    3145728,
-			    'rootPath'   =>    '.' . self::ROOT_PATH,
-			    'savePath'   =>    '',
-			    'saveName'   =>    array('uniqid',''),
-			    'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
-			    'autoSub'    =>    true,
-			    'subName'    =>    array('date','Ymd'),
-			);
-	
-			$upload = new \Think\Upload($config);// 实例化上传类
-			
-		    // 上传文件 
-		    $info   =   $upload->upload();
-		    if($info != false) {// 上传成功
-		    		$returnData['status'] = 0;
-				$returnData['url'] = self::ROOT_PATH . $info['Filedata']['savepath'] . $info['Filedata']['savename'];
-				$returnData['key'] = encode($info['Filedata']['savepath'] . $info['Filedata']['savename']);
-		        $this->ajaxReturn($returnData, 'JSON');
-		    }else{// 上传错误提示错误信息
-		    		$returnData['status'] = -1;
-		    		$returnData['info'] = $upload->getError();
-		        $this->ajaxReturn($returnData, 'JSON');
-		    }
-		}
-	}
-	
-	public function removefile($name) {
-		del_dir_or_file('.' . self::ROOT_PATH . decode($name));
 	}
 }

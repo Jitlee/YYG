@@ -147,7 +147,8 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 
 	<table class="table">
@@ -410,8 +411,7 @@ $(function() {
 							.removeClass("hidden");
 						uploadPreviewBody.append(previewImage);
 						
-						$(".btn",previewImage).attr("key", data.key);
-						$(".btn",previewImage).attr("url", data.url);
+						$(".btn",previewImage).attr("key", data.key).attr("url", data.url);
 						$("img",previewImage).attr("src", data.url);
 					}
 				}
@@ -519,7 +519,7 @@ $(function() {
 					imagesButton.attr("disabled", false);
 				}); 
 				
-				<?php if(isset($$data["gid"])): ?>// 设置下拉框选中
+				<?php if(isset($data["gid"])): ?>// 设置下拉框选中
 					categorySelect.val("<?php echo ($data["cid"]); ?>").change();
 					brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
 				

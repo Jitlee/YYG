@@ -66,15 +66,16 @@
 	<li id="sysmgr"><a>系统管理</a></li>
 	<li id="gdmgr"><a>商品管理</a></li>
 	<li id="mbmgr"><a>会员管理</a></li>
+	<li id="uimgr"><a>界面管理</a></li>
 </ul>
 <div id="subNavTabs">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
 		<?php if(ROLE == 1): ?><li id="usrmgr">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a href="/index.php/Admin/User/../User">管理员列表</a></li>
-				<li id="addusr"><a href="/index.php/Admin/User/../User/add">添加管理员</a></li>
-				<li id="chagpwd"><a href="/index.php/Admin/User/../User/change">修改密码</a></li>
+				<li id="usrlst"><a href="/index.php/Admin/User">管理员列表</a></li>
+				<li id="addusr"><a href="/index.php/Admin/User/add">添加管理员</a></li>
+				<li id="chagpwd"><a href="/index.php/Admin/User/change">修改密码</a></li>
 			</ul>
 		</li><?php endif; ?>
 	</ul>
@@ -82,16 +83,16 @@
 		<li id="msmgr">
 			<a>秒杀商品管理</a>
 			<ul>
-				<li id="mslst"><a href="/index.php/Admin/User/../Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin/User/..//Miaosha/add">添加秒杀商品</a></li>
+				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
+				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="cmgr">
 			<a>分类管理</a>
 			<ul>
-				<li id="clist"><a href="/index.php/Admin/User/../Category">商品分类列表</a></li>
-				<li id="blist"><a href="/index.php/Admin/User/../Brand">品牌管理</a></li>
-				<li id="addb"><a href="/index.php/Admin/User/../Brand/add">添加品牌</a></li>
+				<li id="clist"><a href="/index.php/Admin/Category">商品分类列表</a></li>
+				<li id="blist"><a href="/index.php/Admin/Brand">品牌管理</a></li>
+				<li id="addb"><a href="/index.php/Admin/Brand/add">添加品牌</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -104,6 +105,14 @@
 				<li id="addmb"><a>添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_uimgr" class="nav-sidebar hidden">
+		<li id="mbmgr_">
+			<a>界面管理</a>
+			<ul>
+				<li id="wxhdlist"><a href="/index.php/Admin/Slide">微信幻灯管理</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -184,9 +193,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li><?php endif; ?>
-    <?php $__FOR_START_1141421369__=$minPageNum;$__FOR_END_1141421369__=$pageNum;for($i=$__FOR_START_1141421369__;$i < $__FOR_END_1141421369__;$i+=1){ ?><li><a href="/index.php/Admin/User/Index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
+    <?php $__FOR_START_29631__=$minPageNum;$__FOR_END_29631__=$pageNum;for($i=$__FOR_START_29631__;$i < $__FOR_END_29631__;$i+=1){ ?><li><a href="/index.php/Admin/User/Index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-    <?php $__FOR_START_408991524__=$pageNum+1;$__FOR_END_408991524__=$maxPageNum;for($i=$__FOR_START_408991524__;$i < $__FOR_END_408991524__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+    <?php $__FOR_START_10892__=$pageNum+1;$__FOR_END_10892__=$maxPageNum;for($i=$__FOR_START_10892__;$i < $__FOR_END_10892__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum == $pageCount): ?><li class="disabled">
       <span aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

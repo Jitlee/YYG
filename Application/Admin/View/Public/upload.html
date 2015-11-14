@@ -97,8 +97,7 @@
 							.removeClass("hidden");
 						uploadPreviewBody.append(previewImage);
 						
-						$(".btn",previewImage).attr("key", data.key);
-						$(".btn",previewImage).attr("url", data.url);
+						$(".btn",previewImage).attr("key", data.key).attr("url", data.url);
 						$("img",previewImage).attr("src", data.url);
 					}
 				}
