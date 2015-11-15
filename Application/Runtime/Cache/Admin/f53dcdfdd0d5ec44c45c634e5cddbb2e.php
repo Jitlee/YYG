@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Brand/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Paimai/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -155,51 +155,42 @@ $(function() {
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
 		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加品牌</a>
+	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加拍卖商品</a>
 </div>
-<table id="brandTable" class="table table-bordered">
+<table id="listTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>品牌名称</th>
+			<th>商品标题</th>
 			<th>所属栏目</th>
-			<th style="width:130px">操作</th>
+			<th>起拍价(元)</th>
+			<th>保留价(元)</th>
+			<th>加价幅度(元)</th>
+			<th>保证金(元)</th>
+			<th>出价次数(次)</th>
+			<th>最高价(元)</th>
+			<th>结束时间</th>
+			<th style="width:60px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$brand): ?><tr>
-			<td><?php echo ($brand["name"]); ?></td>
-			<td>
-				<?php if(is_array($brand["categories"])): $i = 0; $__LIST__ = $brand["categories"];if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$category): $mod = ($i % 2 );++$i;?><mark style="margin-left:5px"><?php echo ($category["name"]); ?></mark><?php endforeach; endif; else: echo "" ;endif; ?>
-			</td>
-			<td bid="<?php echo ($brand["bid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($brand["bid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+		<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
+			<td><?php echo ($item["title"]); ?></td>
+			<td><?php echo ($item["category"]["name"]); ?></td>
+			<td><?php echo ($item["qipaijia"]); ?></td>
+			<td><?php echo ($item["baoliujia"]); ?></td>
+			<td><?php echo ($item["jiafujia"]); ?></td>
+			<td><?php echo ($item["baozhengjin"]); ?></td>
+			<td><?php echo ($item["canyurenshu"]); ?></td>
+			<td><?php echo ($item["zuigaojia"]); ?></td>
+			<td><?php echo ($item["end_time"]); ?></td>
+			<td gid="<?php echo ($item["gid"]); ?>">
+				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($item["gid"]); ?>'>编辑</a>
 			</td>
 		</tr><?php endforeach; endif; ?>
 	</tbody>
 </table>
 <script type="text/javascript">
 	$(function(){
-		$("#brandTable").on("click",".delete", function(evt) {
-			var ths = $(this);
-			var bid = ths.parent().attr("bid");
-			var tr = ths.closest("tr");
-			UI.confirm("是否删除", {
-				ok: function() {
-					remove(tr, bid);
-				}
-			});
-		});
-		
-		function remove(tr, bid) {
-			$.post("<?php echo U('remove','','');?>/" + bid, null, function(data) {
-				if(data.status) {
-					tr.remove();
-				} else {
-					$("#tips").text(data.info);
-				}
-			}, "json");
-		}
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

@@ -1,0 +1,54 @@
+[ 2015-11-15T00:12:16+08:00 ] ::1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000350s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000378s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000430s ]
+NOTIC: [2] PDO::__construct(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Db/Driver.class.php 第 103 行.
+ERR: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+
+[ 2015-11-15T00:12:46+08:00 ] ::1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000333s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000348s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000390s ]
+NOTIC: [2] PDO::__construct(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Db/Driver.class.php 第 103 行.
+ERR: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+
+[ 2015-11-15T00:13:16+08:00 ] ::1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000017s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000331s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000353s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000401s ]
+NOTIC: [2] PDO::__construct(): php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Db/Driver.class.php 第 103 行.
+ERR: SQLSTATE[HY000] [2002] php_network_getaddresses: getaddrinfo failed: nodename nor servname provided, or not known
+
+[ 2015-11-15T00:14:39+08:00 ] ::1 /
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000221s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000274s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000305s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0729s ]
+SQL: SELECT * FROM `yyg_category` LIMIT 8   [ RunTime:1.1070s ]
+SQL: SHOW COLUMNS FROM `yyg_slide` [ RunTime:0.0717s ]
+SQL: SELECT * FROM `yyg_slide`  [ RunTime:0.9536s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000168s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000244s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.022089s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.022158s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001586s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001648s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004049s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004110s ]
+

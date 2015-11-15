@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Paimai/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -154,7 +154,8 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 <link href="/Public/Admin/css/bootstrap-datepicker3.min.css" rel="stylesheet"> 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 
 	<table class="table">
@@ -206,29 +207,38 @@ $(function() {
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
+				<label for="inputQipaijia" class="control-label"><r>*</r>起拍价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="<?php echo ($data["money"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputQipaijia" name="qipaijia" value="<?php echo ($data["qipaijia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
+				<label for="inputBaoliujia" class="control-label"><r>*</r>保留价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ($data["danjia"]); ?>" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputBaoliujia" name="baoliujia" value="<?php echo ($data["baoliujia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
+				<label for="inputBaozhengjin" class="control-label"><r>*</r>保证金</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ($data["maxqishu"]); ?>" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
+				<input type="number" class="form-control" style="width:100px" id="inputBaozhengjin" name="baozhengjin" value="<?php echo ($data["baozhengjin"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<label class="control-label">元</label>
+			</td>
+		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputJiafujia" class="control-label"><r>*</r>加价幅度</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputJiafujia" name="jiafujia" value="<?php echo ($data["jiafujia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
@@ -289,14 +299,29 @@ $(function() {
 
 			</td>
 		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="contentEdtior" class="control-label">结束时间</label>
+			</td>
+			<td>
+  				<input id="datepicker" type="text" style="width:150px" value="<?php echo (date('Y年m月d日',strtotime($data["end_time"]))); ?>" class="form-control" required/>
+  				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio1" value="36000">上午10点
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio2" value="54000">下午3点
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio3" value="79200">晚上10点
+				</label>
+				<input id="inputEndTime" name="end_time" value="<?php echo ($data["end_time"]); ?>" class=""/>
+			</td>
+		</tr>
 		<tr>
 			<td class="col-sm-2 control-label">
 				<label class="control-label">商品属性</label>
 			</td>
 			<td>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkRenqi" boolean name="renqi" value="<?php echo ($data["renqi"]); ?>" <?php if($data["renqi"] == 1): ?>checked="true"<?php endif; ?> />推荐
-				</label>
 				<label class="checkbox-inline">
 					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">人气
 				</label>
@@ -312,7 +337,7 @@ $(function() {
 				<button type="submit" class="btn btn-primary"> 提交 </button>
 				<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
 			</td>
-			</div>
+		</tr>
 	</table>
 	<div class="form-group">
 		<p id="checkTips" class="check-tips text-danger"></p>
@@ -436,6 +461,8 @@ $(function() {
 		};
 	});
 </script>
+<script src="/Public/Admin/js/bootstrap-datepicker.min.js"></script>
+<script src="/Public/Admin/js/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript">
 	//表单提交
 	$(document).ajaxStart(function() {
@@ -445,95 +472,130 @@ $(function() {
 	});
 	//刷新验证码
 	$(function() {
-				var brandSelect = $("#brandSelect");
-				var categorySelect = $("#categorySelect").change(function(evt) {
-					var value = $(this).val();
-					brandSelect.empty();
-					brandSelect.append("<option>==请选择品牌==</option>");
-					if (value) {
-						$.get("<?php echo ($categoryAction); ?>/" + value, null, ongetbrandsuccess);
-					}
-				});
+		var brandSelect = $("#brandSelect");
+		var categorySelect = $("#categorySelect").change(function(evt) {
+			var value = $(this).val();
+			brandSelect.empty();
+			brandSelect.append("<option>==请选择品牌==</option>");
+			if (value) {
+				$.get("<?php echo ($categoryAction); ?>/" + value, null, ongetbrandsuccess);
+			}
+		});
 
-				function ongetbrandsuccess(list) {
-					if (list && list.length > 0) {
-						for (var i = 0, len = list.length; i < len; i++) {
-							var option = $("<option>").val(list[i].cid).text(list[i].name);
-							brandSelect.append(option);
-						}
-						brandSelect.val(list[0].cid).change();
+		function ongetbrandsuccess(list) {
+			if (list && list.length > 0) {
+				for (var i = 0, len = list.length; i < len; i++) {
+					var option = $("<option>").val(list[i].cid).text(list[i].name);
+					brandSelect.append(option);
+				}
+				brandSelect.val(list[0].cid).change();
+			}
+		}
+		var thumbButton = $("#thumbButton").click(function() {
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton.parent()).attr("src", url);
+						$("#inputThumb").val(url);
 					}
 				}
-				var thumbButton = $("#thumbButton").click(function() {
-					UI.upload("上传缩略图", {
-						ok: function(files) {
-							if (files.length > 0) {
-								var url = files[0].url;
-								$("img", thumbButton.parent()).attr("src", url);
-								$("#inputThumb").val(url);
-							}
-						}
-					});
-				});
-				$("form").submit(function() {
-					var self = $(this);
-					$.post(self.attr("action"), self.serialize(), success, "json");
-					return false;
+			});
+		});
+		$("form").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
 
-					function success(data) {
-						if (data.status) {
-							window.location.href = data.url;
-						} else {
-							$("#checkTips").text(data.info);
-						}
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+		// 图片上传
+		var photoTemplate = $("#photoTemplate");
+		var imagesButton = $("#imagesButton").click(function() {
+			var limit = 10 - imagesBody.children().length;
+			UI.upload("上传展示图片", {
+				limit: limit,
+				ok: function(files) {
+					for (var i = 0, len = files.length; i < len; i++) {
+						var url = files[i].url;
+						var key = files[i].key;
+						var previewImage = photoTemplate
+							.clone()
+							.removeAttr("id")
+							.removeClass("hidden");
+						imagesBody.append(previewImage);
+						$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
+						$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
+						$("img", previewImage).attr("src", url);
 					}
-				});
-				// 图片上传
-				var photoTemplate = $("#photoTemplate");
-				var imagesButton = $("#imagesButton").click(function() {
-					var limit = 10 - imagesBody.children().length;
-					UI.upload("上传展示图片", {
-						limit: limit,
-						ok: function(files) {
-							for (var i = 0, len = files.length; i < len; i++) {
-								var url = files[i].url;
-								var key = files[i].key;
-								var previewImage = photoTemplate
-									.clone()
-									.removeAttr("id")
-									.removeClass("hidden");
-								imagesBody.append(previewImage);
-								$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
-								$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
-								$("img", previewImage).attr("src", url);
-							}
-							var length = imagesBody.children().length;
-							if (length == 10) {
-								imagesButton.attr("disabled", true);
-							}
-						}
-					});
-				});
-				// 删除图片
-				var imagesBody = $("#imagesBody").on("click", "button", function() {
-					var self = $(this);
-					var parent = self.parent();
-					var file = $("input._file", parent).val();
-					var key = $("input._key", parent).val();
-					//			$.post("<?php echo U('removefile','','');?>/" + key);
-					self.closest("div").remove();
-					imagesButton.attr("disabled", false);
-				}); 
-				
-				<?php if(isset($data["gid"])): ?>// 设置下拉框选中
-					categorySelect.val("<?php echo ($data["cid"]); ?>").change();
-					brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
-				
-				// 设置勾选狂value
-				$("[boolean]").change(function() {
-					var self = $(this);
-					self.val(self.prop("checked") ? 1 : 0);
-				});
+					var length = imagesBody.children().length;
+					if (length == 10) {
+						imagesButton.attr("disabled", true);
+					}
+				}
+			});
+		});
+		// 删除图片
+		var imagesBody = $("#imagesBody").on("click", "button", function() {
+			var self = $(this);
+			var parent = self.parent();
+			var file = $("input._file", parent).val();
+			var key = $("input._key", parent).val();
+			//			$.post("<?php echo U('removefile','','');?>/" + key);
+			self.closest("div").remove();
+			imagesButton.attr("disabled", false);
+		}); 
+		
+		<?php if(isset($data["gid"])): ?>// 设置下拉框选中
+			categorySelect.val("<?php echo ($data["cid"]); ?>").change();
+			brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
+		
+		// 设置勾选狂value
+		$("[boolean]").change(function() {
+			var self = $(this);
+			self.val(self.prop("checked") ? 1 : 0);
+		});
+		
+		// 设置日期
+		var datepicker = $("#datepicker").datepicker({
+		    startDate: "today",
+		    language: "zh-CN",
+		    autoclose: true,
+		    todayHighlight: true,
+		    zIndexOffset: 1000
+		}).on("changeDate", endTimeChanged);
+		
+		$('input[type="radio"][name="endTimeRadio"]').change(endTimeChanged);
+		var inputEndTime = $("#inputEndTime");
+		function endTimeChanged() {
+			var date = datepicker.data('datepicker').getDate();
+			var seconds = Number($('input[type="radio"][name="endTimeRadio"]:checked').val());
+			date.setSeconds(seconds);
+			inputEndTime.val([date.getFullYear(),"-",(date.getMonth() + 1),"-",date.getDate()," ",
+				date.getHours(),":",date.getMinutes(),":",date.getSeconds()].join(""));
+		}
+		$(window).bind("blur", function() {
+			datepicker.data('datepicker').hide();
+		});
+		
+		<?php if(isset($data["end_time"])): ?>// <?php echo ($data["end_time"]); ?>
+			
+			var hours = <?php echo (date('G',strtotime($data["end_time"]))); ?>;
+			if(hours == 10) {
+				$("#endTimeRadio1").attr("checked", "checked");
+			} else if(hours == 15) {
+				$("#endTimeRadio2").attr("checked", "checked");
+			} else {
+				$("#endTimeRadio3").attr("checked", "checked");
+			}
+		<?php else: ?> 
+		$("#endTimeRadio1").attr("checked", "checked");<?php endif; ?> 
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

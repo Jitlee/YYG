@@ -17,7 +17,7 @@ class CategoryController extends CommonController {
 	
 	public function brands($cid) {
 		$db = D('category');
-		$data = $db->where($cid)->relation(true)->find();
+		$data = $db->relation(true)->find($cid);
 		$this->ajaxReturn($data["brands"],'JSON');
 	}
 	
