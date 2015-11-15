@@ -56,7 +56,6 @@ class PaimaiController extends GoodsBaseController {
 			$db = M('paimai');
 			if($db->create()) {
 				$result = $db->save(); // 写入数据到数据库 
-				$this->onedit($data);
 				self::saveImages($_POST['gid']);
 				$this->success('操作成功', U('index', '', ''));
 			} else {
@@ -89,8 +88,8 @@ class PaimaiController extends GoodsBaseController {
 			
 			$this->assign('uploader', U('upload', '', ''));
 			$this->assign('pid', 'gdmgr');
-			$this->assign('mid', $this->_config['addmid']);
-			$this->assign('title', $this->_config['edit']);
+			$this->assign('mid', 'addpm');
+			$this->assign('title', '编辑拍卖商品');
 			
 			$this->display('add');
 		}

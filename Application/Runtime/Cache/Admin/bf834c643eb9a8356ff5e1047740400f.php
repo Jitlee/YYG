@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/User/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Member/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -107,9 +107,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -154,71 +154,79 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加管理员</a>
-</div>
-<table id="adminTable" class="table table-bordered">
+		 <form class="form-inline" role="form" method="post" action="<?php echo U('find', '', '');?>">
+	<div class="form-group">
+		<div class="form-group">
+		    <label for="filterSelect">搜索条件: </label>
+			<select id="filterSelect" class="form-control" name="type">
+				<option value="0">用户UID</option>
+				<option value="1">用户名</option>
+				<option value="2">邮箱</option>
+				<option value="3">手机</option>
+			</select>
+	  	</div>
+		<input type="text" class="form-control" name="value" id="inputValue">
+		<button type="submit" class="btn btn-default">查找</button>
+	</div>
+</form>
+<br />
+<table id="listTable" class="table table-bordered">
 	<thead>
 		<tr>
+			<th>UID</th>
 			<th>用户名</th>
-			<th>所属角色</th>
-			<th>Email</th>
-			<th>最后登陆IP</th>
-			<th>最后登陆时间</th>
-			<th>历史登陆次数</th>
-			<th style="width:150px">操作</th>
+			<th>邮箱</th>
+			<th>手机</th>
+			<th>金额</th>
+			<th>积分</th>
+			<th>经验值</th>
+			<th>登陆时间</th>
+			<th>注册时间</th>
+			<th style="width:150px">管理</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$admin): ?><tr>
-				<td><?php echo ($admin["username"]); ?></td>
-				<td>
-					<?php if($admin["role"] == 1): ?>超级管理员
-						<?php else: ?>管理员<?php endif; ?>
-				</td>
-				<td><?php echo ($admin["email"]); ?></td>
-				<td><?php echo ($admin["login_ip"]); ?></td>
-				<td><?php echo ($admin["login_time"]); ?></td>
-				<td><?php echo ($admin["login"]); ?></td>
-				<td uid="<?php echo ($admin["uid"]); ?>">
-					<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($admin["uid"]); ?>'>编辑</a>
+		<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
+				<td><?php echo ($item["uid"]); ?></td>
+				<td><?php echo ($item["username"]); ?></td>
+				<td><?php echo ($item["email"]); ?></td>
+				<td><?php echo ($item["mobile"]); ?></td>
+				<td><?php echo ($item["money"]); ?></td>
+				<td><?php echo ($item["score"]); ?></td>
+				<td><?php echo ($item["jingyan"]); ?></td>
+				<td><?php echo ($item["time"]); ?></td>
+				<td><?php echo ($item["login_time"]); ?></td>
+				<td uid="<?php echo ($item["uid"]); ?>">
+					<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($item["uid"]); ?>'>编辑</a>
 					<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 				</td>
 			</tr><?php endforeach; endif; ?>
 	</tbody>
 </table>
-<nav>
-  <ul class="pagination">
-  	<?php if($minPageNum == 1): ?><li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li>
-  	<?php else: ?>
-    <li>
-      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li><?php endif; ?>
-    <?php $__FOR_START_74319376__=$minPageNum;$__FOR_END_74319376__=$pageNum;for($i=$__FOR_START_74319376__;$i < $__FOR_END_74319376__;$i+=1){ ?><li><a href="/index.php/Admin/User/Index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
-	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-    <?php $__FOR_START_1970303897__=$pageNum+1;$__FOR_END_1970303897__=$maxPageNum;for($i=$__FOR_START_1970303897__;$i < $__FOR_END_1970303897__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
-	<?php if($maxPageNum == $pageCount): ?><li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </span>
-    </li>
-  	<?php else: ?>
-    <li>
-      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li><?php endif; ?>
-  </ul>
-</nav>
 <script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	
 	$(function(){
-		$("#adminTable").on("click",".delete", function(evt) {
+//		$("form").submit(function() {
+//			var self = $(this);
+//			$.post('<?php echo ($action); ?>', self.serialize(), success, "json");
+//			return false;
+//	
+//			function success(data) {
+//				if (data.status) {
+//					window.location.href = data.url;
+//				} else {
+//					$("#checkTips").text(data.info);
+//				}
+//			}
+//		});
+		
+		$("#listTable").on("click",".delete", function(evt) {
 			var ths = $(this);
 			var uid = ths.parent().attr("uid");
 			var tr = ths.closest("tr");

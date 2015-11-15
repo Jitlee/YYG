@@ -1,5 +1,4 @@
 <taglib name="html" />
-<link href="__CSS__/bootstrap-datepicker3.min.css" rel="stylesheet"> 
 <form class="form-horizontal" action="{$action}" role="form" method="post"  data-toggle="validator">
 	<present name="data.gid">
 		<input type="hidden" name="gid" value="{$data.gid}" />
@@ -58,38 +57,29 @@
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputQipaijia" class="control-label"><r>*</r>起拍价</label>
+				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputQipaijia" name="qipaijia" value="{$data.qipaijia}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="{$data.money}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputBaoliujia" class="control-label"><r>*</r>保留价</label>
+				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputBaoliujia" name="baoliujia" value="{$data.baoliujia}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="{$data.danjia}" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputBaozhengjin" class="control-label"><r>*</r>保证金</label>
+				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputBaozhengjin" name="baozhengjin" value="{$data.baozhengjin}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
-				<label class="control-label">元</label>
-			</td>
-		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputJiafujia" class="control-label"><r>*</r>加价幅度</label>
-			</td>
-			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputJiafujia" name="jiafujia" value="{$data.jiafujia}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
-				<label class="control-label">元</label>
+				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="{$data.maxqishu}" maxlength="7" pattern="^\d+$" required/>
+				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
@@ -149,20 +139,38 @@
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="datepicker" class="control-label">结束时间</label>
+				<label for="jishiButton" class="control-label">即时揭晓</label>
 			</td>
 			<td>
-  				<input id="datepicker" type="text" style="width:150px" value="{$data.end_time|strtotime|date='Y年m月d日',###}" class="form-control" required/>
-  				<label class="radio-inline">
-					<input type="radio" name="endTimeRadio" id="endTimeRadio1" value="36000">上午10点
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="endTimeRadio" id="endTimeRadio2" value="54000">下午3点
-				</label>
-				<label class="radio-inline">
-					<input type="radio" name="endTimeRadio" id="endTimeRadio3" value="79200">晚上10点
-				</label>
-				<input id="inputEndTime" name="end_time" value="{$data.end_time}" class="hidden"/>
+  				<div class="btn-group dropup">
+					<button id="jishiButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						参与即时揭晓 <span class="caret"></span>
+					</button>
+					<ul id="jishiMenus" class="dropdown-menu">
+						<li hours="1"><a>1小时</a></li>
+						<li hours="2"><a>2小时</a></li>
+						<li hours="3"><a>3小时</a></li>
+						<li hours="5"><a>5小时</a></li>
+						<li hours="8"><a>10小时</a></li>
+						<li hours="12"><a>12小时</a></li>
+						<li hours="24"><a>1天</a></li>
+						<li hours="48"><a>2天</a></li>
+						<li hours="0"><a>不参与</a></li>
+					</ul>
+				</div>
+				<span id="jishiSpan" class="label <if condition="$data.jishijiexiao eq 0">label-default<else/>label-success</if>">
+					<switch name="data.jishijiexiao">
+					    <case value="1">1小时</case>
+					    <case value="2">2小时</case>
+					    <case value="3">3小时</case>
+					    <case value="5">5小时</case>
+					    <case value="12">12小时</case>
+					    <case value="24">1天</case>
+					    <case value="240">2天</case>
+					    <default />不参与
+					</switch>
+				</span>
+				<input id="jishiInput" type="text" name="jishijiexiao" value="{$data.jishijiexiao}" class="hidden" />
 			</td>
 		</tr>
 		<tr>
@@ -192,8 +200,6 @@
 	</div>
 </form>
 <include file="Public:upload" />
-<script src="__JS__/bootstrap-datepicker.min.js"></script>
-<script src="__JS__/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript">
 	//表单提交
 	$(document).ajaxStart(function() {
@@ -295,41 +301,17 @@
 			self.val(self.prop("checked") ? 1 : 0);
 		});
 		
-		// 设置日期
-		var datepicker = $("#datepicker").datepicker({
-		    startDate: "today",
-		    language: "zh-CN",
-		    autoclose: true,
-		    todayHighlight: true,
-		    zIndexOffset: 1000
-		}).on("changeDate", endTimeChanged);
-		
-		$('input[type="radio"][name="endTimeRadio"]').change(endTimeChanged);
-		var inputEndTime = $("#inputEndTime");
-		function endTimeChanged() {
-			var date = datepicker.data('datepicker').getDate();
-			var seconds = Number($('input[type="radio"][name="endTimeRadio"]:checked').val());
-			date.setSeconds(seconds);
-			inputEndTime.val([date.getFullYear(),"-",(date.getMonth() + 1),"-",date.getDate()," ",
-				date.getHours(),":",date.getMinutes(),":",date.getSeconds()].join(""));
-		}
-		$(window).bind("blur", function() {
-			datepicker.data('datepicker').hide();
+		// 设置即时
+		$("#jishiMenus").on("click", "li", function(){
+			$this = $(this);
+			var hours = $this.attr("hours");
+			var text = $this.text();
+			var css = hours > 0 ? "label-success" : "label-default";
+			$("#jishiInput").val(hours);
+			$("#jishiSpan").text(text)
+				.removeClass("label-success")
+				.removeClass("label-default")
+				.addClass(css);
 		});
-		
-		<present name="data.end_time">
-			// {$data.end_time}
-			
-			var hours = {$data.end_time|strtotime|date='G',###};
-			if(hours == 10) {
-				$("#endTimeRadio1").attr("checked", "checked");
-			} else if(hours == 15) {
-				$("#endTimeRadio2").attr("checked", "checked");
-			} else {
-				$("#endTimeRadio3").attr("checked", "checked");
-			}
-		<else /> 
-		$("#endTimeRadio1").attr("checked", "checked");
-		</present> 
 	});
 </script>

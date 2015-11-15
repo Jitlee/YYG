@@ -28,9 +28,7 @@ class UserController extends CommonController {
 		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 		
 		$list = $db->page($pageNum, $pageSize)->select();
-		if($list != false) {
-			$this->assign('list',$list);// 模板变量赋值
-		}
+		$this->assign('list',$list);// 模板变量赋值
 		
 		$this->assign('title', '管理员列表');
 		$this->assign('pid', 'sysmgr');

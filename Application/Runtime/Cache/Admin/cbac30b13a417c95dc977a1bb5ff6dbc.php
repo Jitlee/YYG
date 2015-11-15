@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/User/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Member/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -154,43 +154,124 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" role="form" method="post" data-toggle="validator">
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["uid"])): ?><input type="hidden" name="uid" value="<?php echo ($data["uid"]); ?>" /><?php endif; ?>
-	<div class="form-group">
-		<label for="inputName" class="col-sm-2 control-label">用户名</label>
-		<div class="col-sm-10">
-			<input type="text" class="form-control" name="username" id="inputName" placeholder="请输入用户名" value="<?php echo ($data["username"]); ?>" required>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputPassword" class="col-sm-2 control-label">密码</label>
-		<div class="col-sm-10">
-			<input type="password" class="form-control" name="password" id="inputPassword" placeholder="******"  <?php if(!isset($data["uid"])): ?>required<?php endif; ?>>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputEmail" class="col-sm-2 control-label">邮箱</label>
-		<div class="col-sm-10">
-			<input type="email" class="form-control" name="email" id="inputEmail" placeholder="请输电子邮箱" value="<?php echo ($data["email"]); ?>"/>
-		</div>
-	</div>
-	<div class="form-group">
-		<label for="inputRole" class="col-sm-2 control-label">所属角色</label>
-		<div class="col-sm-10">
-			<select class="form-control" name="role" id="inputRole" required>
-				<option value="0" <?php if($data["role"] == 0): ?>selected<?php endif; ?>>管理员</option>
-				<option value="1" <?php if($data["role"] == 1): ?>selected<?php endif; ?>>超级管理员</option>
-			</select>
-		</div>
-	</div>
+
+	<table class="table">
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputUsername" class="control-label"><r>*</r>用户名</label>
+			</td>
+			<td>
+				<input class="form-control" id="inputUsername" name="username" value="<?php echo ($data["username"]); ?>"  required/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputEmail" class="control-label"><r>*</r>邮箱</label>
+			</td>
+			<td>
+				<input type="email" class="form-control" id="inputEmail" name="email" value="<?php echo ($data["email"]); ?>"  required/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputMobile" class="control-label"><r>*</r>手机</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" id="inputMobile" name="mobile" value="<?php echo ($data["mobile"]); ?>"  required/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputPassword" class="control-label">密码</label>
+			</td>
+			<td>
+				<input type="password" class="form-control" id="inputPassword" name="password"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputMoney" class="control-label">账户金额</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" id="inputMoney" name="money" value="<?php echo ($data["money"]); ?>"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputJingyan" class="control-label">经验值</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" id="inputJingyan" name="jingyan" value="<?php echo ($data["jingyan"]); ?>"/>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputScrore" class="control-label">积分</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" id="inputScrore" name="score" value="<?php echo ($data["score"]); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label class="control-label">邮箱认证</label>
+			</td>
+			<td>
+				<label class="radio-inline">
+					<input type="radio" name="emailRatio" id="emailRatio1" value="1" <?php if($data["emailcode"] AND $data["emailcode"] != '-1'): ?>checked="checked"<?php endif; ?>>已验证
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="emailRatio" id="emailRatio2" value="0" <?php if($data["emailcode"] == '-1'): ?>checked="checked"<?php endif; ?>>未验证
+				</label>
+				<input type="hidden" name="emailcode" value="<?php echo ($data["emailcode"]); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label class="control-label">手机认证</label>
+			</td>
+			<td>
+				<label class="radio-inline">
+					<input type="radio" name="mobileRatio" id="emailRatio1" value="1" <?php if($data["emailcode"] AND $data["mobilecode"] != '-1'): ?>checked="checked"<?php endif; ?>>已验证
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="mobileRatio" id="emailRatio2" value="0" <?php if($data["mobilecode"] == '-1'): ?>checked="checked"<?php endif; ?>>未验证
+				</label>
+				<input type="hidden" name="mobilecode" value="<?php echo ($data["mobilecode"]); ?>" />
+			</td>
+		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputThumb" class="control-label">缩略图</label>
+			</td>
+			<td>
+				<img src="<?php echo ((isset($data["img"]) && ($data["img"] !== ""))?($data["img"]):'/Public/Admin/images/goods.jpg'); ?>" class="img-thumbnail thumb" alt="缩略图" />
+				<input class="form-control" style="width:400px" id="inputThumb" name="img" readonly value="<?php echo ((isset($data["img"]) && ($data["img"] !== ""))?($data["img"]):'/Public/Admin/images/goods.jpg'); ?>" />
+				<button id="thumbButton" type="button" class="btn btn-default">上传图片</button>
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputQianming" class="control-label">签名</label>
+			</td>
+			<td>
+				<textarea name="qianming" maxlength="255" class="form-control automaxlength"><?php echo ($data["qianming"]); ?></textarea>
+			</td>
+		</tr>
+		<tr>
+			<td class="col-sm-2">
+			</td>
+			<td>
+				<button type="submit" class="btn btn-primary"> 提交 </button>
+				<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
+			</td>
+		</tr>
+	</table>
 	<div class="form-group">
 		<p id="checkTips" class="check-tips text-danger"></p>
-	</div>
-	<div class="form-group">
-		<div class="col-sm-offset-2 col-sm-10">
-			<button type="submit" class="btn btn-primary"> 提交 </button>
-			<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
-		</div>
 	</div>
 </form>
 <div id="modalUpload" class="modal fade" tabindex="-1" role="dialog">
@@ -312,20 +393,30 @@ $(function() {
 	});
 </script>
 <script type="text/javascript">
-	 //表单提交
+	//表单提交
 	$(document).ajaxStart(function() {
 		$("button:submit").attr("disabled", true);
 	}).ajaxStop(function() {
 		$("button:submit").attr("disabled", false);
 	});
-	 //刷新验证码
+	//刷新验证码
 	$(function() {
-		
+		var thumbButton = $("#thumbButton").click(function() {
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton.parent()).attr("src", url);
+						$("#inputThumb").val(url);
+					}
+				}
+			});
+		});
 		$("form").submit(function() {
 			var self = $(this);
-			$.post('<?php echo ($action); ?>', self.serialize(), success, "json");
+			$.post(self.attr("action"), self.serialize(), success, "json");
 			return false;
-	
+
 			function success(data) {
 				if (data.status) {
 					window.location.href = data.url;
@@ -334,8 +425,16 @@ $(function() {
 				}
 			}
 		});
+		
+		// 设置认证
+		$("input[type='radio']").change(function() {
+			var $this = $(this);
+			var value = $this.val();
+			var input = $("input[type='hidden']", $this.closest("td"));
+			input.val(value == 0 ?  "-1" : "verifycode");
+		});
 	});
-	</script>
+</script>
 		 <p id="tips" class="check-tips text-danger"></p>
 	</div>
 	<div class="clear"></div>

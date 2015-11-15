@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Model;
 use Think\Model\RelationModel;
-class GoodsModel extends RelationModel{
+class MiaoshaModel extends RelationModel{
     protected $_link = array(
         'Category'=>array(
             'mapping_type'      		=> self::BELONGS_TO,
