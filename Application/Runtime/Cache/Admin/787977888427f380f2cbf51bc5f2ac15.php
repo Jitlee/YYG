@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Xiangou/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -84,7 +84,14 @@
 			<a>秒杀商品管理</a>
 			<ul>
 				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="xgmgr">
+			<a>限购商品管理</a>
+			<ul>
+				<li id="xglst"><a href="/index.php/Admin/Xiangou">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">添加限购商品</a></li>
 			</ul>
 		</li>
 		<li id="pmmgr">
@@ -107,9 +114,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -156,7 +163,7 @@ $(function() {
 		<h1><?php echo ($title); ?></h1>
 		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
-
+	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
 	<table class="table">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
@@ -222,6 +229,15 @@ $(function() {
 				<label class="control-label">元</label>
 			</td>
 		</tr>
+		<?php if($type == 2): ?><tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="<?php echo ($data["xiangou"]); ?>" maxlength="7" pattern="^\d+$" required/>
+				<label class="control-label">元</label>
+			</td>
+		</tr><?php endif; ?>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
@@ -289,14 +305,45 @@ $(function() {
 
 			</td>
 		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="jishiButton" class="control-label">即时揭晓</label>
+			</td>
+			<td>
+  				<div class="btn-group dropup">
+					<button id="jishiButton" <?php if($isAllCategories): ?>disabled="true"<?php endif; ?> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						参与即时揭晓 <span class="caret"></span>
+					</button>
+					<ul id="jishiMenus" class="dropdown-menu">
+						<li hours="1"><a>1小时</a></li>
+						<li hours="2"><a>2小时</a></li>
+						<li hours="3"><a>3小时</a></li>
+						<li hours="5"><a>5小时</a></li>
+						<li hours="8"><a>10小时</a></li>
+						<li hours="12"><a>12小时</a></li>
+						<li hours="24"><a>1天</a></li>
+						<li hours="48"><a>2天</a></li>
+						<li hours="0"><a>不参与</a></li>
+					</ul>
+				</div>
+				<span id="jishiSpan" class="label <?php if($data["jishijiexiao"] == 0): ?>label-default<?php else: ?>label-success<?php endif; ?>">
+					<?php switch($data["jishijiexiao"]): case "1": ?>1小时<?php break;?>
+					    <?php case "2": ?>2小时<?php break;?>
+					    <?php case "3": ?>3小时<?php break;?>
+					    <?php case "5": ?>5小时<?php break;?>
+					    <?php case "12": ?>12小时<?php break;?>
+					    <?php case "24": ?>1天<?php break;?>
+					    <?php case "240": ?>2天<?php break;?>
+					    <?php default: ?>不参与<?php endswitch;?>
+				</span>
+				<input id="jishiInput" type="text" name="jishijiexiao" value="<?php echo ($data["jishijiexiao"]); ?>" class="hidden" />
+			</td>
+		</tr>
 		<tr>
 			<td class="col-sm-2 control-label">
 				<label class="control-label">商品属性</label>
 			</td>
 			<td>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkRenqi" boolean name="renqi" value="<?php echo ($data["renqi"]); ?>" <?php if($data["renqi"] == 1): ?>checked="true"<?php endif; ?> />推荐
-				</label>
 				<label class="checkbox-inline">
 					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">人气
 				</label>
@@ -312,7 +359,7 @@ $(function() {
 				<button type="submit" class="btn btn-primary"> 提交 </button>
 				<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
 			</td>
-			</div>
+		</tr>
 	</table>
 	<div class="form-group">
 		<p id="checkTips" class="check-tips text-danger"></p>
@@ -445,95 +492,108 @@ $(function() {
 	});
 	//刷新验证码
 	$(function() {
-				var brandSelect = $("#brandSelect");
-				var categorySelect = $("#categorySelect").change(function(evt) {
-					var value = $(this).val();
-					brandSelect.empty();
-					brandSelect.append("<option>==请选择品牌==</option>");
-					if (value) {
-						$.get("<?php echo ($categoryAction); ?>/" + value, null, ongetbrandsuccess);
-					}
-				});
+		var brandSelect = $("#brandSelect");
+		var categorySelect = $("#categorySelect").change(function(evt) {
+			var value = $(this).val();
+			brandSelect.empty();
+			brandSelect.append("<option>==请选择品牌==</option>");
+			if (value) {
+				$.get("<?php echo ($categoryAction); ?>/" + value, null, ongetbrandsuccess);
+			}
+		});
 
-				function ongetbrandsuccess(list) {
-					if (list && list.length > 0) {
-						for (var i = 0, len = list.length; i < len; i++) {
-							var option = $("<option>").val(list[i].cid).text(list[i].name);
-							brandSelect.append(option);
-						}
-						brandSelect.val(list[0].cid).change();
+		function ongetbrandsuccess(list) {
+			if (list && list.length > 0) {
+				for (var i = 0, len = list.length; i < len; i++) {
+					var option = $("<option>").val(list[i].cid).text(list[i].name);
+					brandSelect.append(option);
+				}
+				brandSelect.val(list[0].cid).change();
+			}
+		}
+		var thumbButton = $("#thumbButton").click(function() {
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton.parent()).attr("src", url);
+						$("#inputThumb").val(url);
 					}
 				}
-				var thumbButton = $("#thumbButton").click(function() {
-					UI.upload("上传缩略图", {
-						ok: function(files) {
-							if (files.length > 0) {
-								var url = files[0].url;
-								$("img", thumbButton.parent()).attr("src", url);
-								$("#inputThumb").val(url);
-							}
-						}
-					});
-				});
-				$("form").submit(function() {
-					var self = $(this);
-					$.post(self.attr("action"), self.serialize(), success, "json");
-					return false;
+			});
+		});
+		$("form").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
 
-					function success(data) {
-						if (data.status) {
-							window.location.href = data.url;
-						} else {
-							$("#checkTips").text(data.info);
-						}
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+		// 图片上传
+		var photoTemplate = $("#photoTemplate");
+		var imagesButton = $("#imagesButton").click(function() {
+			var limit = 10 - imagesBody.children().length;
+			UI.upload("上传展示图片", {
+				limit: limit,
+				ok: function(files) {
+					for (var i = 0, len = files.length; i < len; i++) {
+						var url = files[i].url;
+						var key = files[i].key;
+						var previewImage = photoTemplate
+							.clone()
+							.removeAttr("id")
+							.removeClass("hidden");
+						imagesBody.append(previewImage);
+						$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
+						$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
+						$("img", previewImage).attr("src", url);
 					}
-				});
-				// 图片上传
-				var photoTemplate = $("#photoTemplate");
-				var imagesButton = $("#imagesButton").click(function() {
-					var limit = 10 - imagesBody.children().length;
-					UI.upload("上传展示图片", {
-						limit: limit,
-						ok: function(files) {
-							for (var i = 0, len = files.length; i < len; i++) {
-								var url = files[i].url;
-								var key = files[i].key;
-								var previewImage = photoTemplate
-									.clone()
-									.removeAttr("id")
-									.removeClass("hidden");
-								imagesBody.append(previewImage);
-								$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
-								$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
-								$("img", previewImage).attr("src", url);
-							}
-							var length = imagesBody.children().length;
-							if (length == 10) {
-								imagesButton.attr("disabled", true);
-							}
-						}
-					});
-				});
-				// 删除图片
-				var imagesBody = $("#imagesBody").on("click", "button", function() {
-					var self = $(this);
-					var parent = self.parent();
-					var file = $("input._file", parent).val();
-					var key = $("input._key", parent).val();
-					//			$.post("<?php echo U('removefile','','');?>/" + key);
-					self.closest("div").remove();
-					imagesButton.attr("disabled", false);
-				}); 
-				
-				<?php if(isset($data["gid"])): ?>// 设置下拉框选中
-					categorySelect.val("<?php echo ($data["cid"]); ?>").change();
-					brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
-				
-				// 设置勾选狂value
-				$("[boolean]").change(function() {
-					var self = $(this);
-					self.val(self.prop("checked") ? 1 : 0);
-				});
+					var length = imagesBody.children().length;
+					if (length == 10) {
+						imagesButton.attr("disabled", true);
+					}
+				}
+			});
+		});
+		// 删除图片
+		var imagesBody = $("#imagesBody").on("click", "button", function() {
+			var self = $(this);
+			var parent = self.parent();
+			var file = $("input._file", parent).val();
+			var key = $("input._key", parent).val();
+			//			$.post("<?php echo U('removefile','','');?>/" + key);
+			self.closest("div").remove();
+			imagesButton.attr("disabled", false);
+		}); 
+		
+		<?php if(isset($data["gid"])): ?>// 设置下拉框选中
+			categorySelect.val("<?php echo ($data["cid"]); ?>").change();
+			brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
+		
+		// 设置勾选狂value
+		$("[boolean]").change(function() {
+			var self = $(this);
+			self.val(self.prop("checked") ? 1 : 0);
+		});
+		
+		// 设置即时
+		$("#jishiMenus").on("click", "li", function(){
+			$this = $(this);
+			var hours = $this.attr("hours");
+			var text = $this.text();
+			var css = hours > 0 ? "label-success" : "label-default";
+			$("#jishiInput").val(hours);
+			$("#jishiSpan").text(text)
+				.removeClass("label-success")
+				.removeClass("label-default")
+				.addClass(css);
+		});
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

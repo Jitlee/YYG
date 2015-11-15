@@ -1,25 +1,126 @@
 <?php
 namespace Admin\Controller;
 class MiaoshaController extends GoodsBaseController {
+	protected $_config = array(
+		'type'			=> 1,
+		'listTitle'		=> '秒杀商品列表',
+		'addTitle'		=> '添加秒杀商品',
+		'editTitle'		=> '编辑秒杀商品',
+		'listMid'		=> 'mslst',
+		'addMid'			=> 'addms',
+	);
 	
-	protected function onadd($data) {
-		$db = M('Miaosha');
-		$db->add($data);
+	public function index() {
+		$this->assign('type', $this->_config['type']);
+			
+		$db = D('miaosha');
+		$map['type'] = $this->_config['type'];
+		$list = $db->where($map)->relation(true)->select();
+		$this->assign('list',$list);// 模板变量赋值
+		$this->assign('title', $this->_config['lstTitle']);
+		$this->assign('addTitle', $this->_config['addTitle']);
+		$this->assign('pid', 'gdmgr');
+		$this->assign('mid', $this->_config['listMid']);
+		$this->display('Miaosha/index');
 	}
 	
-	protected function onedit($data) {
+	public function add() {
+		if(IS_POST) {
+			$db = M('miaosha');
+			$data = $db->create();
+			if($data) {
+				$result = $db->add(); // 写入数据到数据库 
+				if($result != false) {
+					$hdb = M('MiaoshaHistory');
+					$db->add($data);
+					self::saveImages($result);
+					$this->success('操作成功', U('index', '', ''));
+				} else {
+					$this->ajaxReturn('数据错误');
+				}
+			} else {
+				$this->ajaxReturn('数据创建错误');
+			}
+		} else {
+			$this->assign('type', $this->_config['type']);
+			
+			$cdb = M('category');
+			$categories = $cdb->select();
+			$this->assign('allCategories', $categories);
+			$this->assign('action', U('add','',''));
+			$this->assign('categoryAction', U('Category/brands', '', ''));
+			$this->assign('uploader', U('upload', '', ''));
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', $this->_config['addMid']);
+			$this->assign('title', $this->_config['addTitle']);
+			$this->display('Miaosha/add');
+		}
+	}
+	
+	public function edit($gid = null) {
+		if(IS_POST) {
+			$db = M('miaosha');
+			if($db->create()) {
+				$result = $db->save(); // 写入数据到数据库 
+				$hdb = M('MiaoshaHistory');
+				$map['gid']=$data['gid'];
+				$map['qishu']=$data['qishu'];
+				$hdb->where($map)->save($data);
+				self::saveImages($_POST['gid']);
+				$this->success('操作成功', U('index', '', ''));
+			} else {
+				$this->ajaxReturn('数据创建错误');
+			}
+		} else {
+			$this->assign('type', $this->_config['type']);
+			
+			$db = D('miaosha');
+			$map['gid'] = $gid;
+			$data = $db->relation(true)->find($gid);
+			$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
+			$this->assign('data', $data);
+			
+			$imgdb = M('GoodsImages');
+			$imgmap['gid'] = $gid;
+			$images = $imgdb->where($imgmap)->select();
+			$this->assign('images', $images);
+			
+			$cdb = M('category');
+			$categories = $cdb->select();
+			$this->assign('allCategories', $categories);
+			
+			$bdb = D('category');
+			$bdata = $bdb->relation(true)->find($data['cid']);
+			$this->assign('allBrands', $bdata['brands']);
+			
+			$this->assign('action', U('edit','',''));
+			$this->assign('categoryAction', U('Category/brands', '', ''));
+			
+			$this->assign('uploader', U('upload', '', ''));
+			$this->assign('pid', 'gdmgr');
+			$this->assign('mid', $this->_config['addMid']);
+			$this->assign('title', $this->_config['editTitle']);
+			
+			$this->display('Miaosha/add');
+		}
+	}
+	
+	public function remove($gid = 0) {
 		$db = M('Miaosha');
-		$map['gid']=$data['gid'];
-		$map['qishu']=$data['qishu'];
-		$db->where($map)->save($data);
+		$ret = $db->delete($gid);
+		if($ret > -1) {
+			$this->success('操作成功');
+		} else {
+			$this->error('数据错误');
+		}
 	}
 	
 	public function history($gid) {
-		$db = D('Goods');
+		$db = D('Miaosha');
 		$goods = $db->relation(true)->find($gid);
 		$this->assign('goods', $goods);
 		
-		$mdb = M('Miaosha');
+		$mdb = M('MiaoshaHistory');
 		$mmap['$gid'] = $gid;
 		$list = $mdb->where($mmap)->order('qishu desc')->select();
 		$this->assign('list', $list);

@@ -3,7 +3,7 @@
 	<present name="data.gid">
 		<input type="hidden" name="gid" value="{$data.gid}" />
 	</present>
-
+	<input type="hidden" name="type" value="{$type}" />
 	<table class="table">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
@@ -73,6 +73,17 @@
 				<label class="control-label">元</label>
 			</td>
 		</tr>
+		<if condition="$type eq 2">
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou}" maxlength="7" pattern="^\d+$" required/>
+				<label class="control-label">元</label>
+			</td>
+		</tr>
+		</if>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
@@ -137,14 +148,47 @@
 				<html:editor id="contentEdtior" name="content" type="UEDITOR">{$data.content}</html:editor>
 			</td>
 		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="jishiButton" class="control-label">即时揭晓</label>
+			</td>
+			<td>
+  				<div class="btn-group dropup">
+					<button id="jishiButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						参与即时揭晓 <span class="caret"></span>
+					</button>
+					<ul id="jishiMenus" class="dropdown-menu">
+						<li hours="1"><a>1小时</a></li>
+						<li hours="2"><a>2小时</a></li>
+						<li hours="3"><a>3小时</a></li>
+						<li hours="5"><a>5小时</a></li>
+						<li hours="8"><a>10小时</a></li>
+						<li hours="12"><a>12小时</a></li>
+						<li hours="24"><a>1天</a></li>
+						<li hours="48"><a>2天</a></li>
+						<li hours="0"><a>不参与</a></li>
+					</ul>
+				</div>
+				<span id="jishiSpan" class="label <if condition="$data.jishijiexiao eq 0">label-default<else/>label-success</if>">
+					<switch name="data.jishijiexiao">
+					    <case value="1">1小时</case>
+					    <case value="2">2小时</case>
+					    <case value="3">3小时</case>
+					    <case value="5">5小时</case>
+					    <case value="12">12小时</case>
+					    <case value="24">1天</case>
+					    <case value="240">2天</case>
+					    <default />不参与
+					</switch>
+				</span>
+				<input id="jishiInput" type="text" name="jishijiexiao" value="{$data.jishijiexiao}" class="hidden" />
+			</td>
+		</tr>
 		<tr>
 			<td class="col-sm-2 control-label">
 				<label class="control-label">商品属性</label>
 			</td>
 			<td>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkRenqi" boolean name="renqi" value="{$data.renqi}" <if condition = "$data.renqi eq 1" >checked="true"</if> />推荐
-				</label>
 				<label class="checkbox-inline">
 					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <if condition = "$data.tuijian eq 1" >checked="true"</if>  value="{$data.tuijian}">人气
 				</label>
@@ -160,7 +204,7 @@
 				<button type="submit" class="btn btn-primary"> 提交 </button>
 				<a class="btn btn-default" href="{:U('index','','')}"> 取消 </a>
 			</td>
-			</div>
+		</tr>
 	</table>
 	<div class="form-group">
 		<p id="checkTips" class="check-tips text-danger"></p>
@@ -176,96 +220,109 @@
 	});
 	//刷新验证码
 	$(function() {
-				var brandSelect = $("#brandSelect");
-				var categorySelect = $("#categorySelect").change(function(evt) {
-					var value = $(this).val();
-					brandSelect.empty();
-					brandSelect.append("<option>==请选择品牌==</option>");
-					if (value) {
-						$.get("{$categoryAction}/" + value, null, ongetbrandsuccess);
-					}
-				});
+		var brandSelect = $("#brandSelect");
+		var categorySelect = $("#categorySelect").change(function(evt) {
+			var value = $(this).val();
+			brandSelect.empty();
+			brandSelect.append("<option>==请选择品牌==</option>");
+			if (value) {
+				$.get("{$categoryAction}/" + value, null, ongetbrandsuccess);
+			}
+		});
 
-				function ongetbrandsuccess(list) {
-					if (list && list.length > 0) {
-						for (var i = 0, len = list.length; i < len; i++) {
-							var option = $("<option>").val(list[i].cid).text(list[i].name);
-							brandSelect.append(option);
-						}
-						brandSelect.val(list[0].cid).change();
+		function ongetbrandsuccess(list) {
+			if (list && list.length > 0) {
+				for (var i = 0, len = list.length; i < len; i++) {
+					var option = $("<option>").val(list[i].cid).text(list[i].name);
+					brandSelect.append(option);
+				}
+				brandSelect.val(list[0].cid).change();
+			}
+		}
+		var thumbButton = $("#thumbButton").click(function() {
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton.parent()).attr("src", url);
+						$("#inputThumb").val(url);
 					}
 				}
-				var thumbButton = $("#thumbButton").click(function() {
-					UI.upload("上传缩略图", {
-						ok: function(files) {
-							if (files.length > 0) {
-								var url = files[0].url;
-								$("img", thumbButton.parent()).attr("src", url);
-								$("#inputThumb").val(url);
-							}
-						}
-					});
-				});
-				$("form").submit(function() {
-					var self = $(this);
-					$.post(self.attr("action"), self.serialize(), success, "json");
-					return false;
+			});
+		});
+		$("form").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
 
-					function success(data) {
-						if (data.status) {
-							window.location.href = data.url;
-						} else {
-							$("#checkTips").text(data.info);
-						}
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+		// 图片上传
+		var photoTemplate = $("#photoTemplate");
+		var imagesButton = $("#imagesButton").click(function() {
+			var limit = 10 - imagesBody.children().length;
+			UI.upload("上传展示图片", {
+				limit: limit,
+				ok: function(files) {
+					for (var i = 0, len = files.length; i < len; i++) {
+						var url = files[i].url;
+						var key = files[i].key;
+						var previewImage = photoTemplate
+							.clone()
+							.removeAttr("id")
+							.removeClass("hidden");
+						imagesBody.append(previewImage);
+						$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
+						$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
+						$("img", previewImage).attr("src", url);
 					}
-				});
-				// 图片上传
-				var photoTemplate = $("#photoTemplate");
-				var imagesButton = $("#imagesButton").click(function() {
-					var limit = 10 - imagesBody.children().length;
-					UI.upload("上传展示图片", {
-						limit: limit,
-						ok: function(files) {
-							for (var i = 0, len = files.length; i < len; i++) {
-								var url = files[i].url;
-								var key = files[i].key;
-								var previewImage = photoTemplate
-									.clone()
-									.removeAttr("id")
-									.removeClass("hidden");
-								imagesBody.append(previewImage);
-								$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
-								$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
-								$("img", previewImage).attr("src", url);
-							}
-							var length = imagesBody.children().length;
-							if (length == 10) {
-								imagesButton.attr("disabled", true);
-							}
-						}
-					});
-				});
-				// 删除图片
-				var imagesBody = $("#imagesBody").on("click", "button", function() {
-					var self = $(this);
-					var parent = self.parent();
-					var file = $("input._file", parent).val();
-					var key = $("input._key", parent).val();
-					//			$.post("{:U('removefile','','')}/" + key);
-					self.closest("div").remove();
-					imagesButton.attr("disabled", false);
-				}); 
-				
-				<present name="data.gid">
-					// 设置下拉框选中
-					categorySelect.val("{$data.cid}").change();
-					brandSelect.val("{$data.bid}").change(); 
-				</present>
-				
-				// 设置勾选狂value
-				$("[boolean]").change(function() {
-					var self = $(this);
-					self.val(self.prop("checked") ? 1 : 0);
-				});
+					var length = imagesBody.children().length;
+					if (length == 10) {
+						imagesButton.attr("disabled", true);
+					}
+				}
+			});
+		});
+		// 删除图片
+		var imagesBody = $("#imagesBody").on("click", "button", function() {
+			var self = $(this);
+			var parent = self.parent();
+			var file = $("input._file", parent).val();
+			var key = $("input._key", parent).val();
+			//			$.post("{:U('removefile','','')}/" + key);
+			self.closest("div").remove();
+			imagesButton.attr("disabled", false);
+		}); 
+		
+		<present name="data.gid">
+			// 设置下拉框选中
+			categorySelect.val("{$data.cid}").change();
+			brandSelect.val("{$data.bid}").change(); 
+		</present>
+		
+		// 设置勾选狂value
+		$("[boolean]").change(function() {
+			var self = $(this);
+			self.val(self.prop("checked") ? 1 : 0);
+		});
+		
+		// 设置即时
+		$("#jishiMenus").on("click", "li", function(){
+			$this = $(this);
+			var hours = $this.attr("hours");
+			var text = $this.text();
+			var css = hours > 0 ? "label-success" : "label-default";
+			$("#jishiInput").val(hours);
+			$("#jishiSpan").text(text)
+				.removeClass("label-success")
+				.removeClass("label-default")
+				.addClass(css);
+		});
 	});
 </script>

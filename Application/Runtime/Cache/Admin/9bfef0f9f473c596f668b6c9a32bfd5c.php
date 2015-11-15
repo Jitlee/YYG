@@ -84,7 +84,21 @@
 			<a>秒杀商品管理</a>
 			<ul>
 				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="xgmgr">
+			<a>限购商品管理</a>
+			<ul>
+				<li id="xglst"><a href="/index.php/Admin/Xiangou">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">添加限购商品</a></li>
+			</ul>
+		</li>
+		<li id="pmmgr">
+			<a>拍卖商品管理</a>
+			<ul>
+				<li id="pmlst"><a href="/index.php/Admin/Paimai">拍卖商品列表</a></li>
+				<li id="addpm"><a href="/index.php/Admin/Paimai/add">添加拍卖商品</a></li>
 			</ul>
 		</li>
 		<li id="cmgr">
@@ -100,9 +114,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -150,22 +164,20 @@ $(function() {
 		 <div class="nav">
 	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加分类</a>
 </div>
-<table id="slideTable" class="table table-bordered">
+<table id="categoryTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>id</th>
-			<th>名称</th>
-			<th>链接</th>
+			<th style="width:48px"></th>
+			<th>分类名称</th>
 			<th style="width:130px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$slide): ?><tr>
-			<td><?php echo ($slide["id"]); ?></td>
-			<td><?php echo ($slide["name"]); ?></td>
-			<td><?php echo ($slide["link"]); ?></td>
-			<td id="<?php echo ($slide["id"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($slide["id"]); ?>'>编辑</a>
+		<?php if(is_array($list)): foreach($list as $key=>$category): ?><tr>
+			<td><img class="thumbnail" style="padding: 1px;margin: 0; width: 30px;" src="<?php echo ((isset($category["thumb"]) && ($category["thumb"] !== ""))?($category["thumb"]):'/Public/Admin/images/favicon.png'); ?>" /></td>
+			<td><?php echo ($category["name"]); ?></td>
+			<td cid="<?php echo ($category["cid"]); ?>">
+				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($category["cid"]); ?>'>编辑</a>
 				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 			</td>
 		</tr><?php endforeach; endif; ?>
@@ -173,19 +185,19 @@ $(function() {
 </table>
 <script type="text/javascript">
 	$(function(){
-		$("#slideTable").on("click",".delete", function(evt) {
+		$("#categoryTable").on("click",".delete", function(evt) {
 			var ths = $(this);
-			var id = ths.parent().attr("id");
+			var cid = ths.parent().attr("cid");
 			var tr = ths.closest("tr");
 			UI.confirm("是否删除", {
 				ok: function() {
-					remove(tr, id);
+					remove(tr, cid);
 				}
 			});
 		});
 		
-		function remove(tr, id) {
-			$.post("<?php echo U('remove','','');?>/" + id, null, function(data) {
+		function remove(tr, cid) {
+			$.post("<?php echo U('remove','','');?>/" + cid, null, function(data) {
 				if(data.status) {
 					tr.remove();
 				} else {

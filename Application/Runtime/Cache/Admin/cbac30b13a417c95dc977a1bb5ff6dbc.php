@@ -42,7 +42,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Member/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -107,9 +107,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -154,81 +154,93 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
-	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+	<?php if(isset($data["uid"])): ?><input type="hidden" name="uid" value="<?php echo ($data["uid"]); ?>" /><?php endif; ?>
 
 	<table class="table">
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="categorySelect" class="control-label"><r>*</r>所属分类</label>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputUsername" class="control-label"><r>*</r>用户名</label>
 			</td>
 			<td>
-				<select id="categorySelect" class="form-control" name="cid" required>
-					<option>==请选择栏目==</option>
-					<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><option value="<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></option><?php endforeach; endif; ?>
-				</select>
-			</td>
-		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="brandSelect" class="control-label"><r>*</r>所属品牌</label>
-			</td>
-			<td>
-				<select id="brandSelect" class="form-control" name="bid" required>
-					<option>==请选择品牌==</option>
-					<?php if(is_array($allBrands)): foreach($allBrands as $key=>$b): ?><option value="<?php echo ($b["bid"]); ?>"><?php echo ($b["name"]); ?></option><?php endforeach; endif; ?>
-				</select>
+				<input class="form-control" id="inputUsername" name="username" value="<?php echo ($data["username"]); ?>"  required/>
 			</td>
 		</tr>
 		<tr>
 			<td class="form-inline col-sm-2 control-label">
-				<label for="inputTitle" class="control-label"><r>*</r>商品标题</label>
+				<label for="inputEmail" class="control-label"><r>*</r>邮箱</label>
 			</td>
 			<td>
-				<input class="form-control" id="inputTitle" name="title" value="<?php echo ($data["title"]); ?>"  required/>
+				<input type="email" class="form-control" id="inputEmail" name="email" value="<?php echo ($data["email"]); ?>"  required/>
 			</td>
 		</tr>
 		<tr>
-			<td class="col-sm-2 control-label">
-				<label for="inputSubTitle" class="control-label">副标题</label>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputMobile" class="control-label"><r>*</r>手机</label>
 			</td>
 			<td>
-				<input class="form-control" id="inputSubTitle" name="subtitle" value="<?php echo ($data["subtitle"]); ?>" />
+				<input type="number" class="form-control" id="inputMobile" name="mobile" value="<?php echo ($data["mobile"]); ?>"  required/>
 			</td>
 		</tr>
 		<tr>
-			<td class="col-sm-2 control-label">
-				<label for="inputDescription" class="control-label">商品描述</label>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputPassword" class="control-label">密码</label>
 			</td>
 			<td>
-				<textarea class="form-control automaxlength" name="description" id="inputDescription" rows="2" maxlength="255"><?php echo ($data["description"]); ?></textarea>
+				<input type="password" class="form-control" id="inputPassword" name="password"/>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputMoney" class="control-label">账户金额</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="<?php echo ($data["money"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
-				<label class="control-label">元</label>
+				<input type="number" class="form-control" id="inputMoney" name="money" value="<?php echo ($data["money"]); ?>"/>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputJingyan" class="control-label">经验值</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ($data["danjia"]); ?>" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">元</label>
+				<input type="number" class="form-control" id="inputJingyan" name="jingyan" value="<?php echo ($data["jingyan"]); ?>"/>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputScrore" class="control-label">积分</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ($data["maxqishu"]); ?>" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
+				<input type="number" class="form-control" id="inputScrore" name="score" value="<?php echo ($data["score"]); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label class="control-label">邮箱认证</label>
+			</td>
+			<td>
+				<label class="radio-inline">
+					<input type="radio" name="emailRatio" id="emailRatio1" value="1" <?php if($data["emailcode"] AND $data["emailcode"] != '-1'): ?>checked="checked"<?php endif; ?>>已验证
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="emailRatio" id="emailRatio2" value="0" <?php if($data["emailcode"] == '-1'): ?>checked="checked"<?php endif; ?>>未验证
+				</label>
+				<input type="hidden" name="emailcode" value="<?php echo ($data["emailcode"]); ?>" />
+			</td>
+		</tr>
+		<tr>
+			<td class="form-inline col-sm-2 control-label">
+				<label class="control-label">手机认证</label>
+			</td>
+			<td>
+				<label class="radio-inline">
+					<input type="radio" name="mobileRatio" id="emailRatio1" value="1" <?php if($data["emailcode"] AND $data["mobilecode"] != '-1'): ?>checked="checked"<?php endif; ?>>已验证
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="mobileRatio" id="emailRatio2" value="0" <?php if($data["mobilecode"] == '-1'): ?>checked="checked"<?php endif; ?>>未验证
+				</label>
+				<input type="hidden" name="mobilecode" value="<?php echo ($data["mobilecode"]); ?>" />
 			</td>
 		</tr>
 		<tr class="form-inline">
@@ -236,73 +248,17 @@ $(function() {
 				<label for="inputThumb" class="control-label">缩略图</label>
 			</td>
 			<td>
-				<img src="<?php echo ((isset($data["thumb"]) && ($data["thumb"] !== ""))?($data["thumb"]):'/Public/Admin/images/goods.jpg'); ?>" class="img-thumbnail thumb" alt="缩略图" />
-				<input class="form-control" style="width:400px" id="inputThumb" name="thumb" readonly value="<?php echo ((isset($data["thumb"]) && ($data["thumb"] !== ""))?($data["thumb"]):'/Public/Admin/images/goods.jpg'); ?>" />
+				<img src="<?php echo ((isset($data["img"]) && ($data["img"] !== ""))?($data["img"]):'/Public/Admin/images/goods.jpg'); ?>" class="img-thumbnail thumb" alt="缩略图" />
+				<input class="form-control" style="width:400px" id="inputThumb" name="img" readonly value="<?php echo ((isset($data["img"]) && ($data["img"] !== ""))?($data["img"]):'/Public/Admin/images/goods.jpg'); ?>" />
 				<button id="thumbButton" type="button" class="btn btn-default">上传图片</button>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="imagesButton" class="control-label">展示图片</label>
-			</td>
-			<td>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">
-							最多上传10张图片
-							<button id="imagesButton" type="button" class="btn btn-default">上传图片</button>
-						</h3>
-					</div>
-					<div class="panel-body">
-						<div id="photoTemplate" class="hidden col-xs-6 col-md-3">
-							<a class="thumbnail">
-								<img alt="" />
-								<input type="hidden" class="hidden _file" />
-								<input type="hidden" class="hidden _key" />
-								<button type="button" class="btn btn-link">删除</button>
-							</a>
-						</div>
-						<div id="imagesBody" class="row">
-							<?php if(is_array($images)): foreach($images as $key=>$image): ?><div class="col-xs-6 col-md-3">
-									<a class="thumbnail">
-										<img alt="" src="<?php echo ($image["image_url"]); ?>" />
-										<input type="hidden" class="hidden _file" name="imageUrls[]" value="<?php echo ($image["image_url"]); ?>" />
-										<input type="hidden" class="hidden _key" name="imageKeys[]" value="<?php echo ($image["image_key"]); ?>" />
-										<button type="button" class="btn btn-link">删除</button>
-									</a>
-								</div><?php endforeach; endif; ?>
-						</div>
-					</div>
-				</div>
-			</td>
-		</tr>
 		<tr>
-			<td class="col-sm-2 control-label">
-				<label for="contentEdtior" class="control-label">商品内容详情</label>
+			<td class="form-inline col-sm-2 control-label">
+				<label for="inputQianming" class="control-label">签名</label>
 			</td>
 			<td>
-				
-<script type="text/javascript" charset="utf-8" src="/Public/UEditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/Public/UEditor/ueditor.all.js"></script>
-<script type="text/plain" id="contentEdtior" name="content" style=""><?php echo ($data["content"]); ?></script>
-<script type="text/javascript">var ue_contentEdtior = UE.getEditor("contentEdtior");</script>
-
-			</td>
-		</tr>
-		<tr>
-			<td class="col-sm-2 control-label">
-				<label class="control-label">商品属性</label>
-			</td>
-			<td>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkRenqi" boolean name="renqi" value="<?php echo ($data["renqi"]); ?>" <?php if($data["renqi"] == 1): ?>checked="true"<?php endif; ?> />推荐
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">人气
-				</label>
-				<label class="checkbox-inline">
-					<input type="checkbox" id="checkBaoyou" boolean name="baoyou" <?php if($data["baoyou"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["baoyou"]); ?>">包邮
-				</label>
+				<textarea name="qianming" maxlength="255" class="form-control automaxlength"><?php echo ($data["qianming"]); ?></textarea>
 			</td>
 		</tr>
 		<tr>
@@ -312,7 +268,7 @@ $(function() {
 				<button type="submit" class="btn btn-primary"> 提交 </button>
 				<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
 			</td>
-			</div>
+		</tr>
 	</table>
 	<div class="form-group">
 		<p id="checkTips" class="check-tips text-danger"></p>
@@ -445,95 +401,38 @@ $(function() {
 	});
 	//刷新验证码
 	$(function() {
-				var brandSelect = $("#brandSelect");
-				var categorySelect = $("#categorySelect").change(function(evt) {
-					var value = $(this).val();
-					brandSelect.empty();
-					brandSelect.append("<option>==请选择品牌==</option>");
-					if (value) {
-						$.get("<?php echo ($categoryAction); ?>/" + value, null, ongetbrandsuccess);
-					}
-				});
-
-				function ongetbrandsuccess(list) {
-					if (list && list.length > 0) {
-						for (var i = 0, len = list.length; i < len; i++) {
-							var option = $("<option>").val(list[i].cid).text(list[i].name);
-							brandSelect.append(option);
-						}
-						brandSelect.val(list[0].cid).change();
+		var thumbButton = $("#thumbButton").click(function() {
+			UI.upload("上传缩略图", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", thumbButton.parent()).attr("src", url);
+						$("#inputThumb").val(url);
 					}
 				}
-				var thumbButton = $("#thumbButton").click(function() {
-					UI.upload("上传缩略图", {
-						ok: function(files) {
-							if (files.length > 0) {
-								var url = files[0].url;
-								$("img", thumbButton.parent()).attr("src", url);
-								$("#inputThumb").val(url);
-							}
-						}
-					});
-				});
-				$("form").submit(function() {
-					var self = $(this);
-					$.post(self.attr("action"), self.serialize(), success, "json");
-					return false;
+			});
+		});
+		$("form").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
 
-					function success(data) {
-						if (data.status) {
-							window.location.href = data.url;
-						} else {
-							$("#checkTips").text(data.info);
-						}
-					}
-				});
-				// 图片上传
-				var photoTemplate = $("#photoTemplate");
-				var imagesButton = $("#imagesButton").click(function() {
-					var limit = 10 - imagesBody.children().length;
-					UI.upload("上传展示图片", {
-						limit: limit,
-						ok: function(files) {
-							for (var i = 0, len = files.length; i < len; i++) {
-								var url = files[i].url;
-								var key = files[i].key;
-								var previewImage = photoTemplate
-									.clone()
-									.removeAttr("id")
-									.removeClass("hidden");
-								imagesBody.append(previewImage);
-								$("input._file", previewImage).val(url).attr("name", "imageUrls[]");
-								$("input._key", previewImage).val(key).attr("name", "imageKeys[]");
-								$("img", previewImage).attr("src", url);
-							}
-							var length = imagesBody.children().length;
-							if (length == 10) {
-								imagesButton.attr("disabled", true);
-							}
-						}
-					});
-				});
-				// 删除图片
-				var imagesBody = $("#imagesBody").on("click", "button", function() {
-					var self = $(this);
-					var parent = self.parent();
-					var file = $("input._file", parent).val();
-					var key = $("input._key", parent).val();
-					//			$.post("<?php echo U('removefile','','');?>/" + key);
-					self.closest("div").remove();
-					imagesButton.attr("disabled", false);
-				}); 
-				
-				<?php if(isset($data["gid"])): ?>// 设置下拉框选中
-					categorySelect.val("<?php echo ($data["cid"]); ?>").change();
-					brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
-				
-				// 设置勾选狂value
-				$("[boolean]").change(function() {
-					var self = $(this);
-					self.val(self.prop("checked") ? 1 : 0);
-				});
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+		
+		// 设置认证
+		$("input[type='radio']").change(function() {
+			var $this = $(this);
+			var value = $this.val();
+			var input = $("input[type='hidden']", $this.closest("td"));
+			input.val(value == 0 ?  "-1" : "verifycode");
+		});
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

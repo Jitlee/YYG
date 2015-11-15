@@ -49,7 +49,6 @@
 	});
 	 //刷新验证码
 	$(function() {
-		
 		$("form").submit(function() {
 			var self = $(this);
 			$.post('{$action}', self.serialize(), success, "json");

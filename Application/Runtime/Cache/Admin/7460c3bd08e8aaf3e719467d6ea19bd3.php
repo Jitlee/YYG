@@ -87,6 +87,13 @@
 				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
+		<li id="pmmgr">
+			<a>拍卖商品管理</a>
+			<ul>
+				<li id="pmlst"><a href="/index.php/Admin/Paimai">拍卖商品列表</a></li>
+				<li id="addpm"><a href="/index.php/Admin/Paimai/add">添加拍卖商品</a></li>
+			</ul>
+		</li>
 		<li id="cmgr">
 			<a>分类管理</a>
 			<ul>
