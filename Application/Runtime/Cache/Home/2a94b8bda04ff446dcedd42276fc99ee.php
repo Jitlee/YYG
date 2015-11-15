@@ -105,7 +105,7 @@
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
+			<a class="mui-tab-item" href="/index.php/Home/MiaoSha">
 				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
 				<span class="mui-tab-label">秒杀</span>
 			</a>
