@@ -1,7 +1,7 @@
 <div class="nav">
-	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加秒杀商品</a>
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">{$addTitle}</a>
 </div>
-<table id="goodTable" class="table table-bordered">
+<table id="listTable" class="table table-bordered">
 	<thead>
 		<tr>
 			<th>商品标题</th>
@@ -10,7 +10,10 @@
 			<th>单价/元</th>
 			<th>期数/最大期数</th>
 			<th>人气商品</th>
-			<th style="width:150px">操作</th>
+			<if condition="$type eq 2">
+				<th>限购次数</th>
+			</if>
+			<th style="width:200px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -22,8 +25,12 @@
 			<td>{$good.danjia}</td>
 			<td>{$good.qishu}/{$good.maxqishu}</td>
 			<td>{$good.renqi}</td>
-			<td cid="{$good.gid}">
+			<if condition="$type eq 2">
+				<td>{$good.xiangou}</td>
+			</if>
+			<td gid="{$good.gid}">
 				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$good.gid}'>编辑</a>
+				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
 				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('history','','')}/{$good.gid}'>查看往期</a>
 			</td>
 		</tr>
@@ -32,5 +39,25 @@
 </table>
 <script type="text/javascript">
 	$(function(){
+		$("#listTable").on("click",".delete", function(evt) {
+			var ths = $(this);
+			var gid = ths.parent().attr("gid");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, gid);
+				}
+			});
+		});
+		
+		function remove(tr, gid) {
+			$.post("{:U('remove','','')}/" + gid, null, function(data) {
+				if(data.status) {
+					tr.remove();
+				} else {
+					$("#tips").text(data.info);
+				}
+			}, "json");
+		}
 	});
 </script>

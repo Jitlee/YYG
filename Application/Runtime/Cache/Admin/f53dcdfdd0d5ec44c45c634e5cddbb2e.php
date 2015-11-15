@@ -84,7 +84,14 @@
 			<a>秒杀商品管理</a>
 			<ul>
 				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="xgmgr">
+			<a>限购商品管理</a>
+			<ul>
+				<li id="xglst"><a href="/index.php/Admin/Miaosha">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">限购秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="pmmgr">
@@ -107,9 +114,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -169,7 +176,7 @@ $(function() {
 			<th>出价次数(次)</th>
 			<th>最高价(元)</th>
 			<th>结束时间</th>
-			<th style="width:60px">操作</th>
+			<th style="width:150px">操作</th>
 		</tr>
 	</thead>
 	<tbody>

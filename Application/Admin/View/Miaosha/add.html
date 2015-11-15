@@ -3,7 +3,7 @@
 	<present name="data.gid">
 		<input type="hidden" name="gid" value="{$data.gid}" />
 	</present>
-
+	<input type="hidden" name="type" value="{$type}" />
 	<table class="table">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
@@ -73,6 +73,17 @@
 				<label class="control-label">元</label>
 			</td>
 		</tr>
+		<if condition="$type eq 2">
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou}" maxlength="7" pattern="^\d+$" required/>
+				<label class="control-label">元</label>
+			</td>
+		</tr>
+		</if>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>

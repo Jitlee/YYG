@@ -7300,3 +7300,1897 @@ INFO: [ app_end ] --START--
 INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001356s ]
 INFO: [ app_end ] --END-- [ RunTime:0.001733s ]
 
+[ 2015-11-15T16:47:42+08:00 ] ::1 /index.php/Admin/Member
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000175s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004373s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004230s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004357s ]
+SQL: SHOW COLUMNS FROM `yyg_member` [ RunTime:0.0588s ]
+SQL: SELECT COUNT(*) AS tp_count FROM `yyg_member` LIMIT 1   [ RunTime:0.0536s ]
+SQL: SELECT * FROM `yyg_member` LIMIT 0,25   [ RunTime:0.1300s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000200s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000271s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.046833s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.046922s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001229s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001302s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004631s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004749s ]
+
+[ 2015-11-15T16:47:48+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000407s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000439s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000494s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0571s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0879s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0832s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0605s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0796s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0719s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000122s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000178s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.035967s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.036049s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000203s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000240s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000649s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000707s ]
+
+[ 2015-11-15T16:47:50+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000245s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000311s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000352s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0555s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0538s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000096s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000134s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.032860s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.032914s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000149s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000181s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000466s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000505s ]
+
+[ 2015-11-15T16:47:50+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577270970
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000400s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000534s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000604s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000604s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000690s ]
+
+[ 2015-11-15T16:48:07+08:00 ] ::1 /index.php/Admin/Paimai
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004619s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.002700s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.002891s ]
+SQL: SHOW COLUMNS FROM `yyg_paimai` [ RunTime:0.0714s ]
+SQL: SELECT * FROM `yyg_paimai`  [ RunTime:0.0612s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0591s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='5' ) LIMIT 1   [ RunTime:0.0615s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0595s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0812s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0594s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0596s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000148s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000208s ]
+NOTIC: [8] Undefined index: canyurenshu /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/f53dcdfdd0d5ec44c45c634e5cddbb2e.php 第 190 行.
+NOTIC: [8] Undefined index: canyurenshu /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/f53dcdfdd0d5ec44c45c634e5cddbb2e.php 第 190 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.044063s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.044159s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001128s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001187s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004048s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004140s ]
+
+[ 2015-11-15T16:48:10+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000206s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000260s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000290s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0606s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0614s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0611s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0595s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0615s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0615s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000115s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000183s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.015953s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016031s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000227s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000274s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000732s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000796s ]
+
+[ 2015-11-15T16:48:15+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000216s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000280s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000315s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0646s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0748s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0635s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0696s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0714s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0683s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000097s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000158s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013770s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013838s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000196s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000234s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000551s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000614s ]
+
+[ 2015-11-15T16:48:18+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000381s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000275s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000305s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0598s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0690s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0601s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0555s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0656s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0528s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000138s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000213s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010255s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010300s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000156s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000196s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000580s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000646s ]
+
+[ 2015-11-15T16:48:19+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000211s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000265s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000296s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0882s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0996s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0589s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0597s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0638s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0611s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000076s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000122s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011235s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011282s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000132s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000162s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000543s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000586s ]
+
+[ 2015-11-15T16:49:30+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003815s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003939s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004074s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0570s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0557s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0525s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0548s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0579s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0546s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000149s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000217s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041455s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.041540s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001257s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001315s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001622s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001719s ]
+
+[ 2015-11-15T16:49:33+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000211s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000265s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000298s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0640s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0731s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000128s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000175s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 237 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.030569s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.030641s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000149s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000181s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000696s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000765s ]
+
+[ 2015-11-15T16:49:33+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577373714
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000416s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000487s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000548s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000667s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000767s ]
+
+[ 2015-11-15T16:49:35+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000210s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000266s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000295s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0601s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0595s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0576s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0658s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0655s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0585s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000067s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000108s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011824s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011878s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000182s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000235s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000521s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000603s ]
+
+[ 2015-11-15T16:49:37+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000203s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000260s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000290s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0603s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0622s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000275s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000347s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 237 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.021168s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.021215s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000118s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000142s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000416s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000470s ]
+
+[ 2015-11-15T16:49:37+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577377652
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000268s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000339s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000383s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000592s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000676s ]
+
+[ 2015-11-15T16:49:42+08:00 ] ::1 /index.php/Admin/Miaosha/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000205s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000262s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000293s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0607s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0705s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000101s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000142s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019140s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019189s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000117s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000142s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000523s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000574s ]
+
+[ 2015-11-15T16:49:43+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577383150
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000558s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000797s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000911s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000775s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000862s ]
+
+[ 2015-11-15T16:49:51+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000290s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000365s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000410s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0721s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0663s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0615s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0619s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0618s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0571s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000151s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000210s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016773s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016855s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000165s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000211s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000536s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000578s ]
+
+[ 2015-11-15T16:49:54+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000536s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000276s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000307s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0678s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0771s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0688s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0799s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0646s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0617s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000076s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000122s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.011645s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.011693s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000136s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000165s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000393s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000431s ]
+
+[ 2015-11-15T16:49:55+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000208s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000265s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000297s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0752s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0540s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0592s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0602s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0567s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0554s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000119s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000192s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014256s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014314s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000171s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000533s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000585s ]
+
+[ 2015-11-15T16:49:59+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000262s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000293s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0607s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0729s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0599s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0597s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0606s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0708s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000110s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000181s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013711s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013778s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000148s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000173s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000518s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000571s ]
+
+[ 2015-11-15T16:50:10+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000015s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000765s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003852s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003959s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0560s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0588s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0521s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0525s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0729s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0621s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000153s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000223s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.039664s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.039755s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001666s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001745s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003412s ]
+INFO: [ app_end ] --END-- [ RunTime:0.003510s ]
+
+[ 2015-11-15T16:50:11+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000268s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000299s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0607s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0539s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0572s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0612s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0518s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0568s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000059s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000096s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.007405s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.007452s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000105s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000128s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000390s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000430s ]
+
+[ 2015-11-15T16:50:13+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000206s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000260s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000290s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0622s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0554s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0696s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0848s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0568s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0667s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000098s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000169s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012350s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012426s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000227s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000294s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000716s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000829s ]
+
+[ 2015-11-15T16:50:17+08:00 ] ::1 /index.php/Admin/Xiangou/edit/12
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000256s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000316s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000356s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0773s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `gid` = 12 LIMIT 1   [ RunTime:0.0650s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0560s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0636s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0722s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0542s ]
+SQL: SHOW COLUMNS FROM `yyg_goods_images` [ RunTime:0.0552s ]
+SQL: SELECT * FROM `yyg_goods_images` WHERE `gid` = 12  [ RunTime:0.0802s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0606s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0582s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0568s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 4 LIMIT 1   [ RunTime:0.0617s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0626s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='4' [ RunTime:0.0631s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000107s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000148s ]
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.028836s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.028884s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000148s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000173s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000420s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000472s ]
+
+[ 2015-11-15T16:50:18+08:00 ] ::1 /index.php/Admin/Category/brands/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000013s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000409s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000800s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000892s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0767s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 4 LIMIT 1   [ RunTime:0.0659s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0623s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='4' [ RunTime:0.0657s ]
+
+[ 2015-11-15T16:50:18+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577418245
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000019s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001176s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003312s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003458s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001352s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001550s ]
+
+[ 2015-11-15T16:50:22+08:00 ] ::1 /index.php/Admin/Xiangou/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000290s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000285s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000323s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0644s ]
+SQL: SELECT * FROM `yyg_miaosha`  [ RunTime:0.0676s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0642s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0822s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0613s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0733s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 19 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000176s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000224s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.017623s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.017784s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000152s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000176s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000460s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000540s ]
+
+[ 2015-11-15T16:51:08+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000127s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004057s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004162s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004296s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0613s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 1  [ RunTime:0.0630s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0602s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0611s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0586s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0588s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000103s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000152s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.040345s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040411s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001504s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001552s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004433s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004510s ]
+
+[ 2015-11-15T16:51:10+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000385s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000421s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0550s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0590s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000100s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000162s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013590s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013650s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000144s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000177s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000399s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000434s ]
+
+[ 2015-11-15T16:51:16+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000760s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000543s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000649s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0556s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0557s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000135s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000185s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 237 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.036021s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.036100s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000143s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000168s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000475s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000510s ]
+
+[ 2015-11-15T16:51:17+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577476995
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000033s ]
+INFO: [ app_init ] --END-- [ RunTime:0.001021s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000783s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000915s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000604s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000689s ]
+
+[ 2015-11-15T16:51:19+08:00 ] ::1 /index.php/Admin/Category/brands/4
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000014s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000393s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000391s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000435s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0563s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 4 LIMIT 1   [ RunTime:0.0565s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0549s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='4' [ RunTime:0.0577s ]
+
+[ 2015-11-15T16:51:20+08:00 ] ::1 /index.php/Admin/Category/brands/7
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000018s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000367s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000486s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000550s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0595s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 7 LIMIT 1   [ RunTime:0.0520s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0564s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='7' [ RunTime:0.0530s ]
+
+[ 2015-11-15T16:52:34+08:00 ] ::1 /index.php/Admin/Xiangou/
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000053s ]
+INFO: [ app_init ] --END-- [ RunTime:0.004772s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003676s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003800s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0732s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0630s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000092s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000132s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041974s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042238s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001605s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001659s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001837s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001907s ]
+
+[ 2015-11-15T16:52:38+08:00 ] ::1 /index.php/Admin/Xiangou/upload
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000374s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000542s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000621s ]
+NOTIC: [2] call_user_func() expects parameter 1 to be a valid callback, no array or string given /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Upload.class.php 第 170 行.
+
+[ 2015-11-15T16:53:37+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003706s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004205s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004360s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0935s ]
+NOTIC: [8] Undefined index: validate /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model.class.php 第 1185 行.
+NOTIC: [8] Undefined index: auto /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model.class.php 第 1128 行.
+SQL: INSERT INTO `yyg_miaosha` (`type`,`cid`,`bid`,`title`,`subtitle`,`description`,`money`,`danjia`,`xiangou`,`maxqishu`,`thumb`,`jishijiexiao`,`content`) VALUES ('2','7','0','黄金大盘','万足金','新疆世家倾心打造','88888','1','50','100','/Uploads/Goods/20151115/564847d6556e0.png','0','&lt;p&gt;富贵豪华，云雾富饶&lt;/p&gt;') [ RunTime:0.0878s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha_history` [ RunTime:0.0608s ]
+SQL: INSERT INTO `yyg_miaosha` (`type`,`cid`,`bid`,`title`,`subtitle`,`description`,`money`,`danjia`,`xiangou`,`maxqishu`,`thumb`,`jishijiexiao`,`content`) VALUES ('2','7','0','黄金大盘','万足金','新疆世家倾心打造','88888','1','50','100','/Uploads/Goods/20151115/564847d6556e0.png','0','&lt;p&gt;富贵豪华，云雾富饶&lt;/p&gt;') [ RunTime:0.0659s ]
+NOTIC: [8] Undefined index: imageUrls /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/GoodsBaseController.class.php 第 8 行.
+NOTIC: [8] Undefined index: imageKeys /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/GoodsBaseController.class.php 第 9 行.
+SQL: SHOW COLUMNS FROM `yyg_goods_images` [ RunTime:0.0538s ]
+SQL: DELETE FROM `yyg_goods_images` WHERE ( 13 ) [ RunTime:0.0592s ]
+
+[ 2015-11-15T16:53:38+08:00 ] ::1 /index.php/Admin/Xiangou/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000206s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000296s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0810s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0695s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0588s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0595s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0611s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0587s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0651s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0687s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000082s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000128s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.025422s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.025508s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001444s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001487s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000784s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000859s ]
+
+[ 2015-11-15T16:53:43+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000026s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000231s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000271s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000302s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0584s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0566s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0581s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0548s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0519s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0527s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0539s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0541s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000114s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000183s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013015s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013076s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000226s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000273s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000718s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000781s ]
+
+[ 2015-11-15T16:53:46+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000205s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000259s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000290s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0624s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 1  [ RunTime:0.0642s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0603s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0597s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0735s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0604s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000123s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000200s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014294s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014361s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000223s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000276s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000805s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000895s ]
+
+[ 2015-11-15T16:53:48+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000205s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000257s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000288s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0552s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0585s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0528s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0557s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0533s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0549s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0541s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0542s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000123s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000200s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013767s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013838s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000215s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000262s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000964s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001093s ]
+
+[ 2015-11-15T16:54:09+08:00 ] ::1 /index.php/Admin/Xiangou/edit/14
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003721s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003543s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003663s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0566s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `gid` = 14 LIMIT 1   [ RunTime:0.0651s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0591s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0587s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0650s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0640s ]
+SQL: SHOW COLUMNS FROM `yyg_goods_images` [ RunTime:0.0582s ]
+SQL: SELECT * FROM `yyg_goods_images` WHERE `gid` = 14  [ RunTime:0.0548s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0620s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0606s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0591s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 7 LIMIT 1   [ RunTime:0.0597s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0553s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='7' [ RunTime:0.0649s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000130s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000178s ]
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.052941s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.052984s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001723s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001770s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001324s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001410s ]
+
+[ 2015-11-15T16:54:10+08:00 ] ::1 /index.php/Admin/Category/brands/7
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000021s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000456s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000642s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000733s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0551s ]
+SQL: SELECT * FROM `yyg_category` WHERE `cid` = 7 LIMIT 1   [ RunTime:0.0545s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0576s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_brand AS b WHERE a.bid = b.bid AND a. cid='7' [ RunTime:0.0636s ]
+
+[ 2015-11-15T16:54:10+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577649966
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000663s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.001155s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.001367s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001190s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001399s ]
+
+[ 2015-11-15T16:54:40+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000022s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003793s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004040s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004179s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0597s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0943s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0681s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0621s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0859s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0600s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0583s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0626s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000194s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000267s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.040346s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.040439s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001315s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001374s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001769s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001922s ]
+
+[ 2015-11-15T16:56:20+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003865s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003859s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003964s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0652s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0641s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0623s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0644s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0586s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0584s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0578s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0592s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000182s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000256s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.050505s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.050646s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.003253s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003324s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004628s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004807s ]
+
+[ 2015-11-15T16:56:34+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000023s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003866s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004008s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004145s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0625s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0758s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0824s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0821s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0689s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0616s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0601s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0580s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000168s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000240s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041820s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.041902s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.001383s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.001441s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004883s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004970s ]
+
+[ 2015-11-15T16:56:41+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000359s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000403s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000457s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0719s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0798s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0744s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0600s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0759s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0598s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0668s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0578s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000106s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000154s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014703s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014789s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000151s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000177s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001011s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001111s ]
+
+[ 2015-11-15T16:56:44+08:00 ] ::1 /index.php/Admin/Xiangou/remove/14
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000011s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000332s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000585s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000659s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0587s ]
+SQL: DELETE FROM `yyg_miaosha` WHERE `gid` = 14 [ RunTime:0.0671s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000068s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000154s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014405s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014534s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000313s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000362s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000874s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000945s ]
+
+[ 2015-11-15T16:56:46+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000354s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000330s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000381s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0681s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.1212s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0603s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0596s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0834s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0593s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000152s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000225s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.016202s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.016273s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000242s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000291s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000818s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000892s ]
+
+[ 2015-11-15T16:57:15+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000078s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003906s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.004011s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004120s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.1041s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 1  [ RunTime:0.0739s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0913s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.0629s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0710s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0725s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000214s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000311s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041990s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.042221s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000857s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000938s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.004169s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004285s ]
+
+[ 2015-11-15T16:59:13+08:00 ] ::1 /index.php/Admin/Miaosha
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000024s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003803s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003963s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.004096s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.1255s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 1  [ RunTime:0.1041s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.1195s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='4' ) LIMIT 1   [ RunTime:0.1339s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.1063s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.1164s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000152s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000222s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.041441s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.041584s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.003241s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003312s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003909s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004047s ]
+
+[ 2015-11-15T16:59:28+08:00 ] ::1 /index.php/Admin/Xiangou/add
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000025s ]
+INFO: [ app_init ] --END-- [ RunTime:0.003820s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.003596s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.003693s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.1252s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.1380s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000181s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000227s ]
+NOTIC: [8] Undefined variable: allBrands /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 186 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 195 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 203 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 211 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 219 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 228 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 237 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 246 行.
+NOTIC: [8] Undefined variable: images /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 282 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 303 行.
+NOTIC: [8] Undefined variable: isAllCategories /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 314 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 329 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 330 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 339 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 348 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+NOTIC: [8] Undefined variable: data /Users/JitleeWan/Documents/Works/YYG/Application/Runtime/Cache/Admin/787977888427f380f2cbf51bc5f2ac15.php 第 351 行.
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.033027s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.033083s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.002992s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.003062s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.003951s ]
+INFO: [ app_end ] --END-- [ RunTime:0.004050s ]
+
+[ 2015-11-15T16:59:29+08:00 ] ::1 /index.php/Admin/Public/ueditup?action=config&&noCache=1447577969295
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000020s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000570s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000603s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000687s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000693s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000818s ]
+
+[ 2015-11-15T16:59:31+08:00 ] ::1 /index.php/Admin/Xiangou
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000219s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000363s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000406s ]
+SQL: SHOW COLUMNS FROM `yyg_miaosha` [ RunTime:0.0626s ]
+SQL: SELECT * FROM `yyg_miaosha` WHERE `type` = 2  [ RunTime:0.0621s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0628s ]
+SQL: SELECT * FROM `yyg_category` WHERE ( 1=1 AND cid='7' ) LIMIT 1   [ RunTime:0.0591s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0563s ]
+SQL: SELECT * FROM `yyg_brand` WHERE ( 1=1 AND bid='0' ) LIMIT 1   [ RunTime:0.0568s ]
+NOTIC: [8] Undefined index: lstTitle /Users/JitleeWan/Documents/Works/YYG/Application/Admin/Controller/MiaoshaController.class.php 第 20 行.
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000099s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000159s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014469s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014636s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000183s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000216s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000479s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000533s ]
+
+[ 2015-11-15T16:59:39+08:00 ] ::1 /index.php/Admin/Category
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000352s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000477s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000605s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0556s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0518s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000140s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000213s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013292s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013431s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000255s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000308s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.001005s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001093s ]
+
+[ 2015-11-15T16:59:47+08:00 ] ::1 /index.php/Admin/Brand
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000317s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000363s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000407s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0614s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0549s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0525s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0568s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0541s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0537s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0639s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0547s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0669s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0561s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000174s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000249s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.019037s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.019116s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000247s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000294s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000884s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001007s ]
+
+[ 2015-11-15T16:59:52+08:00 ] ::1 /index.php/Admin/Brand/edit/12
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000247s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000273s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000307s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0635s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0582s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0590s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 12 LIMIT 1   [ RunTime:0.0639s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0655s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0610s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000157s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000228s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020879s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020985s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000295s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000348s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000910s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001012s ]
+
+[ 2015-11-15T16:59:55+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000016s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000488s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000311s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000351s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0609s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0566s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0588s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0577s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0604s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0772s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0606s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0811s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0643s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0589s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000127s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000203s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014510s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014580s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000207s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000254s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000727s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000812s ]
+
+[ 2015-11-15T16:59:57+08:00 ] ::1 /index.php/Admin/Brand/edit/13
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000205s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000262s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000293s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0635s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0622s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0604s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 13 LIMIT 1   [ RunTime:0.0662s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0533s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0580s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000105s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000157s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013625s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013702s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000124s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000147s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000370s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000404s ]
+
+[ 2015-11-15T16:59:59+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000222s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000272s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000304s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0601s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0615s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0641s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0610s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0633s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0705s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0603s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0637s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0610s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0713s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000108s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000170s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.012672s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.012752s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000230s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000355s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000631s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000698s ]
+
+[ 2015-11-15T17:00:01+08:00 ] ::1 /index.php/Admin/Brand/edit/14
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000212s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000270s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000301s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0649s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0694s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0514s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 14 LIMIT 1   [ RunTime:0.0580s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0574s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0656s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000203s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000281s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013859s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013928s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000147s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000177s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000391s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000424s ]
+
+[ 2015-11-15T17:00:03+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000206s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000296s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0588s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0549s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0617s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0563s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0534s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0565s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0557s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0577s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0740s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0691s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000084s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000172s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.010352s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.010419s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000193s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000227s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000604s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000681s ]
+
+[ 2015-11-15T17:00:05+08:00 ] ::1 /index.php/Admin/Brand/edit/16
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000209s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000264s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000295s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0644s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0548s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0539s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 16 LIMIT 1   [ RunTime:0.0595s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0621s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0539s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000126s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000184s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014195s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014261s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000135s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000166s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000447s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000486s ]
+
+[ 2015-11-15T17:00:07+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000223s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000285s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000318s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0556s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0551s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0758s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0578s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0551s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0533s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0583s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0600s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0564s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0592s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000086s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000137s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013558s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013607s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000124s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000149s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000358s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000392s ]
+
+[ 2015-11-15T17:00:10+08:00 ] ::1 /index.php/Admin/Brand/edit/17
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000012s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000274s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000345s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000386s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0837s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0601s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0770s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 17 LIMIT 1   [ RunTime:0.0599s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0540s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0582s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000078s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000117s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.008044s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.008086s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000107s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000130s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000364s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000397s ]
+
+[ 2015-11-15T17:00:12+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000207s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000278s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000311s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0614s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0620s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0602s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0629s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0599s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0689s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0702s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0623s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0693s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0615s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000132s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000214s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014286s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014359s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000454s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000599s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000751s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000889s ]
+
+[ 2015-11-15T17:00:14+08:00 ] ::1 /index.php/Admin/Brand/edit/18
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000208s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000396s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000433s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0556s ]
+SQL: SELECT * FROM `yyg_category`  [ RunTime:0.0621s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0562s ]
+SQL: SELECT * FROM `yyg_brand` WHERE `bid` = 18 LIMIT 1   [ RunTime:0.0536s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0530s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0600s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000109s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000161s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.014040s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.014123s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000144s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000174s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000476s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000529s ]
+
+[ 2015-11-15T17:00:17+08:00 ] ::1 /index.php/Admin/Brand/index
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000009s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000220s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000267s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000297s ]
+SQL: SHOW COLUMNS FROM `yyg_brand` [ RunTime:0.0599s ]
+SQL: SELECT * FROM `yyg_brand`  [ RunTime:0.0586s ]
+SQL: SHOW COLUMNS FROM `yyg_category` [ RunTime:0.0798s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='12' [ RunTime:0.0618s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='13' [ RunTime:0.0598s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='14' [ RunTime:0.0606s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='15' [ RunTime:0.0637s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='16' [ RunTime:0.0609s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='17' [ RunTime:0.0645s ]
+NOTIC: [8] Undefined index: mapping_order /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 186 行.
+NOTIC: [8] Undefined index: mapping_limit /Users/JitleeWan/Documents/Works/YYG/ThinkPHP/Library/Think/Model/RelationModel.class.php 第 187 行.
+SQL: SELECT b.* FROM yyg_category_has_brand AS a, yyg_category AS b WHERE a.cid = b.cid AND a. bid='18' [ RunTime:0.0662s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000123s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000207s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.013231s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.013287s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000166s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000203s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000541s ]
+INFO: [ app_end ] --END-- [ RunTime:0.000593s ]
+
+[ 2015-11-15T17:00:27+08:00 ] ::1 /index.php/Admin/Slide
+INFO: [ app_init ] --START--
+INFO: Run Behavior\BuildLiteBehavior [ RunTime:0.000010s ]
+INFO: [ app_init ] --END-- [ RunTime:0.000311s ]
+INFO: [ app_begin ] --START--
+INFO: Run Behavior\ReadHtmlCacheBehavior [ RunTime:0.000394s ]
+INFO: [ app_begin ] --END-- [ RunTime:0.000446s ]
+SQL: SHOW COLUMNS FROM `yyg_slide` [ RunTime:0.0596s ]
+SQL: SELECT * FROM `yyg_slide`  [ RunTime:0.0681s ]
+INFO: [ view_parse ] --START--
+INFO: [ template_filter ] --START--
+INFO: Run Behavior\ContentReplaceBehavior [ RunTime:0.000143s ]
+INFO: [ template_filter ] --END-- [ RunTime:0.000214s ]
+INFO: Run Behavior\ParseTemplateBehavior [ RunTime:0.020101s ]
+INFO: [ view_parse ] --END-- [ RunTime:0.020279s ]
+INFO: [ view_filter ] --START--
+INFO: Run Behavior\WriteHtmlCacheBehavior [ RunTime:0.000247s ]
+INFO: [ view_filter ] --END-- [ RunTime:0.000293s ]
+INFO: [ app_end ] --START--
+INFO: Run Behavior\ShowPageTraceBehavior [ RunTime:0.000831s ]
+INFO: [ app_end ] --END-- [ RunTime:0.001003s ]
+

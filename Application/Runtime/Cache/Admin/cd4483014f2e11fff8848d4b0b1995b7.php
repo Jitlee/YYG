@@ -84,7 +84,14 @@
 			<a>秒杀商品管理</a>
 			<ul>
 				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="xgmgr">
+			<a>限购商品管理</a>
+			<ul>
+				<li id="xglst"><a href="/index.php/Admin/Miaosha">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">限购秒杀商品</a></li>
 			</ul>
 		</li>
 		<li id="pmmgr">
@@ -205,9 +212,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li><?php endif; ?>
-    <?php $__FOR_START_600240763__=$minPageNum;$__FOR_END_600240763__=$pageNum;for($i=$__FOR_START_600240763__;$i < $__FOR_END_600240763__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
+    <?php $__FOR_START_2082912214__=$minPageNum;$__FOR_END_2082912214__=$pageNum;for($i=$__FOR_START_2082912214__;$i < $__FOR_END_2082912214__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-    <?php $__FOR_START_78036814__=$pageNum+1;$__FOR_END_78036814__=$maxPageNum;for($i=$__FOR_START_78036814__;$i < $__FOR_END_78036814__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+    <?php $__FOR_START_1626447283__=$pageNum+1;$__FOR_END_1626447283__=$maxPageNum;for($i=$__FOR_START_1626447283__;$i < $__FOR_END_1626447283__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum == $pageCount): ?><li class="disabled">
       <span aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

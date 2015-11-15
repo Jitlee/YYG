@@ -1,27 +1,27 @@
 <?php
 namespace Admin\Controller;
 class MiaoshaController extends GoodsBaseController {
-	
-	protected function onadd($data) {
-		$hdb = M('MiaoshaHistory');
-		$db->add($data);
-	}
-	
-	protected function onedit($data) {
-	}
+	protected $_config = array(
+		'type'			=> 1,
+		'listTitle'		=> '秒杀商品列表',
+		'addTitle'		=> '添加秒杀商品',
+		'editTitle'		=> '编辑秒杀商品',
+		'listMid'		=> 'mslst',
+		'addMid'			=> 'addms',
+	);
 	
 	public function index() {
-		$this->assign('type', $this->goodsType);
+		$this->assign('type', $this->_config['type']);
 			
 		$db = D('miaosha');
-		$list = $db->relation(true)->select();
-		if($list != false) {
-			$this->assign('list',$list);// 模板变量赋值
-		}
-		$this->assign('title', '秒杀商品列表');
+		$map['type'] = $this->_config['type'];
+		$list = $db->where($map)->relation(true)->select();
+		$this->assign('list',$list);// 模板变量赋值
+		$this->assign('title', $this->_config['lstTitle']);
+		$this->assign('addTitle', $this->_config['addTitle']);
 		$this->assign('pid', 'gdmgr');
-		$this->assign('mid', 'mslst');
-		$this->display();
+		$this->assign('mid', $this->_config['listMid']);
+		$this->display('Miaosha/index');
 	}
 	
 	public function add() {
@@ -42,6 +42,8 @@ class MiaoshaController extends GoodsBaseController {
 				$this->ajaxReturn('数据创建错误');
 			}
 		} else {
+			$this->assign('type', $this->_config['type']);
+			
 			$cdb = M('category');
 			$categories = $cdb->select();
 			$this->assign('allCategories', $categories);
@@ -49,9 +51,9 @@ class MiaoshaController extends GoodsBaseController {
 			$this->assign('categoryAction', U('Category/brands', '', ''));
 			$this->assign('uploader', U('upload', '', ''));
 			$this->assign('pid', 'gdmgr');
-			$this->assign('mid', 'addms');
-			$this->assign('title', '添加秒杀商品');
-			$this->display();
+			$this->assign('mid', $this->_config['addMid']);
+			$this->assign('title', $this->_config['addTitle']);
+			$this->display('Miaosha/add');
 		}
 	}
 	
@@ -70,7 +72,7 @@ class MiaoshaController extends GoodsBaseController {
 				$this->ajaxReturn('数据创建错误');
 			}
 		} else {
-			$this->assign('type', $this->goodsType);
+			$this->assign('type', $this->_config['type']);
 			
 			$db = D('miaosha');
 			$map['gid'] = $gid;
@@ -96,10 +98,20 @@ class MiaoshaController extends GoodsBaseController {
 			
 			$this->assign('uploader', U('upload', '', ''));
 			$this->assign('pid', 'gdmgr');
-			$this->assign('mid', $this->_config['addmid']);
-			$this->assign('title', $this->_config['edit']);
+			$this->assign('mid', $this->_config['addMid']);
+			$this->assign('title', $this->_config['editTitle']);
 			
-			$this->display('add');
+			$this->display('Miaosha/add');
+		}
+	}
+	
+	public function remove($gid = 0) {
+		$db = M('Miaosha');
+		$ret = $db->delete($gid);
+		if($ret > -1) {
+			$this->success('操作成功');
+		} else {
+			$this->error('数据错误');
 		}
 	}
 	
