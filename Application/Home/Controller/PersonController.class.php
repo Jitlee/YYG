@@ -17,6 +17,11 @@ class PersonController extends Controller {
         $this->display();
     }
 	
+	public function me(){
+    	$this->assign('title', '一元购');
+        $this->display();
+    }
+	
 	public function login($username = null, $password = null, $verify = null) {
 		if(IS_POST) {
 //			if(!check_verify($verify)) {

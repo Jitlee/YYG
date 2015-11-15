@@ -98,7 +98,6 @@
 		</li>
 
 	</ul>
-<<<<<<< Updated upstream
 </div>
 		</div>
 		<nav class="mui-bar mui-bar-tab">
@@ -118,7 +117,7 @@
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a class="mui-tab-item" href="/index.php/Home/Person/login">
+			<a class="mui-tab-item" href="/index.php/Home/Person/me">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -148,55 +147,4 @@
 			});
 		});
 	});
-=======
-</div>
-		</div>
-		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="tab-webview-subpage-about.html">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-chat.html">
-				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">秒杀</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">拍卖</span>
-			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">我的</span>
-			</a>
-		</nav>
-		<div class="gotop backtop" style="display:none;"></div>
-	</body>
-
-</html>
-<script type="text/javascript">
-	//返回顶部
-	$(document).ready(function() {
-		$(window).scroll(function() {
-			var scrollHeight = $(document).height();
-			var scrollTop = $(window).scrollTop();
-			var $windowHeight = $(window).innerHeight();
-			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
-				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
-			});
-		});
-		$('.backtop').click(function(e) {
-			$(".gotop").css({
-				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
-			});
-			e.preventDefault();
-			$('html,body').animate({
-				scrollTop: 0
-			});
-		});
-	});
->>>>>>> Stashed changes
 </script>

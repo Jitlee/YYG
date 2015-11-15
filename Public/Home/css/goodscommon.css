@@ -67,7 +67,9 @@ text-decoration:none!important;outline:none;}
 .ico-sortArrow-down:before{top:6px;transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);}.ico-sortArrow-up:after{top:4px;}.ico-sortArrow-gray:before{border-bottom-color:#9a9a9a;}.ico-sortArrow-gray:after{border-color:#9a9a9a;}.ico-sortArrow-red:before{border-bottom-color:#db3652;}.ico-sortArrow-red:after{border-color:#db3652;}.ico-sort2Arrow{width:8px;height:11px;position:relative;background:none;}.ico-sort2Arrow:before,.ico-sort2Arrow:after{content:"";position:absolute;display:block;width:3px;height:3px;border:2px solid #b2b2b2;border-top:0;border-right:0;}
 .ico-sort2Arrow:before{top:1px;left:1px;transform:rotate(135deg);-webkit-transform:rotate(135deg);-moz-transform:rotate(135deg);}.ico-sort2Arrow:after{top:5px;left:1px;transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);}.ico-arrow-transGray{width:15px;height:0;border-width:15px;border-color:transparent;border-left:15px solid rgba(0,0,0,.9);transform:rotate(45deg);-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);}.ico-loading,.ico-loading-l{background-image:url('../../lib/img/common/loading.gif');background-repeat:no-repeat;background-position:center center;width:16px;height:16px;background-size:auto;}
 .ico-loading-l{width:50px;height:50px;}
-.icon{display:inline-block;vertical-align:middle;background:url('../images/iconfont-jiaofei.png') no-repeat;background-size:210px 210px;}
+.icon{display:inline-block;vertical-align:middle;background:url('../images/yyg_icon_3.png') no-repeat;
+background-size:70px 70px;}
+.imgsss{display:inline-block;vertical-align:middle;background:url('../images/yyg_icon_3.png') no-repeat;background-size:50px 50px;}
 .icon-alert{width:70px;height:70px;background-position:0 0;}
 .icon-suc{width:70px;height:70px;background-position:-70px 0;}
 .icon-err{width:70px;height:70px;background-position:-140px 0;}
