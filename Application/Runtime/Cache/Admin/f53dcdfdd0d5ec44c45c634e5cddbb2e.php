@@ -90,8 +90,8 @@
 		<li id="xgmgr">
 			<a>限购商品管理</a>
 			<ul>
-				<li id="xglst"><a href="/index.php/Admin/Miaosha">限购商品列表</a></li>
-				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">限购秒杀商品</a></li>
+				<li id="xglst"><a href="/index.php/Admin/Xiangou">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">添加限购商品</a></li>
 			</ul>
 		</li>
 		<li id="pmmgr">

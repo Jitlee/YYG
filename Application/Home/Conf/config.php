@@ -18,5 +18,6 @@ return array(
 		'__IMG__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/images',
 		'__CSS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/css',
 		'__JS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/js',
+		'__FONT_ICON__'		=> 'http://at.alicdn.com/t/font_1447592374_6820765.css',
 	),
 );

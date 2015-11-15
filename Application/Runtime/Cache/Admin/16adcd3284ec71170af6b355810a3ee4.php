@@ -84,7 +84,14 @@
 			<a>秒杀商品管理</a>
 			<ul>
 				<li id="mslst"><a href="/index.php/Admin/Miaosha">秒杀商品列表</a></li>
-				<li id="addms"><a href="/index.php/Admin//Miaosha/add">添加秒杀商品</a></li>
+				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
+			</ul>
+		</li>
+		<li id="xgmgr">
+			<a>限购商品管理</a>
+			<ul>
+				<li id="xglst"><a href="/index.php/Admin/Xiangou">限购商品列表</a></li>
+				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">添加限购商品</a></li>
 			</ul>
 		</li>
 		<li id="pmmgr">
@@ -107,9 +114,9 @@
 		<li id="mbmgr_">
 			<a>会员管理</a>
 			<ul>
-				<li id="mblst"><a>会员列表</a></li>
-				<li id="fdmb"><a>查找会员</a></li>
-				<li id="addmb"><a>添加会员</a></li>
+				<li id="mblst"><a href="/index.php/Admin/Member">会员列表</a></li>
+				<li id="fdmb"><a href="/index.php/Admin/Member/find">查找会员</a></li>
+				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
 			</ul>
@@ -301,7 +308,7 @@ $(function() {
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="contentEdtior" class="control-label">结束时间</label>
+				<label for="datepicker" class="control-label">结束时间</label>
 			</td>
 			<td>
   				<input id="datepicker" type="text" style="width:150px" value="<?php echo (date('Y年m月d日',strtotime($data["end_time"]))); ?>" class="form-control" required/>
@@ -314,7 +321,7 @@ $(function() {
 				<label class="radio-inline">
 					<input type="radio" name="endTimeRadio" id="endTimeRadio3" value="79200">晚上10点
 				</label>
-				<input id="inputEndTime" name="end_time" value="<?php echo ($data["end_time"]); ?>" class=""/>
+				<input id="inputEndTime" name="end_time" value="<?php echo ($data["end_time"]); ?>" class="hidden"/>
 			</td>
 		</tr>
 		<tr>
@@ -323,7 +330,10 @@ $(function() {
 			</td>
 			<td>
 				<label class="checkbox-inline">
-					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">人气
+					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">推荐
+				</label>
+				<label class="checkbox-inline">
+					<input type="checkbox" id="checkBaoyou" boolean name="renqi" <?php if($data["renqi"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["baoyou"]); ?>">人气
 				</label>
 				<label class="checkbox-inline">
 					<input type="checkbox" id="checkBaoyou" boolean name="baoyou" <?php if($data["baoyou"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["baoyou"]); ?>">包邮

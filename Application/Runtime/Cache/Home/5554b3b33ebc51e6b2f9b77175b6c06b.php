@@ -1,22 +1,20 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="author" content="m.178hui.com" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
-		<meta property="qc:admins" content="304107566762141336654" />
-		<title>{$title}</title>
-		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/owl.carousel.css" rel="stylesheet">
-		<link href="__CSS__/global.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/public.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/index.css" rel="stylesheet" type="text/css" />
-		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
+		<title><?php echo ($title); ?></title>
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
+		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
 
-		<script src="__JQ__"></script>
-		<script src="__JS__/owl.carousel.min.js"></script>
-		<script src="__HOME__/layer/layer.js"></script>
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/Public/Home/js/owl.carousel.min.js"></script>
+		<script src="/Public/Home/layer/layer.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -39,29 +37,29 @@
 
 	<body>
 		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">{$title}</h1>
+			<h1 class="mui-title"><?php echo ($title); ?></h1>
 		</header>
 		<div class="mui-content">
-			{__CONTENT__}
+			
 		</div>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="{:U('Home/index', '', '')}">
+			<a id="defaultTab" class="mui-tab-item mui-active" href="/index.php/Home/Index">
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a id="miaosha" class="mui-tab-item" href="{:U('Miaosha/index', '', '')}">
+			<a class="mui-tab-item" href="/index.php/Home/MiaoSha">
 				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
 				<span class="mui-tab-label">秒杀</span>
 			</a>
-			<a id="xiangou" class="mui-tab-item" href="{:U('Xiangou/index', '', '')}">
+			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
 				<span class="mui-icon mui-icon-contact"></span>
 				<span class="mui-tab-label">限购</span>
 			</a>
-			<a id="paimai" class="mui-tab-item" href="{:U('Paimai/index', '', '')}">
+			<a class="mui-tab-item" href="tab-webview-subpage-setting.html">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="{:U('Person/me', '', '')}">
+			<a class="mui-tab-item" href="/index.php/Home/Person/login">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -78,19 +76,17 @@
 			var scrollTop = $(window).scrollTop();
 			var $windowHeight = $(window).innerHeight();
 			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
-				"background-image": "url(__IMG__/iconfont-fanhuidingbu.png)"
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
 			});
 		});
 		$('.backtop').click(function(e) {
 			$(".gotop").css({
-				"background-image": "url(__IMG__/iconfont-fanhuidingbu_up.png)"
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
 			});
 			e.preventDefault();
 			$('html,body').animate({
 				scrollTop: 0
 			});
 		});
-		
-		$("#{$pid|default='index'}").addClass("mui-active");
 	});
 </script>
