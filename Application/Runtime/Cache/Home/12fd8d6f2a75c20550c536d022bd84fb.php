@@ -5,12 +5,14 @@
 		<meta name="author" content="m.178hui.com" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
+		<meta property="qc:admins" content="304107566762141336654" />
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447592374_6820765.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="/Public/Home/js/owl.carousel.min.js"></script>
@@ -158,14 +160,16 @@
 							|</span> <a id='forgetPassword' href="forgetPassword">忘记密码</a>
 						</div>
 					</div>
-					
+					<br />
 					<div class="mui-content-padded oauth-area">
-
+				
 					</div>
 
 					 
 				</form>
-
+				<div class="mui-content-padded">
+						第三方登录<a href="qq">QQ</a>	
+				</div>
 			
 		</div>
 
@@ -240,23 +244,23 @@
 </html>
 		</div>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="/index.php/Home/Index">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Home/index', '', '');?>">
 				<span class="mui-icon mui-icon-home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a class="mui-tab-item" href="/index.php/Home/MiaoSha">
+			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Miaosha/index', '', '');?>">
 				<span class="mui-icon mui-icon-email"><span class="mui-badge">9</span></span>
 				<span class="mui-tab-label">秒杀</span>
 			</a>
-			<a class="mui-tab-item" href="tab-webview-subpage-contact.html">
+			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
 				<span class="mui-icon mui-icon-contact"></span>
 				<span class="mui-tab-label">限购</span>
 			</a>
-			<a class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
+			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a class="mui-tab-item" href="/index.php/Home/Person/login">
+			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -285,5 +289,7 @@
 				scrollTop: 0
 			});
 		});
+		
+		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
 	});
 </script>
