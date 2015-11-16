@@ -1,0 +1,122 @@
+.mui-bar {
+	background-color:#000000;
+}
+
+.mui-bar .mui-title {
+	color: #fff;
+}
+
+@font-face {
+	font-family: "digitalfont";
+	src:url('../fonts/digifaw.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+}
+
+/** 推荐样式开始 */
+.tuijian {
+	display: flex;
+	background: #fff;
+	line-height: 1;
+}
+
+.tuijian-img-container {
+	display: -webkit-box;
+	-webkit-box-orient: horizontal;
+	-webkit-box-pack: center;
+	-webkit-box-align: center;
+	display: -moz-box;
+	-moz-box-orient: horizontal;
+	-moz-box-pack: center;
+	-moz-box-align: center;
+	display: -o-box;
+	-o-box-orient: horizontal;
+	-o-box-pack: center;
+	-o-box-align: center;
+	display: -ms-box;
+	-ms-box-orient: horizontal;
+	-ms-box-pack: center;
+	-ms-box-align: center;
+	display: box;
+	box-orient: horizontal;
+	box-pack: center;
+	box-align: center;
+}
+
+.tuijian-img {
+	width: 30vw;
+	margin-left:3vw;
+}
+
+.tuijian-content {
+	flex: 1;
+	margin: 3vw;
+}
+
+.tuijian-content-title {
+	color: #333;
+	line-height: 1;
+	margin-bottom: 5px;
+}
+
+.tuijian-content h5,
+.tuijian-content .iconfont {
+	line-height: 25px;
+	font-size: 12px;
+}
+
+r {
+	color: red;
+}
+
+.tuijian-content .larger {
+	font-size: 24px
+}
+
+.tuijian-content .small {
+	font-size: 8px
+}
+
+.tuijian-content label {
+	margin-right: 1vw;
+}
+
+.mui-btn,
+button {
+	border-radius: 0;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.mui-btn-red {
+	color: #fff;
+	border: 1px solid #FF002B;
+	background-color: #FF002B;
+}
+
+d {
+	font-family: "digitalfont"!important;
+  	-webkit-font-smoothing: antialiased;
+  	-webkit-text-stroke-width: 0.2px;
+  	-moz-osx-font-smoothing: grayscale;
+  	font-size:14px;
+  	display:inline-block;
+  	background-color: #333;
+	color:#fff;
+	padding: 2px 3px;
+		margin: 0px 2px;
+		line-height: 1;
+}
+
+@media only screen and (max-width: 330px) {
+	d {
+		font-size:13px;
+		padding: 1px 1px;
+    		margin: 0px 1px;
+		}
+}
+/** 推荐样式结束 **/
+
+/** 主菜Tab页开始 **/
+.mui-icon.iconfont {
+	font-size:20px;
+}
+/** 主菜Tab页结束 **/
