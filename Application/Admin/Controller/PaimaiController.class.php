@@ -1,21 +1,31 @@
 <?php
 namespace Admin\Controller;
 class PaimaiController extends GoodsBaseController {
-	
-	protected function onadd($data) {
-	}
-	
-	protected function onedit($data) {
-	}
-	
-	public function index() {
+	private $goodsType = 3;
+	public function index($pageSize = 25, $pageNum = 1) {
 		$this->assign('type', $this->goodsType);
 			
+		// 分页
 		$db = D('paimai');
-		$list = $db->relation(true)->select();
-		if($list != false) {
-			$this->assign('list',$list);// 模板变量赋值
+		$count = $db->count();
+		if(!$pageSize) {
+			$pageSize = 25;
 		}
+		$pageNum = intval($pageNum);
+		$pageCount = ceil($count / $pageSize);
+		if($pageNum > $pageCount) {
+			$pageNum = $pageCount;
+		}
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('count', $count);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+		
+		$list = $db->relation(true)->page($pageNum, $pageSize)->select();
+		$this->assign('list',$list);// 模板变量赋值
+		
 		$this->assign('title', '拍卖商品列表');
 		$this->assign('pid', 'gdmgr');
 		$this->assign('mid', 'pmlst');

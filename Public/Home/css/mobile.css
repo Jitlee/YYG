@@ -11,10 +11,13 @@
 	src:url('../fonts/digifaw.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
 }
 
+.yyg-content {
+	background: #fff;
+}
+
 /** 推荐样式开始 */
 .tuijian {
 	display: flex;
-	background: #fff;
 	line-height: 1;
 }
 
@@ -44,6 +47,7 @@
 .tuijian-img {
 	width: 30vw;
 	margin-left:3vw;
+	max-width: 140px;
 }
 
 .tuijian-content {
@@ -64,7 +68,7 @@
 }
 
 r {
-	color: red;
+	color: #FF002B;
 }
 
 .tuijian-content .larger {
@@ -120,3 +124,108 @@ d {
 	font-size:20px;
 }
 /** 主菜Tab页结束 **/
+
+/** 商品列表 **/
+.yyg-min-nav-bar {
+	padding: 0 5px;
+	font-size:12px;
+	line-height: 22px;
+}
+
+.yyg-min-nav-bar::before {
+	content:"0";
+	background-color: #FF002B;
+	color: #FF002B;
+	
+}
+
+.yyg-goods-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+}
+
+.yyg-goods-list:after {
+	content:" ";
+	display: block;
+	visibility: hidden;
+	height:1px;
+	clear: both;
+}
+
+.yyg-goods-list-item {
+	float:left;
+	padding: 10px;
+	margin: 0;
+	width:50%;
+	border-bottom:solid 1px #efeff4;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	overflow: hidden;
+	
+}
+
+.yyg-goods-list-item:nth-child(odd) {
+	border-right:solid 1px #efeff4;
+}
+
+.yyg-goods-img-container {
+	margin: 10px auto;
+	width:30vw;
+	height:30vw;
+}
+
+.yyg-goods-img {
+	height: 30vw;
+	vertical-align: middle;
+}
+
+.yyg-goods-list-item button{
+	width: 100%;
+	padding: 3px;
+	margin-top:5px;
+}
+.yyg-goods-media {
+	background-color: #FBFBFB;
+}
+
+.yyg-goods-media p{
+	font-size: 10px;
+	color:#A9A9A9;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+}
+
+.yyg-goods-media h5 {
+	font-size: 10px;
+}
+
+.yyg-goods-media .larger {
+	font-size: 16px
+}
+
+.yyg-goods-media .small {
+	font-size: 8px
+}
+
+.yyg-goods-media label {
+	margin-right: 1vw;
+}
+
+.yyg-goods-media time{
+	font-size: 4vw;
+	display:block;
+	width: 100%;
+	text-align: center;
+}
+
+.yyg-goods-media time d{
+	font-size: 4vw;
+}

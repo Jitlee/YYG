@@ -1,5 +1,5 @@
 <present name="tuijian">
-	<section class="mui-content-padded" style="display:flex;background-color: #fff;">
+	<section class="tuijian mui-content-padded yyg-content">
 		<div class="tuijian-img-container">
 			<img class="tuijian-img" src="{$tuijian.thumb}" />
 		</div>
@@ -7,8 +7,61 @@
 			<p class="tuijian-content-title">{$tuijian.title}</p>
 			<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger">{$tuijian.zuigaojia}</r></h5>
 			<h5><i class="iconfont icon-add"></i><label>出价次数</label>{$tuijian.chujiacishu}次</h5>
-			<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="{$tuijian.end_time|strtotime}"></time></h5>
+			<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="{$tuijian.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
 			<button type="button" class="mui-btn mui-btn-red">我要出价</button>
 		</div>
 	</section>
 </present>
+<div class="yyg-content mui-content-padded">
+	<ul id="goodList" class="yyg-goods-list">
+		<foreach name="list" item="item">
+			<li class="yyg-goods-list-item">
+				<div class="yyg-goods-img-container">
+					<img class="yyg-goods-img" src="{$item.thumb}" />
+				</div>
+				<div class="yyg-goods-media">
+					<p class="tuijian-content-title">{$item.title}</p>
+					<h5><label>当前价格</label><r class="small">¥</r> <r class="larger">{$item.zuigaojia}</r></h5>
+					<time countdown="{$item.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+				</div>
+				<a href="{:U('view', '', '')}/{$item.gid}" type="button" class="mui-btn mui-btn-red">我要出价</a>
+			</li>
+		</foreach>
+	</ul>
+</div>
+
+<script>
+	$(function() {
+		var pageNum = 1;
+		var goodList = $("#goodList").swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		});
+		
+		$(window).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+       			page();
+			}
+		}
+		
+		var template = $("li:first-child", goodList);
+		
+		function page() {
+			$.get("{:U('page', '', '')}/8/" + (++pageNum), null, function(list) {
+	       		$.each(list, function() {
+	       			var item = template.clone();
+	       			$("img", item).attr("src", this.thumb);
+	       			$("p", item).text(this.title);
+	       			$("h5 r:last-child", item).text(this.zuigaojia);
+	       			$("a", item).attr("href", "{:U('view', '', '')}/" + this.gid);
+	       			$("time", item).attr("countdown", this.end_time);
+					goodList.append(item);
+	       		});
+	       });
+		}
+	});
+</script>

@@ -10,13 +10,30 @@ class MiaoshaController extends GoodsBaseController {
 		'addMid'			=> 'addms',
 	);
 	
-	public function index() {
+	public function index($pageSize = 25, $pageNum = 1) {
 		$this->assign('type', $this->_config['type']);
-			
-		$db = D('miaosha');
 		$map['type'] = $this->_config['type'];
-		$list = $db->where($map)->relation(true)->select();
+		// 分页
+		$db = D('miaosha');
+		$count = $db->where($map)->count();
+		if(!$pageSize) {
+			$pageSize = 25;
+		}
+		$pageNum = intval($pageNum);
+		$pageCount = ceil($count / $pageSize);
+		if($pageNum > $pageCount) {
+			$pageNum = $pageCount;
+		}
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('count', $count);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+		
+		$list = $db->where($map)->relation(true)->page($pageNum, $pageSize)->select();
 		$this->assign('list',$list);// 模板变量赋值
+		
 		$this->assign('title', $this->_config['lstTitle']);
 		$this->assign('addTitle', $this->_config['addTitle']);
 		$this->assign('pid', 'gdmgr');
