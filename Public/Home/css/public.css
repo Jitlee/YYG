@@ -10,19 +10,6 @@ body {
 	-webkit-text-size-adjust: none;
 }
 
-.mui-bar {
-	background-color:#000000;
-}
-
-.mui-bar .mui-title {
-	color: #fff;
-}
-
-@font-face {
-	font-family: "digitalfont";
-	src:url('../fonts/digifaw.ttf') format('truetype'); /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
-}
-
 ul, li {
 	margin: 0px;
 	padding: 0px;
