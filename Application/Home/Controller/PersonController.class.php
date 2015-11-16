@@ -147,53 +147,48 @@ class PersonController extends Controller {
 /*******QQ登录*******/
 public function qq()
 {
-//		$_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
-//		$login_url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=" 
-//			.$app_id. "&redirect_uri=" . urlencode($callback)
-//			. "&state=" . $_SESSION['state']
-//			. "&scope=".urlencode($scope);
-//
-//		//显示出登录地址
-//       header('Location:'.$login_url);
-		 
-//		layout(true);
-//		$this->display();
-	//	http://www.thinkphp.cn/code/1127.html
-	$qqobj=new \Org\Util\Qqconnect();
- 	$qqobj->getAuthCode();
+    $appkey = C('OAUTH.QQ_APPKEY');
+    $scope = C('OAUTH.QQ_SCOPE');
+    $callback = C('OAUTH.QQ_CALLBACK');
 
+    $qqobj=new \Lib\Login\QQConnect();
+    $qqobj->login($appkey, $callback, $scope);
 }
 
-public function Webibo()
+public function weibo()
 {
-	
+	$appkey = C('OAUTH.WEIBO_APPKEY');
+    $scope = C('OAUTH.WEIBO_SCOPE');
+    $callback = C('OAUTH.WEIBO_CALLBACK');
+    $weibo =new \Lib\Login\WeiboConnect();
+    $weibo->login($appkey, $callback, $scope);
 }
-	/**
-     * 获取access_token值
-     * @return array 返回包含access_token,过期时间的数组
-     * */
-private function get_token($app_id,$app_key,$code,$callback,$state){
-        if($state !== $_SESSION['state']){
-			return false;
-			exit();
-        }
-
-           $url = "https://graph.qq.com/oauth2.0/token";
-            $param = array(
-                "grant_type"    =>    "authorization_code",
-                "client_id"     =>    $app_id,
-                "client_secret" =>    $app_key,
-                "code"          =>    $code,
-                "state"         =>    $state,
-                "redirect_uri"  =>    $callback
-            );
-            $response = $this->get_url($url, $param);
-            if($response == false) {
-                return false;
-            }
-            $params = array();
-            parse_str($response, $params);
-            return $params["access_token"];
+public function auth() {
+    //$type = $this->_param(2);
+    //if($type == 'qq') {
+        //import('@.ORG.QQConnect');
+        $qqobj=new \Lib\Login\QQConnect();
+        $appkey = C('OAUTH.QQ_APPKEY');
+        $appsecretkey = C('OAUTH.QQ_APPSECRETKEY');
+        $callback = C('OAUTH.QQ_CALLBACK');
+    	$qqobj=new \Lib\Login\QQConnect();
+        $info = $qqobj->callback($appkey, $appsecretkey, $callback);
+        $user = $qqobj->get_user_info($info['token'], $info['openid'], $appkey);
+        print_r($user);
+        print_r($info);
+//  } else if($type == 'weibo') {
+//      import('@.ORG.WeiboConnect');
+//      $appkey = C('OAUTH.WEIBO_APPKEY');
+//      $appsecretkey = C('OAUTH.WEIBO_APPSECRETKEY');
+//      $callback = C('OAUTH.WEIBO_CALLBACK');
+//      $weibo = new WeiboConnect();
+//      $info = $weibo->callback($appkey, $appsecretkey, $callback);
+//      $user = $weibo->get_user_info($info['token'], $info['openid']);
+//      print_r($user);
+//      print_r($info);
+//  } else {
+//      $this->error('无效的回调类型！');
+//  }
 }
 	
 	

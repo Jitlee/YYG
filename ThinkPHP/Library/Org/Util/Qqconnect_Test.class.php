@@ -8,7 +8,7 @@ namespace Org\Util;
  /**
   *  qq第三方登录认证
  */
-class Qqconnect {
+class Qqconnect_Test {
      private static $data;
      //APP ID
      private $app_id="101269538";
