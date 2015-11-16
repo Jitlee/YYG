@@ -1,0 +1,14 @@
+<present name="tuijian">
+	<section class="mui-content-padded" style="display:flex;background-color: #fff;">
+		<div class="tuijian-img-container">
+			<img class="tuijian-img" src="{$tuijian.thumb}" />
+		</div>
+		<div class="tuijian-content">
+			<p class="tuijian-content-title">{$tuijian.title}</p>
+			<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger">{$tuijian.zuigaojia}</r></h5>
+			<h5><i class="iconfont icon-add"></i><label>出价次数</label>{$tuijian.chujiacishu}次</h5>
+			<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="{$tuijian.end_time|strtotime}"></time></h5>
+			<button type="button" class="mui-btn mui-btn-red">我要出价</button>
+		</div>
+	</section>
+</present>

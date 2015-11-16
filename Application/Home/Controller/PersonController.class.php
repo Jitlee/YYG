@@ -146,7 +146,7 @@ class PersonController extends Controller {
 	
 /*******QQ登录*******/
 public function qq()
-	{
+{
 //		$_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
 //		$login_url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=" 
 //			.$app_id. "&redirect_uri=" . urlencode($callback)
@@ -162,7 +162,12 @@ public function qq()
 	$qqobj=new \Org\Util\Qqconnect();
  	$qqobj->getAuthCode();
 
-	}
+}
+
+public function Webibo()
+{
+	
+}
 	/**
      * 获取access_token值
      * @return array 返回包含access_token,过期时间的数组

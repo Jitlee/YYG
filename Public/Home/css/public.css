@@ -10,14 +10,6 @@ body {
 	-webkit-text-size-adjust: none;
 }
 
-.mui-bar {
-	background-color:#000000;
-}
-
-.mui-bar .mui-title {
-	color: #fff;
-}
-
 ul, li {
 	margin: 0px;
 	padding: 0px;
