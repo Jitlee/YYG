@@ -25,6 +25,6 @@ return array(
         'WEIBO_APPKEY'      => '3125608124',
         'WEIBO_APPSECRETKEY'=> 'e85df87aaf5d7587f8cb1194606577ec',
         'WEIBO_SCOPE'       => '',
-        'WEIBO_CALLBACK'    => 'http://yyg.ritacc.net/index.php/Home/Person/auth',
+        'WEIBO_CALLBACK'    => 'http://yyg.ritacc.net/index.php/Home/Person/weiboauth',
     ),
 );

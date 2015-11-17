@@ -146,11 +146,11 @@
 				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="familyInfo">
 					<a class="mui-navigate-right">
 						<div class="avatar">
-							<img class="circle-img" alt="头像" data-bind="attr:{ src: familyImg }" />
+							<img class="circle-img" alt="头像" src="{$userinfo.imgurl}" />
 						</div>
 						<div class="userInfo">
 							<p class="nickname" data-bind="text: familyNick"></p>
-							<p class="phoneno">门牌号：
+							<p class="phoneno">ID：{$userinfo.openid}
 								 <a href="/index.php/Home/Person/login">登录</a>
 							</p>
 						</div>

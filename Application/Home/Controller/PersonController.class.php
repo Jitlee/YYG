@@ -3,7 +3,7 @@ namespace Home\Controller;
 use Think\Controller;
 class PersonController extends Controller {
     public function index(){
-    		$this->assign('title', '一元购');
+    	$this->assign('title', '一元购');
 		$this->assign('pid', 'index');
 		
 		$cdb = M('category');
@@ -163,34 +163,72 @@ public function weibo()
     $weibo =new \Lib\Login\WeiboConnect();
     $weibo->login($appkey, $callback, $scope);
 }
-public function auth() {
-    //$type = $this->_param(2);
-    //if($type == 'qq') {
-        //import('@.ORG.QQConnect');
-        $qqobj=new \Lib\Login\QQConnect();
+public function auth() {        
         $appkey = C('OAUTH.QQ_APPKEY');
         $appsecretkey = C('OAUTH.QQ_APPSECRETKEY');
         $callback = C('OAUTH.QQ_CALLBACK');
     	$qqobj=new \Lib\Login\QQConnect();
         $info = $qqobj->callback($appkey, $appsecretkey, $callback);
+//		print_r("openid=".$info['openid']);
         $user = $qqobj->get_user_info($info['token'], $info['openid'], $appkey);
-        print_r($user);
-        print_r($info);
-//  } else if($type == 'weibo') {
-//      import('@.ORG.WeiboConnect');
-//      $appkey = C('OAUTH.WEIBO_APPKEY');
-//      $appsecretkey = C('OAUTH.WEIBO_APPSECRETKEY');
-//      $callback = C('OAUTH.WEIBO_CALLBACK');
-//      $weibo = new WeiboConnect();
-//      $info = $weibo->callback($appkey, $appsecretkey, $callback);
-//      $user = $weibo->get_user_info($info['token'], $info['openid']);
-//      print_r($user);
-//      print_r($info);
-//  } else {
-//      $this->error('无效的回调类型！');
-//  }
+		
+//		print_r("USER=");
+//		print_r("figureurl_2=".$user['figureurl_2']);
+		        
+        $openid =$info['openid'];
+        $img=$user['figureurl_2'];
+		$this->LoginAuth($openid, $img);
 }
+public function weiboauth() {
+        $appkey = C('OAUTH.WEIBO_APPKEY');
+        $appsecretkey = C('OAUTH.WEIBO_APPSECRETKEY');
+        $callback = C('OAUTH.WEIBO_CALLBACK');
+          
+		$weibo=new \Lib\Login\WeiboConnect();
+        $info = $weibo->callback($appkey, $appsecretkey, $callback);
+		
+        $user = $weibo->get_user_info($info['token'], $info['openid']);
+        //print_r($user);
+        //print_r($info);
+        $openid =$info['openid'];
+        $img=$user['profile_image_url'];
+		$this->LoginAuth($openid, $img);
+}
+
+public function LoginAuth($openid,$imgurl)
+{
+	$db = M('member');
+	$data['reg_key'] = $openid;
+	$records = $db->where($data)->find();
+	if(!$records)
+	{
+		//$db->create();
+		
+		$data['login_time']=time();
+		$data['time']=time();
+		if($db->add($data) == false) {
+//			$this->success('操作成功', U('VerifyCode/', '', ''));
+//		} else {
+			$this->error('数据错误');
+		}
+	}
+	else
+	{		
+		//	$records["password"]= $_POST['password'];
+		$records['login_time']=time();
+		$records['time']=time();
+		$db->save($records);
+		
+		//$this->success('操作成功', U('VerifyCode/', '', ''));
+	}
+	$userinfo=    array(
+		    'openid'    	=>  $openid,    // 验证码字体大小
+		    'imgurl'      	=>  $imgurl
+	);
+	$this->assign('userinfo', $userinfo);
 	
-	
-	
+	$this->assign('title', '登录授权.');
+	$this->display("me");
+}
+
 }
