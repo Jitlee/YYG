@@ -13,7 +13,7 @@
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447654310_2816622.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447769195_3516257.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -48,18 +48,16 @@
 			<h1 class="mui-title"><?php echo ($title); ?></h1>
 		</header>
 		<div class="mui-content">
-			
-
-<!DOCTYPE html>
+			<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>商品分类</title>
+    <title>全部商品</title>
 	<meta name="description" content="1元夺宝，就是指只需1元就有机会获得一件商品，好玩有趣，不容错过。" />
     <meta name="keywords" content="1元,一元,1元夺宝,1元购,1元购物,1元云购,一元夺宝,一元购,一元购物,一元云购,夺宝奇兵" />
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
-<meta content="telephone=no" name="format-detection" />
+	<meta content="telephone=no" name="format-detection" />
         <link href="/Public/Home/css/goodscommon.css" rel="stylesheet" type="text/css" />
         <link href="/Public/Home/css/goodslist.css" rel="stylesheet" type="text/css" />
 </head>

@@ -4,33 +4,33 @@ use Think\Controller;
 class MiaoShaController extends Controller {
 		
 	public function index(){
-    	$this->assign('title', '秒杀');
+    		$this->assign('title', '秒杀');
+		$this->assign('pid', 'miaosha');
         $this->display();
     }
-	//	人气
-	public function renqi(){
-		$this->assign('title', '秒杀');
-	    $this->display("index");
-	}
-//	最新
-	public function zuixin(){
-		$this->assign('title', '秒杀');
-	    $this->display("index");
-	}
-//	剩余人次
-	public function shenyu(){
-		$this->assign('title', '秒杀');
-	    $this->display("index");
-	}
-//总需人次
-	public function zrenqi (){
-		$this->assign('title', '秒杀');
-	    $this->display("index");
-	}
-	public function WillEnd (){
-		$this->assign('title', '秒杀');
-	    $this->display();
-	}	
 	
+	public function eee(){
+    		$this->assign('title', '秒杀');
+		$this->assign('pid', 'miaosha');
+        $this->display();
+    }
+	
+	public function pageAll($pageSize, $pageNum) {
+		// 分页
+		$db = M('miaosha');
+		$filter["jishijiexiao"] = 0;
+		$list = $db->where($filter)->order('time desc')->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status')->select();
+		$this->ajaxReturn($list, "JSON");
+	}
+	
+	public function _empty($gid) {
+		$this->view($gid);
+	}
+	
+	protected function view($gid) {
+		$this->assign('title', '拍卖详情');
+		layout('sublayout');
+		$this->display('view');
+	}
 }
 	

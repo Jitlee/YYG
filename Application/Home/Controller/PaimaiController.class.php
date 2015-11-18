@@ -43,4 +43,14 @@ class PaimaiController extends Controller {
 		$list = $db->where($filter)->order('tuijian desc, time desc')->page($pageNum, $pageSize)->field(array('gid','title','thumb','zuigaojia','status','UNIX_TIMESTAMP(end_time)'=>'end_time'))->select();
 		$this->ajaxReturn($list, "JSON");
 	}
+	
+	public function _empty($gid) {
+		$this->view($gid);
+	}
+	
+	protected function view($gid) {
+		$this->assign('title', '拍卖详情');
+		layout('sublayout');
+		$this->display('view');
+	}
 }

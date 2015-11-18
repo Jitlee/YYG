@@ -48,8 +48,6 @@ class MiaoshaController extends GoodsBaseController {
 			if($data) {
 				$result = $db->add(); // 写入数据到数据库 
 				if($result != false) {
-					$hdb = M('MiaoshaHistory');
-					$db->add($data);
 					self::saveImages($result);
 					$this->success('操作成功', U('index', '', ''));
 				} else {
@@ -79,10 +77,6 @@ class MiaoshaController extends GoodsBaseController {
 			$db = M('miaosha');
 			if($db->create()) {
 				$result = $db->save(); // 写入数据到数据库 
-				$hdb = M('MiaoshaHistory');
-				$map['gid']=$data['gid'];
-				$map['qishu']=$data['qishu'];
-				$hdb->where($map)->save($data);
 				self::saveImages($_POST['gid']);
 				$this->success('操作成功', U('index', '', ''));
 			} else {

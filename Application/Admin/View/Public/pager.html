@@ -1,36 +1,38 @@
 <nav>
   <ul class="pagination">
-  	<if condition="$minPageNum eq 1">
-    <li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li>
-  	<else/>
+  	<if condition="$minPageNum gt 1">
     <li>
       <a href="__ACTION__/{$pageSize}/{$minPageNum-1}" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-  	</if>
-    <for start="$minPageNum" end="$pageNum">
-    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:#008000">{$i}</a></li>
-	</for>
-	<li class="active"><a>{$pageNum}</a></li>
-    <for start="$pageNum+1" end="$maxPageNum">
-    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:red">{$i}</a></li>
-	</for>
-	<if condition="$maxPageNum eq $pageCount">
+  	<else/>
     <li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
+      <span aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
       </span>
     </li>
-  	<else/>
+  	</if>
+  	<if condition="$pageNum gt 1">
+	  <for start="$minPageNum" end="$pageNum">
+	    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:#008000">{$i}</a></li>
+		</for>
+	</if>
+	<li class="active"><a>{$pageNum}</a></li>
+  <for start="$pageNum+1" end="$maxPageNum">
+    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:red">{$i}</a></li>
+	</for>
+	<if condition="$maxPageNum lt $pageCount AND $maxPageNum gt 0">
     <li>
       <a href="__ACTION__/{$pageSize}/{$maxPageNum}" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
+    </li>
+  	<else/>
+    <li class="disabled">
+      <span aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </span>
     </li>
   	</if>
   </ul>

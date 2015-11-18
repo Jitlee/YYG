@@ -6,20 +6,20 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
 		<meta property="qc:admins" content="304107566762141336654" />
+		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447654310_2816622.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447769195_3516257.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="/Public/Home/js/owl.carousel.min.js"></script>
 		<script src="/Public/Home/layer/layer.js"></script>
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
-		<script src="/Public/Home/js/knockout-3.3.0.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
@@ -48,185 +48,246 @@
 			<h1 class="mui-title"><?php echo ($title); ?></h1>
 		</header>
 		<div class="mui-content">
-			
-
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>商品分类</title>
-	<meta name="description" content="1元夺宝，就是指只需1元就有机会获得一件商品，好玩有趣，不容错过。" />
-    <meta name="keywords" content="1元,一元,1元夺宝,1元购,1元购物,1元云购,一元夺宝,一元购,一元购物,一元云购,夺宝奇兵" />
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
-<meta content="telephone=no" name="format-detection" />
-        <link href="/Public/Home/css/goodscommon.css" rel="stylesheet" type="text/css" />
-        <link href="/Public/Home/css/goodslist.css" rel="stylesheet" type="text/css" />
-</head>
-<body>
-<div class="g-header">
-    <!-- 导航栏 -->
-    <div class="m-nav">
-        <div class="g-wrap">
-            <ul class="m-nav-list">
-                    <li class="selected"><a href="/index.php/Home/MiaoSha/Index"><span>全部商品<span></a></li>
-                    <li ><a href="/index.php/Home/MiaoSha/WillEnd"><span>即将揭晓<span></a></li>
-                    <li ><a href="/index.php/Home/SaiDan/Index"><span>晒单分享<span></a></li>
-            </ul>
-        </div>
-    </div>
+			<style type="text/css">
+	.mui-scroll-wrapper{
+		overflow: auto;
+	}
+	
+	.mui-slider-indicator {
+		background-color: #fff;
+	}
+	
+	.yyg-bar-nav {
+		display:flex;
+		line-height: 40px;
+		text-align: center;
+		border-bottom:solid 1px #D5D5D5;
+	}
+	
+	.yyg-bar-nav a{
+		color:#999;
+	}
+	
+	.yyg-bar-nav-primary {
+		width: 90px;
+		border-right:solid 1px #D5D5D5;
+	}
+	
+	.yyg-bar-nav-btn {
+		flex:1;
+		-webkit-flex:1;
+		-ms-flex:1;
+		-moz-flex:1;
+		-o-flex:1;
+	}
+	
+	.yyg-bar-nav-btn.yyg-active {
+		color: #db3652;
+	}
+	
+	.yyg-goods-list-item {
+		background-color: #fff;
+	}
+	.yyg-goods-media {
+		background:none;
+		position: relative;
+	}
+	
+	.yyg-goods-media span {
+		color:rgba(171,171,171,1);
+		margin:0 2px;
+	}
+	
+	.yyg-goods-media r{
+		font-size: 20px;
+	}
+	
+	p.yyg-content-title {
+		color:#333;
+		font-size:14px;
+	}
+	
+	.yyg-list-price {
+		position: relative;
+		
+	}
+	
+	.yyg-right {
+		display:block;
+		position: absolute;
+		top:50%;
+		right:5px;
+		text-align: right;
+		transform: translateY(-50%);
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		-moz-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+	}
+	
+	.yyg-list-buy{
+		background-color:rgba(255,102,0,1);
+		color:#fff!important;
+	    height: 18px;
+	    line-height: 18px;
+	    border-radius: 9px 0 0 9px;
+	    font-size:12px;
+	    padding-right:5px;
+	    padding-left:5px;
+	}
+	
+	.yyg-list-buy-sts {
+		display: inline-block;
+		background-position:50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-image: url(/Public/Home/images/sts.png);
+		width:11px;
+		height:11px;
+		vertical-align: middle;
+	}
+	
+	.yyg-del {
+		text-decoration: line-through;
+	}
+	
+	.yyg-goods-list-item hr {
+		border: none;
+		border-top: 1px dotted rgba(252,226,198,1);
+	}
+	
+</style>
+<div id="slider" class="mui-slider">
+	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+		<a class="mui-control-item" href="#itemall">全部商品</a>
+		<a class="mui-control-item" href="#itemjiexiao">即将揭晓</a>
+		<a class="mui-control-item" href="#itemshare">晒单分享</a>
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<div class="mui-slider-group">
+		<div id="itemall" class="mui-slider-item mui-control-content mui-active">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div class="yyg-bar-nav">
+						<a href="javascript:void(0);" class="yyg-bar-nav-primary">商品分类<i class="iconfont icon-dropdown"></i></a>
+						<a href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
+						<a href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
+						<a href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
+						<a href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
+					</div>
+					<ul id="goodList" class="yyg-goods-list">
+					</ul>
+					
+					<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
+						<a href="">
+							<div>
+								<div class="yyg-goods-img-container">
+									<img class="yyg-goods-img" src="" />
+								</div>
+								<div class="yyg-goods-media">
+									<p class="yyg-content-title"></p>
+									<hr />
+									<div class="yyg-list-price">
+										<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
+										<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</div>
+			</div>
+		</div>
+		<div id="itemjiexiao" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					2
+				</div>
+			</div>
+		</div>
+		<div id="itemshare" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					3
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-
-<div class="g-body">
-    <div class="m-list">
-        <!-- 二级导航 -->
-        <div class="g-wrap g-body-hd m-list-nav">
-            <div class="m-list-nav-catlog">
-                <a href="javascript:void(0)">商品分类<i class="ico ico-arrow ico-arrow-down ico-arrow-s-gray"></i></a>
-            </div>
-            <div class="m-list-types">
-                <ul class="m-list-types-list">
-                        <li class="selected "><a href="/index.php/Home/MiaoSha/renqi">人气</a></li>
-                        <li class=" "><a href="/index.php/Home/MiaoSha/zuixin">最新</a></li>
-                        <li class=" "><a href="/index.php/Home/MiaoSha/shenyu">剩余人次</a></li>
-                        <li class=" "><a href="/index.php/Home/MiaoSha/zrenqi">总需人次<i class='ico ico-sort2Arrow'></i></a></li>
-                </ul>
-            </div>
-            <!-- 所有分类列表 -->
-            <div class="m-list-catlog" style="display: none">
-                <ul class="m-list-catlog-list">
-                        <li class="selected"><a href="http://m.1.163.com/list/0-0-1-1.html"><i class="ico ico-type ico-type-0"></i>全部商品</a></li>
-                        <li><a href="http://m.1.163.com/list/1-0-1-1.html"><i class="ico ico-type ico-type-1"></i>手机平板</a></li>
-                        <li><a href="http://m.1.163.com/list/2-0-1-1.html"><i class="ico ico-type ico-type-2"></i>电脑办公</a></li>
-                        <li><a href="http://m.1.163.com/list/3-0-1-1.html"><i class="ico ico-type ico-type-3"></i>数码影音</a></li>
-                        <li><a href="http://m.1.163.com/list/4-0-1-1.html"><i class="ico ico-type ico-type-4"></i>女性时尚</a></li>
-                        <li><a href="http://m.1.163.com/list/5-0-1-1.html"><i class="ico ico-type ico-type-5"></i>美食天地</a></li>
-                        <li><a href="http://m.1.163.com/list/6-0-1-1.html"><i class="ico ico-type ico-type-6"></i>潮流新品</a></li>
-                        <li><a href="http://m.1.163.com/list/7-0-1-1.html"><i class="ico ico-type ico-type-7"></i>网易周边</a></li>
-                        <li><a href="http://m.1.163.com/list/8-0-1-1.html"><i class="ico ico-type ico-type-8"></i>其他商品</a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- 正文 -->
-        <div class="g-wrap g-body-bd">
-            <div class="g-body-bd-mask" style="display:none;"></div>
-            <!-- 商品列表 -->
-            <div class="m-list-content">                 
-                    <div class="m_baoliao w" style=" background:#ffffff; ">
-						<ul class="goods-list clear">
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-								<a target="_blank" href="jump/67939165">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-									<div class="list-price buy">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-										<span class="good-btn">
-												<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 
-										</span>
-									</div>
-								</a>
-							</li>
-					
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-								<a target="_blank" href="jump/66939495">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-									<div class="list-price end">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-										<span class="good-btn">抢光了</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-								<a target="_blank" href="jump/67939165">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-									<div class="list-price buy">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-										<span class="good-btn">
-											<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 </span>
-									</div>
-								</a>
-							</li>
-					
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-								<a target="_blank" href="jump/66939495">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-									<div class="list-price end">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-										<span class="good-btn">抢光了</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-								<a target="_blank" href="jump/67939165">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-									<div class="list-price buy">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-										<span class="good-btn">
-											<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 </span>
-									</div>
-								</a>
-							</li>
-					
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-								<a target="_blank" href="jump/66939495">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-									<div class="list-price end">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-										<span class="good-btn">抢光了</span>
-									</div>
-								</a>
-							</li>
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-								<a target="_blank" href="jump/67939165">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-									<div class="list-price buy">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-										<span class="good-btn">
-											<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 </span>
-									</div>
-								</a>
-							</li>
-					
-							<li>
-								<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-								<a target="_blank" href="jump/66939495">
-									<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-									<div class="list-price end">
-										<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-										<span class="good-btn">抢光了</span>
-									</div>
-								</a>
-							</li>
-							
-						</ul>
-</div>
-            </div>
-             
-        </div>
-    </div>
-</div>
-	<a id="pro-view-1" class="w-miniCart " href="javascript:void(0);">
-		<span class="w-miniCart-text">清单</span>
-		<i class="ico ico-miniCart imgsss"></i>
-		<!-- style="display:none"	-->
-		<b class="w-miniCart-count" data-pro="count">2</b>
-	</a>
-
-</body>
-</html>
-
-
+<script type="text/javascript" src="/Public/Home/js/mui.min.js"></script>
+<script type="text/javascript">
+	mui.init()
+	$(function(){
+		$(".mui-control-content").height($(window).height() - 132);
+//		$('.mui-scroll-wrapper').scroll({
+//			indicators: true //是否显示滚动条
+//		});
+				
+		var slideNumber = 1;
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			slideNumber = e.detail.slideNumber;
+			switch(slideNumber) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+					break;
+			}
+		});
+		
+		$(".mui-scroll-wrapper").bind("scroll", onscrollend)/*.swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		})*/;
+		
+		function onscrollend() {
+			if ($(this).scrollTop() + $(this).height() == $(this).children().height()) {
+       			console.info("滚动到底了");
+       			switch(slideNumber) {
+					case 1:
+						pageAll();
+						break;
+					case 2:
+						pageJiexiao();
+						break;
+					case 3:
+						pageShare();
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		// 全部商品翻页
+		allPageNum = 0;
+		var goodList = $("#goodList");
+		var goodTemplate = $("#goodTemplate");
+		function pageAll() {
+			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++allPageNum), null, function(list) {
+	       		$.each(list, function() {
+	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$("img", item).attr("src", this.thumb);
+	       			$("p", item).text(this.title);
+	       			$("span.money", item).text(this.money);
+	       			$("r", item).text(this.danjia);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll();
+		
+	});
+</script>
 			<br />
 			<br />
 		</div>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="<?php echo U('Home/index', '', '');?>">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>

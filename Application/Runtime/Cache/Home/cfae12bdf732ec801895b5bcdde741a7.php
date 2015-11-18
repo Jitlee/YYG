@@ -6,13 +6,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
 		<meta property="qc:admins" content="304107566762141336654" />
+		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447654310_2816622.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447769195_3516257.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -47,30 +48,36 @@
 			<h1 class="mui-title"><?php echo ($title); ?></h1>
 		</header>
 		<div class="mui-content">
-			<?php if(isset($tuijian)): ?><section class="tuijian mui-content-padded yyg-content">
-		<div class="tuijian-img-container">
-			<img class="tuijian-img" src="<?php echo ($tuijian["thumb"]); ?>" />
-		</div>
-		<div class="tuijian-content">
-			<p class="tuijian-content-title"><?php echo ($tuijian["title"]); ?></p>
-			<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
-			<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
-			<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
-			<button type="button" class="mui-btn mui-btn-red">我要出价</button>
-		</div>
-	</section><?php endif; ?>
+			<?php if(isset($tuijian)): ?><a href="/index.php/Home/Paimai/<?php echo ($tuijian["gid"]); ?>">
+		<section class="tuijian mui-content-padded yyg-content">
+			<div class="tuijian-img-container">
+				<img class="tuijian-img" src="<?php echo ($tuijian["thumb"]); ?>" />
+			</div>
+			<div class="tuijian-content">
+				<p class="tuijian-content-title"><?php echo ($tuijian["title"]); ?></p>
+				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
+				<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
+				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
+				<a type="button" class="mui-btn mui-btn-red" href="/index.php/Home/Paimai/bid/<?php echo ($tuijian["gid"]); ?>">我要出价</a>
+			</div>
+		</section>
+	</a>`<?php endif; ?>
 <div class="yyg-content mui-content-padded">
 	<ul id="goodList" class="yyg-goods-list">
 		<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="yyg-goods-list-item">
-				<div class="yyg-goods-img-container">
-					<img class="yyg-goods-img" src="<?php echo ($item["thumb"]); ?>" />
-				</div>
-				<div class="yyg-goods-media">
-					<p class="tuijian-content-title"><?php echo ($item["title"]); ?></p>
-					<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
-					<time countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
-				</div>
-				<a href="<?php echo U('view', '', '');?>/<?php echo ($item["gid"]); ?>" type="button" class="mui-btn mui-btn-red">我要出价</a>
+				<a href="/index.php/Home/Paimai/<?php echo ($item["gid"]); ?>">
+					<div>
+						<div class="yyg-goods-img-container">
+							<img class="yyg-goods-img" src="<?php echo ($item["thumb"]); ?>" />
+						</div>
+						<div class="yyg-goods-media">
+							<p class="tuijian-content-title"><?php echo ($item["title"]); ?></p>
+							<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
+							<time countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+						</div>
+						<a href="<?php echo U('bid', '', '');?>/<?php echo ($item["gid"]); ?>" type="button" class="mui-btn mui-btn-red">我要出价</a>
+					</div>
+				</a>
 			</li><?php endforeach; endif; ?>
 	</ul>
 </div>
@@ -102,7 +109,8 @@
 	       			$("img", item).attr("src", this.thumb);
 	       			$("p", item).text(this.title);
 	       			$("h5 r:last-child", item).text(this.zuigaojia);
-	       			$("a", item).attr("href", "<?php echo U('view', '', '');?>/" + this.gid);
+	       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
+	       			$(">a>a", item).attr("href", "/index.php/Home/Paimai/bid/" + this.gid);
 	       			$("time", item).attr("countdown", this.end_time);
 					goodList.append(item);
 	       		});
@@ -114,7 +122,7 @@
 			<br />
 		</div>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="<?php echo U('Home/index', '', '');?>">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>

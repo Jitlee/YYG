@@ -4,7 +4,7 @@ use Think\Controller;
 class IndexController extends Controller {
     public function index(){
     		$this->assign('title', '一元购');
-		$this->assign('pid', 'index');
+		$this->assign('pid', 'home');
 		
 		$cdb = M('category');
 		$allCategories = $cdb->limit(8)->select();

@@ -13,7 +13,7 @@
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447769195_3516257.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447654310_2816622.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -48,65 +48,16 @@
 			<h1 class="mui-title"><?php echo ($title); ?></h1>
 		</header>
 		<div class="mui-content">
-			<div class="top w">
-	<div class="m_banner" id="owl">
-		<?php if(is_array($slides)): foreach($slides as $key=>$s): ?><a href="<?php echo ((isset($s["link"]) && ($s["link"] !== ""))?($s["link"]):'#'); ?>" class="item"><img src="<?php echo ($s["img"]); ?>"></a><?php endforeach; endif; ?>
-	</div>
-	<div class="m_nav">
-		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
-	</div>
-</div>
+			<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
 
-<div class="m_baoliao w" style=" background:#ffffff; ">
-	<ul class="goods-list clear">
-		<li>
-			<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-			<a target="_blank" href="jump/67939165">
-				<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-				<div class="list-price buy">
-					<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-					<span class="good-btn">
-							<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 
-					</span>
-				</div>
-			</a>
-		</li>
-
-		<li>
-			<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-			<a target="_blank" href="jump/66939495">
-				<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-				<div class="list-price end">
-					<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-					<span class="good-btn">抢光了</span>
-				</div>
-			</a>
-		</li>
-		<li>
-			<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140305/8/f/53171e5bdfe40_580x380.jpg_290x190.jpg" /></a>
-			<a target="_blank" href="jump/67939165">
-				<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>可爱时尚实用迷你照明电筒  【包邮】</h1>
-				<div class="list-price buy">
-					<i>￥</i><span class="price-new">1</span><i class="del">/￥19</i>
-					<span class="good-btn">
-						<i class="ico15"><img src="/Public/Home/images/sts.png"/></i>去抢购 </span>
-				</div>
-			</a>
-		</li>
-
-		<li>
-			<a target="_blank" href="#"> <img src="http://s1.juancdn.com/bao/140307/e/4/53198186beb1a_580x380.jpg_290x190.jpg" /> </a>
-			<a target="_blank" href="jump/66939495">
-				<h1><i class="ico13"><img src="/Public/Home/images/sdj.png"></i>男士全棉中筒运动袜（5双）  【包邮】</h1>
-				<div class="list-price end">
-					<i>￥</i><span class="price-new">1</span><i class="del">/￥98</i>
-					<span class="good-btn">抢光了</span>
-				</div>
-			</a>
-		</li>
-
-	</ul>
-</div>
 			<br />
 			<br />
 		</div>
