@@ -2,7 +2,6 @@
 namespace Home\Controller;
 use Think\Controller;
 class MiaoshaController extends Controller {
-		
 	public function index(){
     		$this->assign('title', '秒杀');
 		$this->assign('pid', 'miaosha');

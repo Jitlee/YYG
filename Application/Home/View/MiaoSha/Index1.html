@@ -1,61 +1,17 @@
-<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
-<html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="author" content="m.178hui.com" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-		<meta name="format-detection" content="telephone=no">
-		<meta property="qc:admins" content="304107566762141336654" />
-		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
-		<title><?php echo ($title); ?></title>
-		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
-
-		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-		<script src="/Public/Home/js/owl.carousel.min.js"></script>
-		<script src="/Public/Home/layer/layer.js"></script>
-		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
-		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
-		
-		<script src="/Public/Home/js/mobile.js"></script>
-
-		<script type="text/javascript">
-			$(document).ready(function() {
-				$(".mall_list a").click(function() {
-					var index = layer.open({
-						type: 1,
-						title: false,
-						closeBtn: false,
-						shadeClose: false,
-						offset: '25%',
-						content: "<div class='no_login_show'><h1>亲！您还没登录一起惠哦！</h1><a href='login.html'>马上登录</a><a href='register.html'>免费注册</a><a href='#'>先购物，再返利</a><a href='javascript:layer.closeAll();'>取消</a></div>"
-					});
-				});
-				$("#msg_bijia").click(function() {
-					layer.tips('请耐心等待一下，我们正在拼命开发中···', '#msg_bijia');
-				});
-			});
-		</script>
-	</head>
-
-	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title"><?php echo ($title); ?></h1>
-		</header>
-		<div class="mui-content">
-			<style type="text/css">
+<style type="text/css">
+	.mui-scroll-wrapper{
+		overflow: auto;
+	}
+	
+	.mui-slider-indicator {
+		background-color: #fff;
+	}
 	
 	.yyg-bar-nav {
 		display:flex;
 		line-height: 40px;
 		text-align: center;
 		border-bottom:solid 1px #D5D5D5;
-		background:#fff;
 	}
 	
 	.yyg-bar-nav a{
@@ -135,7 +91,7 @@
 		background-position:50% 50%;
 		background-repeat: no-repeat;
 		background-size: cover;
-		background-image: url(/Public/Home/images/sts.png);
+		background-image: url(__IMG__/sts.png);
 		width:11px;
 		height:11px;
 		vertical-align: middle;
@@ -228,51 +184,118 @@
 	}
 	
 </style>
-<div id="goodNav" class="yyg-bar-nav">
-	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
-	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
-	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
-	<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
-	<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
-</div>
-
-<div id="goodCategories" class="yyg-category">
-	<ul class="yyg-category-left">
-		
-	</ul>
-	<ul class="yyg-category-right">
-		
-	</ul>
-</div>
-<ul id="goodList" class="yyg-goods-list">
-</ul>
+<div id="slider" class="mui-slider">
+	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+		<a class="mui-control-item" href="#itemall">全部商品</a>
+		<a class="mui-control-item" href="#itemjiexiao">即将揭晓</a>
+		<a class="mui-control-item" href="#itemshare">晒单分享</a>
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<div class="mui-slider-group">
+		<div id="itemall" class="mui-slider-item mui-control-content mui-active">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div id="goodNav" class="yyg-bar-nav">
+						<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
+						<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
+						<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
+						<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
+						<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
+					</div>
 					
-<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
-	<a href="">
-		<div>
-			<div class="yyg-goods-img-container">
-				<img class="yyg-goods-img" src="" />
-			</div>
-			<div class="yyg-goods-media">
-				<p class="yyg-content-title"></p>
-				<hr />
-				<div class="yyg-list-price">
-					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
-					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+					<div id="goodCategories" class="yyg-category">
+						<ul class="yyg-category-left">
+							
+						</ul>
+						<ul class="yyg-category-right">
+							
+						</ul>
+					</div>
+					<ul id="goodList" class="yyg-goods-list">
+					</ul>
+					
+					<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
+						<a href="">
+							<div>
+								<div class="yyg-goods-img-container">
+									<img class="yyg-goods-img" src="" />
+								</div>
+								<div class="yyg-goods-media">
+									<p class="yyg-content-title"></p>
+									<hr />
+									<div class="yyg-list-price">
+										<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
+										<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
 				</div>
 			</div>
 		</div>
-	</a>
-</li>
+		<div id="itemjiexiao" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					2
+				</div>
+			</div>
+		</div>
+		<div id="itemshare" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					3
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__JS__/mui.min.js"></script>
 <script type="text/javascript">
+	mui.init()
 	$(function(){
+		$(".mui-control-content").height($(window).height() - 132);
+//		$('.mui-scroll-wrapper').scroll({
+//			indicators: true //是否显示滚动条
+//		});
+				
+		var slideNumber = 1;
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			slideNumber = e.detail.slideNumber;
+			switch(slideNumber) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+					break;
+			}
+		});
 		
-		$(document).bind("scroll", onscrollend);
+		$(".mui-scroll-wrapper").bind("scroll", onscrollend)/*.swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		})*/;
 		
 		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+			if ($(this).scrollTop() + $(this).height() == $(this).children().height()) {
        			console.info("滚动到底了");
-				pageAll();
+       			switch(slideNumber) {
+					case 1:
+						pageAll();
+						break;
+					case 2:
+						pageJiexiao();
+						break;
+					case 3:
+						pageShare();
+						break;
+					default:
+						break;
+				}
 			}
 		}
 		
@@ -285,7 +308,7 @@
 			if(clear) {
 				pageNum = 0;
 			}
-			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++pageNum), {
+			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
 				type: orderType,
 				cid: goodCid,
 				bid: goodBid,
@@ -295,7 +318,7 @@
 				}
 	       		$.each(list, function() {
 	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "/index.php/Home/Miaosha/" + this.gid);
+	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
 	       			$("img", item).attr("src", this.thumb);
 	       			$("p", item).text(this.title);
 	       			$("span.money", item).text(this.money);
@@ -324,7 +347,7 @@
 			buttonCategoy.toggleClass("yyg-active");
 			goodCategories.toggleClass("yyg-active");
 			if(!categories) {
-				$.get("<?php echo U('category', '', '');?>", null, function(list){
+				$.get("{:U('category', '', '')}", null, function(list){
 					categories = list;
 					$.each(list, function(index) {
 						$("<li>").text(this.name)
@@ -373,7 +396,7 @@
 				ulBrands.html("");
 				renderBrands(categories[index].brands, cid);
 			} else {
-				$.get("<?php echo U('brands', '', '');?>/" + cid, null, function(list){
+				$.get("{:U('brands', '', '')}/" + cid, null, function(list){
 					categories[index].brands = list;
 					ulBrands.html("");
 					renderBrands(categories[index].brands, cid);
@@ -422,58 +445,5 @@
 		});
 		
 		
-	});
-</script>
-			<br />
-			<br />
-		</div>
-		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
-				<span class="mui-icon iconfont icon-jiangbei"></span>
-				<span class="mui-tab-label">最新揭晓</span>
-			</a>
-			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
-			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_paimai"></span>
-				<span class="mui-tab-label">拍卖</span>
-			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_me"></span>
-				<span class="mui-tab-label">我的</span>
-			</a>
-		</nav>
-		<div class="gotop backtop" style="display:none;"></div>
-	</body>
-
-</html>
-<script type="text/javascript">
-	//返回顶部
-	$(document).ready(function() {
-		$(window).scroll(function() {
-			var scrollHeight = $(document).height();
-			var scrollTop = $(window).scrollTop();
-			var $windowHeight = $(window).innerHeight();
-			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
-				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
-			});
-		});
-		$('.backtop').click(function(e) {
-			$(".gotop").css({
-				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
-			});
-			e.preventDefault();
-			$('html,body').animate({
-				scrollTop: 0
-			});
-		});
-		
-		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
 	});
 </script>

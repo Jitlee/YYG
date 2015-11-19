@@ -43,6 +43,12 @@ class MiaoshaController extends GoodsBaseController {
 	
 	public function add() {
 		if(IS_POST) {
+			if(intval($_POST['jishijiexiao']) > 0) {
+				$now = time();
+				$end_time = $now + 3600;
+				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
+			}
+			
 			$db = M('miaosha');
 			$data = $db->create();
 			if($data) {
@@ -74,8 +80,14 @@ class MiaoshaController extends GoodsBaseController {
 	
 	public function edit($gid = null) {
 		if(IS_POST) {
+			if(intval($_POST['jishijiexiao']) > 0) {
+				$now = time();
+				$end_time = $now + 3600;
+				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
+			}
 			$db = M('miaosha');
-			if($db->create()) {
+			$data = $db->create();
+			if($data) {
 				$result = $db->save(); // 写入数据到数据库 
 				self::saveImages($_POST['gid']);
 				$this->success('操作成功', U('index', '', ''));

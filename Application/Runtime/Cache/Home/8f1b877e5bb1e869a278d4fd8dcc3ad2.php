@@ -13,7 +13,7 @@
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447769195_3516257.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -196,11 +196,11 @@
 				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="familyInfo">
 					<a class="mui-navigate-right">
 						<div class="avatar">
-							<img class="circle-img" alt="头像" data-bind="attr:{ src: familyImg }" />
+							<img class="circle-img" alt="头像" src="<?php echo ($userinfo["imgurl"]); ?>" />
 						</div>
 						<div class="userInfo">
 							<p class="nickname" data-bind="text: familyNick"></p>
-							<p class="phoneno">门牌号：
+							<p class="phoneno">ID：<?php echo ($userinfo["openid"]); ?>
 								 <a href="/index.php/Home/Person/login">登录</a>
 							</p>
 						</div>
@@ -313,9 +313,9 @@
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Miaosha/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_miaosha"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">秒杀</span>
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
+				<span class="mui-icon iconfont icon-jiangbei"></span>
+				<span class="mui-tab-label">最新揭晓</span>
 			</a>
 			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_cart"></span>

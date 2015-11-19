@@ -49,13 +49,13 @@
 		</header>
 		<div class="mui-content">
 			<style type="text/css">
-	
 	.yyg-bar-nav {
 		display:flex;
 		line-height: 40px;
 		text-align: center;
 		border-bottom:solid 1px #D5D5D5;
 		background:#fff;
+		width: 100%;
 	}
 	
 	.yyg-bar-nav a{
@@ -151,46 +151,44 @@
 	}
 	
 	.yyg-category {
-		position: fixed;
-		background: rgba(0,0,0,0.2);
+		position: absolute;
+		background: rgba(0,0,0,0.1);
 		width:100%;
-		height:100%;
 		display:none;
 		z-index: 99;
 	}
-	.yyg-category-left {
-		display: block;
-		width:40%;
-		background-color: #ddd;
-		height:360px;
+	
+	.yyg-category ul {
+		list-style: none;
 		padding: 0;
 		margin: 0;
-		float:left;
-		overflow: auto;
+		background: #fff;
 	}
 	
-	.yyg-category-left li {
-		width:100%;
+	.yyg-category ul:after {
+		content: " ";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		height: 1px;
+	}
+	.yyg-category li {
+		width:33%;
+		color: #999;
+		box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-o-box-sizing: border-box;
+		border-left:solid 1px #D5D5D5;
+		border-bottom:solid 1px #D5D5D5;
+		float:left;
 		text-align: center;
-		color:#999;
 		line-height: 45px;
-		padding: 0;
-		margin: 0;
 	}
 	
-	.yyg-category-left li.yyg-active {
-		color:#333;
-		background-color:#fff;
-	}
-	
-	.yyg-category-right {
-		display: block;
-		width:60%;
-		height:360px;
-		background-color:#fff;
-		padding: 0;
-		margin: 0;
-		float:left;
+	.yyg-category li.yyg-active {
+		color:#FF002B;
 	}
 	
 	#buttonCategoy i:before{
@@ -205,28 +203,89 @@
 		display:block;
 	}
 	
-	.yyg-category-right li {
+	.tuijian {
+		min-height: 30vw;
+	}
+
+	.tuijian-content label {
+		display: inline-block;
+		background-color:#FF002B;
+		/*border-radius: 5px;*/
+		color:#fff;
+		padding:5px 10px;
+		font-size:16px;
+	}
+	.tuijian-content label .iconfont {
+		font-size:16px;
+	}
+	
+	@media only screen and (max-width: 340px) {
+		.tuijian-content label {
+			font-size:14px;
+		}
+		.tuijian-content label .iconfont {
+			font-size:14px;
+		}
+	}
+	
+	
+	.tuijian-img-container {
+		border:solid 1px #D5D5D5;
+		left:3vw;
+	}
+	
+	.tuijian-img {
+		width: 28vw;
+		max-width: 90px;
+	}
+	.tuijian-content {
+		margin-left:34vw;
+	}
+	
+	.tuijian-img-container label {
+		display:block;
+		position: absolute;
+		bottom: 0px;
 		width:100%;
-		color:#333;
-		line-height: 45px;
-		display: table;
+		background-color:rgba(128,128,128,0.5);
+		color:#fff;
+		text-align: center;
+		padding: 3px 0;
 	}
 	
-	.yyg-category-right li span {
-		color:#333;
-		display: table-cell;
-		width:70%;
-		padding-left:10px;
+	.yyg-jiexiao-list a{
+	    padding: 0px 3px 3px 3px;
+	    display: block;
 	}
 	
-	.yyg-category-right li label {
-		color:#999;
-		display: table-cell;
-		width:30%;
-		text-align: right;
-		padding-right:10px;
+	.yyg-jiexiao-list a:first-child {
+		padding-top: 3px; 
 	}
 	
+	.yyg-jiexiao-list a.jiexiao{
+		background-color: #ff3300;
+	}
+	
+	.yyg-jiexiao-list yyg-content{
+		background-color: #fff;
+	}
+	
+	.jiexiao-label {
+		text-align: center;
+		line-height: 23px;
+		height: 20px;
+		width:120px;
+		font-size: 16px;
+		color:#fff;
+		background-color:#FF002B;
+		position: absolute;
+		left:-37px;
+		top:13px;
+		z-index: 100;
+		-webkit-transform: rotate(-45deg);
+		
+	}
+
 </style>
 <div id="goodNav" class="yyg-bar-nav">
 	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
@@ -237,31 +296,52 @@
 </div>
 
 <div id="goodCategories" class="yyg-category">
-	<ul class="yyg-category-left">
-		
-	</ul>
-	<ul class="yyg-category-right">
+	<ul>
 		
 	</ul>
 </div>
 <ul id="goodList" class="yyg-goods-list">
 </ul>
 					
-<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
-	<a href="">
-		<div>
-			<div class="yyg-goods-img-container">
-				<img class="yyg-goods-img" src="" />
-			</div>
-			<div class="yyg-goods-media">
-				<p class="yyg-content-title"></p>
-				<hr />
-				<div class="yyg-list-price">
-					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
-					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+<li id="goodTemplate" class="mui-hidden yyg-jiexiao-list">
+	<a class="jiexiao">
+		<section class="tuijian yyg-content">
+			<label class="jiexiao-label">正在揭晓</label>
+			<div class="tuijian-left">
+				<div class="tuijian-img-container">
+					<img class="tuijian-img" src="<?php echo ($tuijian["thumb"]); ?>" />
+					
+					<label>第<span class="qishu">1</span>期</label>
 				</div>
 			</div>
-		</div>
+			<div class="tuijian-content">
+				<p class="tuijian-content-title"></p>
+				<h5>价值：¥ <span class="money"></span></h5>
+				<label>
+					<i class="iconfont icon-weibiaoti5"></i>揭晓倒计时
+					<time countdown=""><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+				</label>
+			</div>
+		</section>
+	</a>
+</li>
+
+<li id="endTemplate" class="mui-hidden yyg-jiexiao-list">
+	<a>
+		<section class="tuijian yyg-content">
+			<div class="tuijian-left">
+				<div class="tuijian-img-container">
+					<img class="tuijian-img" src="<?php echo ($tuijian["thumb"]); ?>" />
+					<label>第<span class="qishu">1</span>期</label>
+				</div>
+			</div>
+			<div class="tuijian-content">
+				<h4>获得者：<a class="user">我被骗了</a></h4>
+				<h5>商品价值：<span class="money"></span></h5>
+				<h5>本期参与：<r class="canyurenshu"></r> 人次</h5>
+				<h5>揭晓时间：<span class="end_time"></span></h5>
+			</div>
+		</section>
 	</a>
 </li>
 <script type="text/javascript">
@@ -280,6 +360,8 @@
 		var pageNum = 0;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
+		var endTemplate = $("#endTemplate");
+		var goodCid = 0;
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
@@ -287,21 +369,34 @@
 			}
 			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++pageNum), {
 				type: orderType,
-				cid: goodCid,
-				bid: goodBid,
+				cid: goodCid
 			}, function(list) {
 				if(clear) {
 					goodList.html("");
 				}
+				var now = new Date().getTime();
 	       		$.each(list, function() {
-	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "/index.php/Home/Miaosha/" + this.gid);
-	       			$("img", item).attr("src", this.thumb);
-	       			$("p", item).text(this.title);
-	       			$("span.money", item).text(this.money);
-	       			$("r", item).text(this.danjia);
+	       			this.endTime = new Date(this.end_time).getTime();
+	       			if(now < this.endTime) {
+		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+		       			$(">a", item).attr("href", "/index.php/Home/Jiexiao/" + this.gid);
+		       			$("img", item).attr("src", this.thumb);
+		       			$("p", item).text(this.title);
+		       			$("span.money", item).text(Number(this.money).toFixed(2));
+		       			$("time", item).attr("countdown", this.endTime);
+	       			} else {
+	       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+		       			$(">a", item).attr("href", "/index.php/Home/Jiexiao/" + this.gid);
+		       			$("img", item).attr("src", this.thumb);
+		       			$("span.money", item).text(Number(this.money).toFixed(2));
+		       			$("span.end_time", item).text(this.end_time);
+		       			$("r.canyurenshu", item).text(this.canyurenshu);
+	       			}
+	       			
 	       			goodList.append(item);
 	       		});
+	       		
+	       		window.countdown();
 	       });
 		}
 		pageAll();
@@ -323,6 +418,13 @@
 			evt.preventDefault();
 			buttonCategoy.toggleClass("yyg-active");
 			goodCategories.toggleClass("yyg-active");
+			
+			var $this = $(this);
+			var scrollTop = $this.parent().offset().top - $this.height();
+			if(scrollTop > 10) {
+				$('html,body').animate({ scrollTop: scrollTop });
+			}
+			
 			if(!categories) {
 				$.get("<?php echo U('category', '', '');?>", null, function(list){
 					categories = list;
@@ -333,14 +435,7 @@
 							.appendTo(ulCategories);
 					});
 					
-					if(categories.length > 0) {
-						categories[0].brands = [{
-							name: "全部商品",
-							bid: 0,
-							count: categories[0].count
-						}];
-						oncategory.call($("li:first", ulCategories)[0]);
-					}
+					$(">li:first-child",ulCategories).addClass("yyg-active");
 				});
 			}
 			
@@ -350,78 +445,37 @@
 				window.removeEventListener("click", onclosecategory);
 			}
 		});
+		
 		function onclosecategory() {
 			buttonCategoy.toggleClass("yyg-active");
 			goodCategories.toggleClass("yyg-active");
+			window.removeEventListener("click", onclosecategory);
 			console.log("自动关闭");
 		}
 		
 		
-		var ulCategories = $(".yyg-category-left", goodCategories)
+		var ulCategories = $("ul", goodCategories)
 			.on("touchend", "li", oncategory);
 			
-		function oncategory() {
+		function oncategory(evt) {
 			var $this = $(this);
+			if(evt && evt.stopPropagation) {
+				evt.stopPropagation();
+				evt.preventDefault();
+			}
 			if($this.hasClass("yyg-active")) {
 				return;
 			}
-			var index = Number($this.attr("index"));
-			var cid = $this.attr("cid");
 			$("li.yyg-active", ulCategories).removeClass("yyg-active");
-			$this.addClass("yyg-active");
-			if(categories[index].brands) {
-				ulBrands.html("");
-				renderBrands(categories[index].brands, cid);
-			} else {
-				$.get("<?php echo U('brands', '', '');?>/" + cid, null, function(list){
-					categories[index].brands = list;
-					ulBrands.html("");
-					renderBrands(categories[index].brands, cid);
-				});
-			}
-		}
-		
-		function renderBrands(brands, cid) {
-			$.each(brands, function(index) {
-				var li = $("<li>").attr("index", index).attr("bid", this.bid).attr("cid", cid);
-				var span = $("<span>").text(this.name);
-				var label = $("<label>").text("(" + this.count + ")");
-				li.append(span);
-				li.append(label);
-				ulBrands.append(li);
-			});
-		}
-		
-		var goodCid = 0;
-		var goodBid = 0;
-		var ulBrands = $(".yyg-category-right", goodCategories).on("touchend", "li", function(evt){
-			var $this = $(this);
-			evt.stopPropagation();
-			evt.preventDefault();
-			buttonCategoy.toggleClass("yyg-active");
-			goodCategories.toggleClass("yyg-active");
-			if($this.hasClass("yyg-active")) {
-				return false;
-			}
-			var needRefresh = $("li.yyg-active", ulBrands).removeClass("yyg-active").length > 0;
 			$this.addClass("yyg-active");
 			
 			goodCid = $this.attr("cid");
-			goodBid = $this.attr("bid");
-			var name = $("span", $this).text();
-			if(name == "全部") {
-				name = $("li[cid='" + goodCid + "']", ulCategories).text();
-			}
-			$("span", buttonCategoy).text(name);
-			
-			if(needRefresh) {
-				pageAll(true);
-			}
-			
-			return false;
-		});
-		
-		
+			pageAll(true);
+			buttonCategoy.toggleClass("yyg-active");
+			goodCategories.toggleClass("yyg-active");
+			$("span", buttonCategoy).text($this.text());
+			window.removeEventListener("click", onclosecategory);
+		}
 	});
 </script>
 			<br />
@@ -432,7 +486,7 @@
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
 				<span class="mui-icon iconfont icon-jiangbei"></span>
 				<span class="mui-tab-label">最新揭晓</span>
 			</a>

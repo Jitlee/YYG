@@ -8,11 +8,11 @@
 				<p class="tuijian-content-title">{$tuijian.title}</p>
 				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger">{$tuijian.zuigaojia}</r></h5>
 				<h5><i class="iconfont icon-add"></i><label>出价次数</label>{$tuijian.chujiacishu}次</h5>
-				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="{$tuijian.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
+				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time _countdown="{$tuijian.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
 				<a type="button" class="mui-btn mui-btn-red" href="__CONTROLLER__/bid/{$tuijian.gid}">我要出价</a>
 			</div>
 		</section>
-	</a>`
+	</a>
 </present>
 <div class="yyg-content mui-content-padded">
 	<ul id="goodList" class="yyg-goods-list">
@@ -26,9 +26,9 @@
 						<div class="yyg-goods-media">
 							<p class="tuijian-content-title">{$item.title}</p>
 							<h5><label>当前价格</label><r class="small">¥</r> <r class="larger">{$item.zuigaojia}</r></h5>
-							<time countdown="{$item.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+							<time class="normal" _countdown="{$item.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
 						</div>
-						<a href="{:U('bid', '', '')}/{$item.gid}" type="button" class="mui-btn mui-btn-red">我要出价</a>
+						<a href="{:U('bid', '', '')}/{$item.gid}" style="width: 100%;"  type="button" class="mui-btn mui-btn-red">我要出价</a>
 					</div>
 				</a>
 			</li>

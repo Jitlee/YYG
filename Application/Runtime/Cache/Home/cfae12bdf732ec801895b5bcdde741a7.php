@@ -13,7 +13,7 @@
 		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447859325_4677038.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
@@ -57,11 +57,11 @@
 				<p class="tuijian-content-title"><?php echo ($tuijian["title"]); ?></p>
 				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
 				<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
-				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
+				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time _countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
 				<a type="button" class="mui-btn mui-btn-red" href="/index.php/Home/Paimai/bid/<?php echo ($tuijian["gid"]); ?>">我要出价</a>
 			</div>
 		</section>
-	</a>`<?php endif; ?>
+	</a><?php endif; ?>
 <div class="yyg-content mui-content-padded">
 	<ul id="goodList" class="yyg-goods-list">
 		<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="yyg-goods-list-item">
@@ -73,9 +73,9 @@
 						<div class="yyg-goods-media">
 							<p class="tuijian-content-title"><?php echo ($item["title"]); ?></p>
 							<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
-							<time countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+							<time class="normal" _countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
 						</div>
-						<a href="<?php echo U('bid', '', '');?>/<?php echo ($item["gid"]); ?>" type="button" class="mui-btn mui-btn-red">我要出价</a>
+						<a href="<?php echo U('bid', '', '');?>/<?php echo ($item["gid"]); ?>" style="width: 100%;"  type="button" class="mui-btn mui-btn-red">我要出价</a>
 					</div>
 				</a>
 			</li><?php endforeach; endif; ?>
@@ -126,9 +126,9 @@
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Miaosha/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_miaosha"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">秒杀</span>
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
+				<span class="mui-icon iconfont icon-jiangbei"></span>
+				<span class="mui-tab-label">最新揭晓</span>
 			</a>
 			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_cart"></span>

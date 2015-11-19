@@ -1,17 +1,11 @@
 <style type="text/css">
-	.mui-scroll-wrapper{
-		overflow: auto;
-	}
-	
-	.mui-slider-indicator {
-		background-color: #fff;
-	}
 	
 	.yyg-bar-nav {
 		display:flex;
 		line-height: 40px;
 		text-align: center;
 		border-bottom:solid 1px #D5D5D5;
+		background:#fff;
 	}
 	
 	.yyg-bar-nav a{
@@ -184,118 +178,51 @@
 	}
 	
 </style>
-<div id="slider" class="mui-slider">
-	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
-		<a class="mui-control-item" href="#itemall">全部商品</a>
-		<a class="mui-control-item" href="#itemjiexiao">即将揭晓</a>
-		<a class="mui-control-item" href="#itemshare">晒单分享</a>
-	</div>
-	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
-	<div class="mui-slider-group">
-		<div id="itemall" class="mui-slider-item mui-control-content mui-active">
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<div id="goodNav" class="yyg-bar-nav">
-						<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
-						<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
-						<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
-						<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
-						<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
-					</div>
-					
-					<div id="goodCategories" class="yyg-category">
-						<ul class="yyg-category-left">
-							
-						</ul>
-						<ul class="yyg-category-right">
-							
-						</ul>
-					</div>
-					<ul id="goodList" class="yyg-goods-list">
-					</ul>
-					
-					<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
-						<a href="">
-							<div>
-								<div class="yyg-goods-img-container">
-									<img class="yyg-goods-img" src="" />
-								</div>
-								<div class="yyg-goods-media">
-									<p class="yyg-content-title"></p>
-									<hr />
-									<div class="yyg-list-price">
-										<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
-										<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-				</div>
-			</div>
-		</div>
-		<div id="itemjiexiao" class="mui-slider-item mui-control-content">
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					2
-				</div>
-			</div>
-		</div>
-		<div id="itemshare" class="mui-slider-item mui-control-content">
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					3
-				</div>
-			</div>
-		</div>
-	</div>
+<div id="goodNav" class="yyg-bar-nav">
+	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
+	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
+	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
+	<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
+	<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
 </div>
-<script type="text/javascript" src="__JS__/mui.min.js"></script>
-<script type="text/javascript">
-	mui.init()
-	$(function(){
-		$(".mui-control-content").height($(window).height() - 132);
-//		$('.mui-scroll-wrapper').scroll({
-//			indicators: true //是否显示滚动条
-//		});
-				
-		var slideNumber = 1;
-		document.getElementById('slider').addEventListener('slide', function(e) {
-			slideNumber = e.detail.slideNumber;
-			switch(slideNumber) {
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				default:
-					break;
-			}
-		});
+
+<div id="goodCategories" class="yyg-category">
+	<ul class="yyg-category-left">
 		
-		$(".mui-scroll-wrapper").bind("scroll", onscrollend)/*.swipe({
-			swipeUp: onscrollend,
-			threshold: 100,
-			allowPageScroll: "vertical"
-		})*/;
+	</ul>
+	<ul class="yyg-category-right">
+		
+	</ul>
+</div>
+<ul id="goodList" class="yyg-goods-list">
+</ul>
+					
+<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
+	<a href="">
+		<div>
+			<div class="yyg-goods-img-container">
+				<img class="yyg-goods-img" src="" />
+			</div>
+			<div class="yyg-goods-media">
+				<p class="yyg-content-title"></p>
+				<hr />
+				<div class="yyg-list-price">
+					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
+					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+				</div>
+			</div>
+		</div>
+	</a>
+</li>
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
 		
 		function onscrollend() {
-			if ($(this).scrollTop() + $(this).height() == $(this).children().height()) {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
        			console.info("滚动到底了");
-       			switch(slideNumber) {
-					case 1:
-						pageAll();
-						break;
-					case 2:
-						pageJiexiao();
-						break;
-					case 3:
-						pageShare();
-						break;
-					default:
-						break;
-				}
+				pageAll();
 			}
 		}
 		
