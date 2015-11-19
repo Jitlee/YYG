@@ -161,7 +161,8 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
 	<table class="table">
@@ -505,10 +506,10 @@ $(function() {
 		function ongetbrandsuccess(list) {
 			if (list && list.length > 0) {
 				for (var i = 0, len = list.length; i < len; i++) {
-					var option = $("<option>").val(list[i].cid).text(list[i].name);
+					var option = $("<option>").val(list[i].bid).text(list[i].name);
 					brandSelect.append(option);
 				}
-				brandSelect.val(list[0].cid).change();
+				brandSelect.val(list[0].bid).change();
 			}
 		}
 		var thumbButton = $("#thumbButton").click(function() {
@@ -573,7 +574,7 @@ $(function() {
 		}); 
 		
 		<?php if(isset($data["gid"])): ?>// 设置下拉框选中
-			categorySelect.val("<?php echo ($data["cid"]); ?>").change();
+			categorySelect.val("<?php echo ($data["cid"]); ?>");
 			brandSelect.val("<?php echo ($data["bid"]); ?>").change();<?php endif; ?>
 		
 		// 设置勾选狂value

@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class MiaoShaController extends Controller {
+class MiaoshaController extends Controller {
 		
 	public function index(){
     		$this->assign('title', '秒杀');

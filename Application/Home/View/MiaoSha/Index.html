@@ -108,7 +108,7 @@
 	
 	.yyg-category {
 		position: fixed;
-		background: #ACACAC;
+		background: rgba(0,0,0,0.2);
 		width:100%;
 		height:100%;
 		display:none;
@@ -122,6 +122,7 @@
 		padding: 0;
 		margin: 0;
 		float:left;
+		overflow: auto;
 	}
 	
 	.yyg-category-left li {
@@ -340,7 +341,9 @@
 		});
 		var goodCategories = $("#goodCategories");
 		var categories = null;
-		var buttonCategoy = $("#buttonCategoy").click(function() {
+		var buttonCategoy = $("#buttonCategoy").click(function(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
 			buttonCategoy.toggleClass("yyg-active");
 			goodCategories.toggleClass("yyg-active");
 			if(!categories) {
@@ -363,7 +366,20 @@
 					}
 				});
 			}
+			
+			if(buttonCategoy.hasClass("yyg-active")) {
+				window.addEventListener("click", onclosecategory);
+			} else {
+				window.removeEventListener("click", onclosecategory);
+			}
 		});
+		function onclosecategory() {
+			buttonCategoy.toggleClass("yyg-active");
+			goodCategories.toggleClass("yyg-active");
+			console.log("自动关闭");
+		}
+		
+		
 		var ulCategories = $(".yyg-category-left", goodCategories)
 			.on("touchend", "li", oncategory);
 			

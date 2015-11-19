@@ -219,10 +219,10 @@
 		function ongetbrandsuccess(list) {
 			if (list && list.length > 0) {
 				for (var i = 0, len = list.length; i < len; i++) {
-					var option = $("<option>").val(list[i].cid).text(list[i].name);
+					var option = $("<option>").val(list[i].bid).text(list[i].name);
 					brandSelect.append(option);
 				}
-				brandSelect.val(list[0].cid).change();
+				brandSelect.val(list[0].bid).change();
 			}
 		}
 		var thumbButton = $("#thumbButton").click(function() {
@@ -288,7 +288,7 @@
 		
 		<present name="data.gid">
 			// 设置下拉框选中
-			categorySelect.val("{$data.cid}").change();
+			categorySelect.val("{$data.cid}");
 			brandSelect.val("{$data.bid}").change(); 
 		</present>
 		

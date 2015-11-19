@@ -31,7 +31,7 @@ class MiaoshaController extends GoodsBaseController {
 		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
 		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 		
-		$list = $db->where($map)->relation(true)->page($pageNum, $pageSize)->select();
+		$list = $db->where($map)->order('time desc')->relation(true)->page($pageNum, $pageSize)->select();
 		$this->assign('list',$list);// 模板变量赋值
 		
 		$this->assign('title', $this->_config['lstTitle']);
