@@ -71,9 +71,9 @@ switch ($channel) {
         break;
 }
 
-\Pingpp\Pingpp::setApiKey('sk_test_ibbTe5jLGCi5rzfH4OqPW9KC');
+\Lib\Pingpp\Pingpp::setApiKey('sk_test_ibbTe5jLGCi5rzfH4OqPW9KC');
 try {
-    $ch = \Pingpp\Charge::create(
+    $ch = \Lib\Pingpp\Charge::create(
         array(
             'subject'   => 'Your Subject',
             'body'      => 'Your Body',
@@ -87,7 +87,7 @@ try {
         )
     );
     echo $ch;
-} catch (\Pingpp\Error\Base $e) {
+} catch (\Lib\Pingpp\Error\Base $e) {
     header('Status: ' . $e->getHttpStatus());
     echo($e->getHttpBody());
 }

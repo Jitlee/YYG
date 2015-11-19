@@ -127,7 +127,7 @@
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
+			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/Pay', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
