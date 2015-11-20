@@ -56,16 +56,22 @@
         }));
 		
         xhr.onreadystatechange = function () {        	
+        	//alert(xhr.status);
             if (xhr.readyState == 4 && xhr.status == 200) {
-                //alert(xhr.responseText);
-                
-                document.getElementById('divItem').innerHTML=xhr.responseText;
-                
-                console.log(xhr.responseText);
-                pingpp.createPayment(xhr.responseText, function(result, err) {
+                //document.getElementById('divItem').innerHTML=xhr.responseText;
+                alert(xhr.responseText);
+                pingpp.createPayment(xhr.responseText, function(result, err) {                     
                     console.log(result);
                     console.log(err);
-                });
+                    if (result == "success") {
+				        // 只有微信公众账号 wx_pub 支付成功的结果会在这里返回，其他的 wap 支付结果都是在 extra 中对应的 URL 跳转。
+				    } else if (result == "fail") {
+				        // charge 不正确或者微信公众账号支付失败时会在此处返回
+				    } else if (result == "cancel") {
+				        // 微信公众账号支付取消支付
+				    }
+				    alert(result);
+				});
             }
         }
     }

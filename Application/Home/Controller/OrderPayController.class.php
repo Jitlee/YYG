@@ -1,7 +1,7 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
- 
+use Pingpp\Pingpp;
 
 class OrderPayController extends Controller {
 	
@@ -13,13 +13,11 @@ public function Pay(){
 
 public function GetCharge()
 {
-	//\Lib\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
-	
-	//$qqobj=    new \Lib\Login\C();//::retrieve();
-	
-	\Lib\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
+	Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
 	try {
-	    $ch = \Lib\Pingpp\Charge::create(
+		$orderNo="OY00001";
+		$amount=0.01;
+	    $ch = \Pingpp\Charge::create(
 	        array(
 	            'subject'   => 'Your Subject',
 	            'body'      => 'Your Body',
@@ -33,7 +31,7 @@ public function GetCharge()
 	        )
 	    );	     
 		$this->ajaxReturn($ch, 'JSON');
-	} catch (\Lib\Pingpp\Error\Base $e) {
+	} catch (\Pingpp\Error\Base $e) {
 	    header('Status: ' . $e->getHttpStatus());
 		$this->ajaxReturn($e->getHttpBody(), 'JSON');
 	}
