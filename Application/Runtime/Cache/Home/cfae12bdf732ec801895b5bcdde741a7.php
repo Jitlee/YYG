@@ -130,10 +130,13 @@
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
+<<<<<<< HEAD
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
+=======
+>>>>>>> origin/master
 			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>

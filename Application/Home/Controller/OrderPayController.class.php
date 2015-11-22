@@ -39,33 +39,55 @@ public function PayItem(){
 
 public function GetCharge()
 {
-	Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
-	try {
-		$orderNo="OY00001";
-		$arr=range(10000,99900);
-		shuffle($arr);
-		$orderNo=$orderNo . $arr[0];
-		$channel="alipay_wap";
-		$amount=0.01;
-	    $ch = \Pingpp\Charge::create(
-	        array(
-	            'subject'   => 'Your Subject',
-	            'body'      => 'Your Body',
-	            'amount'    => $amount,
-	            'order_no'  => $orderNo,
-	            'currency'  => 'cny',
-	            'extra'     => $extra,
-	            'channel'   => $channel,
-	            'client_ip' => $_SERVER['REMOTE_ADDR'],
-	            'app'       => array('id' => 'app_5K8yzLfvnT4Gaj1S')
-	        )
-	    );	     
-		$this->ajaxReturn($ch, 'JSON');
-	} catch (\Pingpp\Error\Base $e) {
-	    header('Status: ' . $e->getHttpStatus());
-		$this->ajaxReturn($e->getHttpBody(), 'JSON');
-	}
+//	Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
+//	try {
+//		$orderNo="OY00001";
+//		$arr=range(10000,99900);
+//		shuffle($arr);
+//		$orderNo=$orderNo . $arr[0];
+//		$channel="alipay_wap";
+//		$amount=0.01;
+//	    $ch = \Pingpp\Charge::create(
+//	        array(
+//	            'subject'   => 'Your Subject',
+//	            'body'      => 'Your Body',
+//	            'amount'    => $amount,
+//	            'order_no'  => $orderNo,
+//	            'currency'  => 'cny',
+//	            'extra'     => $extra,
+//	            'channel'   => $channel,
+//	            'client_ip' => $_SERVER['REMOTE_ADDR'],
+//	            'app'       => array('id' => 'app_5K8yzLfvnT4Gaj1S')
+//	        )
+//	    );	     
+//		$this->ajaxReturn($ch, 'JSON');
+//	} catch (\Pingpp\Error\Base $e) {
+//	    header('Status: ' . $e->getHttpStatus());
+//		$this->ajaxReturn($e->getHttpBody(), 'JSON');
+//	}
+
+ 
+
+//				"":10,
+//				"":"{$data.rderNo}",
+//				"":"",
+//				a:1,
+//				b:2
+				
+
+		$data["state"]=1;
+		$data["id"]=$_POST['id'];
+		$data["channel"]=$_POST['channel'];
+		$data["limit"]=$_POST['limit'];
+		$data["amount"]=$_POST['amount'];
+		$data["order_no"]=$_POST['order_no'];
+		$data["open_id"]=$_POST['open_id'];
+		$data["credential"]=$_POST['credential'];
 		
+		$this->ajaxReturn($data);
+		//$this->assign('data', $json);
+		//echo $json;
+		//$this->display();
 }
 
 }
