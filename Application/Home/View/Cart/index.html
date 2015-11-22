@@ -1,0 +1,186 @@
+<style type="text/css">
+	.mui-content {
+		padding-bottom: 100px;
+	}
+	.yyg-cart-item {
+		position: relative;
+		padding-top:10px;
+		padding-bottom:10px;
+	}
+	
+	.yyg-cart-img-container {
+		position: absolute;
+		width:75px;
+		height:75px;
+		border:solid 1px #D5D5D5;
+		top:50%;
+		left:15px;
+		transform: translateY(-50%);
+		-webkit-transform: translateY(-50%);
+		-moz-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+	}
+	
+	.yyg-cart-img-container img {
+		width:100%;
+		height:100%;
+	}
+	
+	.yyg-cart-body {
+		margin-left:85px;
+	}
+	
+	.yyg-cart-body input[type=number] {
+		width:85px;
+		padding:3px;
+		margin:0;
+		height:auto;
+	}
+	
+	.yyg-cart-title {
+		color:#666;
+		text-overflow:ellipsis;
+		white-space:nowrap;
+		overflow:hidden;
+		font-size: 16px;
+	}
+	
+	.yyg-cart-body .iconfont {
+		font-size: 24px;
+		color: #8f8f94;
+	}
+	
+	.yyg-cart-remove {
+		float: right;
+	}
+	
+	.yyg-cart-footer {
+		background-color: #fff;
+		border-top:solid 1px #d5d5d5;
+		position: fixed;
+		bottom:50px;
+		height:50px;
+		width:100%;
+		padding-top: 2px;
+    		padding-left: 8px;
+	}
+	
+	.yyg-cart-footer .yyg-btn {
+		position:absolute;
+		top:50%;
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%,-50%);
+		-moz-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+		right:5px;
+		width: 100px;
+	}
+	
+	#emptyBlock {
+		text-align: center;
+		font-size:20px;
+		color:#666;
+		padding: 20px 0;
+	}
+	
+	#emptyBlock .iconfont {
+		font-size: 120px;
+		line-height: 150px;
+	}
+	
+</style>
+
+<present name="list">
+<ul class="mui-table-view yyg-cart">
+	<foreach name="list" item="item">
+		<li class="mui-table-view-cell yyg-cart-item">
+			<div class="yyg-cart-img-container">
+				<img src="{$item.good.thumb}"/>
+			</div>
+			<div class="yyg-cart-body">
+				<p class="yyg-cart-title">(第 {$item.good.qishu} 期){$item.good.title}</p>
+				<h5>剩余{$item.good.shengyurenshu}人次</h5>
+				<input type="number" name="count" cid="{$item.id}" dj="{$item.good.danjia}" value="{$item.count}" bk="{$item.count}" class="mui-input" />
+				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="{$item.id}"><i class="iconfont icon-remove"></i></a>
+			</div>
+		</li>
+	</foreach>
+</ul>
+</present>
+<div id="emptyBlock" <present name="list"> style="display:none"</present>>
+	<i class="iconfont icon-emptyshoppingbag"></i>
+	<br/>
+	购物车为空
+</div>
+<footer id="footer" class="yyg-cart-footer" <notpresent name="list"> style="display:none"</notpresent>>
+	<span>合计 <r id="totalMoney" class="larger">¥2.00</r></span>
+	<h5>共<span id="goodCount">1</span>个商品</h5>
+	<div class="yyg-btn yyg-btn-primary">去结算</div>
+</footer>
+
+<script type="text/javascript">
+	$(function() {
+		function sum() {
+			var total = 0;
+			var count = 0;
+			$(".yyg-cart-item input").each(function() {
+				$this = $(this);
+				total += Number($this.attr("dj")) * Number($this.val());
+				count++;
+			});
+			$("#goodCount").text(count);
+			$("#totalMoney").text("¥" + total.toFixed(2));
+		}
+		
+		var inputHandler = null;
+		$(".yyg-cart-item input").bind("input", function() {
+			$this = $(this);
+			window.clearTimeout(inputHandler);
+			inputHandler = window.setTimeout(function() {
+				var id = $this.attr("cid");
+				var count = $this.val();
+				var bkCount = $this.attr("bk");
+				if(count > 0) {
+					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
+						if(result.status == 1) {
+							sum();
+							$this.attr("bk", count);
+						} else { // 失败
+							new Android_Toast({content: "修改失败"});
+							$this.val(bkCount);
+						}
+					});
+				}
+			}, 200);
+		}).bind("blur", function() {
+			$this = $(this);
+			var count = $this.val();
+			var bkCount = $this.attr("bk");
+			if(!(count > 0)) {
+				$this.val(bkCount);
+			}
+		});
+		
+		sum();
+		
+		$(".yyg-cart-remove").click(function() {
+			$this = $(this);
+			var id = $this.attr("cid");
+			$.post("{:U('remove', '', '')}/" + id, null, function(result) {
+				if(result.status == 1) {
+					$this.closest(".yyg-cart-item").remove();
+					count();
+					if($(".yyg-cart-item").length == 0) {
+						$("#emptyBlock").show();
+						$("#footer").hide();
+					}
+				} else { // 失败
+					new Android_Toast({content: "删除失败"});
+					$this.val(bkCount);
+				}
+			});
+		});
+	});
+</script>

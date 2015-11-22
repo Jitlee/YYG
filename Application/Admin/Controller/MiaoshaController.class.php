@@ -54,7 +54,7 @@ class MiaoshaController extends GoodsBaseController {
 			if($data) {
 				$result = $db->add(); // 写入数据到数据库 
 				if($result != false) {
-					self::saveImages($result);
+					self::saveImages($result, $this->_config['type']);
 					$this->success('操作成功', U('index', '', ''));
 				} else {
 					$this->ajaxReturn('数据错误');
@@ -89,7 +89,7 @@ class MiaoshaController extends GoodsBaseController {
 			$data = $db->create();
 			if($data) {
 				$result = $db->save(); // 写入数据到数据库 
-				self::saveImages($_POST['gid']);
+				self::saveImages($_POST['gid'], $this->_config['type']);
 				$this->success('操作成功', U('index', '', ''));
 			} else {
 				$this->ajaxReturn('数据创建错误');
@@ -99,6 +99,7 @@ class MiaoshaController extends GoodsBaseController {
 			
 			$db = D('miaosha');
 			$map['gid'] = $gid;
+			$map['type'] = $this->_config['type'];
 			$data = $db->relation(true)->find($gid);
 			$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
 			$this->assign('data', $data);

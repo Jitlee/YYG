@@ -207,9 +207,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_1797073339__=$minPageNum;$__FOR_END_1797073339__=$pageNum;for($i=$__FOR_START_1797073339__;$i < $__FOR_END_1797073339__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_68676437__=$minPageNum;$__FOR_END_68676437__=$pageNum;for($i=$__FOR_START_68676437__;$i < $__FOR_END_68676437__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_2063966534__=$pageNum+1;$__FOR_END_2063966534__=$maxPageNum;for($i=$__FOR_START_2063966534__;$i < $__FOR_END_2063966534__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_153825691__=$pageNum+1;$__FOR_END_153825691__=$maxPageNum;for($i=$__FOR_START_153825691__;$i < $__FOR_END_153825691__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

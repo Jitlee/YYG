@@ -10,17 +10,16 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1448212068_2954175.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="/Public/Home/js/owl.carousel.min.js"></script>
 		<script src="/Public/Home/layer/layer.js"></script>
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -44,9 +43,6 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title"><?php echo ($title); ?></h1>
-		</header>
 		<div class="mui-content">
 			<style type="text/css">
 	.yyg-bar-nav {
@@ -269,37 +265,8 @@
 				</div>
 			</div>
 		</div>
-<<<<<<< Updated upstream
-		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_home"></span>
-				<span class="mui-tab-label">首页</span>
-			</a>
-			<a id="miaosha" class="mui-tab-item" href="<?php echo U('Miaosha/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_miaosha"><span class="mui-badge">9</span></span>
-				<span class="mui-tab-label">秒杀</span>
-			</a>
-			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
-			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_paimai"></span>
-				<span class="mui-tab-label">拍卖</span>
-			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_me"></span>
-				<span class="mui-tab-label">我的</span>
-			</a>
-		</nav>
-		<div class="gotop backtop" style="display:none;"></div>
-	</body>
-
-</html>
-=======
 	</a>
 </li>
->>>>>>> Stashed changes
 <script type="text/javascript">
 	$(function(){
 		
@@ -485,15 +452,15 @@
 				<span class="mui-icon iconfont icon-jiangbei"></span>
 				<span class="mui-tab-label">最新揭晓</span>
 			</a>
-			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
 			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
+			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>

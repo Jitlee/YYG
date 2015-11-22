@@ -50,6 +50,20 @@ class PaimaiController extends Controller {
 	
 	protected function view($gid) {
 		$this->assign('title', '拍卖详情');
+		$db = M('paimai');
+		$data = $db->field('gid, title, subtitle,thumb, qipaijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,status')->find($gid);
+		$this->assign('data', $data);
+		
+		$imgdb = M('GoodsImages');
+		$imgmap['gid'] = $gid;
+		$imgmap['type'] = 3;
+		$images = $imgdb->where($imgmap)->select();
+		if(empty($images)) {
+			$image['image_url'] = $data['thumb'];
+			array_push($images, $image);
+		}
+		$this->assign('images', $images);
+		
 		layout('sublayout');
 		$this->display('view');
 	}

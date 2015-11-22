@@ -198,30 +198,30 @@ $(function() {
 </table>
 <nav>
   <ul class="pagination">
-  	<?php if($minPageNum == 1): ?><li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li>
-  	<?php else: ?>
-    <li>
+  	<?php if($minPageNum > 1): ?><li>
       <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
-    </li><?php endif; ?>
-    <?php $__FOR_START_1827726394__=$minPageNum;$__FOR_END_1827726394__=$pageNum;for($i=$__FOR_START_1827726394__;$i < $__FOR_END_1827726394__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } ?>
-	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-    <?php $__FOR_START_515991182__=$pageNum+1;$__FOR_END_515991182__=$maxPageNum;for($i=$__FOR_START_515991182__;$i < $__FOR_END_515991182__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
-	<?php if($maxPageNum == $pageCount): ?><li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </span>
     </li>
   	<?php else: ?>
-    <li>
+    <li class="disabled">
+      <span aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </span>
+    </li><?php endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_882207753__=$minPageNum;$__FOR_END_882207753__=$pageNum;for($i=$__FOR_START_882207753__;$i < $__FOR_END_882207753__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+	<li class="active"><a><?php echo ($pageNum); ?></a></li>
+  <?php $__FOR_START_2132887382__=$pageNum+1;$__FOR_END_2132887382__=$maxPageNum;for($i=$__FOR_START_2132887382__;$i < $__FOR_END_2132887382__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
+    </li>
+  	<?php else: ?>
+    <li class="disabled">
+      <span aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </span>
     </li><?php endif; ?>
   </ul>
 </nav>

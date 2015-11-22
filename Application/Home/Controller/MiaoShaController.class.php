@@ -8,12 +8,6 @@ class MiaoshaController extends Controller {
         $this->display();
     }
 	
-	public function eee(){
-    		$this->assign('title', '秒杀');
-		$this->assign('pid', 'miaosha');
-        $this->display();
-    }
-	
 	public function pageAll($pageSize, $pageNum) {
 		// 分页
 		$db = M('miaosha');

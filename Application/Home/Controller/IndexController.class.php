@@ -53,9 +53,37 @@ class IndexController extends Controller {
 	}
 	
 	protected function view($gid) {
-		$this->assign('title', '商品详情');
 		layout('sublayout');
+		$this->assign('title', '商品详情');
+		
+		$db = M('miaosha');
+		$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,type')->find($gid);
+		$data['percentage'] = min(100, $data['canyurenshu']*100/$data['zongrenshu']);
+		$this->assign('data', $data);
+		
+		$imgdb = M('GoodsImages');
+		$imgmap['gid'] = $gid;
+		$imgmap['type'] = $data['type'];
+		$images = $imgdb->where($imgmap)->select();
+		if(empty($images)) {
+			$image['image_url'] = $data['thumb'];
+			array_push($images, $image);
+		}
+		$this->assign('images', $images);
+		
 		$this->display('view');
+	}
+	
+	public function detail($gid) {
+		layout(false);
+		$this->assign('title', '商品图文详情');
+		
+		$db = M('miaosha');
+		$data = $db->field('gid,content')->find($gid);
+		$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
+		$this->assign('data', $data);
+		
+		$this->display();
 	}
 	
 	public function category() {

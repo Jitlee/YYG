@@ -7,10 +7,14 @@
 		<title>{$title}</title>
 		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/idangerous.swiper.css" rel="stylesheet">
 		<link href="__CSS__/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/android_toast.min.css" rel="stylesheet" type="text/css" />
 
 		<script src="__JQ__"></script>
-		<script src="__HOME__/layer/layer.js"></script>
+		<script src="__JS__/idangerous.swiper-1.9.1.min.js"></script>
+		<script src="__JS__/idangerous.swiper.scrollbar-1.2.js"></script>
+		<script src="__JS__/android_toast.min.js"></script>
 		
 		<script src="__JS__/mobile.js"></script>
 
@@ -34,17 +38,38 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">{$title}</h1>
-		</header>
-		<div class="mui-content">
+		<div class="mui-content" style="padding-top: 0;padding-bottom: 54px;">
 			{__CONTENT__}
 		</div>
+		<div class="gotop backtop" style="display:none;"></div>
 	</body>
 
 </html>
 <script type="text/javascript">
 	$(document).ready(function() {
+		$(window).scroll(function() {
+			var scrollHeight = $(document).height();
+			var scrollTop = $(window).scrollTop();
+			var $windowHeight = $(window).innerHeight();
+			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
+				"background-image": "url(__IMG__/iconfont-fanhuidingbu.png)"
+			});
+		});
+		$('.backtop').click(function(e) {
+			$(".gotop").css({
+				"background-image": "url(__IMG__/iconfont-fanhuidingbu_up.png)"
+			});
+			e.preventDefault();
+			$('html,body').animate({
+				scrollTop: 0
+			});
+		});
 		
+		//Partial Slides
+		swiperLoop = $('.swiper-loop').swiper({
+			pagination : '.pagination-loop',
+			slidesPerSlide : Math.min(3, {$images|count}),
+			loop:true
+		});
 	});
 </script>

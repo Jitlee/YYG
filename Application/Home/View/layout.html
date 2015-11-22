@@ -10,17 +10,16 @@
 		<title>{$title}</title>
 		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="__CSS__/owl.carousel.css" rel="stylesheet">
-		<link href="__CSS__/global.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/public.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/index.css" rel="stylesheet" type="text/css" />
 		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
 		<link href="__CSS__/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/android_toast.min.css" rel="stylesheet" type="text/css" />
 
 		<script src="__JQ__"></script>
 		<script src="__JS__/owl.carousel.min.js"></script>
 		<script src="__HOME__/layer/layer.js"></script>
 		<script src="__JS__/jquery.lazy.min.js"></script>
 		<script src="__JS__/jquery.touchSwipe.min.js"></script>
+		<script src="__JS__/android_toast.min.js"></script>
 		
 		<script src="__JS__/mobile.js"></script>
 
@@ -44,9 +43,6 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title">{$title}</h1>
-		</header>
 		<div class="mui-content">
 			{__CONTENT__}
 			<br />
@@ -61,13 +57,13 @@
 				<span class="mui-icon iconfont icon-jiangbei"></span>
 				<span class="mui-tab-label">最新揭晓</span>
 			</a>
-			<a id="xiangou" class="mui-tab-item" href="{:U('Xiangou/index', '', '')}">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
 			<a id="paimai" class="mui-tab-item" href="{:U('Paimai/index', '', '')}">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
+			</a>
+			<a id="cart" class="mui-tab-item" href="{:U('Cart/index', '', '')}">
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="{:U('OrderPay/demo', '', '')}">
 				<span class="mui-icon iconfont icon-yyg_me"></span>

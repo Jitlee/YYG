@@ -10,17 +10,16 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="/Public/Home/css/global.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/public.css" rel="stylesheet" type="text/css" />
-		<link href="/Public/Home/css/index.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1448206101_9782503.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<script src="/Public/Home/js/owl.carousel.min.js"></script>
 		<script src="/Public/Home/layer/layer.js"></script>
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -44,9 +43,6 @@
 	</head>
 
 	<body>
-		<header class="mui-bar mui-bar-nav">
-			<h1 class="mui-title"><?php echo ($title); ?></h1>
-		</header>
 		<div class="mui-content">
 			<?php if(isset($tuijian)): ?><a href="/index.php/Home/Paimai/<?php echo ($tuijian["gid"]); ?>">
 		<section class="tuijian mui-content-padded yyg-content">
@@ -130,15 +126,15 @@
 				<span class="mui-icon iconfont icon-jiangbei"></span>
 				<span class="mui-tab-label">最新揭晓</span>
 			</a>
-			<a id="xiangou" class="mui-tab-item" href="<?php echo U('Xiangou/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
-				<span class="mui-tab-label">限购</span>
-			</a>
 			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
+			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
