@@ -51,7 +51,11 @@ class JiexiaoController extends Controller {
 	
 	public function brands($cid) {
 		$db = D('category');
-		$brands = $db->relation(true)->find($cid)['brands'];
+		$category = $db->relation(true)->find($cid);
+		$brands = array();
+		if($category) {
+			$brands = $category['brands'];
+		}
 		$gdb = M('miaosha');
 		$map['cid'] = $cid;
 		$map["jishijiexiao"] = 0;
