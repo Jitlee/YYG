@@ -10,7 +10,7 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="http://at.alicdn.com/t/font_1448206101_9782503.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1448212068_2954175.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -63,22 +63,31 @@
             // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
             channel:['alipay_wap','wx_pub','upacp_wap','yeepay_wap','jdpay_wap','bfb_wap'],
             charge_url:'/index.php/Home/OrderPay/GetCharge',  //商户服务端创建订单的url
-            charge_param:{a:1,b:2},                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
-            open_id:'Openid'                             //(可选，使用微信公众号支付时必须传入)
+            charge_param:{
+				"channel":"alipay_wap",
+				"amount":10,
+				"order_no":"<?php echo ($data["rderNo"]); ?>",
+				"open_id":"",
+				a:1,
+				b:2
+            },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
+            open_id:''                             //(可选，使用微信公众号支付时必须传入)
         },function(res){
             if(!res.status){
                 //处理错误
                 alert(res.msg);
             }
             else{
-                //若微信公众号渠道需要使用壹收款的支付成功页面，则在这里进行成功回调，调用 pingpp_one.success 方法，你也可以自己定义回调函数
+                //若微信公众号渠道需要使用壹收款的支付成功页面
+                //则在这里进行成功回调，调用 pingpp_one.success 方法，你也可以自己定义回调函数
                 //其他渠道的处理方法请见第 2 节
                 pingpp_one.success(function(res){
                     if(!res.status){
                         alert(res.msg);
                     }
                 },function(){
-                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，则在该方法内写入 window.location.href = "你的购买页面 url"
+                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，
+                    //则在该方法内写入 window.location.href = "你的购买页面 url"
                     window.location.href='http://yourdomain.com/payment_succeeded';//示例
                 });
             }

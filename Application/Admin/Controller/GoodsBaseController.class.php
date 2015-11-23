@@ -9,7 +9,7 @@ abstract class GoodsBaseController extends CommonController {
 		$keys = $_POST['imageKeys'];
 		$imgdb = M('GoodsImages');
 		$map['gid'] = $gid;
-		$imgdb->where('gid=' . $gid . 'and type=' . $type)->delete();
+		$imgdb->where('gid=' . $gid . ' and type=' . $type)->delete();
 		
 		for ($i = 0; $i < count($urls); ++$i) {
 			$imgdata['gid'] = $gid;

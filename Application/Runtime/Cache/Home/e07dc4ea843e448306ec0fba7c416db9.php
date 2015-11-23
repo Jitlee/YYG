@@ -10,7 +10,7 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="http://at.alicdn.com/t/font_1448206101_9782503.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1448212068_2954175.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -490,13 +490,10 @@
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-<<<<<<< HEAD
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
-=======
->>>>>>> origin/master
 			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
