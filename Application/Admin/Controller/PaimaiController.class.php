@@ -39,7 +39,7 @@ class PaimaiController extends GoodsBaseController {
 			if($data) {
 				$result = $db->add(); // 写入数据到数据库 
 				if($result != false) {
-					self::saveImages($result);
+					self::saveImages($result, 3);
 					$this->success('操作成功', U('index', '', ''));
 				} else {
 					$this->ajaxReturn('数据错误');
@@ -66,7 +66,7 @@ class PaimaiController extends GoodsBaseController {
 			$db = M('paimai');
 			if($db->create()) {
 				$result = $db->save(); // 写入数据到数据库 
-				self::saveImages($_POST['gid']);
+				self::saveImages($_POST['gid'], 3);
 				$this->success('操作成功', U('index', '', ''));
 			} else {
 				$this->ajaxReturn('数据创建错误');
@@ -82,6 +82,7 @@ class PaimaiController extends GoodsBaseController {
 			
 			$imgdb = M('GoodsImages');
 			$imgmap['gid'] = $gid;
+			$imgmap['type'] = 3;
 			$images = $imgdb->where($imgmap)->select();
 			$this->assign('images', $images);
 			
