@@ -104,11 +104,7 @@ class IndexController extends Controller {
 	
 	public function brands($cid) {
 		$db = D('category');
-		$category = $db->relation(true)->find($cid);
-		$brands = array();
-		if($category) {
-			$brands = $category['brands'];
-		}
+		$brands = $db->relation(true)->find($cid)['brands'];
 		$gdb = M('miaosha');
 		$map['cid'] = $cid;
 		$map["jishijiexiao"] = 0;

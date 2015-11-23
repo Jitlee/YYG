@@ -9,7 +9,7 @@
 		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1448212068_2954175.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1447942138_5039756.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
