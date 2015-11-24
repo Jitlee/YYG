@@ -2,9 +2,10 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
+
 	
 	public function index(){
-    		$this->assign('title', '一元购');
+    	$this->assign('title', '一元购');
 		$this->assign('pid', 'home');
 		$sdb = M('slide');
 		$slides = $sdb->select();
