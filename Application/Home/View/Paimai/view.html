@@ -2,7 +2,7 @@
 	<div class="swiper-container swiper-loop">
 	    <div class="swiper-wrapper">
 	    		<foreach name="images" item="image">
-				<div class="swiper-slide"><img src="{$image.image_url}"></div>
+				<div class="swiper-slide" style="background-image: url({$image.image_url});"></div>
 			</foreach>
 	    </div>
 	</div>

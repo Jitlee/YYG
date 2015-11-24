@@ -212,7 +212,6 @@
 	<a href="">
 		<div>
 			<div class="yyg-goods-img-container">
-				<img class="yyg-goods-img" src="" />
 			</div>
 			<div class="yyg-goods-media">
 				<p class="yyg-content-title"></p>
@@ -257,7 +256,8 @@
 	       		$.each(list, function() {
 	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
-	       			$("img", item).attr("src", this.thumb);
+//	       			$("img", item).attr("src", this.thumb);
+					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
 	       			$("p", item).text(this.title);
 	       			$("span.money", item).text(this.money);
 	       			$("r", item).text(this.danjia);

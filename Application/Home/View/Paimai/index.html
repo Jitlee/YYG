@@ -8,7 +8,7 @@
 				<p class="tuijian-content-title">{$tuijian.title}</p>
 				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger">{$tuijian.zuigaojia}</r></h5>
 				<h5><i class="iconfont icon-add"></i><label>出价次数</label>{$tuijian.chujiacishu}次</h5>
-				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time _countdown="{$tuijian.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
+				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time class="normal" _countdown="{$tuijian.end_time|strtotime}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
 				<a type="button" class="mui-btn mui-btn-red" href="__CONTROLLER__/bid/{$tuijian.gid}">我要出价</a>
 			</div>
 		</section>
@@ -20,8 +20,7 @@
 			<li class="yyg-goods-list-item">
 				<a href="__CONTROLLER__/{$item.gid}">
 					<div>
-						<div class="yyg-goods-img-container">
-							<img class="yyg-goods-img" src="{$item.thumb}" />
+						<div class="yyg-goods-img-container" style="background-image: url({$item.thumb});">
 						</div>
 						<div class="yyg-goods-media">
 							<p class="tuijian-content-title">{$item.title}</p>
@@ -60,7 +59,8 @@
 			$.get("{:U('page', '', '')}/8/" + (++pageNum), null, function(list) {
 	       		$.each(list, function() {
 	       			var item = template.clone();
-	       			$("img", item).attr("src", this.thumb);
+//	       			$("img", item).attr("src", this.thumb);
+					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
 	       			$("p", item).text(this.title);
 	       			$("h5 r:last-child", item).text(this.zuigaojia);
 	       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);

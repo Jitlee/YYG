@@ -181,6 +181,9 @@ time.normal d {
 	margin: 10px auto;
 	width:30vw;
 	height:30vw;
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-size: contain;
 }
 
 .yyg-goods-img {
@@ -315,9 +318,10 @@ a.user {
 	line-height: 1.5;
 }
 
-.swiper-slide img {
-	width:100%;
-	vertical-align: middle;
+.swiper-slide {
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	background-size: contain;
 }
 
 .swiper-loop{
