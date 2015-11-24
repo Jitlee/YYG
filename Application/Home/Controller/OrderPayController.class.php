@@ -1,18 +1,15 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-use Pingpp\Pingpp;
-use Pingpp\Charge;
-use Pingpp\Error\Base;
 
+ 
 class OrderPayController extends Controller {
 		
-	public function _initialize() 
+	public function _initialize()
 	{
-		//parent::_initialize();
-		Vendor(‘PingppSDK.init’); 
+	 	vendor( "PingppSDK.init");
 	}
-	
+		
 	public function Pay(){
 	    	$this->assign('title', '支付');
 			//$this->assign('pid', 'miaosha');
@@ -25,7 +22,7 @@ class OrderPayController extends Controller {
 	}
 
 
-	public function test(){
+	public function Index(){
         if (empty($_GET['channel']) || empty($_GET['amount'])) {
             echo 'channel or amount is empty';
             exit();
@@ -62,14 +59,17 @@ class OrderPayController extends Controller {
                 $extra = array('success_url' => 'http://www.yourdomain.com', 'fail_url' => 'http://www.yourdomain.com', 'token' => 'dsafadsfasdfadsjuyhfnhujkijunhaf');
                 break;
         }
+		
+		Vendor('PingppSDK.init');
         \Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
+        
         try {
             $ch = \Pingpp\Charge::create(array('subject' => 'Your Subject', 'body' => 'Your Body', 'amount' => $amount, 'order_no' => $orderNo, 'currency' => 'cny', 'extra' => $extra, 'channel' => $channel,
              'client_ip' => get_client_ip(), 'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')));
-             //echo $ch;
-			 $this->assign('data', $ch);
+             echo $ch;
+			 //$this->assign('data', $ch);
 		
-        	 $this->display("GetCharge");
+        	 $this->display();
         } catch (\Pingpp\Error\Base $e) {
              //header('Status: ' . $e->getHttpStatus());
             header("Content-type:text/html;charset=utf-8");
