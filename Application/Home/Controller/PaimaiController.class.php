@@ -51,7 +51,7 @@ class PaimaiController extends Controller {
 	protected function view($gid) {
 		$this->assign('title', '拍卖详情');
 		$db = M('paimai');
-		$data = $db->field('gid, title, subtitle,thumb, qipaijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,status')->find($gid);
+		$data = $db->field('gid, title, subtitle,thumb, qipaijia,lijijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,status')->find($gid);
 		$this->assign('data', $data);
 		
 		$imgdb = M('GoodsImages');

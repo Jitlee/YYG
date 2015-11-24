@@ -53,7 +53,7 @@ class IndexController extends Controller {
 		$this->view($gid);
 	}
 	
-	protected function view($gid) {
+	protected function view($gid, $qishu) {
 		layout('sublayout');
 		$this->assign('title', '商品详情');
 		

@@ -14,14 +14,16 @@
 </div>
 
 <div class="yyg-body">
-	<div class="swiper-container swiper-loop">
-	    <div class="swiper-wrapper">
-	    	<foreach name="images" item="image">
-				<div class="swiper-slide" style="background-image: url({$image.image_url});"></div>
-			</foreach>
-	    </div>
+	<div class="swiper-outter">
+		<div class="swiper-container swiper-loop">
+		    <div class="swiper-wrapper">
+		    	<foreach name="images" item="image">
+					<div class="swiper-slide" style="background-image: url({$image.image_url});"></div>
+				</foreach>
+		    </div>
+		</div>
+		<div class="pagination pagination-loop"></div>
 	</div>
-	<div class="pagination pagination-loop"></div>
 	
 	<p class="yyg-view-title yyg-view-margin">
 		(第{$data.qishu}期) {$data.title} <r>{$data.subtitle}</r>
@@ -52,7 +54,7 @@
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
-		<div class="yyg-btn yyg-btn-primary">立即一元秒杀</div>
+		<div id="lijiButton" class="yyg-btn yyg-btn-primary">立即一元秒杀</div>
 	</div>
 	<div class="yyg-footer-right">
 		<div id="addCartButton" class="yyg-btn yyg-btn-success">加入购物车</div>
@@ -65,6 +67,11 @@
 		$("#addCartButton").click(function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}", null, function(result) {
 				new Android_Toast({content: result.message});
+			})
+		});
+		$("#lijiButton").click(function() {
+			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+				window.location.href = "{:U('Cart/index', '','')}";
 			})
 		});
 	});

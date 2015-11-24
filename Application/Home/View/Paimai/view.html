@@ -1,18 +1,22 @@
 <div class="yyg-body">
-	<div class="swiper-container swiper-loop">
-	    <div class="swiper-wrapper">
-	    	<foreach name="images" item="image">
-				<div class="swiper-slide" style="background-image: url({$image.image_url});"></div>
-			</foreach>
-	    </div>
+	<div class="swiper-outter">
+		<div class="swiper-container swiper-loop">
+		    <div class="swiper-wrapper">
+		    	<foreach name="images" item="image">
+					<div class="swiper-slide" style="background-image: url({$image.image_url});"></div>
+				</foreach>
+		    </div>
+		</div>
+		<div class="pagination pagination-loop"></div>
 	</div>
-	<div class="pagination pagination-loop"></div>
 	
 	<p class="yyg-view-title yyg-view-margin">
 		{$data.title} <r>{$data.subtitle}</r>
 	</p>
-	<h5 class="yyg-view-margin">当前价：¥ {$data.zuigaojia}</h5>
-	<h5 class="yyg-view-margin">保证金：<r>¥ </r><r class="larger">{$data.baozhengjin}</r></h5>
+	<h5 class="yyg-view-margin">起拍价：¥ {$data.qipaijia}</h5>
+	<h5 class="yyg-view-margin">最高出价者：无</h5>
+	<h5 class="yyg-view-margin">立即揭标价：¥ {$data.lijijia}</h5>
+	<h5 class="yyg-view-margin">保证金：<r> ¥ </r><r class="larger">{$data.baozhengjin}</r></h5>
 </div>
 
 <ul class="mui-table-view yyg-margin20">
@@ -25,6 +29,25 @@
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
-		<div class="yyg-btn yyg-btn-primary">我要出价</div>
+		<a class="yyg-btn yyg-btn-primary" href="{:U('Pay/baozhengjin', '', '')}/{$data.gid}">我要出价</a>
+	</div>
+	<div class="yyg-footer-right">
+		<div id="lijiButton" class="yyg-btn yyg-btn-success">立即揭标</div>
+		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
+
+<script type="text/javascript">
+	$(function() {
+		$("#addCartButton").click(function() {
+			$.post("{:U('Cart/add', '', '')}/{$data.gid}", null, function(result) {
+				new Android_Toast({content: result.message});
+			})
+		});
+		$("#lijiButton").click(function() {
+			$.post("{:U('Cart/add', '', '')}/{$data.gid}/3", null, function(result) {
+				window.location.href = "{:U('Cart/index', '','')}";
+			})
+		});
+	});
+</script>

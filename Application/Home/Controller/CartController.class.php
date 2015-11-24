@@ -19,7 +19,7 @@ class CartController extends Controller {
 		$this->display();
     }
 	
-	public function add($gid) {
+	public function add($gid, $type) {
 		$db = M('cart');
 		$map['gid'] = $gid;
 		$exists = $db->where($map)->field('id')->find();
@@ -30,6 +30,7 @@ class CartController extends Controller {
 		} else {
 			$data['gid'] = $gid;
 			$data['uid'] = 0;
+			$data['type'] = $type;
 			$result['data'] = $db->add($data);
 		}
 		if($result['data']) {
