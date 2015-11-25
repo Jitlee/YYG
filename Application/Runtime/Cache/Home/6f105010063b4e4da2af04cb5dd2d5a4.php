@@ -45,83 +45,10 @@
 	<body>
 		<div class="mui-content">
 			<style type="text/css">
+	
+
 	.mui-content {
 		padding-bottom: 100px;
-	}
-	.yyg-cart-item {
-		position: relative;
-		padding-top:10px;
-		padding-bottom:10px;
-	}
-	
-	.yyg-cart-img-container {
-		position: absolute;
-		width:75px;
-		height:75px;
-		border:solid 1px #D5D5D5;
-		top:50%;
-		left:15px;
-		transform: translateY(-50%);
-		-webkit-transform: translateY(-50%);
-		-moz-transform: translateY(-50%);
-		-o-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-	}
-	
-	.yyg-cart-img-container img {
-		width:100%;
-		height:100%;
-	}
-	
-	.yyg-cart-body {
-		margin-left:85px;
-	}
-	
-	.yyg-cart-body input[type=number] {
-		width:85px;
-		padding:3px;
-		margin:0;
-		height:auto;
-	}
-	
-	.yyg-cart-title {
-		color:#666;
-		text-overflow:ellipsis;
-		white-space:nowrap;
-		overflow:hidden;
-		font-size: 16px;
-	}
-	
-	.yyg-cart-body .iconfont {
-		font-size: 24px;
-		color: #8f8f94;
-	}
-	
-	.yyg-cart-remove {
-		float: right;
-	}
-	
-	.yyg-cart-footer {
-		background-color: #fff;
-		border-top:solid 1px #d5d5d5;
-		position: fixed;
-		bottom:50px;
-		height:50px;
-		width:100%;
-		padding-top: 2px;
-    		padding-left: 8px;
-	}
-	
-	.yyg-cart-footer .yyg-btn {
-		position:absolute;
-		top:50%;
-		-webkit-transform: translateY(-50%);
-		transform: translateY(-50%,-50%);
-		-moz-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		-o-transform: translateY(-50%);
-		right:5px;
-		width: 100px;
 	}
 	
 	#emptyBlock {

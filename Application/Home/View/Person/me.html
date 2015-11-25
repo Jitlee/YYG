@@ -142,7 +142,7 @@
 
 	<body>
 		<div class="mui-content">
-			<ul class="mui-table-view">
+			<ul class="mui-table-view"> 
 				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="familyInfo">
 					<a class="mui-navigate-right">
 						<div class="avatar">
@@ -151,7 +151,7 @@
 						<div class="userInfo">
 							<p class="nickname" data-bind="text: familyNick"></p>
 							<p class="phoneno">ID：{$userinfo.openid}
-								 <a href="/index.php/Home/Person/login">登录</a>
+								 <a href="{:U('Person/me', '', '')}/index.php/Home/Person/">登录</a>
 							</p>
 						</div>
 					</a>
@@ -170,76 +170,77 @@
 				
 				<li class="userline land-cell" data-bind="visible: isLogin" id="loginUser">
 					<span class="cell-left" id="userinfo">
-						<img class="circle-img" alt="头像" data-bind="attr:{ src: userImg }">
-						<p data-bind="text: nickName"></p>
+						<img class="circle-img" alt="积分" src="__IMG__/person/yyg_icon_hb.png">
+						<p data-bind="text: nickName">积分：0.00</p>
 					</span>
 					<a></a>
 					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
-						<span class="land-cell_add">
-							<i class="mui-icon mui-icon-plusempty"></i>
-						</span>
-						<p>添加另一半</p>
-					</span>
-					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'inline-block' : 'none'}" id="otherhalfInfo">
-						<img class="circle-img" alt="头像" data-bind="attr:{ src: otherhalfImg }">
-						<p data-bind="text: otherhalfNick"></p>
-					</span>
+						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
+						<p>红包:0</p>
+					</span>					
 				</li>
 				
 				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="setting">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
-							<img alt="设置" src="../images/setting.png" />
+							<img alt="设置" src="__IMG__/person/yyg_icon_wdms.png"/>
 						</div>
 						<div class="menu-content">
-							<p>设置</p>
-						</div>
-						<!--<div class="menu-tip">
-							<p>让家年华更好玩更好用</p>
-						</div>-->
-					</a>
-				</li>
-				<li class="mui-table-view-cell userline" id="recommend">
-					<a class="mui-navigate-right">
-						<div class="img-tip">
-							<img alt="推荐" src="../images/recommend.png" />
-						</div>
-						<div class="menu-content">
-							<p>推荐给好友</p>
+							<p>我的秒杀</p>
 						</div>
 					</a>
 				</li>
+				<li class="userline land-cell" id="recommend">
+					<span class="cell-left">
+						<img class="circle-img" alt="秒杀记录" src="__IMG__/person/yyg_icon_msjl.png">
+						<p data-bind="text: nickName">秒杀记录</p>
+					</span>
+					<a></a>
+					<span class="cell-left">
+						<img class="circle-img" alt="中奖记录" src="__IMG__/person/yyg_icon_zjjl.png">
+						<p data-bind="text: nickName">中奖记录</p>
+					</span>
+					<a></a>
+					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
+						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
+						<p>红包:0</p>
+					</span>
+					
+					
+					<a></a>
+					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
+						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
+						<p>红包:0</p>
+					</span>
+				</li>
+				
 				<li class="mui-table-view-cell" id="kkemail-li">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
-							<img alt="邮箱" src="../images/kkemail.png" />
+							<img alt="邮箱" src="__IMG__/person/yyg_icon_wdsc.png"/>
 						</div>
 						<div class="menu-content">
-							<p id="kkemail">家庭邮箱</p>
-						</div>
-						
-						<!--<div class="menu-tip">
-							<p>家庭邮箱</p>
-						</div>-->
+							<p id="kkemail">我的收藏</p>
+						</div> 
 					</a>
 				</li>
 				<li class="mui-table-view-cell" id="feedback">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
-							<img alt="反馈" src="../images/suggestion.png" />
+							<img alt="反馈" src="__IMG__/person/yyg_icon_wdpl.png"/>
 						</div>
 						<div class="menu-content">
-							<p>意见反馈</p>
+							<p>我的评论</p>
 						</div>
 					</a>
 				</li>
 				<li class="mui-table-view-cell" id="about">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
-							<img alt="关于" src="../images/about.png" />
+							<img alt="关于" src="__IMG__/person/yyg_icon_wdyq.png"/>
 						</div>
 						<div class="menu-content">
-							<p>关于家年华</p>
+							<p>我的邀请</p>
 						</div>
 					</a>
 				</li>
