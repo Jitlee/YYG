@@ -22,24 +22,17 @@ class PersonController extends Controller {
         $this->display();
     }
 	
-	public function login($username = null, $password = null, $verify = null) {
+	public function login($mobile = null, $password = null) {
 		if(IS_POST) {
-//			if(!check_verify($verify)) {
-//				 $this->error('3验证码输入错误！');
-//			}
 			$db = M('member');
-			$data['mobile'] = $username;
-			$admin = $db->where($data)->find();
-			if(!$admin) {
-				$this->error('1帐号不存在或被禁用');
-			}
-			
-			if($admin['password'] != md5($password)) {
-				$this->error('2密码不正确');
+			$data['mobile'] = $mobile;
+			$user = $db->where($data)->find();
+			if(!$user || $user['password'] != md5($password)) {
+				$this->error('用户名或密码不正确');
 			}
 			
 			$data = array(
-				'uid'			=> $admin['uid'],
+				'uid'			=> $user['uid'],
 				'login'			=> array('exp', '`login` + 1'),
 				'login_time'		=> date('y-m-d-h-i-s'),
 				'login_ip'		=> get_client_ip(),
@@ -49,26 +42,33 @@ class PersonController extends Controller {
 			$auth = array(
 				'uid'			=> $data['uid'],
 				'login_time'		=> $data['login_time'],
-				'role'			=> $admin['role'],
-				'email'			=> $admin['email'],
+				'role'			=> $user['role'],
+				'email'			=> $user['email'],
+				'mobile'			=> $user['mobile'],
 			);
-			session('admin', $auth);
-//			echo dump(session('admin'));
-			$this->success('登陆成功', U('Index/index', '', ''));
-		}
-//		else if(is_login()) {
-//			$this->redirect("Index/index");
-//		} 
-		else 
-		{
-			layout(true);
+			
+			// 将临时购物车的记录替换成真的
+			
+			$cdb = M();
+			$_uid = get_temp_uid();
+			
+			$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;
+			
+			$row = $cdb->execute($sql);
+			session("_uid", $data['uid']); // 替换session
+			
+			session('user', $auth);
+			$url = decode(I('post.redirect'));
+			
+			$this->success('登陆成功', U($url, '', ''));
+		} else  {
+			layout(false);
+			$this->assign('redirect', $mobile);
 			$this->display();
 		}
 	}
 	
-	
 	public function forgetPassword(){
-			
 			$_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
 			$login_url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=" 
 			.$app_id. "&redirect_uri=" . urlencode($callback)

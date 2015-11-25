@@ -44,125 +44,64 @@
 
 	<body>
 		<div class="mui-content">
-			<style type="text/css">
-	
-
-	.mui-content {
-		padding-bottom: 100px;
-	}
-	
-	#emptyBlock {
-		text-align: center;
-		font-size:20px;
-		color:#666;
-		padding: 20px 0;
-	}
-	
-	#emptyBlock .iconfont {
-		font-size: 120px;
-		line-height: 150px;
-	}
-	
-</style>
-
-<?php if(isset($list)): ?><ul class="mui-table-view yyg-cart">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item">
-		<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
-			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">( 立即揭标 ) <?php echo ($item["paimai"]["title"]); ?></p>
-				<h5>起拍价:<?php echo ($item["paimai"]["qipaijia"]); ?></h5>
-				<input type="number" disabled="disabled" name="count" dj="1" value="<?php echo ($item["paimai"]["lijijia"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
-			</div>
-		<?php else: ?>
-			<div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["good"]["thumb"]); ?>"/>
-			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
-				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
-			</div><?php endif; ?>
-		</li><?php endforeach; endif; ?>
-</ul><?php endif; ?>
-<div id="emptyBlock" <?php if(isset($list)): ?>style="display:none"<?php endif; ?>>
-	<i class="iconfont icon-emptyshoppingbag"></i>
-	<br/>
-	购物车为空
-</div>
-<footer id="footer" class="yyg-cart-footer" <?php if(!isset($list)): ?>style="display:none"<?php endif; ?>>
-	<span>合计 <r id="totalMoney" class="larger">¥2.00</r></span>
-	<h5>共<span id="goodCount">1</span>个商品</h5>
-	<a href="<?php echo U('Pay/index','','');?>" class="yyg-btn yyg-btn-primary">去结算</a>
-</footer>
-
+					<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>账号</label>
+						<input id='account' type="text" name="mobile" class="mui-input-clear mui-input" required placeholder="请输入您的手机号码">
+					</div>
+					<div class="mui-input-row">
+						<label>密码</label>
+						<input id='password' type="password"  name="password"  class="mui-input-clear mui-input" required placeholder="请输入密码">
+					</div>
+					<div class="mui-input-row">
+						<label>确认</label>
+						<input id='password_confirm' type="password" name="passwordconfim" class="mui-input-clear mui-input" required placeholder="请确认密码">
+					</div>
+				</div>
+				<div class="mui-content-padded">
+					<button id='reg' type="submit" class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+				</div>
+			</form>
+			
+				
+		</div>
 <script type="text/javascript">
-	$(function() {
-		function sum() {
-			var total = 0;
-			var count = 0;
-			$(".yyg-cart-item input").each(function() {
-				$this = $(this);
-				total += Number($this.attr("dj")) * Number($this.val());
-				count++;
-			});
-			$("#goodCount").text(count);
-			$("#totalMoney").text("¥" + total.toFixed(2));
-		}
-		
-		var inputHandler = null;
-		$(".yyg-cart-item input").bind("input", function() {
-			$this = $(this);
-			window.clearTimeout(inputHandler);
-			inputHandler = window.setTimeout(function() {
-				var id = $this.attr("cid");
-				var count = $this.val();
-				var bkCount = $this.attr("bk");
-				if(count > 0) {
-					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
-						if(result.status == 1) {
-							sum();
-							$this.attr("bk", count);
-						} else { // 失败
-							new Android_Toast({content: "修改失败"});
-							$this.val(bkCount);
-						}
-					});
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	 //刷新验证码
+	$(function() {		
+		$("form").submit(function() {
+			var self = $(this);
+			var pwd=$("#password").val();
+			var repwd=$("#password_confirm").val();
+			if(pwd!=repwd)
+			{
+				layer.tips('输入两次密码不一致！','#password_confirm');
+				return false;
+			}
+			$.post('<?php echo ($action); ?>', self.serialize(), success, "json");
+			return false;
+	
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
+				} else {
+					$("#checkTips").text(data.info);
 				}
-			}, 200);
-		}).bind("blur", function() {
-			$this = $(this);
-			var count = $this.val();
-			var bkCount = $this.attr("bk");
-			if(!(count > 0)) {
-				$this.val(bkCount);
 			}
 		});
-		
-		sum();
-		
-		$(".yyg-cart-remove").click(function() {
-			$this = $(this);
-			var id = $this.attr("cid");
-			$.post("<?php echo U('remove', '', '');?>/" + id, null, function(result) {
-				if(result.status == 1) {
-					$this.closest(".yyg-cart-item").remove();
-					count();
-					if($(".yyg-cart-item").length == 0) {
-						$("#emptyBlock").show();
-						$("#footer").hide();
-					}
-				} else { // 失败
-					new Android_Toast({content: "删除失败"});
-					$this.val(bkCount);
-				}
-			});
-		});
 	});
-</script>
+	</script>
 			<br />
 			<br />
 		</div>

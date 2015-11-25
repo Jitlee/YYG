@@ -65,7 +65,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#addCartButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}", null, function(result) {
+			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
 				new Android_Toast({content: result.message});
 			})
 		});

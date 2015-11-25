@@ -44,125 +44,53 @@
 
 	<body>
 		<div class="mui-content">
-			<style type="text/css">
-	
-
-	.mui-content {
-		padding-bottom: 100px;
-	}
-	
-	#emptyBlock {
-		text-align: center;
-		font-size:20px;
-		color:#666;
-		padding: 20px 0;
-	}
-	
-	#emptyBlock .iconfont {
-		font-size: 120px;
-		line-height: 150px;
-	}
-	
-</style>
-
-<?php if(isset($list)): ?><ul class="mui-table-view yyg-cart">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item">
-		<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
-			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">( 立即揭标 ) <?php echo ($item["paimai"]["title"]); ?></p>
-				<h5>起拍价:<?php echo ($item["paimai"]["qipaijia"]); ?></h5>
-				<input type="number" disabled="disabled" name="count" dj="1" value="<?php echo ($item["paimai"]["lijijia"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
-			</div>
-		<?php else: ?>
-			<div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["good"]["thumb"]); ?>"/>
-			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
-				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
-			</div><?php endif; ?>
-		</li><?php endforeach; endif; ?>
-</ul><?php endif; ?>
-<div id="emptyBlock" <?php if(isset($list)): ?>style="display:none"<?php endif; ?>>
-	<i class="iconfont icon-emptyshoppingbag"></i>
-	<br/>
-	购物车为空
-</div>
-<footer id="footer" class="yyg-cart-footer" <?php if(!isset($list)): ?>style="display:none"<?php endif; ?>>
-	<span>合计 <r id="totalMoney" class="larger">¥2.00</r></span>
-	<h5>共<span id="goodCount">1</span>个商品</h5>
-	<a href="<?php echo U('Pay/index','','');?>" class="yyg-btn yyg-btn-primary">去结算</a>
-</footer>
-
+			<!DOCTYPE html>
+<html>
+<head>
+    <title>Ping++ One Demo</title>
+</head>
+<body>
+    <button id="pay">点此调起壹收款</button>
+</body>
+<script type="text/javascript" src="https://one.pingxx.com/lib/pingpp_one.js"></script>
 <script type="text/javascript">
-	$(function() {
-		function sum() {
-			var total = 0;
-			var count = 0;
-			$(".yyg-cart-item input").each(function() {
-				$this = $(this);
-				total += Number($this.attr("dj")) * Number($this.val());
-				count++;
-			});
-			$("#goodCount").text(count);
-			$("#totalMoney").text("¥" + total.toFixed(2));
-		}
-		
-		var inputHandler = null;
-		$(".yyg-cart-item input").bind("input", function() {
-			$this = $(this);
-			window.clearTimeout(inputHandler);
-			inputHandler = window.setTimeout(function() {
-				var id = $this.attr("cid");
-				var count = $this.val();
-				var bkCount = $this.attr("bk");
-				if(count > 0) {
-					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
-						if(result.status == 1) {
-							sum();
-							$this.attr("bk", count);
-						} else { // 失败
-							new Android_Toast({content: "修改失败"});
-							$this.val(bkCount);
-						}
-					});
-				}
-			}, 200);
-		}).bind("blur", function() {
-			$this = $(this);
-			var count = $this.val();
-			var bkCount = $this.attr("bk");
-			if(!(count > 0)) {
-				$this.val(bkCount);
-			}
-		});
-		
-		sum();
-		
-		$(".yyg-cart-remove").click(function() {
-			$this = $(this);
-			var id = $this.attr("cid");
-			$.post("<?php echo U('remove', '', '');?>/" + id, null, function(result) {
-				if(result.status == 1) {
-					$this.closest(".yyg-cart-item").remove();
-					count();
-					if($(".yyg-cart-item").length == 0) {
-						$("#emptyBlock").show();
-						$("#footer").hide();
-					}
-				} else { // 失败
-					new Android_Toast({content: "删除失败"});
-					$this.val(bkCount);
-				}
-			});
-		});
-	});
+    document.getElementById('pay').addEventListener('click',function(){
+        pingpp_one.init({
+            app_id:'app_5K8yzLfvnT4Gaj1S',                     //该应用在ping++的应用ID
+            order_no:'<?php echo ($data["rderNo"]); ?>',                     //订单在商户系统中的订单号
+            amount:10,                                   //订单价格，单位：人民币 分
+            // 壹收款页面上需要展示的渠道，数组，数组顺序即页面展示出的渠道的顺序
+            // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
+            channel:['alipay_wap','wx_pub','upacp_wap','yeepay_wap','jdpay_wap','bfb_wap'],
+            charge_url:'/index.php/Home/OrderPay?channel=alipay_wap&amount=12',  //商户服务端创建订单的url
+            charge_param:{				
+				a:1,
+				b:2
+            },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
+            open_id:''                             //(可选，使用微信公众号支付时必须传入)
+        },function(res){
+            if(!res.status){
+                //处理错误
+                alert("错误信息" + res.msg);
+            }
+            else{
+                //若微信公众号渠道需要使用壹收款的支付成功页面
+                //则在这里进行成功回调，调用 pingpp_one.success 方法，你也可以自己定义回调函数
+                //其他渠道的处理方法请见第 2 节
+                pingpp_one.success(function(res){
+                    if(!res.status){
+                        alert(res.msg);
+                    }
+                },function(){
+                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，
+                    //则在该方法内写入 window.location.href = "你的购买页面 url"
+                    window.location.href='http://yourdomain.com/payment_succeeded';//示例
+                });
+            }
+        });
+    });
 </script>
+</html>
 			<br />
 			<br />
 		</div>
