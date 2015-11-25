@@ -66,10 +66,11 @@ class OrderPayController extends Controller {
         try {
             $ch = \Pingpp\Charge::create(array('subject' => 'Your Subject', 'body' => 'Your Body', 'amount' => $amount, 'order_no' => $orderNo, 'currency' => 'cny', 'extra' => $extra, 'channel' => $channel,
              'client_ip' => get_client_ip(), 'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')));
-             //echo $ch;
-			 $this->assign('data', $ch);
+             echo $ch;
+			 //$this->assign('data', $ch);
 		
-        	 $this->display();
+        	 //$this->display();
+        	 //$this->ajaxReturn($ch, 'JSON');
         } catch (\Pingpp\Error\Base $e) {
              //header('Status: ' . $e->getHttpStatus());
             header("Content-type:text/html;charset=utf-8");
