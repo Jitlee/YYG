@@ -2,10 +2,8 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-
-	
 	public function index(){
-    	$this->assign('title', '一元购');
+    		$this->assign('title', '一元购');
 		$this->assign('pid', 'home');
 		$sdb = M('slide');
 		$slides = $sdb->select();
@@ -45,7 +43,7 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status')->select();
+		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status,type')->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
@@ -61,7 +59,6 @@ class IndexController extends Controller {
 		$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,type')->find($gid);
 		$data['percentage'] = min(100, $data['canyurenshu']*100/$data['zongrenshu']);
 		$this->assign('data', $data);
-		
 		$imgdb = M('GoodsImages');
 		$imgmap['gid'] = $gid;
 		$imgmap['type'] = $data['type'];

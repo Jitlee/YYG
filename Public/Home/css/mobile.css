@@ -593,8 +593,14 @@ input[disabled] {
 	margin: 15px 8px 8px 8px;
 }
 
-.mui-checkbox input[type=checkbox][disabled]:checked:before{
-    color: #000;
+.mui-checkbox input[type=checkbox]:before{
+	content: '\e442';
+    color: #CCCCCC;
+    opacity: 0.8;
+}
+.mui-checkbox input[type=checkbox]:checked:before{
+	content: '\e442';
+    opacity: 1;
 }
 
 .mui-table-view-cell .mui-input-row {
@@ -618,4 +624,15 @@ input[disabled] {
 	top: 50%;
 	-webkit-transform: translateY(-50%);
 	right: 40px;
+}
+
+label.mui-input-row {
+	display: block;
+    line-height: 26px;
+}
+
+label.mui-input-row input[type=checkbox] {
+	top: 50%;
+    -webkit-transform: translateY(-50%);
+    right: 0;
 }

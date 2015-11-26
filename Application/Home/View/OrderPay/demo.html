@@ -16,17 +16,17 @@
             // 壹收款页面上需要展示的渠道，数组，数组顺序即页面展示出的渠道的顺序
             // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
             channel:['alipay_wap','wx_pub','upacp_wap','yeepay_wap','jdpay_wap','bfb_wap'],
-            charge_url:'/index.php/Home/OrderPay?channel=alipay_wap&amount=12',  //商户服务端创建订单的url
+            charge_url:'/index.php/Home/OrderPay/index?channel=alipay_wap&amount=12',  //商户服务端创建订单的url
             charge_param:{				
 				a:1,
 				b:2
             },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
-            open_id:'5K8yzLfvnT4Gaj1S'                             //(可选，使用微信公众号支付时必须传入)
+            open_id:''                             //(可选，使用微信公众号支付时必须传入)
         },function(res){
            // alert(res);
             if(!res.status){
                 //处理错误
-                alert("错误信息：" + res.chargeUrlOutput);
+                alert(res.chargeUrlOutput);
                 alert(res.msg);
             }
             else{
