@@ -94,15 +94,22 @@
 			}
 		});
 		
-		$("#zhifuButton").click(function(){
-				// 无需第三方付款
-				$.post("<?php echo U('zhifu','','');?>", {
-					score: 0, // 福分支付金额
-					money: _money,  // 余额支付金额
-					third: _total // 第三方支付金额
-				}, function(result) {
-					console.log(result);
-				});
+		var zhifuButton = $("#zhifuButton").click(function(){
+			// 无需第三方付款
+			zhifuButton.prop("disabled", true);
+			$.post("<?php echo U('zhifu','','');?>", {
+				score: 0, // 福分支付金额
+				money: _money,  // 余额支付金额
+				third: _total // 第三方支付金额
+			}, function(result) {
+				if(result.status == 0) {
+					window.location.href ="<?php echo U('success','','');?>";
+				} else {
+					console.log(result.status);
+					new Android_Toast({content: "支付失败"});
+				}
+				zhifuButton.prop("disabled", false);
+			});
 		});
 	});
 </script>

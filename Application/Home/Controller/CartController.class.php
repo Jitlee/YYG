@@ -67,10 +67,10 @@ class CartController extends Controller {
 		$db = M('cart');
 		if($db->delete($id)) {
 			$result['status'] = 1;
-			$result['message'] = '删除购物车成功';
+			$result['message'] = '删除成功';
 		} else {
 			$result['status'] = 0;
-			$result['message'] = '添加到购物车失败';
+			$result['message'] = '删除失败';
 		}
 		$this->ajaxReturn($result);
 	}

@@ -107,12 +107,18 @@ class PayController extends Controller {
 //					$success = false;
 //				}
 			} else {
-				
+				$this->miaosha($cart, $uid);
 			}
 			if($status != 0) {
 				break;
 			}
 		}
+		
+		if($status == 0) {
+			// 清空购物车
+			$sys->where('uid='.$uid)->delete();
+		}		
+		
 		$result['status'] = $status;
 		if($status == 0) {
 			$sys->commit();
@@ -123,21 +129,20 @@ class PayController extends Controller {
 		}
 	}
 	
-	function miaosha($cart) {
+	function miaosha($cart, $uid) {
 		// 更新秒杀主记录
 		$mdb = M('Miaosha');
-		$good = $mdb->field('gid, canyushengshu, shengyurenshu, zongrenshu, jishijiexiao, status')->find($cart['good']['gid']);
+		$good = $mdb->field('gid, canyurenshu, shengyurenshu, zongrenshu, jishijiexiao, status')->find($cart['good']['gid']);
 		$good['zongrenshu'] = intval($good['zongrenshu']);
-		$good['canyushengshu'] = min(intval($good['canyushengshu']) + intval($cart['count']), $good['zongrenshu']);
-		$good['shengyurenshu'] = $good['zongrenshu'] - $good['canyushengshu'];
+		$good['canyurenshu'] = min(intval($good['canyurenshu']) + intval($cart['count']), $good['zongrenshu']);
+		$good['shengyurenshu'] = $good['zongrenshu'] - $good['canyurenshu'];
 			
 		$mmdb = M('MemberMiaosha');
-		$data = array();
 		// 添加用户秒杀记录
 		$data['uid'] = $uid;
 		$data['gid'] = $cart['good']['gid'];
 		$data['count'] = $cart['count'];
-		$data['index'] = $good['canyushengshu'];
+		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果
 		if($mmdb->add($data)) {
 			$good['status'] = 1; // 修改状态为已购买
 			// 结果判断
@@ -148,25 +153,41 @@ class PayController extends Controller {
 				if(intval($good['jishijiexiao']) == 0) { // 非即时揭晓
 					$sql = $sql . ' WHERE gid = ' . + $good['gid'];
 				}
-				$sql = $sql . ' ORDER BY DESC LIMIT 100';
+				$sql = $sql . ' ORDER BY `time` DESC LIMIT 100';
 				
 				$query = $mdb->query($sql);
 				if(empty($query)) {
 					return 7; // 计算结果失败
 				}
 				
-				$prizecode = intval($query[0]);
+				$prizecode = intval($query[0]) % $good['canyurenshu'];
 				
 				$good['status'] = 2;
 				
 				$good['prizecode'] = $prizecode + 10000001;
 				
 				// 查询获奖者
-				$filter[]; // TODO: 计算结果
-				$mmdb->where()->find();
-								
+				$sql = 'SELECT `uid` FROM yyg_member_miaosha WHERE `gid` = ' . $good['gid'] . ' AND ' . $prizecode . ' BETWEEN `canyu`-`count` AND `canyu`';
+				$query = $mmdb->query($sql);
+				
+				if(empty($query)) {
+					return 8; // 计算结果中奖用户失败
+				}
+				
+				$good['prizeuid'] = $query[0]['uid'];
 			}
+
+			if($mdb->save($good)) {
+				return 0;
+			}
+			
+			return 9; // 保存主表失败
 		}
 		return 5; // 增加秒杀记录失败
+	}
+
+	public function success() {
+		layout(false);
+		$this->display();
 	}
 }

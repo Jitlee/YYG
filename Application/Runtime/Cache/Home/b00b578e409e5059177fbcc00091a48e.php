@@ -70,7 +70,7 @@
 	<h5 class="yyg-view-margin">价值：¥ <?php echo ($data["money"]); ?></h5>
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
-			<div class="yyg-progressing" style="width:<?php echo ($data["percentage"]); ?>%"></div>
+			<div class="yyg-progressing" style="width:<?php echo ((isset($percentage) && ($percentage !== ""))?($percentage):0); ?>%"></div>
 		</div>
 		<div class="yyg-progess-indicator">
 			<span class="yyg-progess-l"><?php echo ($data["canyurenshu"]); ?></span>
