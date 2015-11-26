@@ -20,8 +20,8 @@
 		<title>登陆</title>
 
 		<!-- Bootstrap core CSS -->
-		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
-		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" />
+		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />		
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/login.css" rel="stylesheet" />
 		<style>
 			.area {
@@ -108,6 +108,13 @@
 				</div>
 
 				<div class="mui-content-padded">
+<<<<<<< Updated upstream
+						第三方登录
+						<span class="mui-icon mui-icon-qq"><a href="qq" >QQ</a>	</span>
+						
+						<a href="weibo">Weibo</a>
+						<a href="qq">QQ</a>
+=======
 					<button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 					<div class="link-area">
 						<a id='reg' href="<?php echo U('reg', '', '');?>">注册账号</a> <span class="spliter">
@@ -116,6 +123,7 @@
 				</div>
 				<br />
 				<div class="mui-content-padded oauth-area">
+>>>>>>> Stashed changes
 				</div>
 				<input type="hidden" name="redirect" value="<?php echo ($redirect); ?>" />
 			</form>

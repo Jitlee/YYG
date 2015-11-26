@@ -494,7 +494,7 @@
 				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
+			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>

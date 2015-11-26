@@ -24,6 +24,7 @@ class CartController extends Controller {
 		$db = M('cart');
 		$map['gid'] = $gid;
 		$map['type'] = $type;
+		$map['uid'] = get_temp_uid();
 		$exists = $db->where($map)->field('id,count')->find();
 		if(empty($exists)) {
 			$data['gid'] = $gid;
@@ -36,7 +37,6 @@ class CartController extends Controller {
 			// 存在，累加
 			$data['count'] = intval($exists['count']) + 1;
 			$result['data'] = $db->where($exists)->save($data);
-			echo dump($exists);
 		}
 		if($result['data']) {
 			$result['status'] = 1;
