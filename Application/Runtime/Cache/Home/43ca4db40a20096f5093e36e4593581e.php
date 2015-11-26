@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,21 +7,21 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta property="qc:admins" content="304107566762141336654" />
 		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
-		<title>{$title}</title>
-		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/owl.carousel.css" rel="stylesheet">
-		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/mobile.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/android_toast.min.css" rel="stylesheet" type="text/css" />
+		<title><?php echo ($title); ?></title>
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
+		<link href="http://at.alicdn.com/t/font_1448373727_1371717.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
-		<script src="__JQ__"></script>
-		<script src="__JS__/owl.carousel.min.js"></script>
-		<script src="__HOME__/layer/layer.js"></script>
-		<script src="__JS__/jquery.lazy.min.js"></script>
-		<script src="__JS__/jquery.touchSwipe.min.js"></script>
-		<script src="__JS__/android_toast.min.js"></script>
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/Public/Home/js/owl.carousel.min.js"></script>
+		<script src="/Public/Home/layer/layer.js"></script>
+		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
+		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
 		
-		<script src="__JS__/mobile.js"></script>
+		<script src="/Public/Home/js/mobile.js"></script>
 
 		<script type="text/javascript">
 			$(document).ready(function() {
@@ -44,28 +44,37 @@
 
 	<body>
 		<div class="mui-content">
-			{__CONTENT__}
+			<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+
 			<br />
 			<br />
 		</div>
 		<nav class="mui-bar mui-bar-tab">
-			<a id="home" class="mui-tab-item" href="{:U('Index/index', '', '')}">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_home"></span>
 				<span class="mui-tab-label">首页</span>
 			</a>
-			<a id="jiexiao" class="mui-tab-item" href="{:U('Jiexiao/index', '', '')}">
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
 				<span class="mui-icon iconfont icon-jiangbei"></span>
 				<span class="mui-tab-label">最新揭晓</span>
 			</a>
-			<a id="paimai" class="mui-tab-item" href="{:U('Paimai/index', '', '')}">
+			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="cart" class="mui-tab-item" href="{:U('Cart/index', '', '')}">
+			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
-			<a id="person" class="mui-tab-item" href="{:U('Person/me', '', '')}">
+			<a id="person" class="mui-tab-item" href="<?php echo U('OrderPay/demo', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_me"></span>
 				<span class="mui-tab-label">我的</span>
 			</a>
@@ -82,12 +91,12 @@
 			var scrollTop = $(window).scrollTop();
 			var $windowHeight = $(window).innerHeight();
 			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
-				"background-image": "url(__IMG__/iconfont-fanhuidingbu.png)"
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
 			});
 		});
 		$('.backtop').click(function(e) {
 			$(".gotop").css({
-				"background-image": "url(__IMG__/iconfont-fanhuidingbu_up.png)"
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
 			});
 			e.preventDefault();
 			$('html,body').animate({
@@ -95,6 +104,6 @@
 			});
 		});
 		
-		$("#{$pid|default='index'}").addClass("mui-active");
+		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
 	});
 </script>

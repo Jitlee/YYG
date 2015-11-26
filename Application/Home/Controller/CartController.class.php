@@ -11,7 +11,8 @@ class CartController extends Controller {
 		$this->assign('pid', 'cart');
 		
 		$db = D('cart');
-		$list = $db->relation(true)->select();
+		$map['uid'] = get_temp_uid();
+		$list = $db->where($map)->relation(true)->select();
 		if(!empty($list)) {
 			$this->assign('list', $list);
 		}
@@ -22,16 +23,20 @@ class CartController extends Controller {
 	public function add($gid, $type) {
 		$db = M('cart');
 		$map['gid'] = $gid;
-		$exists = $db->where($map)->field('id')->find();
-		if($exists) {
-			// 存在，累加
-			$exists['count'] = array('exp', '`count` + 1');
-			$result['data'] = $db->save($exists);
-		} else {
+		$map['type'] = $type;
+		$exists = $db->where($map)->field('id,count')->find();
+		if(empty($exists)) {
 			$data['gid'] = $gid;
-			$data['uid'] = 0;
+			$data['uid'] = get_temp_uid();
 			$data['type'] = $type;
+			$data['flag'] = is_login() ? 1 : 0; // 0 没有登陆， 1登陆
+			
 			$result['data'] = $db->add($data);
+		} else {
+			// 存在，累加
+			$data['count'] = intval($exists['count']) + 1;
+			$result['data'] = $db->where($exists)->save($data);
+			echo dump($exists);
 		}
 		if($result['data']) {
 			$result['status'] = 1;

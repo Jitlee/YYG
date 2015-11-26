@@ -15,7 +15,7 @@ return array(
 	
 	'URL_PARAMS_BIND'       	=>  true, // URL变量绑定到操作方法作为参数
 	'URL_PARAMS_BIND_TYPE'		=> 1,  // 设置参数绑定按照变量顺序绑定
-
+	'SHOW_PAGE_TRACE'=>true,
 	'OAUTH'                 => array(
         'QQ_APPKEY'         => '101269538',
         'QQ_APPSECRETKEY'   => '9ecd278b8df0e59695e75d48c2f0718e',
