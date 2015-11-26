@@ -57,7 +57,7 @@ class IndexController extends Controller {
 		
 		$db = M('miaosha');
 		$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,type')->find($gid);
-		$data['percentage'] = min(100, $data['canyurenshu']*100/$data['zongrenshu']);
+		$data['percentage'] = min(100, intval($data['canyurenshu'])*100/ intval($data['zongrenshu']));
 		$this->assign('data', $data);
 		$imgdb = M('GoodsImages');
 		$imgmap['gid'] = $gid;

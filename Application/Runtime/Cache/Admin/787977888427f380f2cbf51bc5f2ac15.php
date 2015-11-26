@@ -161,8 +161,7 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 
-<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
 	<table class="table">
@@ -244,7 +243,7 @@ $(function() {
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ($data["maxqishu"]); ?>" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ((isset($data["maxqishu"]) && ($data["maxqishu"] !== ""))?($data["maxqishu"]):100); ?>" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
 			</td>
 		</tr>

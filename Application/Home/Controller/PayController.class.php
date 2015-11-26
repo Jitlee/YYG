@@ -62,20 +62,17 @@ class PayController extends Controller {
 					$user = session('user');
 					$uid = $user['uid'];
 					$db = M('member');
-					$user = $db->field('money,score')->find($uid);
-					$userMoney = floatval($user['money']);
-					$userScore = floatval($user['score']);
+					$account = $db->field('uid, money,score')->find($uid);
+					$account['money'] = floatval($account['money']);
+					$account['score'] = floatval($account['score']);
 					
-					$money = floatval($_POST['money']);
-					if($money == $total) { // 全部余额付款
-						if($money <= $userMoney) {
-							// 余额充足
-							$this->doPay($list);
-						} else {
-							$result['status'] = 3;
-							$this->ajaxReturn($result, 'JSON');
-						}
-					}
+					$_pay = array(
+						'money'		=> floatval($_POST['money']),
+						'score'		=> floatval($_POST['score']),
+						'third'		=> floatval($_POST['third']),
+						'thirdType'		=> intval($_POST['thirdType']),
+					);
+					$this->doPay($list, $account, $_pay);
 				} else {
 					$result['status'] = 2;
 					$this->ajaxReturn($result, 'JSON');
@@ -87,13 +84,10 @@ class PayController extends Controller {
 		}
 	}
 	
-	private function doPay($list) {
+	private function doPay($list, $account, $_pay) {
 		$sys = M('cart');
 		$sys->startTrans();
 		$status = 0;
-		
-		$user = session('user');
-		$uid = $user['uid'];
 					
 		$pdb = M('MemberPaimai');
 		foreach($list as $cart) {
@@ -107,7 +101,7 @@ class PayController extends Controller {
 //					$success = false;
 //				}
 			} else {
-				$this->miaosha($cart, $uid);
+				$this->miaosha($cart, $account);
 			}
 			if($status != 0) {
 				break;
@@ -116,8 +110,30 @@ class PayController extends Controller {
 		
 		if($status == 0) {
 			// 清空购物车
-			$sys->where('uid='.$uid)->delete();
-		}		
+			$sys->where('uid='.$account['uid'])->delete();
+			// 增加消费记录
+			$adb = M('account');
+			$adata = array(
+				'uid'			=> $account['uid'],
+				'type'			=> -1, // 付款
+				'money'			=> $_pay['money'],	// 余额
+				'score'			=> $_pay['score'],  // 积分
+				'third'			=> $_pay['third'],  // 第三方支付
+				'third_type'		=> $_pay['thirdType'], // 第三方支付类型
+				'content' => '购买商品',
+			);
+			if($adb->add($adata)) {
+				// 扣除个人账户余额
+				$account['money'] -= $_pay['money'];
+				$account['score'] -= $_pay['score'];
+				$udb = M('member');
+				if(!$udb->save($account)) {
+					$status = 12; // 扣除个人余额失败
+				}
+			} else {
+				$status = 11; // 增加消费记录失败
+			}
+		}
 		
 		$result['status'] = $status;
 		if($status == 0) {
@@ -129,19 +145,24 @@ class PayController extends Controller {
 		}
 	}
 	
-	function miaosha($cart, $uid) {
+	function miaosha($cart, $account) {
 		// 更新秒杀主记录
 		$mdb = M('Miaosha');
-		$good = $mdb->field('gid, canyurenshu, shengyurenshu, zongrenshu, jishijiexiao, status')->find($cart['good']['gid']);
+		$good = $mdb->find($cart['good']['gid']);
 		$good['zongrenshu'] = intval($good['zongrenshu']);
 		$good['canyurenshu'] = min(intval($good['canyurenshu']) + intval($cart['count']), $good['zongrenshu']);
 		$good['shengyurenshu'] = $good['zongrenshu'] - $good['canyurenshu'];
+		
+		if(intval($good['status']) == 2) {
+			return 2;  // 商品已经完结
+		}
 			
 		$mmdb = M('MemberMiaosha');
 		// 添加用户秒杀记录
-		$data['uid'] = $uid;
+		$data['uid'] = $account['uid'];
 		$data['gid'] = $cart['good']['gid'];
 		$data['count'] = $cart['count'];
+		$data['qishu'] = $good['qishu'];
 		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果
 		if($mmdb->add($data)) {
 			$good['status'] = 1; // 修改状态为已购买
@@ -175,6 +196,24 @@ class PayController extends Controller {
 				}
 				
 				$good['prizeuid'] = $query[0]['uid'];
+				
+				$hdb = M('MiaoshaHistory');
+				if(!$hdb->add($good)) {
+					return 10; // 保存历史失败
+				}
+				
+				// 更新期数
+				$maxqishu = intval($good['maxqishu']);
+				$qishu = intval($good['qishu']);
+				if($qishu <= $maxqishu) {
+					// 重新开始
+					$good['qishu'] = $qishu + 1;
+					$good['status'] = 0;
+					$good['prizeuid'] = null;
+					$good['prizecode'] = null;
+					$good['canyurenshu'] = 0;
+					$good['shengyurenshu'] = $good['zongrenshu'];
+				}
 			}
 
 			if($mdb->save($good)) {
