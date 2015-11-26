@@ -212,6 +212,7 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
+<<<<<<< HEAD
 <<<<<<< Updated upstream
   	<?php if($pageNum > 1): $__FOR_START_28726__=$minPageNum;$__FOR_END_28726__=$pageNum;for($i=$__FOR_START_28726__;$i < $__FOR_END_28726__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
@@ -221,6 +222,11 @@ $(function() {
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
   <?php $__FOR_START_1944093809__=$pageNum+1;$__FOR_END_1944093809__=$maxPageNum;for($i=$__FOR_START_1944093809__;$i < $__FOR_END_1944093809__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 >>>>>>> Stashed changes
+=======
+  	<?php if($pageNum > 1): $__FOR_START_4438__=$minPageNum;$__FOR_END_4438__=$pageNum;for($i=$__FOR_START_4438__;$i < $__FOR_END_4438__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+	<li class="active"><a><?php echo ($pageNum); ?></a></li>
+  <?php $__FOR_START_17879__=$pageNum+1;$__FOR_END_17879__=$maxPageNum;for($i=$__FOR_START_17879__;$i < $__FOR_END_17879__;$i+=1){ ?><li><a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+>>>>>>> origin/master
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Member/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
