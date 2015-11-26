@@ -48,29 +48,35 @@ class OrderPayController extends Controller {
                 break;
         }
 		
-		Vendor('PingppSDK.init');
+		//Vendor('PingppSDK.init');
         \Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
         try {
-            $ch = \Pingpp\Charge::create(
-            	array(
-            		'subject' => 'Your Subject', 
-	            	'body' => 'Your Body', 
-	            	'amount' => $amount, 
-	            	'order_no' => $orderNo, 
-	            	'currency' => 'cny', 
-	            	'extra' => $extra, 
-	            	'channel' => $channel,
-	             	'client_ip' => get_client_ip(), 
-	             	'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
-				)
-			);
+//          $ch = \Pingpp\Charge::create(
+//          	array(
+//          		'subject' => 'Your Subject', 
+//	            	'body' => 'Your Body', 
+//	            	'amount' => $amount, 
+//	            	'order_no' => $orderNo, 
+//	            	'currency' => 'cny', 
+//	            	'extra' => $extra, 
+//	            	'channel' => $channel,
+//	             	'client_ip' => get_client_ip(), 
+//	             	'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
+//				)
+//			);
+//          echo $ch;
+			$ch = \Pingpp\Charge::create(array('subject' => 'Your Subject', 'body' => 'Your Body', 'amount' => $amount, 'order_no' => $orderNo, 'currency' => 'cny', 'extra' => $extra, 'channel' => $channel,
+             'client_ip' => get_client_ip(), 'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')));
              echo $ch;
-			 
+			 exit; 
+			  
         	 //$this->ajaxReturn($ch, 'JSON');
+        	 //$this->ajaxReturn($ch);
+        	 
         } catch (\Pingpp\Error\Base $e) {
              //header('Status: ' . $e->getHttpStatus());
             header("Content-type:text/html;charset=utf-8");
-             echo($e->getHttpBody());
+            echo($e->getHttpBody());
         }
     
 	}
