@@ -26,6 +26,31 @@
 			  	border-radius: 50%;
 			  	1box-shadow: 0 0 1px 1px rgba(130,130,130,0.7);
 			}
+			.user-img{
+				width: 60px;
+			  	height: 60px;
+			  	border-radius: 50%;
+			  	1box-shadow: 0 0 1px 1px rgba(130,130,130,0.7);
+			}
+			.user-cell4{				 
+				display: inline-block;
+				float:left;
+			}
+			.user-cell_right
+			{
+				position: relative;
+				display: inline-block;
+				width: 50%;
+				margin-left: 20px;
+				margin-top: 10px;
+			}
+			.cell-top>span{
+				1display: inline-block;
+				height: 100px;
+				border: 0px;
+				padding: 8px 0px;
+				text-align: center;
+			}
 			.userInfo {
 				float: left;
 				margin-left: 20px;
@@ -102,6 +127,7 @@
 				border-left: 1px outset #E1E1E1;
 				height: 60px;
 			}
+			
 			.land-cell>span{
 				1display: inline-block;
 				height: 80px;
@@ -119,6 +145,13 @@
 				right: 0px;
 				width: 48%;
 			}
+			.land-cell4{
+				position: relative;
+				display: inline-block;
+				width: 23%;
+			}
+			
+			
 			.land-cell img{
 				width: 40px;
 			  	height: 40px;
@@ -143,74 +176,74 @@
 	<body>
 		<div class="mui-content">
 			<ul class="mui-table-view"> 
-				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="familyInfo">
+				<li class="mui-table-view-cell cell-top" id="recommend">
 					<a class="mui-navigate-right">
-						<div class="avatar">
-							<img class="circle-img" alt="头像" src="{$userinfo.imgurl}" />
-						</div>
-						<div class="userInfo">
-							<p class="nickname" data-bind="text: familyNick"></p>
-							<p class="phoneno">ID：{$userinfo.openid}
-								 <a href="{:U('Person/me', '', '')}/index.php/Home/Person/">登录</a>
-							</p>
-						</div>
+						<span class="user-cell4">
+							<img class="user-img" alt="秒杀记录" src="__IMG__/person/yyg_icon_msjl.png">						 
+						</span>						 
+						<span class="user-cell_right">							 
+							<p data-bind="text: nickName">{$userinfo.openid}</p>
+							<p data-bind="text: nickName">中奖记录</p>
+						</span>
 					</a>
 				</li>
 				
-				<li class="mui-table-view-cell userline" data-bind="visible: !isLogin()" id="demo">
-					<a class="mui-navigate-right">
-						<div class="avatar">
-							<img class="circle-img" alt="头像" src="../images/family.png">
-						</div>
-						<div class="userInfo" style="font-size: 18px;margin-top: 12px;">
-							退出演示
-						</div>
-					</a>
+				 
+				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">
+						<a class="mui-navigate-right">
+								<div class="img-tip">
+									<img alt="我的钱包" src="__IMG__/person/yyg_icon_wdqb.png"/>
+								</div>
+								<div class="menu-content">
+									<p>我的钱包</p>
+								</div>
+							 
+							<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount1">
+								<p>	我要充值</p>							 
+							</span>
+						</a>
 				</li>
-				
 				<li class="userline land-cell" data-bind="visible: isLogin" id="loginUser">
 					<span class="cell-left" id="userinfo">
 						<img class="circle-img" alt="积分" src="__IMG__/person/yyg_icon_hb.png">
 						<p data-bind="text: nickName">积分：0.00</p>
 					</span>
 					<a></a>
-					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
+					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount2">
 						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
 						<p>红包:0</p>
 					</span>					
 				</li>
 				
-				<li class="mui-table-view-cell userline" data-bind="visible: isLogin" id="setting">
-					<a class="mui-navigate-right">
+				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">
+					 
 						<div class="img-tip">
-							<img alt="设置" src="__IMG__/person/yyg_icon_wdms.png"/>
+							<img alt="我的秒杀" src="__IMG__/person/yyg_icon_wdms.png"/>
 						</div>
 						<div class="menu-content">
 							<p>我的秒杀</p>
 						</div>
-					</a>
+					 
 				</li>
 				<li class="userline land-cell" id="recommend">
-					<span class="cell-left">
+					<span class="land-cell4">
 						<img class="circle-img" alt="秒杀记录" src="__IMG__/person/yyg_icon_msjl.png">
 						<p data-bind="text: nickName">秒杀记录</p>
 					</span>
-					<a></a>
-					<span class="cell-left">
+					 
+					<span class="land-cell4">
 						<img class="circle-img" alt="中奖记录" src="__IMG__/person/yyg_icon_zjjl.png">
 						<p data-bind="text: nickName">中奖记录</p>
 					</span>
-					<a></a>
-					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
-						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
-						<p>红包:0</p>
+					 
+					<span class="land-cell4" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
+						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_ysd.png">
+						<p>已晒单</p>
 					</span>
-					
-					
-					<a></a>
-					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
-						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
-						<p>红包:0</p>
+					 
+					<span class="land-cell4" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
+						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_wsd.png">
+						<p>未晒单</p>
 					</span>
 				</li>
 				

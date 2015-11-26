@@ -1,8 +1,6 @@
 <?php
 
-function is_login() {
-	return session('?user');
-}
+ 
 
 function get_temp_uid() {
 	$uid = session("_uid");
@@ -16,4 +14,17 @@ function get_temp_uid() {
 		session("_uid", $uid);
 	}
 	return $uid;
+}
+
+
+function is_login() {
+	$admin = session('wxUserinfo');
+	if(empty($admin)) {
+		return 0;
+	} else {
+		define('UID', $admin['uid']);
+		define('username', $admin['username']);
+		define('reg_key', $admin['reg_key']);
+		return 1;
+	}
 }
