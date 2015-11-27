@@ -19,5 +19,6 @@ return array(
 		'__CSS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/css',
 		'__JS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/js',
 		'__FONT_ICON__'		=> 'http://at.alicdn.com/t/font_1448373727_1371717.css',
+		'__PING__'		=> 'https://one.pingxx.com/lib/pingpp_one.js',
 	),
 );

@@ -50,7 +50,48 @@ class PayController extends Controller {
 		$this->display();
 	}
 	
-	public function zhifu() {
+	public function thridpay() {
+		if(IS_POST) {
+			$params = json_decode(htmlspecialchars_decode(file_get_contents('php://input')));
+			if(!($params->third > 0) || $params->channel) {
+				 exit();
+			}
+			
+			$amount = $params->third;
+			$channel = $params->channel;
+			$orderNo = substr(md5(time()), 0, 12);
+			$extra = array();
+        		switch ($channel) {
+	            	case 'alipay_wap' :
+	                $extra['success_url'] = U('success', '', '');
+					$extra['cancel_url'] = U('cancel', '', '');
+	                break;
+			}
+			\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
+			try {
+				$ch = \Pingpp\Charge::create(
+					array(
+						'subject' 		=> 'Your Subject',
+						'body' 			=> 'Your Body',
+						'amount' 		=> $amount,
+						'order_no' 		=> $orderNo,
+						'currency' 		=> 'cny',
+						'extra' 			=> $extra,
+						'channel' 		=> $channel,
+         				'client_ip' 		=> get_client_ip(),
+         				'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
+					)
+				);
+             	echo $ch;
+			 	exit;
+			} catch (\Pingpp\Error\Base $e) {
+	            header("Content-type:text/html;charset=utf-8");
+	            echo($e->getHttpBody());
+	        }
+		}
+	}
+	
+	public function localpay() {
 		if(IS_POST) {
 			$result = array();
 			if(is_login()) {
@@ -70,7 +111,6 @@ class PayController extends Controller {
 						'money'		=> floatval($_POST['money']),
 						'score'		=> floatval($_POST['score']),
 						'third'		=> floatval($_POST['third']),
-						'thirdType'		=> intval($_POST['thirdType']),
 					);
 					$this->doPay($list, $account, $_pay);
 				} else {
@@ -276,6 +316,16 @@ class PayController extends Controller {
 	}
 
 	public function success() {
+		echo dump($_POST);
+		echo '-----';
+		$params = json_decode(htmlspecialchars_decode(file_get_contents('php://input')));
+		echo dump($params);
+		
+		layout(false);
+		$this->display();
+	}
+	
+	public function cancel() {
 		layout(false);
 		$this->display();
 	}

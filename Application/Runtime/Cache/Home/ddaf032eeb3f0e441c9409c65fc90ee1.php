@@ -124,7 +124,6 @@
 				第三方登录
 				<a href="qq">QQ</a>
 				<a href="weibo">Weibo</a>
-				<a href="qq">QQ</a>
 			</div>
 
 		</div>
