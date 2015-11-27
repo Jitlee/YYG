@@ -191,7 +191,9 @@ public function LoginAuth($openid,$imgurl)
 	$this->assign('userinfo', $userinfo);
 	
 	$this->assign('title', '登录授权.');
-	$this->display("me");
+	//session
+	session('wxUserinfo', $userinfo);
+	$this->display("Person/me");
 }
 
 }

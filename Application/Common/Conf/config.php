@@ -20,11 +20,11 @@ return array(
         'QQ_APPKEY'         => '101269538',
         'QQ_APPSECRETKEY'   => '9ecd278b8df0e59695e75d48c2f0718e',
         'QQ_SCOPE'          => 'get_user_info,get_repost_list,add_idol,add_t,del_t,add_pic_t,del_idol',
-        'QQ_CALLBACK'       => 'http://yyg.ritacc.net/index.php/Home/Person/auth',
+        'QQ_CALLBACK'       => 'http://yyg.ritacc.net/index.php/Home/Public/auth',
         
         'WEIBO_APPKEY'      => '3125608124',
         'WEIBO_APPSECRETKEY'=> 'e85df87aaf5d7587f8cb1194606577ec',
         'WEIBO_SCOPE'       => '',
-        'WEIBO_CALLBACK'    => 'http://yyg.ritacc.net/index.php/Home/Person/weiboauth',
+        'WEIBO_CALLBACK'    => 'http://yyg.ritacc.net/index.php/Home/Public/weiboauth',
     ),
 );
