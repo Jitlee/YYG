@@ -49,6 +49,11 @@ class MiaoshaController extends GoodsBaseController {
 				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
 			}
 			
+			$money = floatval($_POST['money']);
+			$danjia = floatval($_POST['danjia']);
+			$_POST['zongrenshu'] = ceil($money / $danjia);
+			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
+			
 			$db = M('miaosha');
 			$data = $db->create();
 			if($data) {
@@ -85,6 +90,12 @@ class MiaoshaController extends GoodsBaseController {
 				$end_time = $now + 3600;
 				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
 			}
+			
+			$money = floatval($_POST['money']);
+			$danjia = floatval($_POST['danjia']);
+			$_POST['zongrenshu'] = ceil($money / $danjia);
+			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
+			
 			$db = M('miaosha');
 			$data = $db->create();
 			if($data) {

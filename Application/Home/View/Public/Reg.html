@@ -13,10 +13,7 @@
 						<label>密码</label>
 						<input id='password' type="password"  name="password"  class="mui-input-clear mui-input" required placeholder="请输入密码">
 					</div>
-					<div class="mui-input-row">
-						<label>确认</label>
-						<input id='password_confirm' type="password" name="passwordconfim" class="mui-input-clear mui-input" required placeholder="请确认密码">
-					</div>
+					 
 				</div>
 				<div class="mui-content-padded">
 					<button id='reg' type="submit" class="mui-btn mui-btn-block mui-btn-primary">注册</button>
@@ -37,12 +34,12 @@
 		$("form").submit(function() {
 			var self = $(this);
 			var pwd=$("#password").val();
-			var repwd=$("#password_confirm").val();
-			if(pwd!=repwd)
-			{
-				layer.tips('输入两次密码不一致！','#password_confirm');
-				return false;
-			}
+//			var repwd=$("#password_confirm").val();
+//			if(pwd!=repwd)
+//			{
+//				layer.tips('输入两次密码不一致！','#password_confirm');
+//				return false;
+//			}
 			$.post('{$action}', self.serialize(), success, "json");
 			return false;
 	

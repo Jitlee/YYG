@@ -24,6 +24,7 @@ class CartController extends Controller {
 		$db = M('cart');
 		$map['gid'] = $gid;
 		$map['type'] = $type;
+		$map['uid'] = get_temp_uid();
 		$exists = $db->where($map)->field('id,count')->find();
 		if(empty($exists)) {
 			$data['gid'] = $gid;
@@ -36,7 +37,6 @@ class CartController extends Controller {
 			// 存在，累加
 			$data['count'] = intval($exists['count']) + 1;
 			$result['data'] = $db->where($exists)->save($data);
-			echo dump($exists);
 		}
 		if($result['data']) {
 			$result['status'] = 1;
@@ -67,10 +67,10 @@ class CartController extends Controller {
 		$db = M('cart');
 		if($db->delete($id)) {
 			$result['status'] = 1;
-			$result['message'] = '删除购物车成功';
+			$result['message'] = '删除成功';
 		} else {
 			$result['status'] = 0;
-			$result['message'] = '添加到购物车失败';
+			$result['message'] = '删除失败';
 		}
 		$this->ajaxReturn($result);
 	}

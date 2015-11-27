@@ -31,7 +31,7 @@
 	<h5 class="yyg-view-margin">价值：¥ {$data.money}</h5>
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
-			<div class="yyg-progressing" style="width:{$data.percentage}%"></div>
+			<div class="yyg-progressing" style="width:{$data.percentage|default=0}%"></div>
 		</div>
 		<div class="yyg-progess-indicator">
 			<span class="yyg-progess-l">{$data.canyurenshu}</span>
