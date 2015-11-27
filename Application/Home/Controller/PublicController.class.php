@@ -49,7 +49,7 @@ public function login($mobile = null, $password = null) {
 //			}
 //			else
 //			{
-				$this->redirect('Person/me');
+				$this->success('登录成功',U('Person/me', '',''));
 			//}
 		} else  {
 			layout(false);

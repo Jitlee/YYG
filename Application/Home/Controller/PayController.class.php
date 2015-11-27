@@ -174,12 +174,12 @@ class PayController extends Controller {
 			$cdb = M('MiaoshaCode');
 			$cmap['gid'] = $good['gid'];
 			$cmap['qishu'] = $good['qishu'];
-			$clist = $cdb->where($cmap)->field('code')->select();
+			$clist = $cdb->where($cmap)->field('pcode')->select();
 			
 			// 去掉已使用的
 			if(!empty($clist)) {
 				foreach($clist as $c) {
-					unset($codes[intval($c['code'])]);
+					unset($codes[intval($c['pcode'])]);
 				}
 				$codes = array_values($codes); // 重建索引
 			}
@@ -230,7 +230,7 @@ class PayController extends Controller {
 				}
 				
 				$good['status'] = 2;
-				$good['prizecode'] = $presult['pcode'];
+				$good['prizecode'] = 10000001 + intval($presult['pcode']);
 				$good['prizeuid'] = $presult['uid'];
 				
 				// 查询获奖者
