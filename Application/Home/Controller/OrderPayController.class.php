@@ -11,14 +11,16 @@ class OrderPayController extends Controller {
 	}
 	
 	public function Index(){
-        if (empty($_GET['channel']) || empty($_GET['amount'])) {
-            echo 'channel or amount is empty';
+		//$json = new Services_JSON();
+		$p=$json-> $GLOBALS["HTTP_RAW_POST_DATA"] ;
+        if (empty($p['channel']) || empty($p['amount'])) {
+            echo $json;
             exit();
         }
-        $channel = strtolower($_GET['channel']);
-        $amount = $_GET['amount'];
+        $channel = strtolower($p['channel']);
+        $amount = $p['amount'];
         $orderNo = substr(md5(time()), 0, 12);
-
+	
         //$extra 在使用某些渠道的时候，需要填入相应的参数，其它渠道则是 array() .具体见以下代码或者官网中的文档。其他渠道时可以传空值也可以不传。
         $extra = array();
         switch ($channel) {

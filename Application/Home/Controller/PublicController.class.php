@@ -49,7 +49,7 @@ public function login($mobile = null, $password = null) {
 //			}
 //			else
 //			{
-				$this->redirect('Person/me');
+				$this->success('登录成功',U('Person/me', '',''));
 			//}
 		} else  {
 			layout(false);
@@ -191,7 +191,9 @@ public function LoginAuth($openid,$imgurl)
 	$this->assign('userinfo', $userinfo);
 	
 	$this->assign('title', '登录授权.');
-	$this->display("me");
+	//session
+	session('wxUserinfo', $userinfo);
+	$this->display("Person/me");
 }
 
 }

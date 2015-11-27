@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html lang="zh-CN">
 
 	<head>
@@ -20,9 +20,9 @@
 		<title>登陆</title>
 
 		<!-- Bootstrap core CSS -->
-		<link href="__B_CSS__" rel="stylesheet" />		
-		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/login.css" rel="stylesheet" />
+		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />		
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/login.css" rel="stylesheet" />
 		<style>
 			.area {
 				margin: 20px auto 0px auto;
@@ -94,7 +94,7 @@
 		</header>
 
 		<div class="mui-content">
-			<form action="{:U('login','','')}" role="form" method="post" class="mui-input-group">
+			<form action="<?php echo U('login','','');?>" role="form" method="post" class="mui-input-group">
 				<div class="mui-input-group">
 					<div class="mui-input-row">
 						<label for="username" class="control-label">用户名:</label>
@@ -110,7 +110,7 @@
 				<div class="mui-content-padded"> 
 					<button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-primary">登录</button>
 					<div class="link-area">
-						<a id='reg' href="{:U('reg', '', '')}">注册账号</a> <span class="spliter">
+						<a id='reg' href="<?php echo U('reg', '', '');?>">注册账号</a> <span class="spliter">
 							|</span> <a id='forgetPassword' href="forgetPassword">忘记密码</a>
 					</div>
 				</div>
@@ -118,12 +118,13 @@
 				<div class="mui-content-padded oauth-area">
  
 				</div>
-				<input type="hidden" name="redirect" value="{$redirect}" />
+				<input type="hidden" name="redirect" value="<?php echo ($redirect); ?>" />
 			</form>
 			<div class="mui-content-padded">
 				第三方登录
 				<a href="qq">QQ</a>
 				<a href="weibo">Weibo</a>
+				<a href="qq">QQ</a>
 			</div>
 
 		</div>
@@ -131,12 +132,12 @@
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-		<script src="__JQ__"></script>
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 		<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-		<script src="__B_JS__"></script>
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 		<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-		<script src="__IE10_BUG__"></script>
+		<script src="http://v3.bootcss.com/assets/js/ie10-viewport-bug-workaround.js"></script>
 
 		<script type="text/javascript">
 			//表单提交
