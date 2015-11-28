@@ -1,4 +1,50 @@
-<style type="text/css">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="m.178hui.com" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no">
+		<meta property="qc:admins" content="304107566762141336654" />
+		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
+		<title><?php echo ($title); ?></title>
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
+		<link href="http://at.alicdn.com/t/font_1448373727_1371717.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
+
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/Public/Home/js/owl.carousel.min.js"></script>
+		<script src="/Public/Home/layer/layer.js"></script>
+		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
+		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
+		
+		<script src="/Public/Home/js/mobile.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".mall_list a").click(function() {
+					var index = layer.open({
+						type: 1,
+						title: false,
+						closeBtn: false,
+						shadeClose: false,
+						offset: '25%',
+						content: "<div class='no_login_show'><h1>亲！您还没登录一起惠哦！</h1><a href='login.html'>马上登录</a><a href='register.html'>免费注册</a><a href='#'>先购物，再返利</a><a href='javascript:layer.closeAll();'>取消</a></div>"
+					});
+				});
+				$("#msg_bijia").click(function() {
+					layer.tips('请耐心等待一下，我们正在拼命开发中···', '#msg_bijia');
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<style type="text/css">
 	.yyg-bar-nav {
 		display:flex;
 		line-height: 40px;
@@ -92,7 +138,7 @@
 		background-position:50% 50%;
 		background-repeat: no-repeat;
 		background-size: cover;
-		background-image: url(__IMG__/sts.png);
+		background-image: url(/Public/Home/images/sts.png);
 		width:11px;
 		height:11px;
 		vertical-align: middle;
@@ -194,14 +240,10 @@
 </style>
 <div class="top w">
 	<div class="m_banner" id="owl">
-		<foreach name="slides" item="s">
-		<a href="{$s.link|default='#'}" class="item"><img src="{$s.img}"></a>
-		</foreach>
+		<?php if(is_array($slides)): foreach($slides as $key=>$s): ?><a href="<?php echo ((isset($s["link"]) && ($s["link"] !== ""))?($s["link"]):'#'); ?>" class="item"><img src="<?php echo ($s["img"]); ?>"></a><?php endforeach; endif; ?>
 	</div>
 	<div class="m_nav">
-		<foreach name="allCategories" item="c">
-			<a href="#"><img src="{$c.thumb|default='__IMG__/m-index_10.png'}"><span>{$c.name}</span></a>
-		</foreach>
+		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
 	</div>
 </div>
 <div id="goodNav" class="yyg-bar-nav">
@@ -262,7 +304,7 @@
 			if(clear) {
 				pageNum = 0;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++pageNum), {
 				type: orderType,
 				cid: goodCid,
 				bid: goodBid,
@@ -272,7 +314,7 @@
 				}
 	       		$.each(list, function() {
 	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
+	       			$("a", item).attr("href", "/index.php/Home/Index/" + this.gid);
 //	       			$("img", item).attr("src", this.thumb);
 					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
@@ -310,7 +352,7 @@
 			}
 			
 			if(!categories) {
-				$.get("{:U('category', '', '')}", null, function(list){
+				$.get("<?php echo U('category', '', '');?>", null, function(list){
 					categories = list;
 					$.each(list, function(index) {
 						$("<li>").text(this.name)
@@ -365,7 +407,7 @@
 				ulBrands.html("");
 				renderBrands(categories[index].brands, cid);
 			} else {
-				$.get("{:U('brands', '', '')}/" + cid, null, function(list){
+				$.get("<?php echo U('brands', '', '');?>/" + cid, null, function(list){
 					categories[index].brands = list;
 					ulBrands.html("");
 					renderBrands(categories[index].brands, cid);
@@ -414,5 +456,58 @@
 		});
 		
 		
+	});
+</script>
+			<br />
+			<br />
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
+				<span class="mui-icon iconfont icon-jiangbei"></span>
+				<span class="mui-tab-label">最新揭晓</span>
+			</a>
+			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_paimai"></span>
+				<span class="mui-tab-label">拍卖</span>
+			</a>
+			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_me"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<div class="gotop backtop" style="display:none;"></div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	//返回顶部
+	$(document).ready(function() {
+		$(window).scroll(function() {
+			var scrollHeight = $(document).height();
+			var scrollTop = $(window).scrollTop();
+			var $windowHeight = $(window).innerHeight();
+			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
+			});
+		});
+		$('.backtop').click(function(e) {
+			$(".gotop").css({
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
+			});
+			e.preventDefault();
+			$('html,body').animate({
+				scrollTop: 0
+			});
+		});
+		
+		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
 	});
 </script>

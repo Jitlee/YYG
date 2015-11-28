@@ -43,7 +43,7 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status,type')->select();
+		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status, qishu, canyurenshu, zongrenshu,type')->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
