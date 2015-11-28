@@ -85,6 +85,13 @@
 			.oauth-area .oauth-btn:active {
 				border: solid 1px #aaa;
 			}
+			.user-img{
+				width: 30px;
+			  	height: 30px;
+			  	border-radius: 50%;
+			  	padding: 3px;
+			  	1box-shadow: 0 0 1px 1px rgba(130,130,130,0.7);
+			}
 		</style>
 	</head>
 
@@ -120,14 +127,20 @@
 				</div>
 				<input type="hidden" name="redirect" value="{$redirect}" />
 			</form>
-			<div class="mui-content-padded">
-				第三方登录
-				<a href="qq">QQ</a>
-				<a href="weibo">Weibo</a>
-			</div>
+			 
 
 		</div>
-
+		<nav class="mui-bar mui-bar-tab">
+			<span  class="mui-tab-item">
+				<a href="{:U('Public/qq', '', '')}">
+					<img alt="" class="user-img" src="__IMG__/person/qq.png"/>
+				</a>
+				&nbsp;
+				<a href="{:U('Public/weibo', '', '')}">
+					<img alt="" class="user-img" src="__IMG__/person/sweibo.png"/>
+				</a>
+			</span>
+		</nav>
 		<!-- Bootstrap core JavaScript
 		================================================== -->
 		<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
