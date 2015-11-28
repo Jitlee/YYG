@@ -50,21 +50,29 @@ class PayController extends Controller {
 		$this->display();
 	}
 	
+	/**
+	 * 第三方支付
+	 */
 	public function thridpay() {
 		if(IS_POST) {
-			$params = json_decode(htmlspecialchars_decode(file_get_contents('php://input')));
-			if(!($params->third > 0) || $params->channel) {
+			vendor( "PingppSDK.init");
+			
+			$params = json_decode(file_get_contents('php://input'));
+			if(!($params->third > 0) || empty($params->channel)) {
+				echo $params->third;
 				 exit();
 			}
 			
 			$amount = $params->third;
 			$channel = $params->channel;
-			$orderNo = substr(md5(time()), 0, 12);
+			$orderNo = md5(time());
+			session('_trade_no_', $orderNo);
+			
 			$extra = array();
         		switch ($channel) {
 	            	case 'alipay_wap' :
-	                $extra['success_url'] = U('success', '', '');
-					$extra['cancel_url'] = U('cancel', '', '');
+	                $extra['success_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '');
+					$extra['cancel_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '');
 	                break;
 			}
 			\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
@@ -76,7 +84,7 @@ class PayController extends Controller {
 						'amount' 		=> $amount,
 						'order_no' 		=> $orderNo,
 						'currency' 		=> 'cny',
-						'extra' 			=> $extra,
+						'extra' 		=> $extra,
 						'channel' 		=> $channel,
          				'client_ip' 		=> get_client_ip(),
          				'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
@@ -90,40 +98,65 @@ class PayController extends Controller {
 	        }
 		}
 	}
-	
-	public function localpay() {
-		if(IS_POST) {
-			$result = array();
-			if(is_login()) {
-				$db = D('cart');
-				$list = $db->relation(true)->select();
-				if(!empty($list)) {
-					$total =$total = $this->total($list);
-					
-					$user = session('user');
-					$uid = $user['uid'];
-					$db = M('member');
-					$account = $db->field('uid, money,score')->find($uid);
-					$account['money'] = floatval($account['money']);
-					$account['score'] = floatval($account['score']);
-					
-					$_pay = array(
-						'money'		=> floatval($_POST['money']),
-						'score'		=> floatval($_POST['score']),
-						'third'		=> floatval($_POST['third']),
-					);
-					$this->doPay($list, $account, $_pay);
-				} else {
-					$result['status'] = 2;
-					$this->ajaxReturn($result, 'JSON');
-				}
-			} else {
-				$result['status'] = 1;
-				$this->ajaxReturn($result, 'JSON');
-			}
+
+	// 第三方支付成功页面
+	public function thirdpaysuccess() {
+		$tradeNo = I('request.out_trade_no');
+		$result = I('request.result');
+		if($result == 'success' && $tradeNo == session('_trade_no_')) {
+			session('_trade_no_', null);
+			$this->pay(true);
+			layout(false);
+			$this->display('success');	
+		} else {
+			layout(false);
+			$this->display('error');	
 		}
 	}
 	
+	/**
+	 * 本地支付入口
+	 */
+	public function localpay() {
+		if(IS_POST) {
+			$_pay = array(
+				'money'		=> floatval($_POST['money']),
+				'score'		=> floatval($_POST['score']),
+				'third'		=> floatval($_POST['third']),
+			);
+			$status = $this->pay(true, $_pay);
+		}
+	}
+	
+	/**
+	 * 结算
+	 */
+	private function pay($needThirdPay = true, $_pay) {
+		if(is_login()) {
+			$db = D('cart');
+			$list = $db->relation(true)->select();
+			if(!empty($list)) {
+				$total =$total = $this->total($list);
+				
+				$user = session('user');
+				$uid = $user['uid'];
+				$db = M('member');
+				$account = $db->field('uid, money,score')->find($uid);
+				$account['money'] = floatval($account['money']);
+				$account['score'] = floatval($account['score']);
+				$this->doPay($list, $account, $_pay);
+			} else {
+				$result['status'] = 2;
+				$this->ajaxReturn($result, 'JSON');
+			}
+		} else {
+			$result['status'] = 1;
+		}
+	}
+	
+	/**
+	 * 执行结算操作
+	 */
 	private function doPay($list, $account, $_pay) {
 		$sys = M('cart');
 		$sys->startTrans();
@@ -316,16 +349,16 @@ class PayController extends Controller {
 	}
 
 	public function success() {
-		echo dump($_POST);
-		echo '-----';
-		$params = json_decode(htmlspecialchars_decode(file_get_contents('php://input')));
-		echo dump($params);
-		
 		layout(false);
 		$this->display();
 	}
 	
 	public function cancel() {
+		layout(false);
+		$this->display();
+	}
+	
+	public function error() {
 		layout(false);
 		$this->display();
 	}
