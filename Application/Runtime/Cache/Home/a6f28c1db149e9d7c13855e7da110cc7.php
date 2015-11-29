@@ -39,7 +39,68 @@
 
 	<body>
 		<div class="mui-content" style="padding-top: 0;padding-bottom: 54px;">
-			<div class="yyg-qishu">
+			<style type="text/css">
+	.yyg-prize {
+		border:1px solid #FF002B;
+		border-radius: 5px;
+		margin:8px;
+		background-color: #FDF5E6;
+		min-height: 80px;
+		position: relative;
+	}
+	#emptyBlock {
+		text-align: center;
+		font-size:20px;
+		color:#666;
+		padding: 20px 0;
+	}
+	
+	#emptyBlock .iconfont {
+		font-size: 80px;
+		line-height: 100px;
+	}
+	
+	.yyg-prize-img {
+		position: absolute;
+		left:10px;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: 100% 100%;
+		width:64px;
+		height:64px;
+		border-radius: 32px;
+		left: 10px;
+		top:15px;
+	}
+	
+	.yyg-prize-content {
+		padding-left: 90px;
+		margin-top:8px;
+		margin-bottom:8px;
+	}
+	
+	.yyg-prize-content h5 {
+		line-height: 20px;
+	}
+	
+	.yyg-prize-content a{
+		font-size:16px;
+		color: #2af;
+	}
+	
+	.yyg-prize-all {
+		border-top:solid 1px rgba(255,0, 43, 0.2);
+		line-height: 30px;
+		display: block;
+		/*color:#FF002B;*/
+		color:#999;
+		font-size: 16px;
+		text-align: center;
+	}
+	
+</style>
+
+<div class="yyg-qishu">
 	<ul class="yyg-qishu-view">
 		<?php if(is_array($periods)): foreach($periods as $key=>$item): ?><a class="yyg-qishu-item <?php if(isset($item["active"])): ?>yyg-active<?php endif; ?>" <?php if(!isset($item["active"])): ?>href="<?php echo U('view','','');?>/<?php echo ($item["gid"]); ?>/<?php echo ($item["qishu"]); ?>"<?php endif; ?> >第<?php echo ($item["qishu"]); ?>期</a><?php endforeach; endif; ?>
 	</ul>
@@ -47,64 +108,60 @@
 </div>
 
 <div class="yyg-body">
-	<div class="swiper-outter">
-		<div class="swiper-container swiper-loop">
-		    <div class="swiper-wrapper">
-		    	<?php if(is_array($images)): foreach($images as $key=>$image): ?><div class="swiper-slide" style="background-image: url(<?php echo ($image["image_url"]); ?>);"></div><?php endforeach; endif; ?>
-		    </div>
+	<?php if(isset($data["prizer"])): ?><div class="yyg-prize">
+			<div class="yyg-prize-img" style="background-image: url(<?php echo ($data["prizer"]["img"]); ?>);">
+			</div>
+			<div class="yyg-prize-content">
+				<a ><?php echo ($data["prizer"]["username"]); ?></a>
+				<h5>本次参与:<r><?php echo ($data["prizer"]["count"]); ?></r></h5>
+				<h5>幸运云购码:<r><?php echo ($data["prizecode"]); ?></r></h5>
+				<h5>揭晓时间：<?php echo ($data["end_time"]); ?></h5>
+			</div>
+			<a class="yyg-prize-all">
+				获得者本期所有云购码 >
+			</a>
 		</div>
-		<div class="pagination pagination-loop"></div>
-	</div>
-	
-	<p class="yyg-view-title yyg-view-margin">
-		(第<?php echo ($data["qishu"]); ?>期) <?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
-	</p>
-	<h5 class="yyg-view-margin">价值：¥ <?php echo ($data["money"]); ?></h5>
-	<div class="yyg-progress-bar yyg-view-margin">
-		<div class="yyg-progress">
-			<div class="yyg-progressing" style="width:<?php echo ((isset($data["percentage"]) && ($data["percentage"] !== ""))?($data["percentage"]):0); ?>%"></div>
+	<?php else: ?>
+		<div id="emptyBlock" class="yyg-prize">
+			<i class="iconfont icon-yihan"></i>
+			<br/>
+			很遗憾，本期没有人参与
+		</div><?php endif; ?>
+	<section class="tuijian yyg-content">
+		<div class="tuijian-left">
+			<div class="tuijian-img-container">
+				<img class="tuijian-img" src="<?php echo ($data["thumb"]); ?>" />
+			</div>
 		</div>
-		<div class="yyg-progess-indicator">
-			<span class="yyg-progess-l"><?php echo ($data["canyurenshu"]); ?></span>
-			<span class="yyg-progess-c"><?php echo ($data["zongrenshu"]); ?></span>
-			<span class="yyg-progess-r"><?php echo ($data["shengyurenshu"]); ?></span>
+		<div class="tuijian-content">
+			<p class="tuijian-content-title">(第<?php echo ($data["qishu"]); ?>期)<?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r></p>
+			<h5>价值：¥ <?php echo ($data["money"]); ?></h5>
 		</div>
-		<div class="yyg-progess-label">
-			<span class="yyg-progess-l">已参与</span>
-			<span class="yyg-progess-c">总需</span>
-			<span class="yyg-progess-r">剩余</span>
-		</div>
-	</div>
+	</section>
 </div>
 
 <ul class="mui-table-view yyg-margin20">
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">(<?php echo ($data["canyurenshu"]); ?>)</span></a></li>
+	<?php if(isset($data["prizer"])): ?><li class="mui-table-view-cell"><a class="mui-navigate-right">计算结果</a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">(<?php echo ($data["canyurenshu"]); ?>)</span></a></li><?php endif; ?>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
+	<?php if(isset($data["prizer"])): ?><li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li><?php endif; ?>
 </ul>
 <footer class="yyg-footer">
-	<div class="yyg-footer-left">
+	<div class="yyg-footer-block">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
-		<div id="lijiButton" class="yyg-btn yyg-btn-primary">立即一元秒杀</div>
-	</div>
-	<div class="yyg-footer-right">
-		<div id="addCartButton" class="yyg-btn yyg-btn-success">加入购物车</div>
+		<?php if(isset($data["current"])): ?><a id="addCartButton" href="<?php echo U('view','','');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["current"]); ?>" class="yyg-btn yyg-btn-primary">
+				第<?php echo ($data["current"]); ?>期正在进行中...
+			</a>
+		<?php else: ?> 
+			<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
+				商品已经结束活动
+			</a><?php endif; ?> 
 		<a class="yyg-btn yyg-btn-link" href="<?php echo U('Cart/index', '','');?>"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
 
 <script type="text/javascript">
 	$(function() {
-		$("#addCartButton").click(function() {
-			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>", null, function(result) {
-				new Android_Toast({content: result.message});
-			})
-		});
-		$("#lijiButton").click(function() {
-			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>", null, function(result) {
-				window.location.href = "<?php echo U('Cart/index', '','');?>";
-			})
-		});
 	});
 </script>
 

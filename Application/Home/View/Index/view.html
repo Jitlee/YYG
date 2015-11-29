@@ -1,16 +1,10 @@
 <div class="yyg-qishu">
 	<ul class="yyg-qishu-view">
-		<div class="yyg-qishu-item">
-			a
-		</div>
-		<div class="yyg-qishu-item">
-			b
-		</div>
-		<div class="yyg-qishu-item">
-			c
-		</div>
+		<foreach name="periods" item="item">
+		<a class="yyg-qishu-item <present name="item.active">yyg-active</present>" <notpresent name="item.active">href="{:U('view','','')}/{$item.gid}/{$item.qishu}"</notpresent> >第{$item.qishu}期</a>
+		</foreach>
 	</ul>
-	<a class="yyg-qishu-all">+</a>
+	<!--<a class="yyg-qishu-all">+</a>-->
 </div>
 
 <div class="yyg-body">
@@ -47,7 +41,7 @@
 </div>
 
 <ul class="mui-table-view yyg-margin20">
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录</a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">({$data.canyurenshu})</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 </ul>

@@ -256,11 +256,11 @@ a.user {
 	margin: 0;
 	padding: 0;
 	display: block;
-	width:-moz-calc(100% - 49px);
+	/*width:-moz-calc(100% - 49px);
 	width:-webkit-calc(100% - 49px);
 	width:-ms-calc(100% - 49px);
 	width:-o-calc(100% - 49px);
-	width:calc(100% - 49px);
+	width:calc(100% - 49px);*/
 	border-right: #D5D5D5 solid 1px;
 }
 
@@ -287,6 +287,12 @@ a.user {
 	border-left: #D5D5D5 solid 1px;
 	float:left;
 	display: block;
+	color:#333;
+}
+
+.yyg-qishu-item.yyg-active {
+	background-color: #fff;
+	color:#FF002B;
 }
 
 .yyg-qishu-all {
@@ -455,6 +461,10 @@ footer.yyg-footer {
 	background-color:#2af;
 	color:#fff;
 }
+.yyg-btn.yyg-btn-disabed {
+	background-color:#D5D5D5;
+	color:#666;
+}
 
 .yyg-btn-link {
 	background: none;
@@ -507,6 +517,28 @@ input[disabled] {
 	margin: 8px;
 	display: block;
 	vertical-align: middle;
+}
+
+.yyg-footer-block {
+    display: block;
+    width: 100%;
+    position: relative;
+    float: left;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.yyg-footer-block .yyg-btn {
+	float:left;
+}
+
+.yyg-footer-block .yyg-btn-primary, .yyg-footer-block .yyg-btn-disabed{
+	display: block;
+	width: calc(100% - 80px);
+	width: -webkit-calc(100% - 80px);
+	width: -o-calc(100% - 80px);
+	width: -moz-calc(100% - 80px);
+	width: -ms-calc(100% - 80px);
 }
 
 .yyg-cart-item {

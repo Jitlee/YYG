@@ -6,7 +6,7 @@
 		<meta name="format-detection" content="telephone=no">
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1448373727_1371717.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -101,7 +101,7 @@
 			if(_total > 0) {
 				thirdPay();
 			} else {
-				thirdPay();
+				localPay();
 			}
 		});
 		
@@ -111,11 +111,10 @@
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
 			}, function(result) {
-				if(result.status == 0) {
+				if(result == 0) {
 					window.location.href ="<?php echo U('success','','');?>";
 				} else {
-					console.log(result.status);
-					new Android_Toast({content: "支付失败"});
+					new Android_Toast({content: "支付失败,错误代码：" + result});
 				}
 				zhifuButton.prop("disabled", false);
 			});

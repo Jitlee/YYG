@@ -3,6 +3,7 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
 	public function index(){
+		run_task();
     		$this->assign('title', '一元购');
 		$this->assign('pid', 'home');
 		$sdb = M('slide');
@@ -18,12 +19,8 @@ class IndexController extends Controller {
 		$filter['type'] = 1;
 		
 		$cid = intval(I('get.cid'));
-		$bid = intval(I('get.bid'));
 		if($cid > 0) {
 			$filter['cid'] = $cid;
-			if($bid > 0) {
-				$filter['bid'] = $bid;
-			}
 		}
 		
 		$type = I("get.type");
@@ -47,29 +44,131 @@ class IndexController extends Controller {
 		$this->ajaxReturn($list, "JSON");
 	}
 	
-	public function _empty($gid) {
-		$this->view($gid);
+	public function _empty($gid, $qishu) {
+		$this->view($gid, $qishu);
 	}
 	
-	protected function view($gid, $qishu) {
+	public function view($gid, $qishu = null) {
 		layout('sublayout');
 		$this->assign('title', '商品详情');
 		
-		$db = M('miaosha');
-		$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,type')->find($gid);
+		$data = $this->getGood($gid, $qishu);
 		$data['percentage'] = min(100, intval($data['canyurenshu'])*100/ intval($data['zongrenshu']));
 		$this->assign('data', $data);
-		$imgdb = M('GoodsImages');
-		$imgmap['gid'] = $gid;
-		$imgmap['type'] = $data['type'];
-		$images = $imgdb->where($imgmap)->select();
-		if(empty($images)) {
-			$image['image_url'] = $data['thumb'];
-			array_push($images, $image);
-		}
-		$this->assign('images', $images);
 		
-		$this->display('view');
+		$data['status'] = intval($data['status']);
+		$data['qishu'] = intval($data['qishu']);
+		$data['maxqishu'] = intval($data['maxqishu']);
+		$qishuArray = array();
+		if($data['status'] == 2) {
+			// 下一期
+			if($data['qishu'] < $data['maxqishu']) {
+				array_push($qishuArray, array(
+					'qishu'		=> $data['qishu'] + 1,
+					'gid'		=> $data['gid'],
+				));
+			}
+			
+			// 当期
+			array_push($qishuArray, array(
+				'qishu'		=> $data['qishu'],
+				'gid'		=> $data['gid'],
+				'active'		=> true,
+			));
+			
+			// 上一期
+			if($data['qishu'] > 1) {
+				array_push($qishuArray, array(
+					'qishu'		=> $data['qishu'] - 1,
+					'gid'		=> $data['gid'],
+				));
+			}
+		} else {
+			
+			$imgdb = M('GoodsImages');
+			$imgmap['gid'] = $gid;
+			$imgmap['type'] = $data['type'];
+			$images = $imgdb->where($imgmap)->select();
+			if(empty($images)) {
+				$image['image_url'] = $data['thumb'];
+				array_push($images, $image);
+			}
+			$this->assign('images', $images);
+		
+			// 当期
+			array_push($qishuArray, array(
+				'qishu'		=> $data['qishu'],
+				'gid'		=> $data['gid'],
+				'active'		=> true,
+			));
+			
+			// 上一期
+			if($data['qishu'] > 1) {
+				array_push($qishuArray, array(
+					'qishu'		=> $data['qishu'] - 1,
+					'gid'		=> $data['gid'],
+				));
+			}
+			
+			// 上上期
+			if($data['qishu'] > 2) {
+				array_push($qishuArray, array(
+					'qishu'		=> $data['qishu'] - 2,
+					'gid'		=> $data['gid'],
+				));
+			}
+		}
+		$this->assign('periods', $qishuArray);
+		
+		if($data['status'] == 2) {
+			$this->display('end');
+		} else {
+			$this->display('view');
+		}
+	}
+	
+	private function getGood($gid, $qishu = null) {
+		if(!$qishu) {
+			$db = M('miaosha');
+			return $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
+		} else {
+			// 历史
+			$db = M('MiaoshaHistory');
+			$map['gid'] = $gid;
+			$map['qishu'] = $qishu;
+			$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time')->where($map)->find();
+			if(empty($data)) {
+				return $this->getGood($gid);
+			}
+			
+			// 获取当情期
+			$mdb = M('miaosha');
+			$mmap['gid'] = $gid;
+			$mmap['status'] = array('lt', 2);
+			$current = $mdb->field('qishu')->where($mmap)->find();
+			$data['current'] = $current['qishu'];
+			
+			// 获取当前中奖用户
+			if($data['prizeuid']) {
+				$udb = M('member');
+				$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+				$data['prizer'] = $user;
+					
+				if(empty($user['username'])) {
+					$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
+				}
+				
+				// 获取用户当期购买数量
+				$mhdb = M('MemberMiaosha');
+				$mhmap['uid'] = $data['prizeuid'];
+				$mhmap['gid'] = $data['gid'];
+				$mhmap['qishu'] = $data['qishu'];
+				$count = $mhdb->where($mhmap)->sum('count');
+				$data['prizer']['count'] = $count;
+			}
+			
+			return $data;
+		}
 	}
 	
 	public function detail($gid) {
@@ -91,36 +190,10 @@ class IndexController extends Controller {
 		$db = M('miaosha');
 		$filter["jishijiexiao"] = 0;
 		$filter["type"] = 1;
-		$count = $db->where($filter)->count();
-		$all['count'] = $count;
 		$all['name'] = '全部';
 		$all['cid'] = 0;
 		array_unshift($list, $all);
 		
 		$this->ajaxReturn($list, "JSON");
-	}
-	
-	public function brands($cid) {
-		$db = D('category');
-		$category = $db->relation(true)->find($cid);
-		$brands = array();
-		if($category) {
-			$brands = $category['brands'];
-		}
-		$gdb = M('miaosha');
-		$map['cid'] = $cid;
-		$map["jishijiexiao"] = 0;
-		$map["type"] = 1;
-		$total = 0;
-		foreach($brands as $key => $brand){
-			$map['bid'] = $brand['bid'];
-			$count = $brands[$key]['count'] = $gdb->where($map)->count();
-			$total += $count;
-		}
-		$all['count'] = $total;
-		$all['name'] = '全部';
-		$all['bid'] = 0;
-		array_unshift($brands, $all);
-		$this->ajaxReturn($brands,'JSON');
 	}
 }

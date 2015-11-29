@@ -4,6 +4,7 @@ use Think\Controller;
 class JiexiaoController extends Controller {
 	
 	public function index(){
+		run_task();
     		$this->assign('title', '最新揭晓');
 		$this->assign('pid', 'jiexiao');
 		$this->display();
@@ -19,8 +20,52 @@ class JiexiaoController extends Controller {
 		if($cid > 0) {
 			$filter['cid'] = $cid;
 		}
+		$type = I("get.type");
+		$order = '';
 		
-		$list = $db->where($filter)->order("status asc, end_time desc")->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status, canyurenshu, end_time')->select();
+		switch($type) {
+			case 2:
+				$order = ",time desc";
+				break;
+			case 3:
+				$order = ",shengyurenshu desc";
+				break;
+			case 4: // 总需人数
+				$order = ",zongrenshu desc";
+				break;
+			default: // 人气
+				$order = ",canyurenshu desc";
+				break;
+		}
+		
+		$filter['status'] = array('elt', 2);
+		
+		$list = $db->where($filter)
+			->order('status asc'. $order)
+			->page($pageNum, $pageSize)
+			->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, end_time,prizeuid,prizecode')->select();
+			
+		if(!empty($list)) {
+			$udb = M('member');
+			$mhdb = M('MemberMiaosha');
+			foreach($list as $data) {
+				if(!empty($data['prizeuid'])) {
+					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+					$data['prizer'] = $user;
+					
+					if(empty($user['username'])) {
+						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
+					}
+					
+					// 获取用户当期购买数量
+					$mhmap['uid'] = $data['prizeuid'];
+					$mhmap['gid'] = $data['gid'];
+					$mhmap['qishu'] = $data['qishu'];
+					$count = $mhdb->where($mhmap)->sum('count');
+					$data['prizer']['count'] = $count;
+				}
+			}
+		}
 		$this->ajaxReturn($list, "JSON");
 	}
 	

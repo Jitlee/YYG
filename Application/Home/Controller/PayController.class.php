@@ -6,10 +6,25 @@ use Think\Controller;
  */
 class PayController extends Controller {
 	
+//	1; // 没有登陆
+//	2; // 查询购物车失败
+//	3  // 商品已经完结
+//	5; // 增加秒杀记录失败
+//	7; // 计算结果失败
+//	8; // 获取中奖用户失败
+//	9; // 保存主表失败
+//	10; // 保存历史失败
+//	11; // 增加消费记录失败
+//	12; // 扣除个人余额失败
+//	13; // 生成客户随即码失败
+//	14;  // 余额不足
+//	15;  // 需要第三方支付
+	
 	public function index(){
 		if(is_login()) {
 			$db = D('cart');
-			$list = $db->relation(true)->select();
+			$map['uid'] = get_temp_uid();
+			$list = $db->where($map)->relation(true)->select();
 			if(!empty($list)) {
 				$this->assign('list', $list);
 				$total = $this->total($list);
@@ -68,6 +83,12 @@ class PayController extends Controller {
 			$orderNo = md5(time());
 			session('_trade_no_', $orderNo);
 			
+			session($orderNo, array(
+				'money'		=> $params->money,
+				'third'		=> $params->third,
+				'score'		=> $params->score,
+			));
+			
 			$extra = array();
         		switch ($channel) {
 	            	case 'alipay_wap' :
@@ -101,15 +122,21 @@ class PayController extends Controller {
 
 	// 第三方支付成功页面
 	public function thirdpaysuccess() {
+		layout(false);
 		$tradeNo = I('request.out_trade_no');
 		$result = I('request.result');
-		if($result == 'success' && $tradeNo == session('_trade_no_')) {
+		if($result == 'success' && $tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
 			session('_trade_no_', null);
-			$this->pay(true);
-			layout(false);
-			$this->display('success');	
+			$_pay = session($tradeNo);
+			$status = $this->pay(false, $_pay);
+			if($status == 0) {
+				$this->display('success');	
+			} else { // TODO: 失败了没有机制
+				$this->assign('status', $status);
+				$this->display('error');	
+			}
+			session($tradeNo, null);
 		} else {
-			layout(false);
 			$this->display('error');	
 		}
 	}
@@ -125,16 +152,18 @@ class PayController extends Controller {
 				'third'		=> floatval($_POST['third']),
 			);
 			$status = $this->pay(true, $_pay);
+			$this->ajaxReturn($status);
 		}
 	}
 	
 	/**
 	 * 结算
 	 */
-	private function pay($needThirdPay = true, $_pay) {
+	private function pay($needCheckThridPay, $_pay) {
 		if(is_login()) {
 			$db = D('cart');
-			$list = $db->relation(true)->select();
+			$map['uid'] = get_temp_uid();
+			$list = $db->where($map)->relation(true)->select();
 			if(!empty($list)) {
 				$total =$total = $this->total($list);
 				
@@ -144,13 +173,21 @@ class PayController extends Controller {
 				$account = $db->field('uid, money,score')->find($uid);
 				$account['money'] = floatval($account['money']);
 				$account['score'] = floatval($account['score']);
-				$this->doPay($list, $account, $_pay);
+				
+				if($account['money'] < $_pay['money']) {
+					return 14;  // 余额不足
+				}
+				
+				if($needCheckThridPay && $_pay['third'] > 0) {
+					return 15;  // 需要第三方支付
+				}
+				
+				return $this->doPay($list, $account, $_pay);
 			} else {
-				$result['status'] = 2;
-				$this->ajaxReturn($result, 'JSON');
+				return 2; // 查询购物车失败
 			}
 		} else {
-			$result['status'] = 1;
+			return 1; // 没有登陆
 		}
 	}
 	
@@ -159,21 +196,17 @@ class PayController extends Controller {
 	 */
 	private function doPay($list, $account, $_pay) {
 		$sys = M('cart');
+		$adb = M('account');
+		$pdb = M('MemberPaimai');
 		$sys->startTrans();
 		$status = 0;
 					
-		$pdb = M('MemberPaimai');
 		foreach($list as $cart) {
 			if(intval($cart['type']) == 3) {
-//				// 拍卖
-//				$data['uid'] = $uid;
-//				$data['gid'] = $cart['paimai']['gid'];
-//				$data['flag'] = 3; // 立即按揭
-//				$data['money'] = $cart['paimai']['lijijia'];
-//				if(!$pdb->add($data)) {
-//					$success = false;
-//				}
+				// 拍卖-立即
+//				$status = $this->paimai($cart, $account);
 			} else {
+				// 秒杀
 				$status = $this->miaosha($cart, $account);
 			}
 			if($status != 0) {
@@ -185,7 +218,6 @@ class PayController extends Controller {
 			// 清空购物车
 			$sys->where('uid='.$account['uid'])->delete();
 			// 增加消费记录
-			$adb = M('account');
 			$adata = array(
 				'uid'			=> $account['uid'],
 				'type'			=> -1, // 付款
@@ -196,12 +228,14 @@ class PayController extends Controller {
 				'content' => '购买商品',
 			);
 			if($adb->add($adata)) {
-				// 扣除个人账户余额
-				$account['money'] -= $_pay['money'];
-				$account['score'] -= $_pay['score'];
-				$udb = M('member');
-				if(!$udb->save($account)) {
-					$status = 12; // 扣除个人余额失败
+				if($_pay['money'] > 0 || $_pay['score'] > 0) {
+					$udb = M('member');
+					// 扣除个人账户余额
+					$account['money'] -= $_pay['money'];
+					$account['score'] -= $_pay['score'];
+					if(!$udb->save($account)) {
+						$status = 12; // 扣除个人余额失败
+					}
 				}
 			} else {
 				$status = 11; // 增加消费记录失败
@@ -211,11 +245,10 @@ class PayController extends Controller {
 		$result['status'] = $status;
 		if($status == 0) {
 			$sys->commit();
-			$this->ajaxReturn($result, 'JSON');
 		} else {
 			$sys->rollback();
-			$this->ajaxReturn($result, 'JSON');
 		}
+		return $status;
 	}
 	
 	function miaosha($cart, $account) {
@@ -291,34 +324,17 @@ class PayController extends Controller {
 				}
 				
 				$prize = intval($query[0]) % $good['canyurenshu'];
-				// 获取获奖者和号码
-//				$sql = printf('SELECT * FROM yyg_miaosha_code WHERE gid = %s  AND qishu = %s ASC LIMIT %s,1;',
-//					$good['gid'], $good['qishu'], $prize);
-				
 				$cmap['gid'] = $good['gid'];
 				$cmap['qishu'] = $good['qishu'];
 				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prize + 1, 1)->find();
-				if(empty($query)) {
+				if(!$presult) {
 					return 8; // 获取中奖用户失败
 				}
 				
 				$good['status'] = 2;
-				$good['prizecode'] = 10000001 + intval($presult['pcode']);
+				$good['prizecode'] = 10000001 + $prize;
 				$good['prizeuid'] = $presult['uid'];
-				
-				// 查询获奖者
-				/** 已废弃
-//				$sql = 'SELECT `uid` FROM yyg_member_miaosha WHERE `gid` = ' . $good['gid'] . ' AND ' . $prizecode . ' BETWEEN `canyu`-`count` AND `canyu`';
-//				$query = $mmdb->query($sql);
-				**/
-//				
-//				
-//				
-//				if(empty($query)) {
-//					return 8; // 计算结果中奖用户失败
-//				}
-//				
-//				$good['prizeuid'] = $query[0]['uid'];
+				$good['end_time'] = date('y-m-d-H-i-s');
 				
 				$hdb = M('MiaoshaHistory');
 				if(!$hdb->add($good)) {
@@ -336,6 +352,14 @@ class PayController extends Controller {
 					$good['prizecode'] = null;
 					$good['canyurenshu'] = 0;
 					$good['shengyurenshu'] = $good['zongrenshu'];
+					$jishi = intval($good['jishijiexiao']);
+					if($jishi > 0) {
+						$now = time();
+						$end_time = $now + $jishi * 3600;
+						$good['end_time'] =  date('y-m-d-H-i-s', $end_time);
+					} else {
+						$good['end_time'] = null;
+					}
 				}
 			}
 

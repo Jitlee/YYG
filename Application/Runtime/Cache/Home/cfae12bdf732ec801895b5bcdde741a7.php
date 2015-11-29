@@ -44,123 +44,74 @@
 
 	<body>
 		<div class="mui-content">
-			<style type="text/css">
-	
-
-	.mui-content {
-		padding-bottom: 100px;
-	}
-	
-	#emptyBlock {
-		text-align: center;
-		font-size:20px;
-		color:#666;
-		padding: 20px 0;
-	}
-	
-	#emptyBlock .iconfont {
-		font-size: 120px;
-		line-height: 150px;
-	}
-	
-</style>
-
-<?php if(isset($list)): ?><ul class="mui-table-view yyg-cart">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item">
-		<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
+			<?php if(isset($tuijian)): ?><a href="/index.php/Home/Paimai/<?php echo ($tuijian["gid"]); ?>">
+		<section class="tuijian mui-content-padded yyg-content">
+			<div class="tuijian-img-container">
+				<img class="tuijian-img" src="<?php echo ($tuijian["thumb"]); ?>" />
 			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">( 立即揭标 ) <?php echo ($item["paimai"]["title"]); ?></p>
-				<h5>起拍价:<?php echo ($item["paimai"]["qipaijia"]); ?></h5>
-				<input type="number" disabled="disabled" name="count" dj="1" value="<?php echo ($item["paimai"]["lijijia"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
+			<div class="tuijian-content">
+				<p class="tuijian-content-title"><?php echo ($tuijian["title"]); ?></p>
+				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
+				<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
+				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time class="normal" _countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
+				<a type="button" class="mui-btn mui-btn-red" href="/index.php/Home/Paimai/bid/<?php echo ($tuijian["gid"]); ?>">我要出价</a>
 			</div>
-		<?php else: ?>
-			<div class="yyg-cart-img-container">
-				<img src="<?php echo ($item["good"]["thumb"]); ?>"/>
-			</div>
-			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
-				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
-				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
-			</div><?php endif; ?>
-		</li><?php endforeach; endif; ?>
-</ul><?php endif; ?>
-<div id="emptyBlock" <?php if(isset($list)): ?>style="display:none"<?php endif; ?>>
-	<i class="iconfont icon-emptyshoppingbag"></i>
-	<br/>
-	购物车为空
+		</section>
+	</a><?php endif; ?>
+<div class="yyg-content mui-content-padded">
+	<ul id="goodList" class="yyg-goods-list">
+		<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="yyg-goods-list-item">
+				<a href="/index.php/Home/Paimai/<?php echo ($item["gid"]); ?>">
+					<div>
+						<div class="yyg-goods-img-container" style="background-image: url(<?php echo ($item["thumb"]); ?>);">
+						</div>
+						<div class="yyg-goods-media">
+							<p class="tuijian-content-title"><?php echo ($item["title"]); ?></p>
+							<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
+							<time class="normal" _countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+						</div>
+						<a href="<?php echo U('bid', '', '');?>/<?php echo ($item["gid"]); ?>" style="width: 100%;"  type="button" class="mui-btn mui-btn-red">我要出价</a>
+					</div>
+				</a>
+			</li><?php endforeach; endif; ?>
+	</ul>
 </div>
-<footer id="footer" class="yyg-cart-footer" <?php if(!isset($list)): ?>style="display:none"<?php endif; ?>>
-	<span>合计 <r id="totalMoney" class="larger">¥2.00</r></span>
-	<h5>共<span id="goodCount">1</span>个商品</h5>
-	<a href="<?php echo U('Pay/index','','');?>" class="yyg-btn yyg-btn-primary">去结算</a>
-</footer>
 
-<script type="text/javascript">
+<script>
 	$(function() {
-		function sum() {
-			var total = 0;
-			var count = 0;
-			$(".yyg-cart-item input").each(function() {
-				$this = $(this);
-				total += Number($this.attr("dj")) * Number($this.val());
-				count++;
-			});
-			$("#goodCount").text(count);
-			$("#totalMoney").text("¥" + total.toFixed(2));
+		var pageNum = 1;
+		var goodList = $("#goodList").swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		});
+		
+		$(window).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+       			page();
+			}
 		}
 		
-		var inputHandler = null;
-		$(".yyg-cart-item input").bind("input", function() {
-			$this = $(this);
-			window.clearTimeout(inputHandler);
-			inputHandler = window.setTimeout(function() {
-				var id = $this.attr("cid");
-				var count = $this.val();
-				var bkCount = $this.attr("bk");
-				if(count > 0) {
-					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
-						if(result.status == 1) {
-							sum();
-							$this.attr("bk", count);
-						} else { // 失败
-							new Android_Toast({content: "修改失败"});
-							$this.val(bkCount);
-						}
-					});
-				}
-			}, 200);
-		}).bind("blur", function() {
-			$this = $(this);
-			var count = $this.val();
-			var bkCount = $this.attr("bk");
-			if(!(count > 0)) {
-				$this.val(bkCount);
-			}
-		});
+		var template = $("li:first-child", goodList);
 		
-		sum();
-		
-		$(".yyg-cart-remove").click(function() {
-			$this = $(this);
-			var id = $this.attr("cid");
-			$.post("<?php echo U('remove', '', '');?>/" + id, null, function(result) {
-				if(result.status == 1) {
-					$this.closest(".yyg-cart-item").remove();
-					count();
-					if($(".yyg-cart-item").length == 0) {
-						$("#emptyBlock").show();
-						$("#footer").hide();
-					}
-				} else { // 失败
-					new Android_Toast({content: "删除失败"});
-					$this.val(bkCount);
-				}
-			});
-		});
+		function page() {
+			$.get("<?php echo U('page', '', '');?>/8/" + (++pageNum), null, function(list) {
+	       		$.each(list, function() {
+	       			var item = template.clone();
+//	       			$("img", item).attr("src", this.thumb);
+					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+	       			$("p", item).text(this.title);
+	       			$("h5 r:last-child", item).text(this.zuigaojia);
+	       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
+	       			$(">a>a", item).attr("href", "/index.php/Home/Paimai/bid/" + this.gid);
+	       			$("time", item).attr("countdown", this.end_time);
+					goodList.append(item);
+	       		});
+	       });
+		}
 	});
 </script>
 			<br />
