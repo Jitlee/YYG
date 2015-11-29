@@ -6,14 +6,17 @@
 			<form>
 				<div class="mui-input-group">
 					<div class="mui-input-row">
-						<label>账号</label>
-						<input id='account' type="text" name="mobile" class="mui-input-clear mui-input" required placeholder="请输入您的手机号码">
+						<label>手机号码</label>
+						<input id='account' type="text" name="mobile" class="mui-input-clear mui-input" maxlength="11" required placeholder="请输入您的手机号码">
 					</div>
 					<div class="mui-input-row">
 						<label>密码</label>
 						<input id='password' type="password"  name="password"  class="mui-input-clear mui-input" required placeholder="请输入密码">
 					</div>
-					 
+					<div class="mui-input-row">
+						<label>昵称</label>
+						<input id='username' type="text" name="username" class="mui-input-clear mui-input" required placeholder="请输入您的昵称">
+					</div> 
 				</div>
 				<div class="mui-content-padded">
 					<button id='reg' type="submit" class="mui-btn mui-btn-block mui-btn-primary">注册</button>
@@ -29,25 +32,17 @@
 	}).ajaxStop(function() {
 		$("button:submit").attr("disabled", false);
 	});
-	 //刷新验证码
 	$(function() {		
 		$("form").submit(function() {
 			var self = $(this);
-			var pwd=$("#password").val();
-//			var repwd=$("#password_confirm").val();
-//			if(pwd!=repwd)
-//			{
-//				layer.tips('输入两次密码不一致！','#password_confirm');
-//				return false;
-//			}
 			$.post('{$action}', self.serialize(), success, "json");
 			return false;
-	
 			function success(data) {
 				if (data.status) {
-					window.location.href = data.url;
+					//layer.alert(data.msg);
+					window.location.href = "{:U('Person/me','','')}";
 				} else {
-					$("#checkTips").text(data.info);
+					layer.alert(data.msg);
 				}
 			}
 		});

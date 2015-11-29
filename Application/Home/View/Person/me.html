@@ -170,20 +170,59 @@
 				font-size: 34px;
 				font-weight: 300;
 			}
+			#recharge{float:right; padding-right: 25px; padding-top: 3px;}
 		</style>
-	</head>
+		<script src="__JQ__"></script>
 
+		<script type="text/javascript">
+	   		seajs.initReady(function(){
+				seajs.use(["util", "ko", "md5"],function(){
+					seajs.use("me");
+				});				
+			});
+   		</script>
+   		<script type="text/javascript">
+	   		$(function() {
+	   			
+	   			$("#recharge").click(function() {
+					window.location.href="{:U('Person/recharge', '', '')}";
+				});
+				//秒杀记录
+				$("#miaoshaRecord").click(function() {
+					window.location.href="{:U('Person/miaoshaRecord', '', '')}";
+				});
+				//中奖记录
+				$("#miaoshazj").click(function() {	
+					window.location.href="{:U('Person/miaoshazj', '', '')}";
+				});
+				//已晒单
+				$("#miaoshasdfinish").click(function() {
+					window.location.href="{:U('Person/miaoshasdfinish', '', '')}";
+				});
+				//未晒单
+				$("#miaoshasdno").click(function() {
+					window.location.href="{:U('Person/miaoshasdno', '', '')}";
+				});
+				$("#userinfotop").click(function() {
+					window.location.href="{:U('Person/userinfoitem', '', '')}";
+				});
+				
+			});
+		</script>
+	</head>
+	
 	<body>
+
 		<div class="mui-content">
 			<ul class="mui-table-view"> 
-				<li class="mui-table-view-cell cell-top" id="recommend">
+				<li class="mui-table-view-cell cell-top"  id="userinfotop">
 					<a class="mui-navigate-right">
 						<span class="user-cell4">
-							<img class="user-img" alt="秒杀记录" src="__IMG__/person/yyg_icon_msjl.png">						 
+							<img class="user-img" alt="" src="{$data.img}">						 
 						</span>						 
 						<span class="user-cell_right">							 
-							<p data-bind="text: nickName">{$userinfo.openid}</p>
-							<p data-bind="text: nickName">中奖记录</p>
+							<p data-bind="text: nickName">{$data.username}</p>
+							<p data-bind="text: nickName">{$data.mobile}</p>
 						</span>
 					</a>
 				</li>
@@ -198,65 +237,62 @@
 									<p>我的钱包</p>
 								</div>
 							 
-							<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount1">
-								<p>	我要充值</p>							 
+							<span class="cell-right" id="recharge">
+								<span class="mui-badge mui-badge-danger">我要充值</span>							 
 							</span>
 						</a>
 				</li>
 				<li class="userline land-cell" data-bind="visible: isLogin" id="loginUser">
 					<span class="cell-left" id="userinfo">
 						<img class="circle-img" alt="积分" src="__IMG__/person/yyg_icon_jf.png">
-						<p data-bind="text: nickName">积分：0.00</p>
+						<p data-bind="text: nickName">积分：{$data.score}</p>
 					</span>
 					<a></a>
 					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount2">
 						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_hb.png">
-						<p>余额:0</p>
+						<p>余额:{$data.money}</p>
 					</span>					
 				</li>
 				
-				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">
-					 
+				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">					 
 						<div class="img-tip">
 							<img alt="我的秒杀" src="__IMG__/person/yyg_icon_wdms.png"/>
 						</div>
 						<div class="menu-content">
 							<p>我的秒杀</p>
-						</div>
+						</div> 
 					 
 				</li>
-				<li class="userline land-cell" id="recommend">
-					<span class="land-cell4">
+				<li class="userline land-cell">
+					<span class="land-cell4"  id="miaoshaRecord">
 						<img class="circle-img" alt="秒杀记录" src="__IMG__/person/yyg_icon_msjl.png">
-						<p data-bind="text: nickName">秒杀记录</p>
+						<p data-bind="text: nickName">
+								秒杀记录 
+						</p>
 					</span>
 					 
-					<span class="land-cell4">
+					<span class="land-cell4"  id="miaoshazj">
 						<img class="circle-img" alt="中奖记录" src="__IMG__/person/yyg_icon_zjjl.png">
-						<p data-bind="text: nickName">中奖记录</p>
+						<p data-bind="text: nickName">
+							中奖记录 
+						</p>
 					</span>
 					 
-					<span class="land-cell4" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
-						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_ysd.png">
-						<p>已晒单</p>
+					<span class="land-cell4"  id="miaoshasdfinish">
+						<img class="circle-img" alt="已晒单" src="__IMG__/person/yyg_icon_ysd.png">
+						<p data-bind="text: nickName">
+							已晒单 
+						</p>
 					</span>
 					 
-					<span class="land-cell4" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount">
-						<img class="circle-img" alt="红包" src="__IMG__/person/yyg_icon_wsd.png">
-						<p>未晒单</p>
+					<span class="land-cell4" id="miaoshasdno">
+						<img class="circle-img" alt="未晒单" src="__IMG__/person/yyg_icon_wsd.png">
+						<p data-bind="text: nickName">
+							未晒单
+						</p>
 					</span>
 				</li>
 				
-				<li class="mui-table-view-cell" id="kkemail-li">
-					<a class="mui-navigate-right">
-						<div class="img-tip">
-							<img alt="邮箱" src="__IMG__/person/yyg_icon_wdsc.png"/>
-						</div>
-						<div class="menu-content">
-							<p id="kkemail">我的收藏</p>
-						</div> 
-					</a>
-				</li>
 				<li class="mui-table-view-cell" id="feedback">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
@@ -277,15 +313,20 @@
 						</div>
 					</a>
 				</li>
+				<li class="mui-table-view-cell" id="about">
+					<a class="mui-navigate-right" href="{:U('Person/loginexit', '', '')}">
+						<div class="img-tip">
+							<img alt="关于" src="__IMG__/person/yyg_icon_wdyq.png"/>
+						</div>
+						<div class="menu-content">
+							<p>注销</p>
+						</div>
+					</a>
+				</li>
 			</ul>
 		</div>
-		<script type="text/javascript">
-	   		seajs.initReady(function(){
-				seajs.use(["util", "ko", "md5"],function(){
-					seajs.use("me");
-				});
-			})
-   		</script>
+		
+
 	</body>
 
 </html>

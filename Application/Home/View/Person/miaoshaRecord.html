@@ -1,0 +1,136 @@
+<style type="text/css">
+	
+
+.userinfo{ background: none; border-top: none;}
+.userinfo li{ border-top: none;}
+.userinfo:before{ height: 0;}
+.userinfo:after{ height: 0;}
+.userinfoin{ padding:0 17px;}
+.userinfoinimg{margin-right: 17px !important;width: 65px !important; height: 65px !important; border-radius: 50%; max-width: 65px !important; border: 1px solid #808182;  overflow: hidden;}
+.userinfoinimg img{width: 100%; height: 100%;border-radius: 50%;}
+.yyg-progress-bar  { margin-left: 80px}
+.yyg-list-price{ padding-left: 80px;}
+.yyg-progress .yyg-progressing {height:6px; }	
+.yyg-progress {margin-bottom:5px;}
+.yyg-del { float:right; padding-right: 10px;}
+</style>
+ 
+ 
+
+<div id="goodCategories" class="yyg-category">
+	<ul class="yyg-category-left">
+		
+	</ul>
+	<ul class="yyg-category-right">
+		
+	</ul>
+</div>
+<ul id="goodList" class="yyg-goods-list">
+</ul>
+					
+ 
+<li class="mui-table-view-cell mui-media userinfoin  mui-hidden" id="goodTemplateing">
+	
+		<div class="mui-media-object mui-pull-left userinfoinimg">
+        <img src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+        </div>
+        
+		<div class="mui-media-body">
+			<a href="#" class="goodurl">
+				<p class="userinfonh" style="color:#ff0000;">进行中</p>
+				<p class="zcontent" style="color:#252525;">(第53期)xx</p>
+				<p class='mui-ellipsis userinfot gray6' style="color:#535353;">购买时间：<em class="gray6 ztime"> 2015-11-28 15:12:00.000</em></p>
+				<div class="yyg-progress-bar yyg-view-margin">
+					<div class="yyg-progress">
+						<div class="yyg-progressing" style="width:default=0}%"></div>
+					</div>
+					<div class="yyg-progess-indicator">
+						<span class="yyg-progess-l pl">{$data.canyurenshu}</span>
+						<span class="yyg-progess-c pc">{$data.zongrenshu}</span>
+						<span class="yyg-progess-r pr">{$data.shengyurenshu}</span>
+					</div>
+					<div class="yyg-progess-label">
+						<span class="yyg-progess-l">已参与</span>
+						<span class="yyg-progess-c">总需</span>
+						<span class="yyg-progess-r">剩余</span>
+					</div>
+				</div>
+				 
+			</a>			
+		</div>
+	
+</li>
+
+<li class="mui-table-view-cell mui-media userinfoin  mui-hidden" id="goodTemplate">
+	<a href="#" class="goodurl">
+		<div class="mui-media-object mui-pull-left userinfoinimg">
+        <img src="http://dcloudio.github.io/mui/assets/img/shuijiao.jpg">
+        </div>
+		<div class="mui-media-body">
+			<p class="userinfonh" style="color:#ff0000;">已揭晓</p>
+			<p class="zcontent" style="color:#252525;">(第53期)xx</p>
+			<p class='mui-ellipsis userinfot' style="color:#535353;">获得者：<em class="blue">134****4666</em></p>
+			<p class='mui-ellipsis userinfot gray6' style="color:#535353;">揭晓时间：<em class="gray6 ztime"> 2015-11-28 15:12:00.000</em></p>
+		</div>
+	</a>
+</li>
+        
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}
+		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#goodList");
+		var goodTemplate = $("#goodTemplate");
+		var goodTemplateing=$("#goodTemplateing");
+		var useTemplate;
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("{:U('pageAllMR', '', '')}/8/" + (++pageNum), {
+				type: orderType
+				 
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+	       		$.each(list, function() {
+	       			useTemplate=goodTemplateing;
+	       			if(this.jishijiexiao==1)
+	       			{
+	       				useTemplate=goodTemplate;
+	       			}
+	       			
+	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
+	       			$(".money", item).text(this.zongrenshu);
+	       			$("r", item).text(this.canyurenshu);
+	       			
+	       			$(".pl", item).text(this.canyurenshu);
+					$(".pc", item).text(this.zongrenshu);
+					$(".pr", item).text(this.shengyurenshu);
+	       			
+	       			$(".ztime", item).text(this.time);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>

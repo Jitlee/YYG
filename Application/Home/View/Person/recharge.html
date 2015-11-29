@@ -1,0 +1,101 @@
+
+<header class="mui-bar mui-bar-nav">
+  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+    <span class="mui-icon mui-icon-left-nav" ></span>
+    	返回
+  </button>
+  <h1 class="mui-title">帐户充值</h1>
+</header>
+<br/>
+<br/>
+
+
+    <div class="g-Total gray9">您的当前余额：<span class="orange arial">0.00</span>元</div>
+    <section class="clearfix g-member">
+        <div class="g-Recharge">
+	        <ul id="ulOption">
+		        <li money="10"><a href="javascript:;" class="z-sel">10元<s></s></a></li>
+		        <li money="20"><a href="javascript:;">20元<s></s></a></li>
+		        <li money="50"><a href="javascript:;">50元<s></s></a></li>
+		        <li money="100"><a href="javascript:;">100元<s></s></a></li>
+		        <li money="200"><a href="javascript:;">200元<s></s></a></li>
+		        <li><input type="text" class="z-init" placeholder="输入金额" maxlength="8" /></li>
+	        </ul>
+	    </div>
+	    <article class="clearfix mt10 m-round g-pay-ment g-bank-ct">
+		    <ul id="ulBankList">
+				<li class="gray6">选择网银充值<em class="orange">10.00</em>元</li>
+			</ul>
+	    </article>
+	    <div class="mt10 f-Recharge-btn">
+		    <button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary">确认充值</button>
+	    </div>
+    </section>
+<style>
+a { color: #000;text-decoration: none;outline: medium none;}
+* {margin: 0px;padding: 0px;}
+ul, li {list-style: outside none none;}
+.g-Total {
+    background: #F4F4F4 none repeat scroll 0% 0%;
+    border-bottom: 1px solid #DCDCDC;
+    line-height: 30px;
+    padding: 5px 10px 0px;
+    font-size: 14px;
+}
+.g-Recharge li a, .g-Recharge li .z-initsel, .g-Recharge li b {
+    color: #959595;
+    width: 90%;
+    line-height: 30px;
+    display: inline-block;
+    background: #FFF none repeat scroll 0% 0%;
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid #EAEAEA;
+    box-shadow: 1px 1px 1px #EDEDED;
+    position: relative;
+}
+.g-member {
+    background: #F4F4F4 none repeat scroll 0% 0%;
+    padding: 10px 5px;
+    box-sizing: border-box;
+}
+.clearfix {
+    display: block;
+}
+
+.g-Recharge li:nth-child(3n-1) {
+    width: 34%;
+    text-align: center;
+}
+.g-Recharge li,.z-init {
+    width: 33%;
+    float: left;
+    margin-bottom: 10px;
+}
+div, ul, li, dl, dt, dd, table, td, input {
+    font-size: 12px;
+}
+ .g-Recharge li .z-init {
+    width: 90%;
+    padding: 0px 0px;
+    text-align: center;
+    border: medium none;
+}
+.g-Recharge li a, .g-Recharge li .z-initsel, .g-Recharge li b {
+    color: #959595;
+    line-height: 30px;
+    text-align: center;
+}
+.g-Recharge li input {
+    color: #959595;
+}
+input {
+    vertical-align: middle;
+}
+body, button, input, select, textarea {
+    font-size: 12px;
+    font-family: arial,微软雅黑;
+}
+</style>
+    
+ 

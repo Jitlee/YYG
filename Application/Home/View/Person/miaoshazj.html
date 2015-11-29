@@ -1,0 +1,87 @@
+<style type="text/css">
+
+.userinfo{  border-top: none;}
+.userinfo li{background:#FFFFFF; border-top: none;}
+.userinfo:before{ height: 0;}
+.userinfo:after{ height: 0;}
+.userinfoin{ padding:0 17px;}
+.userinfoinimg{margin-right: 17px !important;width: 50px !important; height: 50px !important; border-radius: 50%; 
+ max-width: 65px !important; border: 1px solid #808182;  overflow: hidden;}
+ .userinfoinimg, .mui-media-body{ padding-top: 5px;}
+.userinfoinimg img{width: 100%; height: 100%;border-radius: 50%;}
+.yyg-progress  { margin-left: 80px}
+.yyg-list-price{ padding-left: 80px;}
+.yyg-progress .yyg-progressing {height:6px; }	
+.yyg-progress {margin-bottom:5px;}
+.yyg-del { float:right; padding-right: 10px;}
+</style>
+ 
+
+<ul id="goodList" class="yyg-goods-list">
+</ul>
+					
+ 
+<li class="mui-table-view-cell mui-media userinfoin  mui-hidden" id="goodTemplate">
+		<div class="mui-media-object mui-pull-left userinfoinimg">
+        <img src="#">
+        </div>
+		<div class="mui-media-body">
+			<a href="#" class="goodurl">
+				<p class="zcontent" style="color:#252525;">(第53期)xx</p>					
+				<p class='mui-ellipsis userinfot gray6' style="color:#535353;">揭晓时间：<em class="gray6 ztime"> 2015-11-28 15:12:00.000</em></p>
+			</a>
+		</div>
+</li>
+        
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}
+		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#goodList");
+		var goodTemplate = $("#goodTemplate");
+		 
+		var useTemplate;
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("{:U('pageAllzj', '', '')}/8/" + (++pageNum), {
+				type: orderType
+				 
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+	       		$.each(list, function() {
+	       			useTemplate=goodTemplate;
+	       			
+	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+	       			
+	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
+	       			$(".money", item).text(this.zongrenshu);
+	       			$("r", item).text(this.canyurenshu);
+	       			
+	       			$(".ztime", item).text(this.time);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>
