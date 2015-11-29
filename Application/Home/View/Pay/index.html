@@ -45,12 +45,6 @@
 			
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<label  id="scoreButton" for="scoreCheckBox" class="mui-input-row mui-checkbox">
-						<div>福分抵扣：<span class="yyg-gray">(可用福分{$account.score})</span></div>
-						<input id="scoreCheckBox" type="checkbox">
-					</label>
-				</li>
-				<li class="mui-table-view-cell">
 					<label id="yueButton" for="yueCheckBox" class="mui-input-row mui-checkbox  mui-disabled">
 						<div>余额支付：<span class="yyg-gray">(余额¥{$account.money})</span></div>
 						<input id="yueCheckBox" type="checkbox">
@@ -76,9 +70,6 @@
 </html>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#scoreButton").click(function() {
-			
-		});
 		
 		var money = {$account.money};
 		var scroe = {$account.score};

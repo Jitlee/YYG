@@ -19,6 +19,8 @@ class PayController extends Controller {
 //	13; // 生成客户随即码失败
 //	14;  // 余额不足
 //	15;  // 需要第三方支付
+//	16;  // 付款金额不对
+//	17;  // 保存保证金失败
 	
 	public function index(){
 		if(is_login()) {
@@ -60,6 +62,14 @@ class PayController extends Controller {
 		$db = M('paimai');
 		$data = $db->field('gid, title, baozhengjin, thumb')->find($gid);
 		$this->assign('data', $data);
+		$this->assign('total', $data['baozhengjin']);
+		
+		$user = session('user');
+		$uid = $user['uid'];
+		$db = M('member');
+		$user = $db->field('money,score')->find($uid);
+		$this->assign('account', $user);
+		
     		$this->assign('title', '保证金');
 		layout(false);
 		$this->display();
@@ -75,7 +85,7 @@ class PayController extends Controller {
 			$params = json_decode(file_get_contents('php://input'));
 			if(!($params->third > 0) || empty($params->channel)) {
 				echo $params->third;
-				 exit();
+				exit();
 			}
 			
 			$amount = $params->third;
@@ -84,9 +94,10 @@ class PayController extends Controller {
 			session('_trade_no_', $orderNo);
 			
 			session($orderNo, array(
-				'money'		=> $params->money,
-				'third'		=> $params->third,
-				'score'		=> $params->score,
+				'money'			=> $params->money,
+				'third'			=> $params->third,
+				'score'			=> $params->score,
+				'bgid'			=> $params->bgid,
 			));
 			
 			$extra = array();
@@ -146,60 +157,150 @@ class PayController extends Controller {
 	 */
 	public function localpay() {
 		if(IS_POST) {
-			$_pay = array(
-				'money'		=> floatval($_POST['money']),
-				'score'		=> floatval($_POST['score']),
-				'third'		=> floatval($_POST['third']),
-			);
-			$status = $this->pay(true, $_pay);
-			$this->ajaxReturn($status);
+			if(is_login()) {
+				$_pay = array(
+					'money'				=> floatval($_POST['money']),
+					'score'				=> floatval($_POST['score']),
+					'third'				=> floatval($_POST['third']),
+					'bgid'				=> $_POST['bgid'],
+				);
+				$status = $this->pay(true, $_pay);
+				$this->ajaxReturn($status);
+			} else {
+				$this->ajaxReturn(1);
+			}
 		}
 	}
 	
 	/**
-	 * 结算
+	 * 普通商品和立即揭榜商品结算
 	 */
 	private function pay($needCheckThridPay, $_pay) {
-		if(is_login()) {
-			$db = D('cart');
+		$status = 0;
+		$uid = get_temp_uid();
+		$udb = M('member');
+		$udb->startTrans();
+		$account = $udb->field('uid, money,score')->find($uid);
+		$account['money'] = floatval($account['money']);
+		$account['score'] = floatval($account['score']);
+		if($_pay['bgid']) { // 缴纳保证金
+			$status = $this->doPayBaozhengjin($needCheckThridPay, $account, $_pay);
+		} else { // 购买商品
+			$cdb = D('cart');
 			$map['uid'] = get_temp_uid();
-			$list = $db->where($map)->relation(true)->select();
+			$list = $cdb->where($map)->relation(true)->select();
 			if(!empty($list)) {
 				$total =$total = $this->total($list);
-				
-				$user = session('user');
-				$uid = $user['uid'];
-				$db = M('member');
-				$account = $db->field('uid, money,score')->find($uid);
-				$account['money'] = floatval($account['money']);
-				$account['score'] = floatval($account['score']);
-				
-				if($account['money'] < $_pay['money']) {
-					return 14;  // 余额不足
+				if($_pay['money'] + $_pay['third'] < $total) {
+					$status = 16;  // 付款金额不对
+				} else if($account['money'] < $_pay['money']) {
+					$status = 14;  // 余额不足
+				} else if($needCheckThridPay && $_pay['third'] > 0) {
+					$status = 15;  // 需要第三方支付
+				}
+				if($status == 0) {
+					$status = $this->doPay($list, $account, $_pay);
+				}
+				if($status == 0) {
+					// 清空购物车
+					$cdb->where('uid='.$account['uid'])->delete();
 				}
 				
-				if($needCheckThridPay && $_pay['third'] > 0) {
-					return 15;  // 需要第三方支付
-				}
-				
-				return $this->doPay($list, $account, $_pay);
 			} else {
-				return 2; // 查询购物车失败
+				$status = 2; // 查询购物车失败
 			}
-		} else {
-			return 1; // 没有登陆
 		}
+		
+		if($status == 0) {
+			$udb->commit();
+		} else {
+			$udb->rollback();
+		}
+		
+		return $status;
+	}
+	
+	/**
+	 * 结算保证金
+	 */
+	private function doPayBaozhengjin($needCheckThridPay, $account, $_pay) {
+		$pdb = M('paimai');
+		$adb = M('account');
+		$udb = M('member');
+		$pmap['gid'] = $_pay['bgid'];
+		$pmap['status'] = array('lt', 2);
+		$good = $pdb->where($pmap)->field('gid,baozhengjin')->find();
+		if($good) {
+			// 商品还存在，还没结束
+			
+			// 验证
+			$total = floatval($good['baozhengjin']);
+			if($_pay['money'] + $_pay['third'] < $total) {
+				return 16;  // 付款金额不对
+			} else if($account['money'] < $_pay['money']) {
+				return 14;  // 余额不足
+			} else if($needCheckThridPay && $_pay['third'] > 0) {
+				return 15;  // 需要第三方支付
+			}
+				
+			// 增加消费记录
+			$adata = array(
+				'uid'			=> $account['uid'],
+				'type'			=> -1, // 付款
+				'money'			=> $_pay['money'], // 余额
+				'third'			=> $_pay['third'], // 第三方支付类型
+				'content' 		=> '缴纳保证金',
+			);
+			if($adb->add($adata)) {
+				// 扣除个人账户余额
+				if($_pay['money'] > 0) {
+					$account['money'] -= $_pay['money'];
+					if(!$udb->save($account)) {
+						return 12; // 扣除个人余额失败
+					}
+				}
+			} else {
+				return 11; // 增加消费记录失败
+			}
+			
+			// 增加缴纳保证金记录
+			$mpdb = M('MemberPaimai');
+			$mpdata['uid'] = $account['uid'];
+			$mpdata['gid'] = $good['gid'];
+			$mpdata['flag'] = 0;
+			$mpdata['money'] = $total;
+			if(!$mpdb->add($mpdata)) {
+				return 17; // 保存保证金记录失败
+			}
+		} else if($_pay['third'] > 0) {
+			// 商品已结束
+			// 第三方支付的钱转到余额
+			// 增加消费记录
+			$adata = array(
+				'uid'			=> $account['uid'],
+				'type'			=> 1, // 付款
+				'third'			=> $_pay['third'], // 第三方支付类型
+				'content' => '退还商品保证金到余额',
+			);
+			if($adb->add($adata)) {
+				// 扣除个人账户余额
+				$account['money'] += $_pay['money'];
+				if(!$udb->save($account)) {
+					return 12; // 扣除个人余额失败
+				}
+			} else {
+				return 11; // 增加消费记录失败
+			}
+		}
+		return 0;
 	}
 	
 	/**
 	 * 执行结算操作
 	 */
 	private function doPay($list, $account, $_pay) {
-		$sys = M('cart');
 		$adb = M('account');
 		$pdb = M('MemberPaimai');
-		$sys->startTrans();
-		$status = 0;
 					
 		foreach($list as $cart) {
 			if(intval($cart['type']) == 3) {
@@ -207,48 +308,34 @@ class PayController extends Controller {
 //				$status = $this->paimai($cart, $account);
 			} else {
 				// 秒杀
-				$status = $this->miaosha($cart, $account);
-			}
-			if($status != 0) {
-				break;
+				return $this->miaosha($cart, $account);
 			}
 		}
 		
-		if($status == 0) {
-			// 清空购物车
-			$sys->where('uid='.$account['uid'])->delete();
-			// 增加消费记录
-			$adata = array(
-				'uid'			=> $account['uid'],
-				'type'			=> -1, // 付款
-				'money'			=> $_pay['money'],	// 余额
-				'score'			=> $_pay['score'],  // 积分
-				'third'			=> $_pay['third'],  // 第三方支付
-				'third_type'		=> $_pay['thirdType'], // 第三方支付类型
-				'content' => '购买商品',
-			);
-			if($adb->add($adata)) {
-				if($_pay['money'] > 0 || $_pay['score'] > 0) {
-					$udb = M('member');
-					// 扣除个人账户余额
-					$account['money'] -= $_pay['money'];
-					$account['score'] -= $_pay['score'];
-					if(!$udb->save($account)) {
-						$status = 12; // 扣除个人余额失败
-					}
+		// 增加消费记录
+		$adata = array(
+			'uid'			=> $account['uid'],
+			'type'			=> -1, // 付款
+			'money'			=> $_pay['money'],	// 余额
+			'score'			=> $_pay['score'],  // 积分
+			'third'			=> $_pay['third'],  // 第三方支付
+			'third_type'		=> $_pay['thirdType'], // 第三方支付类型
+			'content' => '购买商品',
+		);
+		if($adb->add($adata)) {
+			if($_pay['money'] > 0 || $_pay['score'] > 0) {
+				$udb = M('member');
+				// 扣除个人账户余额
+				$account['money'] -= $_pay['money'];
+				$account['score'] -= $_pay['score'];
+				if(!$udb->save($account)) {
+					return 12; // 扣除个人余额失败
 				}
-			} else {
-				$status = 11; // 增加消费记录失败
 			}
-		}
-		
-		$result['status'] = $status;
-		if($status == 0) {
-			$sys->commit();
 		} else {
-			$sys->rollback();
+			return 11; // 增加消费记录失败
 		}
-		return $status;
+		return 0;
 	}
 	
 	function miaosha($cart, $account) {

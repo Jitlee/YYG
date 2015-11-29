@@ -68,7 +68,7 @@ function run_task() {
 
 function finish_jiexiao() {
 	$mdb = M('Miaosha');
-	$list = $mdb->where('status < 2 and jishijiexiao > 0 and end_time < current_timestamp()')->select();
+	$list = $mdb->where('status < 2 and jishijiexiao > 0 and end_time <= current_timestamp()')->select();
 	if(!empty($list)) {
 		foreach($list as $good) {
 			$status = 0;
@@ -132,7 +132,7 @@ function finish_paimai() {
 	$mpdb = M('MemberPaimai');
 	$adb = M('account');
 	$mdb = M('member');
-	$list = $pdb->field('gid,chujiazhe, baoliujia,zuigaojia, chujiazhe,status')->where('status < 2 and end_time < current_timestamp()')->select();
+	$list = $pdb->field('gid,chujiazhe, baoliujia,zuigaojia, chujiazhe,status')->where('status < 2 and end_time <= current_timestamp()')->select();
 	if(!empty($list)) {
 		foreach($list as $good) {
 			$pdb->startTrans();

@@ -67,11 +67,22 @@
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputBaoliujia" class="control-label"><r>*</r>保留价</label>
+				<label for="inputBaoliujia" class="control-label">保留价</label>
 			</td>
 			<td>
 				<input type="number" class="form-control" style="width:100px" id="inputBaoliujia" name="baoliujia" value="{$data.baoliujia}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
+				<span>中标结束，如果没有投标着出价高于或等于保留价，则本次拍卖流拍（该字段用户不可见，默认为0时表示没有保留价）</span>
+			</td>
+		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputLijijia" class="control-label">立即揭标价</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputLijijia" name="lijijia" value="{$data.lijijia}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<label class="control-label">元</label>
+				<span>用户可以选择以立即揭标价中标该商品（默认为0元，表示不能立即揭标）</span>
 			</td>
 		</tr>
 		<tr class="form-inline">

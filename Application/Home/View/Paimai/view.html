@@ -14,13 +14,13 @@
 		{$data.title} <r>{$data.subtitle}</r>
 	</p>
 	<h5 class="yyg-view-margin">起拍价：¥ {$data.qipaijia}</h5>
-	<h5 class="yyg-view-margin">最高出价者：无</h5>
+	<h5 class="yyg-view-margin">最高出价：¥ <span id="zuigaojiaLabel">{$data.zuigaojia}</span></h5>
 	<h5 class="yyg-view-margin">立即揭标价：¥ {$data.lijijia}</h5>
 	<h5 class="yyg-view-margin">保证金：<r> ¥ </r><r class="larger">{$data.baozhengjin}</r></h5>
 </div>
 
 <ul class="mui-table-view yyg-margin20">
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">出价记录({$data.chujiacishu})</a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right">出价记录(<span id="chujiacishuLabel">{$data.chujiacishu}</span>)</a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">卖家承诺</a></li>
@@ -29,7 +29,11 @@
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
-		<a class="yyg-btn yyg-btn-primary" href="{:U('Pay/baozhengjin', '', '')}/{$data.gid}">我要出价</a>
+		<present name="isBaozheng">
+			<a id="chujiaButton" class="yyg-btn yyg-btn-primary">我要出价</a>
+		<else/>
+			<a href="{:U('Pay/baozhengjin','','')}/{$data.gid}" class="yyg-btn yyg-btn-primary">缴纳保证金</a>
+		</present>
 	</div>
 	<div class="yyg-footer-right">
 		<div id="lijiButton" class="yyg-btn yyg-btn-success">立即揭标</div>
@@ -37,13 +41,96 @@
 	</div>
 </footer>
 
+<present name="isBaozheng">
+	<style>
+		.yyg-chujia-bg{
+			background-color: rgba(0,0,0,0.2);
+			position: fixed;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			z-index: 9999;
+		}
+	</style>
+	<div id="chujiaBlock" class="yyg-chujia-bg" style="display: none;">
+		<div class="yyg-btn">-1000</div>
+		<div class="yyg-btn">-100</div>
+		<input id="inputChujia" value="{$zuidijia}" />
+		<div class="yyg-btn">+100</div>
+		<div class="yyg-btn">+1000</div>
+		<div class="yyg-btn" id="dochujiaButton">出价</div>
+	</div>
+</present>
+
 <script type="text/javascript">
 	$(function() {
-		$("#addCartButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}", null, function(result) {
-				new Android_Toast({content: result.message});
-			})
-		});
+		<present name="isBaozheng">
+			var qipaijia = {$data.qipaijia};
+			var zuigaojia = {$data.zuigaojia};
+			var jiafujia = {$data.jiafujia};
+			var zuidijia = {$zuidijia};
+			var chujiacishu = {$data.chujiacishu};
+			var chujiaBlock = $("#chujiaBlock");
+			var inputChujia = $("#inputChujia");
+			var zuigaojiaLabel = $("#zuigaojiaLabel");
+			var chujiacishuLabel = $("#chujiacishuLabel");
+			var refreshHandler = null;
+			startReresh();
+			
+			$("#chujiaButton").click(function() {
+				// 设置状态
+				stopRefresh();
+				
+				inputChujia.val(zuidijia);
+				
+				chujiaBlock.show();
+			});
+			
+			
+			$("#dochujiaButton").click(function() {
+				var money = Number(inputChujia.val());
+				$.post("{:U('chujia', '', '')}/{$data.gid}/" + money,null,function(result) {
+					startReresh();
+					chujiaBlock.hide();
+					if(result.status != 0) {
+						// 出价成功
+						new Android_Toast({content: result.message});
+					} else {
+						zuigaojia = money;
+						chujiacishu++;
+						zuigaojiaLabel.text(zuigaojia);
+						chujiacishuLabel.text(chujiacishu);
+						zuidijia = zuigaojia + jiafujia;
+					}
+				});
+			});
+			
+			function startReresh() {
+				// 自动刷新最高价状态
+				refreshHandler = window.setInterval(function() {
+					$.get("{:U('refresh', '', '')}/{$data.gid}", null, function(data) {
+						if(data.status < 2) {
+							chujiacishu = data.chujiacishu;
+							zuigaojia = data.zuigaojia;
+							zuigaojiaLabel.text(zuigaojia);
+							chujiacishuLabel.text(chujiacishu);
+							if(data.zuigaojia > zuidijia) {
+								zuidijia = zuigaojia + jiafujia;
+							}
+							
+						} else {
+							alert("商品已经结束");
+							window.location.href = "{:U('view', '', '')}/{$data.gid}";
+						}
+					})
+				}, 10000);
+			}
+			
+			function stopRefresh() {
+				window.clearInterval(refreshHandler);
+			}
+		</present>
 		$("#lijiButton").click(function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/3", null, function(result) {
 				window.location.href = "{:U('Cart/index', '','')}";
