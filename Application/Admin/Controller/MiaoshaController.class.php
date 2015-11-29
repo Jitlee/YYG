@@ -43,10 +43,11 @@ class MiaoshaController extends GoodsBaseController {
 	
 	public function add() {
 		if(IS_POST) {
-			if(intval($_POST['jishijiexiao']) > 0) {
+			$jishi = intval($_POST['jishijiexiao']);
+			if($jishi > 0) {
 				$now = time();
-				$end_time = $now + 3600;
-				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
+				$end_time = $now + $jishi * 3600;
+				$_POST['end_time'] = date('y-m-d-H-i-s', $end_time);
 			}
 			
 			$money = floatval($_POST['money']);
@@ -85,10 +86,11 @@ class MiaoshaController extends GoodsBaseController {
 	
 	public function edit($gid = null) {
 		if(IS_POST) {
-			if(intval($_POST['jishijiexiao']) > 0) {
+			$jishi = intval($_POST['jishijiexiao']);
+			if($jishi > 0) {
 				$now = time();
-				$end_time = $now + 3600;
-				$_POST['end_time'] = date('y-m-d-h-i-s', $end_time);
+				$end_time = $now + $jishi * 3600;
+				$_POST['end_time'] = date('y-m-d-H-i-s', $end_time);
 			}
 			
 			$money = floatval($_POST['money']);

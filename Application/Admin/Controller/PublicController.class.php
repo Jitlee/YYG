@@ -32,7 +32,7 @@ class PublicController extends Controller {
 			$data = array(
 				'uid'			=> $admin['uid'],
 				'login'			=> array('exp', '`login` + 1'),
-				'login_time'		=> date('y-m-d-h-i-s'),
+				'login_time'		=> date('y-m-d-H-i-s'),
 				'login_ip'		=> get_client_ip(),
 			);
 			$db->save($data);

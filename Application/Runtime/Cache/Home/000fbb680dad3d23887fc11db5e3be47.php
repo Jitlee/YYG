@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,7 +10,7 @@
 		<h4>恭喜支付成功</h4>
 		<script>
 			window.setTimeout(function() {
-				window.location.href = "{:U('Index/index', '','')}";
+				window.location.href = "<?php echo U('Index/index', '','');?>";
 			}, 2000);
 		</script>
 	</body>

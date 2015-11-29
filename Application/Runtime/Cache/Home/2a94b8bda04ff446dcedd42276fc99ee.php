@@ -1,4 +1,50 @@
-<style type="text/css">
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="m.178hui.com" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+		<meta name="format-detection" content="telephone=no">
+		<meta property="qc:admins" content="304107566762141336654" />
+		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
+		<title><?php echo ($title); ?></title>
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
+		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
+
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/Public/Home/js/owl.carousel.min.js"></script>
+		<script src="/Public/Home/layer/layer.js"></script>
+		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
+		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
+		
+		<script src="/Public/Home/js/mobile.js"></script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".mall_list a").click(function() {
+					var index = layer.open({
+						type: 1,
+						title: false,
+						closeBtn: false,
+						shadeClose: false,
+						offset: '25%',
+						content: "<div class='no_login_show'><h1>亲！您还没登录一起惠哦！</h1><a href='login.html'>马上登录</a><a href='register.html'>免费注册</a><a href='#'>先购物，再返利</a><a href='javascript:layer.closeAll();'>取消</a></div>"
+					});
+				});
+				$("#msg_bijia").click(function() {
+					layer.tips('请耐心等待一下，我们正在拼命开发中···', '#msg_bijia');
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<style type="text/css">
 	.yyg-bar-nav {
 		display:flex;
 		line-height: 40px;
@@ -92,7 +138,7 @@
 		background-position:50% 50%;
 		background-repeat: no-repeat;
 		background-size: cover;
-		background-image: url(__IMG__/sts.png);
+		background-image: url(/Public/Home/images/sts.png);
 		width:11px;
 		height:11px;
 		vertical-align: middle;
@@ -106,6 +152,7 @@
 		border: none;
 		border-top: 1px dotted rgba(252,226,198,1);
 	}
+	
 	
 	.yyg-category {
 		position: absolute;
@@ -160,91 +207,22 @@
 		display:block;
 	}
 	
-	.tuijian {
-		min-height: 30vw;
-	}
-
-	.tuijian-content label {
-		display: inline-block;
-		background-color:#FF002B;
-		/*border-radius: 5px;*/
-		color:#fff;
-		padding:5px 10px;
-		font-size:16px;
-	}
-	.tuijian-content label .iconfont {
-		font-size:16px;
+	.yyg-progress, .yyg-progress .yyg-progressing {
+		height:4px;
 	}
 	
-	@media only screen and (max-width: 340px) {
-		.tuijian-content label {
-			font-size:14px;
-		}
-		.tuijian-content label .iconfont {
-			font-size:14px;
-		}
+	.yyg-progress {
+		margin-bottom:5px;
 	}
-	
-	
-	.tuijian-img-container {
-		border:solid 1px #D5D5D5;
-		left:3vw;
-	}
-	
-	.tuijian-img {
-		width: 90px;
-		height:90px;
-	}
-	.tuijian-content {
-		margin-left:120px;
-		padding-bottom: 10px;
-	}
-	
-	.tuijian-img-container label {
-		display:block;
-		position: absolute;
-		bottom: 0px;
-		width:100%;
-		background-color:rgba(128,128,128,0.5);
-		color:#fff;
-		text-align: center;
-		padding: 3px 0;
-	}
-	
-	.yyg-jiexiao-list a{
-	    padding: 0px 3px 3px 3px;
-	    display: block;
-	}
-	
-	.yyg-jiexiao-list a.jiexiao{
-		background-color: #ff3300;
-	}
-	
-	.yyg-jiexiao-list yyg-content{
-		background-color: #fff;
-	}
-	
-	.jiexiao-label {
-		text-align: center;
-		line-height: 23px;
-		height: 20px;
-		width:120px;
-		font-size: 16px;
-		color:#fff;
-		background-color:#FF002B;
-		position: absolute;
-		left:-37px;
-		top:13px;
-		z-index: 100;
-		-webkit-transform: rotate(-45deg);
-		
-	}
-	
-	.yijiexiao {
-		color:#333;
-	}
-
 </style>
+<div class="top w">
+	<div class="m_banner" id="owl">
+		<?php if(is_array($slides)): foreach($slides as $key=>$s): ?><a href="<?php echo ((isset($s["link"]) && ($s["link"] !== ""))?($s["link"]):'#'); ?>" class="item"><img src="<?php echo ($s["img"]); ?>"></a><?php endforeach; endif; ?>
+	</div>
+	<div class="m_nav">
+		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
+	</div>
+</div>
 <div id="goodNav" class="yyg-bar-nav">
 	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
 	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
@@ -261,64 +239,22 @@
 <ul id="goodList" class="yyg-goods-list">
 </ul>
 					
-<li id="goodTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="jiexiao">
-		<section class="tuijian yyg-content">
-			<label class="jiexiao-label">正在揭晓</label>
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="{$tuijian.thumb}" />
-					
-					<label>第<span class="qishu"></span>期</label>
+<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
+	<a href="">
+		<div>
+			<div class="yyg-goods-img-container">
+			</div>
+			<div class="yyg-goods-media">
+				<p class="yyg-content-title"></p>
+				<div class="yyg-progress">
+					<div class="yyg-progressing" style="width:0%"></div>
+				</div>
+				<div class="yyg-list-price">
+					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
+					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
 				</div>
 			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h5>价值：¥ <span class="money"></span></h5>
-				<label>
-					<i class="iconfont icon-weibiaoti5"></i>揭晓倒计时
-					<time countdown=""><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
-				</label>
-			</div>
-		</section>
-	</a>
-</li>
-
-<li id="endTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="yijiexiao" alt="">
-		<section class="tuijian yyg-content">
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="" />
-					<label>第<span class="qishu"></span>期</label>
-				</div>
-			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h4>获得者：<span class="user">希望下次一定中</span></h4>
-				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5>本期参与：<r class="canyurenshu"></r> 人次</h5>
-				<h5>揭晓时间：<span class="end_time"></span></h5>
-			</div>
-		</section>
-	</a>
-</li>
-
-<li id="emptyTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="yijiexiao yyg-empty" alt="">
-		<section class="tuijian yyg-content">
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="" />
-					<label>第<span class="qishu"></span>期</label>
-				</div>
-			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5><i class="iconfont icon-yihan"></i>很遗憾，本期没有人参与</h5>
-			</div>
-		</section>
+		</div>
 	</a>
 </li>
 <script type="text/javascript">
@@ -337,59 +273,29 @@
 		var pageNum = 0;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
-		var endTemplate = $("#endTemplate");
-		var emptyTemplate = $("#emptyTemplate");
 		var goodCid = 0;
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
 				pageNum = 0;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++pageNum), {
 				type: orderType,
 				cid: goodCid
 			}, function(list) {
 				if(clear) {
 					goodList.html("");
 				}
-				var now = new Date().getTime();
 	       		$.each(list, function() {
-//	       			this.endTime = new Date(this.end_time).getTime();
-	       			if(this.status < 2) {
-		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
-		       			$("img", item).attr("src", this.thumb);
-		       			$("p", item).text(this.title);
-		       			$(".qishu", item).text(this.qishu);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("time", item).attr("countdown", new Date(this.end_time).getTime());
-	       			} else if(this.status == 2 && this.prizer) {
-	       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
-		       			$(".qishu", item).text(this.qishu);
-		       			$("img", item).attr("src", this.thumb);
-		       			$("p", item).text(this.title);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("span.end_time", item).text(this.end_time);
-		       			$("r.canyurenshu", item).text(this.prizer.count);
-		       			$(".user", item).text(this.prizer.username);
-	       			} else if(this.status == 2) {
-	       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
-		       			$(".qishu", item).text(this.qishu);
-		       			$("img", item).attr("src", this.thumb);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("p", item).text(this.title);
-	       			}
-	       			
+	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$("a", item).attr("href", "/index.php/Home/Index/" + this.gid);
+					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
+	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
+	       			$("span.money", item).text(this.money);
+	       			$("r", item).text(this.danjia);
 	       			goodList.append(item);
 	       		});
-	       		
-	       		if(pageNum == 1) {
-	       			$('.jiexiao:first').css('padding-top', '3px');
-	       		}
-	       		
-	       		window.countdown();
 	       });
 		}
 		pageAll();
@@ -419,7 +325,7 @@
 			}
 			
 			if(!categories) {
-				$.get("{:U('category', '', '')}", null, function(list){
+				$.get("<?php echo U('category', '', '');?>", null, function(list){
 					categories = list;
 					$.each(list, function(index) {
 						$("<li>").text(this.name)
@@ -469,5 +375,60 @@
 			$("span", buttonCategoy).text($this.text());
 			window.removeEventListener("click", onclosecategory);
 		}
+		
+		
+	});
+</script>
+			<br />
+			<br />
+		</div>
+		<nav class="mui-bar mui-bar-tab">
+			<a id="home" class="mui-tab-item" href="<?php echo U('Index/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_home"></span>
+				<span class="mui-tab-label">首页</span>
+			</a>
+			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
+				<span class="mui-icon iconfont icon-jiangbei"></span>
+				<span class="mui-tab-label">最新揭晓</span>
+			</a>
+			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_paimai"></span>
+				<span class="mui-tab-label">拍卖</span>
+			</a>
+			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-tab-label">购物车</span>
+			</a>
+			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
+				<span class="mui-icon iconfont icon-yyg_me"></span>
+				<span class="mui-tab-label">我的</span>
+			</a>
+		</nav>
+		<div class="gotop backtop" style="display:none;"></div>
+	</body>
+
+</html>
+<script type="text/javascript">
+	//返回顶部
+	$(document).ready(function() {
+		$(window).scroll(function() {
+			var scrollHeight = $(document).height();
+			var scrollTop = $(window).scrollTop();
+			var $windowHeight = $(window).innerHeight();
+			scrollTop > 75 ? $(".gotop").fadeIn(200).css("display", "block") : $(".gotop").fadeOut(200).css({
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu.png)"
+			});
+		});
+		$('.backtop').click(function(e) {
+			$(".gotop").css({
+				"background-image": "url(/Public/Home/images/iconfont-fanhuidingbu_up.png)"
+			});
+			e.preventDefault();
+			$('html,body').animate({
+				scrollTop: 0
+			});
+		});
+		
+		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
 	});
 </script>
