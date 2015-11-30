@@ -9,11 +9,11 @@ class PaimaiController extends Controller {
 		
 		// 推荐
 		$db = M('paimai');
-		$tuijian = $db->where('tuijian=1 AND (status=0 OR status=1)')->order('time desc')->find();
+		$tuijian = $db->where('tuijian=1 AND status < 2')->order('time desc')->find();
 		if(!$tuijian) {
-			$tuijian = $db->where('renqi=1 AND (status=0 OR status=1)')->order('time desc')->find();
+			$tuijian = $db->where('renqi=1 AND status < 2')->order('time desc')->find();
 			if(!$tuijian) {
-				$tuijian = $db->where('status=0 OR status=1')->order('time desc')->find();
+				$tuijian = $db->where(' status < 2')->order('time desc')->find();
 			}
 		}
 		
@@ -21,14 +21,16 @@ class PaimaiController extends Controller {
 			session('tuijian_first_id', $tuijian['gid']);
 			$filter['gid'] = array("neq", $tuijian['gid']);
 			$this->assign('tuijian', $tuijian);
+		} else {
+			session('tuijian_first_id', null);
 		}
 		
-		$list = $db->where($filter)
-			->order('tuijian desc, time desc')
-			->page($pageNum, $pageSize)
-			->field('gid,title,thumb,zuigaojia,status,end_time')
-			->select();
-		$this->assign('list', $list);
+//		$list = $db->where($filter)
+//			->order('tuijian desc, time desc')
+//			->page($pageNum, $pageSize)
+//			->field('gid,title,thumb,zuigaojia,status,end_time')
+//			->select();
+//		$this->assign('list', $list);
 		
         $this->display();
     }
@@ -41,7 +43,7 @@ class PaimaiController extends Controller {
 		
 		// 分页
 		$db = M('paimai');
-		$list = $db->where($filter)->order('tuijian desc, time desc')->page($pageNum, $pageSize)->field(array('gid','title','thumb','zuigaojia','status','UNIX_TIMESTAMP(end_time)'=>'end_time'))->select();
+		$list = $db->where($filter)->order('tuijian desc, time desc')->page($pageNum, $pageSize)->field(array('gid','title','thumb','zuigaojia','status','prizeuid','UNIX_TIMESTAMP(end_time)'=>'end_time'))->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
@@ -53,32 +55,36 @@ class PaimaiController extends Controller {
 		if(is_login()) {
 			$this->assign('title', '拍卖详情');
 			$db = M('paimai');
-			$data = $db->field('gid, title, subtitle,thumb, qipaijia,lijijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,status')->find($gid);
+			$data = $db->field('gid, title, subtitle,thumb, baoliujia,qipaijia,lijijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,prizeuid, liji,status,end_time')->find($gid);
 			
-			$data['qipaijia'] = intval($data['qipaijia']);
-			$data['zuigaojia'] = intval($data['zuigaojia']);
-			$data['jiafujia'] = intval($data['jiafujia']);
-			$zuidijia = $data['qipaijia'];
-			if($data['zuigaojia'] >= $data['qipaijia']) {
-				$zuidijia = $data['zuigaojia'] + $data['jiafujia'];
-			}
+			$this->assign('data', $data);
 			
-			
-			$imgdb = M('GoodsImages');
-			$imgmap['gid'] = $gid;
-			$imgmap['type'] = 3;
-			$images = $imgdb->where($imgmap)->select();
-			if(empty($images)) {
-				$image['image_url'] = $data['thumb'];
-				array_push($images, $image);
-			}
-			$this->assign('images', $images);
+			$data['baoliujia'] = intval($data['baoliujia']);
+			$baoliu = $data['baoliujia'] > 0;
+			$this->assign('baoliu', $baoliu);
 			
 			$data['status'] = intval($data['status']);
 			
-			$this->assign('data', $data);
-			$this->assign('zuidijia', $zuidijia);
-			if($data['status'] < 2) { // 未结束
+			if($data['status'] < 2) {
+				$data['qipaijia'] = intval($data['qipaijia']);
+				$data['zuigaojia'] = intval($data['zuigaojia']);
+				$data['jiafujia'] = intval($data['jiafujia']);
+				$zuidijia = $data['qipaijia'];
+				if($data['zuigaojia'] >= $data['qipaijia']) {
+					$zuidijia = $data['zuigaojia'] + $data['jiafujia'];
+				}
+				$this->assign('zuidijia', $zuidijia);
+			
+				$imgdb = M('GoodsImages');
+				$imgmap['gid'] = $gid;
+				$imgmap['type'] = 3;
+				$images = $imgdb->where($imgmap)->select();
+				if(empty($images)) {
+					$image['image_url'] = $data['thumb'];
+					array_push($images, $image);
+				}
+				$this->assign('images', $images);
+				
 				// 判断是否已出价
 				$hdb = M('MemberPaimai');
 				$hmap['uid'] = get_temp_uid();
@@ -93,6 +99,18 @@ class PaimaiController extends Controller {
 				layout('sublayout');
 				$this->display('view');
 			} else {
+				// 获取当前中奖用户
+				if($data['prizeuid']) {
+					$udb = M('member');
+					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+					$data['prizer'] = $user;
+						
+					if(empty($user['username'])) {
+						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
+					}
+					$this->assign('prizer', $user);
+				}
+				
 				layout('sublayout');
 				$this->display('end'); // 已结束
 			}

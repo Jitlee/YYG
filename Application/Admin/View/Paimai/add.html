@@ -344,6 +344,8 @@
 			}
 		<else /> 
 		$("#endTimeRadio1").attr("checked", "checked");
+		var today = new Date();
+		$("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());
 		</present> 
 	});
 </script>

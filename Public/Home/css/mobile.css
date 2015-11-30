@@ -63,6 +63,10 @@ a, a:link, a:focus{
 	margin-bottom: 5px;
 }
 
+.yyg-goods-list p.tuijian-content-title{
+	font-size: 16px;
+}
+
 .tuijian-content h5,
 .tuijian-content .iconfont {
 	line-height: 25px;
@@ -198,6 +202,7 @@ time.normal d {
 }
 .yyg-goods-media {
 	background-color: #FBFBFB;
+	height:64px;
 }
 
 .yyg-goods-media p{
@@ -224,11 +229,12 @@ time.normal d {
 	margin-right: 1vw;
 }
 
-.yyg-goods-media time{
+.yyg-goods-media time{3
 	font-size: 4vw;
 	display:block;
 	width: 100%;
 	text-align: center;
+	margin: 3px 0;
 }
 
 .yyg-goods-media time d{
@@ -668,3 +674,9 @@ label.mui-input-row input[type=checkbox] {
     -webkit-transform: translateY(-50%);
     right: 0;
 }
+
+.filed-label-60 {
+	display: inline-block;
+	width:60px;
+}
+
