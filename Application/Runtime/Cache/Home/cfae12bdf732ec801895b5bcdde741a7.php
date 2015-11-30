@@ -71,7 +71,7 @@
 			<div class="yyg-goods-media">
 				<p class="tuijian-content-title"></p>
 				<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
-				<time class="normal" _countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+				<time class="normal"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
 			</div>
 			<div style="width: 100%;"  type="button" class="yyg-btn yyg-btn-primary">我要出价</div>
 		</div>
@@ -137,7 +137,7 @@
 		       			$("p", item).text(this.title);
 		       			$("h5 r:last-child", item).text(this.zuigaojia);
 		       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
-		       			$("time", item).attr("_countdown", this.end_time);
+		       			$("time", item).attr("_countdown", this._end_time);
 						goodList.append(item);
 					} else if(this.prizeuid > 0) {
 						var item = endTemplate.clone().removeAttr("id").removeClass("mui-hidden");

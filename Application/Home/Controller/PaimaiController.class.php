@@ -43,7 +43,7 @@ class PaimaiController extends Controller {
 		
 		// 分页
 		$db = M('paimai');
-		$list = $db->where($filter)->order('tuijian desc, time desc')->page($pageNum, $pageSize)->field(array('gid','title','thumb','zuigaojia','status','prizeuid','UNIX_TIMESTAMP(end_time)'=>'end_time'))->select();
+		$list = $db->where($filter)->order('tuijian desc, time desc')->page($pageNum, $pageSize)->field(array('gid','title','thumb','zuigaojia','status','prizeuid', 'end_time','UNIX_TIMESTAMP(end_time)'=>'_end_time'))->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
