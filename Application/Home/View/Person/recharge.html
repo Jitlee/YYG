@@ -6,6 +6,7 @@
   </button>
   <h1 class="mui-title">帐户充值</h1>
 </header>
+
 <br/>
 <br/>
 
@@ -14,23 +15,78 @@
     <section class="clearfix g-member">
         <div class="g-Recharge">
 	        <ul id="ulOption">
-		        <li money="10"><a href="javascript:;" class="z-sel">10元<s></s></a></li>
-		        <li money="20"><a href="javascript:;">20元<s></s></a></li>
-		        <li money="50"><a href="javascript:;">50元<s></s></a></li>
-		        <li money="100"><a href="javascript:;">100元<s></s></a></li>
-		        <li money="200"><a href="javascript:;">200元<s></s></a></li>
-		        <li><input type="text" class="z-init" placeholder="输入金额" maxlength="8" /></li>
+		        <li money="10"><a href="javascript:void(0);" class="z-sel">10元<s></s></a></li>
+		        <li money="20"><a href="javascript:void(0);">20元<s></s></a></li>
+		        <li money="50"><a href="javascript:void(0);">50元<s></s></a></li>
+		        <li money="100"><a href="javascript:void(0);">100元<s></s></a></li>
+		        <li money="200"><a href="javascript:void(0);">200元<s></s></a></li>
+		        <li money="500"><a href="javascript:void(0);">500元<s></s></a></li>
 	        </ul>
 	    </div>
 	    <article class="clearfix mt10 m-round g-pay-ment g-bank-ct">
 		    <ul id="ulBankList">
-				<li class="gray6">选择网银充值<em class="orange">10.00</em>元</li>
+				<li class="gray6">充值金额<em class="orange" id="addrechange">10.00</em>元</li>
 			</ul>
 	    </article>
 	    <div class="mt10 f-Recharge-btn">
-		    <button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary">确认充值</button>
+		    <button id='btnrechange' type="button" class="mui-btn mui-btn-block mui-btn-primary">确认充值</button>
 	    </div>
     </section>
+<script type="text/javascript" src="https://one.pingxx.com/lib/pingpp_one.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		 $("#ulOption").find("li").each(function(i,o){
+		 		var obj =$(o);
+		 		obj.click(function(){
+		 			$(".z-sel").removeClass("z-sel");
+		 			$(this).find("a").addClass("z-sel");
+		 			$("#addrechange").text(obj.attr("money"));
+		 		});
+		 });
+		 
+		 $("#btnrechange").click(function(){
+		 	  var vmoney=$("#addrechange").text();
+			 	pingpp_one.init({
+	            app_id:'app_5K8yzLfvnT4Gaj1S',                     //该应用在ping++的应用ID
+	            order_no:'{$data.rderNo}',                     //订单在商户系统中的订单号
+	            amount: parseInt(vmoney),                                   //订单价格，单位：人民币 分
+	            // 壹收款页面上需要展示的渠道，数组，数组顺序即页面展示出的渠道的顺序
+	            // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
+	            channel:['alipay_wap','wx_pub'],
+	            charge_url:"{:U('OrderPay/Index', '', '')}",  //商户服务端创建订单的url
+	            charge_param:{
+	            	sourceType:"recharge",
+								a:1,
+								b:2
+	            },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
+	            open_id:''                             //(可选，使用微信公众号支付时必须传入)
+	        },function(res){
+	           // alert(res);
+	            if(!res.status){
+	                //处理错误
+	                alert(res.chargeUrlOutput);
+	                alert(res.msg);
+	            }
+	            else{
+	                //若微信公众号渠道需要使用壹收款的支付成功页面
+	                //则在这里进行成功回调，调用 pingpp_one.success 方法，你也可以自己定义回调函数
+	                //其他渠道的处理方法请见第 2 节
+	                pingpp_one.success(function(res){
+	                    if(!res.status){
+	                        alert(res.msg);
+	                    }
+	                },function(){
+	                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，
+	                    //则在该方法内写入 window.location.href = "你的购买页面 url"
+	                    window.location.href="{:U('Index/Index', '', '')}";//示例
+	                });
+	            }
+	        });
+        
+		 });
+	});
+</script>
 <style>
 a { color: #000;text-decoration: none;outline: medium none;}
 * {margin: 0px;padding: 0px;}
@@ -42,6 +98,7 @@ ul, li {list-style: outside none none;}
     padding: 5px 10px 0px;
     font-size: 14px;
 }
+.gray6{ font-size: 14px; font-weight: bold;}
 .g-Recharge li a, .g-Recharge li .z-initsel, .g-Recharge li b {
     color: #959595;
     width: 90%;
@@ -53,6 +110,10 @@ ul, li {list-style: outside none none;}
     border: 1px solid #EAEAEA;
     box-shadow: 1px 1px 1px #EDEDED;
     position: relative;
+}
+.g-Recharge li a.z-sel {
+    border: 1px solid #F60;
+    color: #666;
 }
 .g-member {
     background: #F4F4F4 none repeat scroll 0% 0%;
@@ -81,7 +142,7 @@ div, ul, li, dl, dt, dd, table, td, input {
     text-align: center;
     border: medium none;
 }
-.g-Recharge li a, .g-Recharge li .z-initsel, .g-Recharge li b {
+.g-Recharge li a, .g-Recharge li .z-initsel, .g-Recharge li b{
     color: #959595;
     line-height: 30px;
     text-align: center;
