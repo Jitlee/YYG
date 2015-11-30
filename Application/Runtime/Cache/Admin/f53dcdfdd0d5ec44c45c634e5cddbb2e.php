@@ -171,6 +171,7 @@ $(function() {
 			<th>所属栏目</th>
 			<th>起拍价(元)</th>
 			<th>保留价(元)</th>
+			<th>立即揭标价(元)</th>
 			<th>加价幅度(元)</th>
 			<th>保证金(元)</th>
 			<th>出价次数(次)</th>
@@ -185,6 +186,7 @@ $(function() {
 			<td><?php echo ($item["category"]["name"]); ?></td>
 			<td><?php echo ($item["qipaijia"]); ?></td>
 			<td><?php echo ($item["baoliujia"]); ?></td>
+			<td><?php echo ($item["lijijia"]); ?></td>
 			<td><?php echo ($item["jiafujia"]); ?></td>
 			<td><?php echo ($item["baozhengjin"]); ?></td>
 			<td><?php echo ($item["chujiacishu"]); ?></td>
@@ -209,9 +211,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_284247709__=$minPageNum;$__FOR_END_284247709__=$pageNum;for($i=$__FOR_START_284247709__;$i < $__FOR_END_284247709__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_1827789184__=$minPageNum;$__FOR_END_1827789184__=$pageNum;for($i=$__FOR_START_1827789184__;$i < $__FOR_END_1827789184__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1360662112__=$pageNum+1;$__FOR_END_1360662112__=$maxPageNum;for($i=$__FOR_START_1360662112__;$i < $__FOR_END_1360662112__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_1604323697__=$pageNum+1;$__FOR_END_1604323697__=$maxPageNum;for($i=$__FOR_START_1604323697__;$i < $__FOR_END_1604323697__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

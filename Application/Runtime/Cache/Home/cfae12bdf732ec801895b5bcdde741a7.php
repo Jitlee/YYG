@@ -54,32 +54,61 @@
 				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
 				<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
 				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time class="normal" _countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
-				<a type="button" class="mui-btn mui-btn-red" href="/index.php/Home/Paimai/bid/<?php echo ($tuijian["gid"]); ?>">我要出价</a>
+				<a type="button" style="padding-left:30px; padding-right: 30px;" class="yyg-btn yyg-btn-primary">我要出价</a>
 			</div>
 		</section>
 	</a><?php endif; ?>
 <div class="yyg-content mui-content-padded">
 	<ul id="goodList" class="yyg-goods-list">
-		<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="yyg-goods-list-item">
-				<a href="/index.php/Home/Paimai/<?php echo ($item["gid"]); ?>">
-					<div>
-						<div class="yyg-goods-img-container" style="background-image: url(<?php echo ($item["thumb"]); ?>);">
-						</div>
-						<div class="yyg-goods-media">
-							<p class="tuijian-content-title"><?php echo ($item["title"]); ?></p>
-							<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
-							<time class="normal" _countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
-						</div>
-						<a href="<?php echo U('bid', '', '');?>/<?php echo ($item["gid"]); ?>" style="width: 100%;"  type="button" class="mui-btn mui-btn-red">我要出价</a>
-					</div>
-				</a>
-			</li><?php endforeach; endif; ?>
 	</ul>
 </div>
 
+<li id="goodTemplate" class="yyg-goods-list-item mui-hidden">
+	<a>
+		<div>
+			<div class="yyg-goods-img-container">
+			</div>
+			<div class="yyg-goods-media">
+				<p class="tuijian-content-title"></p>
+				<h5><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
+				<time class="normal" _countdown="<?php echo (strtotime($item["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+			</div>
+			<div style="width: 100%;"  type="button" class="yyg-btn yyg-btn-primary">我要出价</div>
+		</div>
+	</a>
+</li>
+<li id="endTemplate" class="yyg-goods-list-item mui-hidden">
+	<a>
+		<div>
+			<div class="yyg-goods-img-container">
+			</div>
+			<div class="yyg-goods-media">
+				<p class="tuijian-content-title"></p>
+				<h5 style="margin: 7px 0;"><label>最高出价</label><r class="small">¥</r> <r class="larger"><?php echo ($item["zuigaojia"]); ?></r></h5>
+				<h5><label>结束时间</label><span class="end-time"></span></h5>
+			</div>
+			<div style="width: 100%;"  type="button" class="yyg-btn yyg-btn-disabed">竞拍已结束</div>
+		</div>
+	</a>
+</li>
+
+<li id="emptyTemplate" class="yyg-goods-list-item mui-hidden">
+	<a>
+		<div>
+			<div class="yyg-goods-img-container">
+			</div>
+			<div class="yyg-goods-media">
+				<p class="tuijian-content-title"></p>
+				<h5 style="margin: 10px 0 9px 0;"><i class="iconfont icon-yihan"></i>很遗憾，此次拍卖没有人参与或者流拍了</h5>
+			</div>
+			<div style="width: 100%;"  type="button" class="yyg-btn yyg-btn-disabed">竞拍已结束</div>
+		</div>
+	</a>
+</li>
+
 <script>
 	$(function() {
-		var pageNum = 1;
+		var pageNum = 0;
 		var goodList = $("#goodList").swipe({
 			swipeUp: onscrollend,
 			threshold: 100,
@@ -95,23 +124,42 @@
 			}
 		}
 		
-		var template = $("li:first-child", goodList);
+		var goodTemplate = $("#goodTemplate");
+		var endTemplate = $("#endTemplate");
+		var emptyTemplate = $("#emptyTemplate");
 		
 		function page() {
 			$.get("<?php echo U('page', '', '');?>/8/" + (++pageNum), null, function(list) {
 	       		$.each(list, function() {
-	       			var item = template.clone();
-//	       			$("img", item).attr("src", this.thumb);
-					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-	       			$("p", item).text(this.title);
-	       			$("h5 r:last-child", item).text(this.zuigaojia);
-	       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
-	       			$(">a>a", item).attr("href", "/index.php/Home/Paimai/bid/" + this.gid);
-	       			$("time", item).attr("countdown", this.end_time);
-					goodList.append(item);
+	       			if(this.status < 2) {
+		       			var item = goodTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+		       			$("p", item).text(this.title);
+		       			$("h5 r:last-child", item).text(this.zuigaojia);
+		       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
+		       			$("time", item).attr("_countdown", this.end_time);
+						goodList.append(item);
+					} else if(this.prizeuid > 0) {
+						var item = endTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+		       			$("p", item).text(this.title);
+		       			$("h5 r:last-child", item).text(this.zuigaojia);
+		       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
+		       			$(".end-time", item).text(this.end_time);
+						goodList.append(item);
+					} else {
+						var item = emptyTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+		       			$("p", item).text(this.title);
+		       			$(">a", item).attr("href", "/index.php/Home/Paimai/" + this.gid);
+						goodList.append(item);
+					}
 	       		});
+	       		countdown();
 	       });
 		}
+		
+		page();
 	});
 </script>
 			<br />

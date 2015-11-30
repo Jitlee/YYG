@@ -13,10 +13,15 @@
 	<p class="yyg-view-title yyg-view-margin">
 		{$data.title} <r>{$data.subtitle}</r>
 	</p>
-	<h5 class="yyg-view-margin">起拍价：¥ {$data.qipaijia}</h5>
-	<h5 class="yyg-view-margin">最高出价：¥ <span id="zuigaojiaLabel">{$data.zuigaojia}</span></h5>
-	<h5 class="yyg-view-margin">立即揭标价：¥ {$data.lijijia}</h5>
-	<h5 class="yyg-view-margin">保证金：<r> ¥ </r><r class="larger">{$data.baozhengjin}</r></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">当前价格</label><r>¥</r> <r class="larger"><span id="zuigaojiaLabel">{$data.zuigaojia}</span></r></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">起拍价格</label>¥ {$data.qipaijia}</h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">加价幅度</label>¥ {$data.jiafujia}</h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">保证金额</label>¥ {$data.jiafujia}</h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">立拍价格</label>¥ {$data.lijijia}</h5>
+	<if condition="$baoliu">
+	<h5 class="yyg-view-margin"><label class="filed-label-60">有保留价</label>是</h5>
+	</if>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">剩余时间</label><time yj="false" _countdown="{$data.end_time|strtotime}"></time></h5>
 </div>
 
 <ul class="mui-table-view yyg-margin20">

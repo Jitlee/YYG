@@ -616,7 +616,9 @@ $(function() {
 				$("#endTimeRadio3").attr("checked", "checked");
 			}
 		<?php else: ?> 
-		$("#endTimeRadio1").attr("checked", "checked");<?php endif; ?> 
+		$("#endTimeRadio1").attr("checked", "checked");
+		var today = new Date();
+		$("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());<?php endif; ?> 
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

@@ -52,10 +52,13 @@
 	<p class="yyg-view-title yyg-view-margin">
 		<?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
 	</p>
-	<h5 class="yyg-view-margin">起拍价：¥ <?php echo ($data["qipaijia"]); ?></h5>
-	<h5 class="yyg-view-margin">最高出价：¥ <span id="zuigaojiaLabel"><?php echo ($data["zuigaojia"]); ?></span></h5>
-	<h5 class="yyg-view-margin">立即揭标价：¥ <?php echo ($data["lijijia"]); ?></h5>
-	<h5 class="yyg-view-margin">保证金：<r> ¥ </r><r class="larger"><?php echo ($data["baozhengjin"]); ?></r></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">当前价格</label><r>¥</r> <r class="larger"><span id="zuigaojiaLabel"><?php echo ($data["zuigaojia"]); ?></span></r></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">起拍价格</label>¥ <?php echo ($data["qipaijia"]); ?></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">加价幅度</label>¥ <?php echo ($data["jiafujia"]); ?></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">保证金额</label>¥ <?php echo ($data["jiafujia"]); ?></h5>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">立拍价格</label>¥ <?php echo ($data["lijijia"]); ?></h5>
+	<?php if($baoliu): ?><h5 class="yyg-view-margin"><label class="filed-label-60">有保留价</label>是</h5><?php endif; ?>
+	<h5 class="yyg-view-margin"><label class="filed-label-60">剩余时间</label><time yj="false" _countdown="<?php echo (strtotime($data["end_time"])); ?>"></time></h5>
 </div>
 
 <ul class="mui-table-view yyg-margin20">
