@@ -20,16 +20,39 @@ class OrderPayController extends Controller {
 		
 		$amount = $params->amount;
 		$channel = $params->channel;
-			
-		//$json = new Services_JSON();
-//		$p=$json-> $GLOBALS["HTTP_RAW_POST_DATA"] ;
-//      if (empty($p['channel']) || empty($p['amount'])) {
-//          echo $json;
-//          exit();
-//      }
-//      $channel = strtolower($p['channel']);
-//      $amount = $p['amount'];
+		 
         $orderNo = substr(md5(time()), 0, 12);
+		
+		$sourceType=$params->sourceType;
+		if($sourceType=="recharge")
+		{
+			$result["status"]=0;
+			$result["msg"]="操作成功。";
+			if(is_login()) {
+				$db = D('member_addmoney_record');
+				$data["uid"] 		=session("_uid");
+				$data["code"] 		=$orderNo;
+				$data["money"] 		=$amount;
+				$data["pay_type"] 	=$channel;
+				$data["status"] 	=0;
+				$data["time"] 		=date('y-m-d-h-i-s'); 
+				$db->create();
+				if($db->add() != false) {
+					$result["status"]=1;
+				} 
+				else 
+				{
+					$result["msg"]='保存订单失败。';
+					exit;
+				}
+			}
+			else 
+			{
+				$result["msg"]='没有登录。';
+				exit;
+			}
+		}
+		
 	
         //$extra 在使用某些渠道的时候，需要填入相应的参数，其它渠道则是 array() .具体见以下代码或者官网中的文档。其他渠道时可以传空值也可以不传。
         $extra = array();
@@ -63,28 +86,10 @@ class OrderPayController extends Controller {
 		//Vendor('PingppSDK.init');
         \Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
         try {
-//          $ch = \Pingpp\Charge::create(
-//          	array(
-//          		'subject' => 'Your Subject', 
-//	            	'body' => 'Your Body', 
-//	            	'amount' => $amount, 
-//	            	'order_no' => $orderNo, 
-//	            	'currency' => 'cny', 
-//	            	'extra' => $extra, 
-//	            	'channel' => $channel,
-//	             	'client_ip' => get_client_ip(), 
-//	             	'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
-//				)
-//			);
-//          echo $ch;
 			$ch = \Pingpp\Charge::create(array('subject' => 'Your Subject', 'body' => 'Your Body', 'amount' => $amount, 'order_no' => $orderNo, 'currency' => 'cny', 'extra' => $extra, 'channel' => $channel,
              'client_ip' => get_client_ip(), 'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')));
              echo $ch;
 			 exit; 
-			  
-        	 //$this->ajaxReturn($ch, 'JSON');
-        	 //$this->ajaxReturn($ch);
-        	 
         } catch (\Pingpp\Error\Base $e) {
              //header('Status: ' . $e->getHttpStatus());
             header("Content-type:text/html;charset=utf-8");

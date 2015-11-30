@@ -38,7 +38,7 @@ class PayController extends Controller {
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
 			$this->assign('account', $user);
-	    		$this->assign('title', '结算支付');
+	    	$this->assign('title', '结算支付');
 			layout(false);
 			$this->display();
 		} else {
