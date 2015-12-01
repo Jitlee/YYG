@@ -21,6 +21,8 @@ class PayController extends Controller {
 //	15;  // 需要第三方支付
 //	16;  // 付款金额不对
 //	17;  // 保存保证金失败
+//	18;  // 支付失败
+//	19;  // session数据丢失
 	
 	public function index(){
 		if(is_login()) {
@@ -136,7 +138,10 @@ class PayController extends Controller {
 		layout(false);
 		$tradeNo = I('request.out_trade_no');
 		$result = I('request.result');
-		if($result == 'success' && $tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
+		if($result != 'success') {
+			$this->assign('status', 18);
+			$this->display('error');	
+		} else if($tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
 			session('_trade_no_', null);
 			$_pay = session($tradeNo);
 			$status = $this->pay(false, $_pay);
@@ -148,6 +153,7 @@ class PayController extends Controller {
 			}
 			session($tradeNo, null);
 		} else {
+			$this->assign('status', 19);
 			$this->display('error');	
 		}
 	}

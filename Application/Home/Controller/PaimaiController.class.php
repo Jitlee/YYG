@@ -185,4 +185,46 @@ class PaimaiController extends Controller {
 		$good = $pdb->field('gid,zuigaojia, chujiacishu,status')->find($gid);
 		$this->ajaxReturn($good, 'JSON');
 	}
+	
+	public function prizerecord($gid, $uid, $pageNum = 1) {
+		$db = M('MemberPaimai');
+		$map['flag'] = 1;
+		$map['gid'] = $gid;
+		$list = $db->where($map)->order('id desc')->page($pageNum, 20)->select();
+		if($pageNum > 1) {
+			if(empty($list)) {
+				$this->ajaxReturn(null);
+			} else {
+				$this->ajaxReturn($list, 'JSON');
+			}
+		} else {
+			$this->assign('gid', $gid);
+			$this->assign('uid', $uid);
+			$this->assign('list', $list);
+			$this->assign('title', '出价记录');
+			layout('sublayout');
+			$this->display();
+		}
+	}
+	
+	public function record($gid, $pageNum = 1) {
+		$pageNum = intval($pageNum);
+		$db = M('MemberPaimai');
+		$map['flag'] = 1;
+		$map['gid'] = $gid;
+		$list = $db->where($map)->order('id desc')->page($pageNum, 20)->select();
+		if($pageNum > 1) {
+			if(empty($list)) {
+				$this->ajaxReturn(0, 'JSON');
+			} else {
+				$this->ajaxReturn($list, 'JSON');
+			}
+		} else {
+			$this->assign('gid', $gid);
+			$this->assign('list', $list);
+			$this->assign('title', '出价记录');
+			layout('sublayout');
+			$this->display();
+		}
+	}
 }
