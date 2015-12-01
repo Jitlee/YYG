@@ -49,19 +49,12 @@ public function login() {
 	}
 
 
-	public function forgetPassword(){
-			$_SESSION['state'] = md5(uniqid(rand(), TRUE)); //CSRF protection
-			$login_url = "https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=" 
-			.$app_id. "&redirect_uri=" . urlencode($callback)
-			. "&state=" . $_SESSION['state']
-			. "&scope=".urlencode($scope);
-			
-		layout(true);
-		$this->assign('title', $login_url);
-		$this->display();
-	}
+public function forgetPassword(){
+	layout(true);
+	$this->display();
+}
 	
-	public function reg(){
+public function reg(){
 		if(IS_POST) {
 				$_POST['password'] = md5($_POST['password']);
 				$db = M('member');
@@ -190,7 +183,7 @@ public function LoginAuth($openid,$imgurl)
 	}	
 }
 
-	public function setmobile(){
+public function setmobile(){
 			if(IS_POST) {
 					$db = M('member');
 					$data['mobile'] = $_POST['mobile'];
@@ -229,5 +222,23 @@ public function LoginAuth($openid,$imgurl)
 				$this->display();
 			}
 	}
+
+public function userimg(){
+	layout(true);
+	$this->display();
+}
+public function useraddress(){
+	layout(true);
+	$this->display();
+}
+public function userpwd(){
+	layout(true);
+	$this->display();
+}
+
+public function userinfo(){
+	layout(true);
+	$this->display();
+}
 
 }

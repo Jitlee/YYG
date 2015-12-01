@@ -2,8 +2,100 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title></title>
+		<title>我的</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<script src="../sea.js"></script>
+ 
+		<script src="__JQ__"></script>
+		<link href="__CSS__/me.css" rel="stylesheet" type="text/css" />
+		
+		<script type="text/javascript">
+	   		seajs.initReady(function(){
+				seajs.use(["util", "ko", "md5"],function(){
+					seajs.use("me");
+				});				
+			});
+   		</script>
+   		<script type="text/javascript">
+	   		$(function() {
+	   			//个人资料
+	   			$("#userinfo").click(function() {
+					window.location.href="{:U('Person/userinfo', '', '')}";
+				});
+				//修改头像
+				$("#userimg").click(function() {
+					window.location.href="{:U('Person/userimg', '', '')}";
+				});
+				//收货地址
+				$("#useraddress").click(function() {	
+					window.location.href="{:U('Person/useraddress', '', '')}";
+				});
+				//修改密码
+				$("#userpwd").click(function() {
+					window.location.href="{:U('Person/userpwd', '', '')}";
+				});
+			});
+		</script>
 	</head>
+	
 	<body>
+		<header class="mui-bar mui-bar-nav">
+		  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+		    <span class="mui-icon mui-icon-left-nav" ></span>
+		    	返回
+		  </button>
+		  <h1 class="mui-title">个人设置</h1>
+		</header>
+		
+		 
+		<div class="mui-content">
+			<ul class="mui-table-view">  
+				<li class="mui-table-view-cell" id="userinfo">
+					<a class="mui-navigate-right">
+						<div class="img-tip">
+							<img alt="个人资料" src="__IMG__/person/yyg_icon_wdpl.png"/>
+						</div>
+						<div class="menu-content">
+							<p>个人资料</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="userimg">
+					<a class="mui-navigate-right">
+						<div class="img-tip">
+							<img alt="修改头像" src="__IMG__/person/yyg_icon_wdpl.png"/>
+						</div>
+						<div class="menu-content">
+							<p>修改头像</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="useraddress">
+					<a class="mui-navigate-right">
+						<div class="img-tip">
+							<img alt="收货地址" src="__IMG__/person/yyg_icon_wdyq.png"/>
+						</div>
+						<div class="menu-content">
+							<p>收货地址</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" id="about">
+					<a class="mui-navigate-right" href="{:U('Person/userpwd', '', '')}">
+						<div class="img-tip">
+							<img alt="修改密码" src="__IMG__/person/yyg_icon_wdyq.png"/>
+						</div>
+						<div class="menu-content">
+							<p>修改密码</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		
+
 	</body>
+
 </html>

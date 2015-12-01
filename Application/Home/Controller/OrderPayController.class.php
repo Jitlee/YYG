@@ -22,23 +22,27 @@ class OrderPayController extends Controller {
 		$channel = $params->channel;
 		 
         $orderNo = substr(md5(time()), 0, 12);
-		
+		//sourceType":"recharge
 		$sourceType=$params->sourceType;
 		if($sourceType=="recharge")
 		{
 			$result["status"]=0;
 			$result["msg"]="操作成功。";
 			if(is_login()) {
-				$db = D('member_addmoney_record');
-				$data["uid"] 		=session("_uid");
-				$data["code"] 		=$orderNo;
-				$data["money"] 		=$amount;
-				$data["pay_type"] 	=$channel;
-				$data["status"] 	=0;
-				$data["time"] 		=date('y-m-d-h-i-s'); 
-				$db->create();
-				if($db->add() != false) {
-					$result["status"]=1;
+				//$db = M('member_addmoney_record');
+				
+				$db = M('member_addmoney_record');
+				$data = array(
+					'uid'		=>session("_uid"),
+					'code'		=>$orderNo,
+					'money'		=>$amount,
+					'pay_type'	=>$channel,
+					'status'	=>0,
+					'time'		=>time()
+				);
+
+				if($db->add($data) != false) {		
+					//$result["status"]=1;
 				} 
 				else 
 				{
@@ -58,7 +62,11 @@ class OrderPayController extends Controller {
         $extra = array();
         switch ($channel) {
             case 'alipay_wap' :
-                $extra = array('success_url' => 'http://www.yourdomain.com/success', 'cancel_url' => 'http://www.yourdomain.com/cancel');
+                $extra = array(
+                	'success_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '')
+                	, 'cancel_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '')
+				);
+					
                 break;
             case 'upmp_wap' :
                 $extra = array('result_url' => 'http://www.yourdomain.com/result?code=');
@@ -75,12 +83,6 @@ class OrderPayController extends Controller {
             case 'wx_pub_qr' :
                 $extra = array('product_id' => 'Productid');
                 break;
-            case 'yeepay_wap' :
-                $extra = array('product_category' => '1', 'identity_id' => 'your identity_id', 'identity_type' => 1, 'terminal_type' => 1, 'terminal_id' => 'your terminal_id', 'user_ua' => 'your user_ua', 'result_url' => 'http://www.yourdomain.com/result');
-                break;
-            case 'jdpay_wap' :
-                $extra = array('success_url' => 'http://www.yourdomain.com', 'fail_url' => 'http://www.yourdomain.com', 'token' => 'dsafadsfasdfadsjuyhfnhujkijunhaf');
-                break;
         }
 		
 		//Vendor('PingppSDK.init');
@@ -96,6 +98,47 @@ class OrderPayController extends Controller {
             echo($e->getHttpBody());
         }
     
+	}
+	
+	
+	// 第三方支付成功页面
+	public function thirdpaysuccess() {
+		layout(false);
+		$tradeNo = I('request.out_trade_no');
+		$result = I('request.result');
+		if($result != 'success') {
+			$this->assign('status', 18);
+			$this->display('error');	
+		} else if($tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
+			session('_trade_no_', null);
+			$_pay = session($tradeNo);
+			$status = $this->pay(false, $_pay);
+			if($status == 0) {
+				$this->display('success');	
+			} else { // TODO: 失败了没有机制
+				$this->assign('status', $status);
+				$this->display('error');	
+			}
+			session($tradeNo, null);
+		} else {
+			$this->assign('status', 19);
+			$this->display('error');	
+		}
+	}
+	
+	public function success() {
+		layout(false);
+		$this->display();
+	}
+	
+	public function cancel() {
+		layout(false);
+		$this->display();
+	}
+	
+	public function error() {
+		layout(false);
+		$this->display();
 	}
 	
 	
