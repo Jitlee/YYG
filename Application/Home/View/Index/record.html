@@ -1,0 +1,94 @@
+<style>
+	table.yyg-table {
+		width: 100%;
+		font-size:12px;
+	}
+	
+	table.yyg-table th{
+		padding: 8px;
+		/*width:33.3333%;*/
+	}
+	
+	table.yyg-table td{
+		background: #fff;
+		padding: 8px;
+		border-top: solid #D5D5D5 1px;
+		box-sizing: border-box;
+	}
+	
+	table.yyg-table td.yyg-left,table.yyg-table th.yyg-left {
+		text-align: left;
+	}
+	
+	table.yyg-table td.yyg-center,table.yyg-table th.yyg-center {
+		text-align: center;
+	}
+	
+	table.yyg-table td.yyg-right,table.yyg-table th.yyg-right {
+		text-align: right;
+	}
+</style>
+<table class="yyg-table">
+	<tr>
+		<th class=" yyg-left">买家</th>
+		<th class="yyg-center">购买人次</th>
+		<th class="yyg-right">时间</th>
+	</tr>
+	<tbody id="recrodList">
+	<foreach name="list" item="item">
+		<tr>
+			<td class="username yyg-left">{$item.username}</td>
+			<td class="yyg-center"><a href="{:U('coderecord','','')}/{$qishu}/{$gid}/{$item.mid}/{$item.uid}/{$item.username}" class="count">{$item.count}</a></td>
+			<td class="time yyg-right">{$item.time}</td>
+		</tr>
+	</foreach>
+	</tbody>
+</table>
+<footer class="yyg-footer">
+	<div class="yyg-footer-block">
+		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
+		<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
+			参与记录
+		</a>
+		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
+	</div>
+</footer>
+
+<script>
+	$(function() {
+		var pageNum = 1;
+		var goodList = $("#recrodList").swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		});
+		
+		$(window).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+       			page();
+			}
+		}
+		
+		var recrodList = $("#recrodList");
+		var template = $("li:first-child", recrodList);
+		
+		function page() {
+			$.get("{:U('record', '', '')}/{$gid}/" + (++pageNum), null, function(list) {
+				if(list && list.length > 0) {
+		       		$.each(list, function() {
+		       			var item = template.clone();
+		       			$(".username", item).text(this.username);
+		       			$(".count", item).text(this.count);
+		       			$(".time", item).text(this.time);
+		       			recrodList.append(item);
+		       		});
+		       	} else {
+		       		pageNum--;	
+		       	}
+	        });
+		}
+	});
+</script>

@@ -41,59 +41,37 @@
 	<body>
 		<div class="mui-content" style="padding-top: 0;padding-bottom: 54px;">
 			<style>
-	table.yyg-table {
-		width: 100%;
-		font-size:12px;
-	}
-	
-	table.yyg-table th{
+	ul.yyg-prizecode-list {
+		list-style: none;
 		padding: 8px;
-		/*width:33.3333%;*/
+		margin: 0;
+		background-color:#fff;	
 	}
 	
-	table.yyg-table td{
-		background: #fff;
-		padding: 8px;
-		border-top: solid #D5D5D5 1px;
-		box-sizing: border-box;
-	}
-	
-	table.yyg-table td.yyg-left,table.yyg-table th.yyg-left {
-		text-align: left;
-	}
-	
-	table.yyg-table td.yyg-center,table.yyg-table th.yyg-center {
-		text-align: center;
-	}
-	
-	table.yyg-table td.yyg-right,table.yyg-table th.yyg-right {
-		text-align: right;
+	ul.yyg-prizecode-list li {
+		margin-right: 10px;
+		margin-top:3px;
+		margin-bottom:3px;
+		padding: 0;
+		display: inline-block;
+		font-size: 12px;
 	}
 </style>
-<table class="yyg-table">
-	<tr>
-		<th class=" yyg-left">买家</th>
-		<th class="yyg-center">出价</th>
-		<th class="yyg-right">时间</th>
-	</tr>
-	<tbody id="recrodList">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
-			<td class="username yyg-left"><?php echo ($item["username"]); ?></td>
-			<td class="money yyg-center"><?php echo ($item["money"]); ?></td>
-			<td class="time yyg-right"><?php echo ($item["time"]); ?></td>
-		</tr><?php endforeach; endif; ?>
-	</tbody>
-</table>
+<h5 class="yyg-cell-left"><?php echo ($username); ?>第<?php echo ($qishu); ?>期本次共购买了<?php echo ($count); ?>人次</h5>
+<ul id="recrodList" class="yyg-prizecode-list">
+	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li><?php echo ($item["pcode"]); ?></li><?php endforeach; endif; ?>
+</ul>
 <footer class="yyg-footer">
 	<div class="yyg-footer-block">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
 		<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
-			出价记录
+			<?php echo ($title); ?>
 		</a>
 		<a class="yyg-btn yyg-btn-link" href="<?php echo U('Cart/index', '','');?>"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
 
+<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 <script>
 	$(function() {
 		var pageNum = 1;
@@ -116,13 +94,10 @@
 		var template = $("li:first-child", recrodList);
 		
 		function page() {
-			$.get("<?php echo U('record', '', '');?>/<?php echo ($gid); ?>/" + (++pageNum), null, function(list) {
+			$.get("<?php echo U('coderecord', '', '');?>/<?php echo ($qishu); ?>/<?php echo ($gid); ?>/<?php echo ($mid); ?>/<?php echo ($uid); ?>/<?php echo ($username); ?>/" + (++pageNum), null, function(list) {
 				if(list && list.length > 0) {
 		       		$.each(list, function() {
-		       			var item = template.clone();
-		       			$(".username", item).text(this.username);
-		       			$(".money", item).text(this.money);
-		       			$(".time", item).text(this.time);
+		       			var item = template.clone().text(this.pcode);
 		       			recrodList.append(item);
 		       		});
 		       	} else {

@@ -363,7 +363,8 @@ class PayController extends Controller {
 		$data['count'] = intval($cart['count']);
 		$data['qishu'] = $good['qishu'];
 		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果  （已废弃）
-		if($mmdb->add($data)) {
+		$mid = $mmdb->add($data);
+		if($mid) {
 			// 生成购买记录随机码
 			$codes = array();
 			for($i = 0; $i < $good['zongrenshu']; ++$i) {
@@ -389,6 +390,7 @@ class PayController extends Controller {
 				array_splice($codes, $offset, 1);
 				
 				$cdata = array(
+					'mid'		=> $mid, // 购买记录主表ID
 					'gid'		=> $good['gid'],
 					'qishu'		=> $good['qishu'],
 					'uid'		=> $account['uid'],

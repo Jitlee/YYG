@@ -151,19 +151,15 @@ class IndexController extends Controller {
 			// 获取当前中奖用户
 			if($data['prizeuid']) {
 				$udb = M('member');
-				$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+				$user = $udb->field(array('uid','IFNULL(NULLIF(username, \'\'), INSERT(mobile,4,4,\'****\'))'  => 'username', 'img'))->find($data['prizeuid']);
 				$data['prizer'] = $user;
-					
-				if(empty($user['username'])) {
-					$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
-				}
 				
 				// 获取用户当期购买数量
-				$mhdb = M('MemberMiaosha');
+				$mhdb = M('MiaoshaCode');
 				$mhmap['uid'] = $data['prizeuid'];
 				$mhmap['gid'] = $data['gid'];
 				$mhmap['qishu'] = $data['qishu'];
-				$count = $mhdb->where($mhmap)->sum('count');
+				$count = $mhdb->where($mhmap)->count();
 				$data['prizer']['count'] = $count;
 			}
 			
@@ -195,5 +191,85 @@ class IndexController extends Controller {
 		array_unshift($list, $all);
 		
 		$this->ajaxReturn($list, "JSON");
+	}
+	
+	public function record($qishu, $gid, $pageNum = 1) {
+		$pageNum = intval($pageNum);
+		$db = M('MemberMiaosha');
+		$map['gid'] = $gid;
+		$map['qishu'] = $qishu;
+		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->where($map)->order('id desc')->page($pageNum, 20)->select();
+		if($pageNum > 1) {
+			if(empty($list)) {
+				$this->ajaxReturn(0, 'JSON');
+			} else {
+				$this->ajaxReturn($list, 'JSON');
+			}
+		} else {
+			$this->assign('gid', $gid);
+			$this->assign('qishu', $qishu);
+			$this->assign('list', $list);
+			$this->assign('title', '参与记录');
+			layout('sublayout');
+			$this->display();
+		}
+	}
+	
+	public function prizerecord($qishu, $gid, $uid, $username, $pageNum = 1) {
+		$db = M('MiaoshaCode');
+		$map['qishu'] = $qishu;
+		$map['gid'] = $gid;
+		$map['uid'] = $uid;
+		$list = $db->field(array('pcode + 10000001' => 'pcode'))->where($map)->order('id desc')->page($pageNum, 200)->select();
+		if($pageNum > 1) {
+			if(empty($list)) {
+				$this->ajaxReturn(null);
+			} else {
+				$this->ajaxReturn($list, 'JSON');
+			}
+		} else {
+			$count = $db->where($map)->count();
+			$this->assign('count', $count);
+			
+			$this->assign('gid', $gid);
+			$this->assign('uid', $uid);
+			$this->assign('qishu', $qishu);
+			$this->assign('username', $username);
+			$this->assign('list', $list);
+			$this->assign('title', '云购码列表');
+			layout('sublayout');
+			$this->display();
+		}
+	}
+	
+	public function coderecord($qishu, $gid, $mid, $uid, $username, $pageNum = 1) {
+		$db = M('MiaoshaCode');
+		$map['qishu'] = $qishu;
+		$map['gid'] = $gid;
+		$map['uid'] = $uid;
+		$map['mid'] = $mid;
+		$list = $db->field(array('pcode + 10000001' => 'pcode'))->where($map)->order('id desc')->page($pageNum, 200)->select();
+		if($pageNum > 1) {
+			if(empty($list)) {
+				$this->ajaxReturn(null);
+			} else {
+				$this->ajaxReturn($list, 'JSON');
+			}
+		} else {
+			$count = $db->where($map)->count();
+			$this->assign('count', $count);
+			
+			$this->assign('gid', $gid);
+			$this->assign('uid', $uid);
+			$this->assign('qishu', $qishu);
+			$this->assign('mid', $mid);
+			$this->assign('username', $username);
+			$this->assign('list', $list);
+			$this->assign('title', '云购码列表');
+			layout('sublayout');
+			$this->display();
+		}
 	}
 }

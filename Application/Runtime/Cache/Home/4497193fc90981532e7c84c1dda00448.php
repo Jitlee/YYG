@@ -121,10 +121,10 @@
 			<br/>
 			很遗憾，本商品没有人参与竞拍或本商品已流拍
 		</div><?php endif; ?>
+	<p class="yyg-view-title yyg-view-margin">
+		<?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
+	</p>
 	<section class="tuijian yyg-content">
-		<p class="yyg-view-title yyg-view-margin">
-			<?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
-		</p>
 		<div class="tuijian-left">
 			<div class="tuijian-img-container">
 				<img class="tuijian-img" src="<?php echo ($data["thumb"]); ?>" />
@@ -145,7 +145,7 @@
 
 <ul class="mui-table-view yyg-margin20">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('record', '','');?>/<?php echo ($data["gid"]); ?>">出价记录(<span id="chujiacishuLabel"><?php echo ($data["chujiacishu"]); ?></span>)</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情  <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">卖家承诺</a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">保证金须知</a></li>

@@ -118,7 +118,7 @@
 				<h5>幸运云购码:<r><?php echo ($data["prizecode"]); ?></r></h5>
 				<h5>揭晓时间：<?php echo ($data["end_time"]); ?></h5>
 			</div>
-			<a class="yyg-prize-all">
+			<a class="yyg-prize-all" href="<?php echo U('prizerecord','','');?>/<?php echo ($data["qishu"]); ?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["prizeuid"]); ?>/<?php echo ($data["prizer"]["username"]); ?>">
 				获得者本期所有云购码 >
 			</a>
 		</div>
@@ -143,8 +143,8 @@
 
 <ul class="mui-table-view yyg-margin20">
 	<?php if(isset($data["prizer"])): ?><li class="mui-table-view-cell"><a class="mui-navigate-right">计算结果</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">(<?php echo ($data["canyurenshu"]); ?>)</span></a></li><?php endif; ?>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('record', '', '');?>/<?php echo ($data["qishu"]); ?>/<?php echo ($data["gid"]); ?>">参与记录 <span class="yyg-tiny">(<?php echo ($data["canyurenshu"]); ?>)</span></a></li><?php endif; ?>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<?php if(isset($data["prizer"])): ?><li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li><?php endif; ?>
 </ul>
 <footer class="yyg-footer">

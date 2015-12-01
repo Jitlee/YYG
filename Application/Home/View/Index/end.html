@@ -79,7 +79,7 @@
 				<h5>幸运云购码:<r>{$data.prizecode}</r></h5>
 				<h5>揭晓时间：{$data.end_time}</h5>
 			</div>
-			<a class="yyg-prize-all">
+			<a class="yyg-prize-all" href="{:U('prizerecord','','')}/{$data.qishu}/{$data.gid}/{$data.prizeuid}/{$data.prizer.username}">
 				获得者本期所有云购码 >
 			</a>
 		</div>
@@ -106,9 +106,9 @@
 <ul class="mui-table-view yyg-margin20">
 	<present name="data.prizer">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">计算结果</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">({$data.canyurenshu})</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.canyurenshu})</span></a></li>
 	</present>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<present name="data.prizer">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 	</present>
