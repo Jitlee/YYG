@@ -40,69 +40,75 @@
 
 	<body>
 		<div class="mui-content" style="padding-top: 0;padding-bottom: 54px;">
-			<h5 style="position: relative;" class="yyg-cell-left">出价<span class="yyg-cell-right yyg-right-margin">时间</span></h5>
-<table class="mui-table-view">
-	<tr>
-		<th>买家</th>
-		<th>出价</th>
-		<th>时间</th>
-	</tr>
-	<tbody id="recrodList">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr class="mui-table-view-cell">
-			<td class="username"><?php echo ($item["mobile"]); ?></td>
-			<td class="money"><?php echo ($item["money"]); ?></td>
-			<td class="time yyg-cell-right yyg-right-margin"><?php echo ($item["time"]); ?></td>
-		</tr><?php endforeach; endif; ?>
-	</tbody>
-</table>
+			<div class="yyg-qishu">
+	<ul class="yyg-qishu-view">
+		<?php if(is_array($periods)): foreach($periods as $key=>$item): ?><a class="yyg-qishu-item <?php if(isset($item["active"])): ?>yyg-active<?php endif; ?>" <?php if(!isset($item["active"])): ?>href="<?php echo U('view','','');?>/<?php echo ($item["gid"]); ?>/<?php echo ($item["qishu"]); ?>"<?php endif; ?> >第<?php echo ($item["qishu"]); ?>期</a><?php endforeach; endif; ?>
+	</ul>
+	<!--<a class="yyg-qishu-all">+</a>-->
+</div>
+
+<div class="yyg-body">
+	<div class="swiper-outter">
+		<div class="swiper-container swiper-loop">
+		    <div class="swiper-wrapper">
+		    	<?php if(is_array($images)): foreach($images as $key=>$image): ?><div class="swiper-slide" style="background-image: url(<?php echo ($image["image_url"]); ?>);"></div><?php endforeach; endif; ?>
+		    </div>
+		</div>
+		<div class="pagination pagination-loop"></div>
+	</div>
+	
+	<p class="yyg-view-title yyg-view-margin">
+		(第<?php echo ($data["qishu"]); ?>期) <?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
+	</p>
+	<h5 class="yyg-view-margin">价值：¥ <?php echo ($data["money"]); ?></h5>
+	<div class="yyg-progress-bar yyg-view-margin">
+		<div class="yyg-progress">
+			<div class="yyg-progressing" style="width:<?php echo ((isset($data["percentage"]) && ($data["percentage"] !== ""))?($data["percentage"]):0); ?>%"></div>
+		</div>
+		<div class="yyg-progess-indicator">
+			<span class="yyg-progess-l"><?php echo ($data["canyurenshu"]); ?></span>
+			<span class="yyg-progess-c"><?php echo ($data["zongrenshu"]); ?></span>
+			<span class="yyg-progess-r"><?php echo ($data["shengyurenshu"]); ?></span>
+		</div>
+		<div class="yyg-progess-label">
+			<span class="yyg-progess-l">已参与</span>
+			<span class="yyg-progess-c">总需</span>
+			<span class="yyg-progess-r">剩余</span>
+		</div>
+	</div>
+</div>
+
+<ul class="mui-table-view yyg-margin20">
+	<li class="mui-table-view-cell"><a class="mui-navigate-right">参与记录<span class="yyg-tiny">(<?php echo ($data["canyurenshu"]); ?>)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情<span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
+</ul>
 <footer class="yyg-footer">
-	<div class="yyg-footer-block">
+	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.back()"><i class="mui-icon mui-icon-back"></i></a>
-		<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
-			获得者本商品出价记录
-		</a>
+		<div id="lijiButton" class="yyg-btn yyg-btn-primary">立即一元秒杀</div>
+	</div>
+	<div class="yyg-footer-right">
+		<div id="addCartButton" class="yyg-btn yyg-btn-success">加入购物车</div>
 		<a class="yyg-btn yyg-btn-link" href="<?php echo U('Cart/index', '','');?>"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
 
-<script>
+<script type="text/javascript">
 	$(function() {
-		var pageNum = 1;
-		var goodList = $("#recrodList").swipe({
-			swipeUp: onscrollend,
-			threshold: 100,
-			allowPageScroll: "vertical"
+		$("#addCartButton").click(function() {
+			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>", null, function(result) {
+				new Android_Toast({content: result.message});
+			})
 		});
-		
-		$(window).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-       			page();
-			}
-		}
-		
-		var recrodList = $("#recrodList");
-		var template = $("li:first-child", recrodList);
-		
-		function page() {
-			$.get("<?php echo U('record', '', '');?>/<?php echo ($gid); ?>/" + (++pageNum), null, function(list) {
-				if(list && list.length > 0) {
-		       		$.each(list, function() {
-		       			var item = template.clone();
-		       			$(".username", item).text(this.username);
-		       			$(".money", item).text(this.money);
-		       			$(".time", item).text(this.time);
-		       			recrodList.append(item);
-		       		});
-		       	} else {
-		       		pageNum--;	
-		       	}
-	        });
-		}
+		$("#lijiButton").click(function() {
+			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>", null, function(result) {
+				window.location.href = "<?php echo U('Cart/index', '','');?>";
+			})
+		});
 	});
 </script>
+
 		</div>
 		<div class="gotop backtop" style="display:none;"></div>
 	</body>

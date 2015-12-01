@@ -212,7 +212,17 @@ class PaimaiController extends Controller {
 		$db = M('MemberPaimai');
 		$map['flag'] = 1;
 		$map['gid'] = $gid;
-		$list = $db->where($map)->order('id desc')->page($pageNum, 20)->select();
+		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')
+			->field('yyg_member_paimai.money,yyg_member_paimai.time,yyg_member.username,yyg_member.mobile')
+			->where($map)->order('id desc')->page($pageNum, 20)->select();
+			//SELECT INSERT(phone,4,4,'****') FROM hometimes_user;
+//		if(!empty($list)) {
+//			foreach($list as $item) {
+//				if(empty($item['username'])) {
+//					$item['username'] = substr($item['mobile'], 0, 3).'****'.substr($item['mobile'], 7, 4);
+//				}
+//			}
+//		}
 		if($pageNum > 1) {
 			if(empty($list)) {
 				$this->ajaxReturn(0, 'JSON');
