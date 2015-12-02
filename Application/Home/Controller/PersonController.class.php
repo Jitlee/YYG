@@ -51,6 +51,107 @@ class PersonController extends CommonController {
 		$this->display();
 	}
 	
+		
+	public function userimg(){
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+			$db = M('member');
+			$data['uid'] = session("_uid");
+			$user = $db->where($data)->find();
+			if(!$user) {
+				$result["msg"]='用户不存在。';
+			}
+			$user["img"]=$_POST['membimg'];
+			$db->save($user);
+			$result["status"]=1;
+			session('wxUserinfo', $user);
+			$this->ajaxReturn($result, "JSON");
+		}
+		else
+		{
+			layout(true);
+			$data=session('wxUserinfo');
+			$this->assign("data", $data);
+			$this->display();
+		}
+	}
+	public function useraddress(){
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+		}
+		else
+		{
+			layout(true);
+			$this->display();
+		}
+	}
+	public function userpwd(){
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+			$db = M('member');
+			$data['uid'] = session("_uid");
+			$user = $db->where($data)->find();
+			if(!$user) {
+				$result["msg"]='用户不存在。';
+			}
+			else
+			{
+				$password= md5($_POST['txtoldpwd']);
+				if(  $user['password'] != $password) {
+					$result["msg"]='原密码错误。';
+				}
+				else
+				{
+					$passwordNew= md5($_POST['txtconfimpwd']);
+					$user['password']=$passwordNew;
+					$db->save($user);
+					$result["status"]=1;
+					session('wxUserinfo', null);
+				}
+			}
+			$this->ajaxReturn($result, "JSON");
+		}
+		else
+		{
+			layout(true);
+			$this->display();
+		}
+	}
+	
+	public function userinfo(){
+		if(IS_POST) {
+			$db = M('member');
+			$data['uid'] = session("_uid");
+			$user = $db->where($data)->find();
+			$result["status"]=0;
+			$result["msg"]="操作成功。";
+			if($user)
+			{						 					
+				$records["mobile"]	=$_POST['mobile'];
+				$records["username"]	=$_POST['username'];
+				session('wxUserinfo', $records);							
+				$db->save($records);						
+				$result["status"]=1;
+			}
+			else
+			{
+				$result["msg"]="用户不存在。";
+			}
+			$this->ajaxReturn($result);		
+		}
+		else
+		{
+			layout(true);
+			$data=session('wxUserinfo');
+			$this->assign("data", $data);
+			$this->display();
+		}
+	}
+	
+	
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
 		$Model = M('miaosha');
@@ -149,5 +250,6 @@ class PersonController extends CommonController {
         $verify = new \Think\Verify($config);
         $verify->entry();
 	}
+ 
 
 }

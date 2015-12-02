@@ -1,9 +1,54 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
-</html>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"  onclick="history.go(-1)"></a>
+			<h1 class="mui-title">修改密码</h1>
+		</header>
+		<div class="mui-content">
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>原密码</label>
+						<input type="password" id='txtoldpwd'  name="txtoldpwd" class="mui-input-clear mui-input" maxlength="16" required placeholder="请输入当前密码">
+					</div>
+					<div class="mui-input-row">
+						<label>新密码</label>
+						<input type="password" id='txtnewpwd'   name="txtnewpwd"  class="mui-input-clear mui-input" required placeholder="请输入新密码">
+					</div>
+					<div class="mui-input-row">
+						<label>确认密码</label>
+						<input type="password" id='txtconfimpwd'   name="txtconfimpwd" class="mui-input-clear mui-input" required placeholder="请再次输入新密码">
+					</div> 
+				</div>
+				<div class="mui-content-padded">
+					<button id='reg' type="submit" class="mui-btn mui-btn-block mui-btn-primary">修改</button>
+				</div>
+			</form>
+			
+				
+		</div>
+<script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	$(function() {		
+		$("form").submit(function() {
+			if($("#txtnewpwd").val() != $("#txtconfimpwd").val())
+			{
+				layer.alert("输入两次密码不一致。");
+				return false;
+			}
+			var self = $(this);
+			$.post("{:U('Person/userpwd','','')}", self.serialize(), success, "json");
+			return false;
+			function success(data) {
+				if (data.status) {
+					window.location.href = "{:U('Public/login','','')}";
+				} else {
+					layer.alert(data.msg);
+				}
+			}
+		});
+	});
+	</script>

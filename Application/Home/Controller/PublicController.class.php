@@ -11,8 +11,7 @@ public function login() {
 			$result["msg"]="登录成功。";
 				
 			$password= md5($_POST['password']);
-				 
-				
+				  
 			$db = M('member');
 			$data['mobile'] = $_POST['mobile'];
 			$user = $db->where($data)->find();
@@ -223,22 +222,6 @@ public function setmobile(){
 			}
 	}
 
-public function userimg(){
-	layout(true);
-	$this->display();
-}
-public function useraddress(){
-	layout(true);
-	$this->display();
-}
-public function userpwd(){
-	layout(true);
-	$this->display();
-}
 
-public function userinfo(){
-	layout(true);
-	$this->display();
-}
 
 }

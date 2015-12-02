@@ -1,31 +1,29 @@
-<header class="mui-bar mui-bar-nav">
-  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
-		<span class="mui-icon mui-icon-left-nav" ></span>
-    	返回
-  </button>
-  <h1 class="mui-title">个人设置</h1>
-</header>
-		<div class="clearfix m-round m-name mui-content">
-			<div class="fl f-Himg ac">
-				<a href="#" class="z-Himg">
-					<img id="showimg" src="__IMG__/tx//2111274314672928.jpg" border=0/></a>
-				<span class="z-class-icon01 gray02"><s></s></span>
-			</div>
-			 
+<style>
+	.ac{ text-align:center;}
+	#showimg{ float:initial;}
+</style>
+	<header class="mui-bar mui-bar-nav">
+		  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+				<span class="mui-icon mui-icon-left-nav" ></span>
+		    	返回
+		  </button>
+		  <h1 class="mui-title">个人设置</h1>
+	</header>
+ 
+		<div class="m-round m-name mui-content">
+				<div class="fl f-Himg ac">
+					<span>
+							<img id="showimg" src="__IMG__/{$data.img}" border=0/> 
+					</span>
+				 <span>
+						<form   method="post" id="crop_form">
+							<input type="hidden" id="membimg" name="membimg" value="{$data.img}" />
+							<input id="crop_submit" type="submit" name="submit" class="bluebut" value="保存头像" title="保存头像" />
+						</form>
+					</span>
+				</div>
 		</div>
-
-		<div class="">
-			<div class="touxiangdiv">
-				<!--<img alt="" id="showimg" src="">-->
-				<form action="http://www.yygtx.com/index.php/mobile/basicinfo/updateuserphoto" method="post" id="crop_form">
-					<input type="hidden" id="membimg" name="membimg" value="tx/2111274314672928.jpg" />
-					<input id="crop_submit" type="submit" name="submit" class="bluebut" value="保存头像" title="保存头像" />
-				</form>
-
-
-			</div>
-
-		</div>
+ 
 		
 		 
 		<div class="mui-slider-item">
@@ -62,5 +60,27 @@
 		$("#showimg").attr("src",ss.src);
 		$("#membimg").val(ss.id);
 	}
+	
+	$(document).ajaxStart(function() {
+				$("button:submit").attr("disabled", true);
+			}).ajaxStop(function() {
+				$("button:submit").attr("disabled", false);
+			});
+			$(function() {		
+				$("form").submit(function() {
+					var self = $(this);
+					$.post("{:U('Person/userimg','','')}", self.serialize(), success, "json");
+					return false;
+					function success(data) {
+						if (data.status) {
+							//window.location.href = "{:U('Person/userinfoitem','','')}";
+							history.go(-1);
+						} else {
+							layer.alert(data.msg);
+						}
+					}
+				});
+			});
+			
 </script>
   
