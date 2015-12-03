@@ -20,7 +20,7 @@
 		<title>登陆</title>
 
 		<!-- Bootstrap core CSS -->
-		<link href="__B_CSS__" rel="stylesheet" />		
+		<link href="__B_CSS__" rel="stylesheet" />
 		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="__CSS__/login.css" rel="stylesheet" />
 		<style>
@@ -34,12 +34,12 @@
 				margin-top: 20px;
 			}
 			.mui-input-group label {
-				width: 22%;
+				width: 35%;
 			}
 			.mui-input-row label~input,
 			.mui-input-row label~select,
 			.mui-input-row label~textarea {
-				width: 68%;
+				width: 58%;
 			}
 			.mui-checkbox input[type=checkbox],
 			.mui-radio input[type=radio] {
@@ -116,10 +116,13 @@
 					$.post("{:U('Public/login','','')}", self.serialize(), success, "json");
 					return false;
 					function success(data) {
-						if (data.status) {
+						if (data.status)
+						{
 							//layer.alert(data.msg);
 							window.location.href = "{:U('Person/me','','')}";
-						} else {
+						}
+						else
+						{
 							layer.alert(data.msg);
 						}
 					}
@@ -156,8 +159,7 @@
 					</div>
 				</div>
 				<br />
-				<div class="mui-content-padded oauth-area">
- 
+				<div class="mui-content-padded oauth-area"> 
 				</div>
 				<input type="hidden" name="redirect" value="{$redirect}" />
 			</form>

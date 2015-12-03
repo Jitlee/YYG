@@ -16,6 +16,13 @@
 .yyg-del { float:right; padding-right: 10px;}
 </style>
  
+<header class="mui-bar mui-bar-nav">
+	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+			<span class="mui-icon mui-icon-left-nav" ></span>
+	    	返回
+	  </button>
+	  <h1 class="mui-title">已晒单</h1>
+</header>
 
 <ul id="goodList" class="yyg-goods-list">
 </ul>
@@ -44,7 +51,6 @@
 				pageAll();
 			}
 		}
-		
 		// 全部商品翻页
 		var pageNum = 0;
 		var goodList = $("#goodList");

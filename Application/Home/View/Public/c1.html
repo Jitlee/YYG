@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript">
+			 //表单提交
+			$(document).ajaxStart(function() {
+				$("button:submit").attr("disabled", true);
+			}).ajaxStop(function() {
+				$("button:submit").attr("disabled", false);
+			});
+			
+			function success(data) {
+				if (data.status==0) {
+					//layer.alert(data.data);
+					var provinces=$("#provinces");
+					$("#provinces option").remove();							
+					var pro=new Array;		
+					var pro2=new Array;							 
+					pro=data.data.replace("{","").replace("}","").replace("\"","").split(",");
+					for(var i=0;i< pro.length;i++)
+					{
+						pro2=pro[i].split(":");
+						$("#provinces").append("<option value='"+pro2[1]+"'>"+pro2[0].replace("\"","").replace("\"","")+"</option>");
+					}
+				} else {
+					layer.alert(data.status);
+					layer.alert(data.message);
+				}
+			}
+			
+			function successcity(data) {
+				if (data.status==0) {
+					//layer.alert(data.data);
+					var provinces=$("#city");
+					$("#city option").remove();							
+					var pro=new Array;		
+					var pro2=new Array;							 
+					pro=data.data.replace("{","").replace("}","").replace("\"","").split(",");
+					for(var i=0;i< pro.length;i++)
+					{
+						pro2=pro[i].split(":");
+						$("#city").append("<option value='"+pro2[1]+"'>"+pro2[0].replace("\"","").replace("\"","")+"</option>");
+					}
+				} else {
+					layer.alert(data.status);
+					layer.alert(data.message);
+				}
+			}
+			
+			
+			$(function() {	
+				 	var self = $("body");
+					$.post("{:U('Card1/Get_Provinces','','')}", self.serialize(), success, "json");
+					 
+					
+					
+					$("#provinces").change(function(){
+						var p=$("#provinces").val();
+						$.post("{:U('Card1/Get_Provinces','','')}", {"Provinceid": p}, successcity, "json");					
+					});
+					
+			});
+		</script>
+	</head>
+	<body>
+		<form>
+			<div class="mui-content">
+				
+			<select id="provinces">
+				<option>ddd</option>
+			</select>
+			省
+			<select id="city">
+				<option>ddd</option>
+			</select>
+			市
+			</div>
+		</form>
+	</body>
+	
+</html>

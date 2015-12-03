@@ -222,6 +222,14 @@ public function setmobile(){
 			}
 	}
 
+	 
+	public function c1(){
+    	$this->assign('title', '省市区测试');			 
+		$this->display();
+    }
+	
+	
+	 
 
 
 }
