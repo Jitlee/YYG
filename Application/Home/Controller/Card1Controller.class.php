@@ -11,8 +11,37 @@ class Card1Controller extends Controller {
 		$data = array("userAccount"=>"10000");
 		$url="https://openapi.1card1.cn/OpenApi/Get_Provinces";
 		$data=$this->GetData($url,$data);
-		//eacho $data;
-		$this->ajaxReturn($data);		
+		
+		$db=M("add");
+	
+		//$val=  str_split($data["data"];
+		$pro2=$data["data"];
+		$pro2= strtr($pro2,'\"','');
+		$pro2= strtr($pro2,"{","");
+		$pro2= strtr($pro2,"}","");
+		//$pro2= strtr(''/[|{|}| ]+/g'," ","");
+		
+		$pro=split(",",$pro2);
+							 
+		foreach ($array as $pro)
+		{
+			
+			$pro2=split(":",$array);			
+			//provinces.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
+			$item= array(
+				'addid'		=>$pro2[1],
+				'addname'	=>$pro2[0],
+				'addparent'	=>0,
+				'addtype'	=>0
+			);
+			
+			$db->add($item);
+			$this->ajaxReturn($array);		
+			//exit;
+		}
+		$this->ajaxReturn($pro);
+		
+		
 		//$this->display();
     }
 	
@@ -24,6 +53,10 @@ class Card1Controller extends Controller {
 		);
 		$url="https://openapi.1card1.cn/OpenApi/Get_CitiesByProvince";
 		$data=$this->GetData($url,$data);
+		
+		
+					
+					
 		$this->ajaxReturn($data);
     }
 	public function Get_CountyByCity(){
