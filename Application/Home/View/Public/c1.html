@@ -16,51 +16,85 @@
 					//layer.alert(data.data);
 					var provinces=$("#provinces");
 					$("#provinces option").remove();							
-					var pro=new Array;		
-					var pro2=new Array;							 
-					pro=data.data.replace("{","").replace("}","").replace("\"","").split(",");
+					var pro=new Array;
+					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
+					pro=val.split(",");					 
 					for(var i=0;i< pro.length;i++)
 					{
-						pro2=pro[i].split(":");
-						$("#provinces").append("<option value='"+pro2[1]+"'>"+pro2[0].replace("\"","").replace("\"","")+"</option>");
+						var pro2=pro[i].split(":");
+						provinces.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
 					}
 				} else {
-					layer.alert(data.status);
 					layer.alert(data.message);
 				}
 			}
 			
 			function successcity(data) {
 				if (data.status==0) {
-					//layer.alert(data.data);
-					var provinces=$("#city");
-					$("#city option").remove();							
-					var pro=new Array;		
-					var pro2=new Array;							 
-					pro=data.data.replace("{","").replace("}","").replace("\"","").split(",");
+					var city=$("#city");
+					$("#city option").remove();			
+					city.append("<option value='0'>请选择</option>");
+					var pro=new Array;
+					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
+					pro=val.split(",");		
 					for(var i=0;i< pro.length;i++)
 					{
-						pro2=pro[i].split(":");
-						$("#city").append("<option value='"+pro2[1]+"'>"+pro2[0].replace("\"","").replace("\"","")+"</option>");
+						var pro2=pro[i].split(":");
+						if(pro2[1]!="0")
+						{
+							city.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");	
+						}						
 					}
 				} else {
-					layer.alert(data.status);
 					layer.alert(data.message);
 				}
 			}
-			
+			function successCounty(data) {
+				if (data.status==0) {
+					var County=$("#County");
+					$("#County option").remove();	
+					County.append("<option value='0'>请选择</option>");
+					var pro=new Array;
+					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
+					pro=val.split(",");		
+					for(var i=0;i< pro.length;i++)
+					{
+						var pro2=pro[i].split(":");
+						if(pro2[1]!="0")
+						{
+							County.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
+						}
+					}
+				} else {
+					layer.alert(data.message);
+				}
+			}
 			
 			$(function() {	
 				 	var self = $("body");
 					$.post("{:U('Card1/Get_Provinces','','')}", self.serialize(), success, "json");
 					 
-					
-					
 					$("#provinces").change(function(){
-						var p=$("#provinces").val();
-						$.post("{:U('Card1/Get_Provinces','','')}", {"Provinceid": p}, successcity, "json");					
+						if($("#provinces").val()=="0")
+						{
+							$("#city option").remove();
+							$("#city").append("<option value='0'>请选择</option>");
+							return;
+						}						
+						var self = $("form");						
+						$.post("{:U('Card1/Get_CitiesByProvince','','')}", self.serialize(), successcity, "json");					
 					});
 					
+					$("#city").change(function(){
+						if($("#city").val()=="0")
+						{
+							$("#County option").remove();
+							$("#County").append("<option value='0'>请选择</option>");
+							return;
+						}
+						var self = $("form");						
+						$.post("{:U('Card1/Get_CountyByCity','','')}", self.serialize(), successCounty, "json");					
+					});					
 			});
 		</script>
 	</head>
@@ -68,14 +102,18 @@
 		<form>
 			<div class="mui-content">
 				
-			<select id="provinces">
-				<option>ddd</option>
+			<select id="provinces" name="provinces">
+				<option>请选择</option>
 			</select>
 			省
-			<select id="city">
-				<option>ddd</option>
+			<select id="city" name="city">
+				<option>请选择</option>
 			</select>
 			市
+			<select id="County">
+				<option>请选择</option>
+			</select>
+			县
 			</div>
 		</form>
 	</body>

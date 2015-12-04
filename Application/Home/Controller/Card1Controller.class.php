@@ -17,16 +17,25 @@ class Card1Controller extends Controller {
     }
 	
  	public function Get_CitiesByProvince(){
- 		var provi=$_POST["Provinceid"];
-    	$this->assign('title', '{购物车}');	
-		$data = array("userAccount"=>"10000");
+ 		$provi=$_POST["provinces"];
+		$data = array(
+			"userAccount"	=>"10000",
+			"provinceId"			=>$provi
+		);
 		$url="https://openapi.1card1.cn/OpenApi/Get_CitiesByProvince";
 		$data=$this->GetData($url,$data);
-		//eacho $data;
-		$this->ajaxReturn($data);		
-		//$this->display();
+		$this->ajaxReturn($data);
     }
-	
+	public function Get_CountyByCity(){
+ 		$cityid=$_POST["city"];
+		$data = array(
+			"userAccount"	=>"10000",
+			"cityId"			=>$cityid
+		);
+		$url="https://openapi.1card1.cn/OpenApi/Get_CountyByCity";
+		$data=$this->GetData($url,$data);
+		$this->ajaxReturn($data);
+    }
 	
 	function GetData($url,$data)
 	{
