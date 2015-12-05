@@ -23,6 +23,9 @@ class PayController extends Controller {
 //	17;  // 保存保证金失败
 //	18;  // 支付失败
 //	19;  // session数据丢失
+//	20;  // 商品不允许立即价
+//	21;  // 保存出价记录失败
+//  22;  // 保存最高价失败
 	
 	public function index(){
 		if(is_login()) {
@@ -311,7 +314,7 @@ class PayController extends Controller {
 		foreach($list as $cart) {
 			if(intval($cart['type']) == 3) {
 				// 拍卖-立即
-//				$status = $this->paimai($cart, $account);
+				$status = $this->paimai($cart, $account);
 			} else {
 				// 秒杀
 				return $this->miaosha($cart, $account);
@@ -388,6 +391,7 @@ class PayController extends Controller {
 				$offset = rand(0, count($codes) - 1);
 				$code = $codes[$offset];
 				array_splice($codes, $offset, 1);
+				$codes = array_values($codes); // 重建索引
 				
 				$cdata = array(
 					'mid'		=> $mid, // 购买记录主表ID
@@ -465,6 +469,77 @@ class PayController extends Controller {
 			return 9; // 保存主表失败
 		}
 		return 5; // 增加秒杀记录失败
+	}
+
+	function paimai($cart, $account) {
+		$good = $cart['paimai'];
+		$lijijia = floatval($good['lijijia']);
+		$good['chujiacishu'] = intval($good['chujiacishu']);
+		$status = intval($good['status']);
+		$mpdb = M('MemberPaimai');
+		if($lijijia > 0) {
+			if($status < 2) {
+				// 增加出价记录
+				$mpdb = M('MemberPaimai');
+				$mpdata['uid'] = $account['uid'];
+				$mpdata['gid'] = $good['gid'];
+				$mpdata['flag'] = 2; // 立即揭标
+				$mpdata['money'] = $lijijia;
+				if($mpdb->add($mpdata)) {
+					$pdb = M('paimai');
+					$good['chujiacishu']++;
+					$good['zuigaojia'] = $lijijia;
+					$good['chujiazhe'] = $account['uid'];
+					$good['status'] = 2; // 商品已结束
+					$good['liji'] = 1; // 立即拍下的商品
+					$good['prizeuid'] = $account['uid']; // 中奖者
+					if($pdb->save($good)) {
+						// 归还保证金
+						$mpdb = M('MemberPaimai');
+						$adb = M('account');
+						$mdb = M('member');
+						$mpfilter['gid'] = $good['gid'];
+						$mpfilter['flag'] = 0; // 保证金
+						// 立即拍，本人须退还保证金
+//						$mpfilter['uid'] = array('neq', $good['prizeuid']); // 过滤拍得者
+						$records = $mpdb->where($mpfilter)->select();
+						if(!empty($records)) {
+							foreach($records as $record) {
+								// 将保证金退还给个人余额
+								$member = $mdb->field('uid, money')->find($record['uid']);
+								if($member) {
+									$member['money'] = floatval($member['money']) + floatval($record['money']);
+									if(!$mdb->save($member)) {
+										return 23;
+									}
+								}
+								
+								// 记录资金流水
+								$adata = array(
+									'uid'			=> $record['uid'],
+									'type'			=> 1, // 退款
+									'money'			=> $record['money'],	// 余额
+									'content' 		=> '退还保证金',
+								);
+								
+								if(!$adb->add($adata)) {
+									return 24;
+								}
+							}
+						}
+						return 0;
+					} else {
+						return 22; // 保存最高价失败
+					}
+				} else {
+					return 21; // 保存出价记录失败
+				}
+			} else {
+				return 3; // 商品已结束
+			}
+		} else {
+			return 20; // 商品不允许立即价
+		}
 	}
 
 	public function success() {

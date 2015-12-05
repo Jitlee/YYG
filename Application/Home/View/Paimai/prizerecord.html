@@ -2,8 +2,12 @@
 <ul id="recrodList" class="mui-table-view">
 	<foreach name="list" item="item">
 		<li class="mui-table-view-cell">
-			{$item.money}
-			<span class="yyg-cell-right yyg-right-margin">{$item.time}</span>
+			<span class="money">{$item.money}
+			<if condition="$item.flag eq 2">
+				 (立即揭拍)
+			</if>
+			</span>
+			<span class="yyg-cell-right yyg-right-margin time">{$item.time}</span>
 		</li>
 	</foreach>
 </ul>
@@ -40,7 +44,7 @@
 		var template = $("li:first-child", recrodList);
 		
 		function page() {
-			$.get("{:U('prizerecord', '', '')}/{$gid}/" + (++pageNum), null, function(list) {
+			$.get("{:U('prizerecord', '', '')}/{$gid}/{$uid}/" + (++pageNum), null, function(list) {
 				if(list && list.length > 0) {
 		       		$.each(list, function() {
 		       			var item = template.clone();

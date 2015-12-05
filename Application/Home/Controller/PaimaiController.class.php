@@ -188,7 +188,7 @@ class PaimaiController extends Controller {
 	
 	public function prizerecord($gid, $uid, $pageNum = 1) {
 		$db = M('MemberPaimai');
-		$map['flag'] = 1;
+		$map['flag'] = array('neq', 0);
 		$map['gid'] = $gid;
 		$list = $db->where($map)->order('id desc')->page($pageNum, 20)->select();
 		if($pageNum > 1) {
@@ -210,11 +210,11 @@ class PaimaiController extends Controller {
 	public function record($gid, $pageNum = 1) {
 		$pageNum = intval($pageNum);
 		$db = M('MemberPaimai');
-		$map['flag'] = 1;
+		$map['flag'] = array('neq', 0);
 		$map['gid'] = $gid;
 		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')
 			->field(array('yyg_member_paimai.money','yyg_member_paimai.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->where($map)->order('id desc')->page($pageNum, 20)->select();
+			->where($map)->order('id desc')->page($pageNum, 10)->select();
 		if($pageNum > 1) {
 			if(empty($list)) {
 				$this->ajaxReturn(0, 'JSON');
