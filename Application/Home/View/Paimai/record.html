@@ -73,7 +73,7 @@
 		}
 		
 		var recrodList = $("#recrodList");
-		var template = $("li:first-child", recrodList);
+		var template = $("tr:first-child", recrodList);
 		
 		function page() {
 			$.get("{:U('record', '', '')}/{$gid}/" + (++pageNum), null, function(list) {
