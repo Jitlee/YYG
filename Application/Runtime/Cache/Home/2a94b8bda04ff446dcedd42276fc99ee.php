@@ -70,6 +70,23 @@
 		border-right:solid 1px #D5D5D5;
 	}
 	
+	.owl-controls {
+		position: absolute;
+	    bottom: 0;
+	    left: 50%;
+	    transform: translateX(-50%);
+	}
+	
+	.owl-theme .owl-controls .owl-page span {
+		background-color: transparent;
+		border:solid 1px #fff;
+		opacity: 1;
+	}
+	
+	.owl-theme .owl-controls .owl-page.active span {
+		background-color: #fff;
+	}
+	
 	.yyg-bar-nav-btn {
 		flex:1;
 		-webkit-flex:1;
@@ -223,21 +240,6 @@
 		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
 	</div>
 </div>
-<div id="goodNav" class="yyg-bar-nav">
-	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
-	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
-	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
-	<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
-	<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
-</div>
-
-<div id="goodCategories" class="yyg-category">
-	<ul>
-		
-	</ul>
-</div>
-<ul id="goodList" class="yyg-goods-list">
-</ul>
 					
 <li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
 	<a href="">

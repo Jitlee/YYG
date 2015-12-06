@@ -9,6 +9,20 @@ class IndexController extends Controller {
 		$sdb = M('slide');
 		$slides = $sdb->select();
 		$this->assign('slides', $slides);
+		
+		// 商品分类
+		$cdb = M('category');
+		$categories = $cdb->page(1,8)->select();
+		$this->assign('allCategories', $categories);
+		
+		$this->display();
+    }
+	
+	public function all(){
+		run_task();
+    		$this->assign('title', '一元购');
+		$this->assign('pid', 'home');
+		
 		$this->display();
     }
 	
