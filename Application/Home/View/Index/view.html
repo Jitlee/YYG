@@ -22,7 +22,10 @@
 	<p class="yyg-view-title yyg-view-margin">
 		(第{$data.qishu}期) {$data.title} <r>{$data.subtitle}</r>
 	</p>
-	<h5 class="yyg-view-margin">价值：¥ {$data.money}</h5>
+	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger">{$data.money}</r></h5>
+	<if condition="$data.xiangou gt 0">
+		<h5 class="yyg-view-margin">限购：{$data.xiangou} 人次</h5>
+	</if>
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
 			<div class="yyg-progressing" style="width:{$data.percentage|default=0}%"></div>

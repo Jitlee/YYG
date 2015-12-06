@@ -45,8 +45,6 @@
 	<body>
 		<div class="mui-content">
 			<style type="text/css">
-	
-
 	.mui-content {
 		padding-bottom: 100px;
 	}
@@ -63,10 +61,36 @@
 		line-height: 150px;
 	}
 	
+	.yyg-removed {
+		/*-webkit-filter: grayscale(100%); 
+		-moz-filter: grayscale(100%); 
+		-ms-filter: grayscale(100%); 
+		-o-filter: grayscale(100%); 
+		filter: grayscale(100%); 
+		filter: gray; */
+		position: relative;
+		overflow: hidden;
+	}
+	.yyg-removed:after{
+		content: "已结束";
+		display: block;
+		text-align: center;
+		line-height: 23px;
+		height: 23px !important;
+		width:120px;
+		font-size: 16px;
+		color:#333;
+		position: absolute;
+		left:-37px;
+		top:13px;
+		z-index: 100;
+		-webkit-transform: rotate(-45deg);
+	}
+	
 </style>
 
 <?php if(isset($list)): ?><ul class="mui-table-view yyg-cart">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item">
+	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item <?php if($item["status"] != 1): ?>yyg-removed<?php endif; ?>" id="<?php echo ($item["id"]); ?>">
 		<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
 				<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
 			</div>
@@ -83,7 +107,7 @@
 			<div class="yyg-cart-body">
 				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
 				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
+				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" <?php if($item["status"] != 1): ?>disabled="disabled"<?php endif; ?> xg="<?php echo ($item["good"]["xiangou"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
 			</div><?php endif; ?>
 		</li><?php endforeach; endif; ?>
@@ -121,9 +145,15 @@
 				var id = $this.attr("cid");
 				var count = $this.val();
 				var bkCount = $this.attr("bk");
+				var xiangou = Number($this.attr("xg"));
 				if(count > 0) {
+					if(count > 0 && xiangou > 0 && count > xiangou) {
+						new Android_Toast({content: "该商品限购" + xiangou  + "人次" });
+						count = xiangou;
+						$this.val(count);
+					}
 					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
-						if(result.status == 1) {
+						if(result.status == 0) {
 							sum();
 							$this.attr("bk", count);
 						} else { // 失败
@@ -147,10 +177,11 @@
 		$(".yyg-cart-remove").click(function() {
 			$this = $(this);
 			var id = $this.attr("cid");
+			var bkCount = $this.attr("bk");
 			$.post("<?php echo U('remove', '', '');?>/" + id, null, function(result) {
 				if(result.status == 1) {
 					$this.closest(".yyg-cart-item").remove();
-					count();
+					sum();
 					if($(".yyg-cart-item").length == 0) {
 						$("#emptyBlock").show();
 						$("#footer").hide();

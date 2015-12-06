@@ -290,6 +290,9 @@
 	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$("a", item).attr("href", "/index.php/Home/Index/" + this.gid);
 					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+					if(this.xiangou > 0) {
+						item.addClass('yyg-xiangou');
+					}
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
 	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
 	       			$("span.money", item).text(this.money);

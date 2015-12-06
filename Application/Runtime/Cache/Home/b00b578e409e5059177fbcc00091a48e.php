@@ -60,7 +60,8 @@
 	<p class="yyg-view-title yyg-view-margin">
 		(第<?php echo ($data["qishu"]); ?>期) <?php echo ($data["title"]); ?> <r><?php echo ($data["subtitle"]); ?></r>
 	</p>
-	<h5 class="yyg-view-margin">价值：¥ <?php echo ($data["money"]); ?></h5>
+	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger"><?php echo ($data["money"]); ?></r></h5>
+	<?php if($data["xiangou"] > 0): ?><h5 class="yyg-view-margin">限购：<?php echo ($data["xiangou"]); ?> 人次</h5><?php endif; ?>
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
 			<div class="yyg-progressing" style="width:<?php echo ((isset($data["percentage"]) && ($data["percentage"] !== ""))?($data["percentage"]):0); ?>%"></div>

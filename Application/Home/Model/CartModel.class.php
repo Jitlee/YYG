@@ -7,7 +7,7 @@ class CartModel extends RelationModel{
             'mapping_type'      		=> self::BELONGS_TO,
             'class_name'        		=> 'Miaosha',
             'mapping_name'			=> 'good',
-            'mapping_fields'			=> 'gid,title,qishu,thumb,shengyurenshu,danjia,type,status',
+            'mapping_fields'			=> 'gid,title,qishu,thumb,shengyurenshu,danjia,type,status,xiangou',
             'foreign_key'			=> 'gid',
             'parent_key'				=> 'gid',
             'condition'				=> 'type<>3',

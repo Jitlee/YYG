@@ -69,21 +69,20 @@
 				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="{$data.danjia}" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="{$data.danjia|default='1'}" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
-		<if condition="$type eq 2">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou}" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou|default='0'}" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">元</label>
+				<span>设置限购次数（默认为0，表示不限购）</span>
 			</td>
 		</tr>
-		</if>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>

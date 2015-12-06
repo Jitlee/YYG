@@ -214,7 +214,7 @@ class PaimaiController extends Controller {
 		$map['gid'] = $gid;
 		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')
 			->field(array('yyg_member_paimai.money','yyg_member_paimai.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->where($map)->order('id desc')->page($pageNum, 10)->select();
+			->where($map)->order('id desc')->page($pageNum, 20)->select();
 		if($pageNum > 1) {
 			if(empty($list)) {
 				$this->ajaxReturn(0, 'JSON');

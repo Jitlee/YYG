@@ -22,22 +22,43 @@
 		<!-- Bootstrap core CSS -->
 		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/Public/Admin/css/bootstrap.css" rel="stylesheet">
+		<link href="/Application/admin/View/css/index.css" rel="stylesheet">
+		<link href="/Application/admin/View/css/common.css" rel="stylesheet">	
+		<!--<link href="/Application/admin/View/css/global.css" rel="stylesheet">-->
+			<style type="text/css">
+				.navv .current{background:url(../images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
+				
+				.navv .current a{
+					display:block;
+					left:20px;
+					height:40px;
+					text-align:center;
+					padding-right:20px;
+					background:url(../images/nav_bg_1.png) no-repeat right top;
+					color:#2a8bbb;
+					top:0px;
+				}
+				#navbar ul li a{color: #ffffff;}
+				#navbar ul li p{color: #ffffff;}
+			</style>
 	</head>
 
-	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+	<body style="padding-top: 90px;">
+		<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #2a8bbb; margin-bottom: 0px; height: 80px;">
 			<div class="container-fluid">
-				<div class="navbar-header">
+				<div class="navbar-header" id="header">
+					
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">后台管理系统</a>
+					<div class="logo"></div>
+					<!--<a class="navbar-brand" href="#">后台管理系统</a>-->
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" >
 						<li>
 							<p class="navbar-text">admin</p>
 						</li>
@@ -46,6 +67,12 @@
 					</ul>
 				</div>
 			</div>
+		<ul id="mainNavTabs" class="navv navbar-fixed-top" style="position: absolute; top:40px; left:500px; z-index: 100; background: none; border-bottom: none; ">
+		<li id="sysmgr" class="normal"><a>系统管理</a></li>
+		<li id="gdmgr" class="normal"><a>商品管理</a></li>
+		<li id="mbmgr" class="normal"><a>会员管理</a></li>
+		<li id="uimgr" class="normal"><a>界面管理</a></li>
+</ul>
 		</nav>
 
 		<!-- Bootstrap core JavaScript
@@ -62,20 +89,15 @@
 		<!--<script src="/Public/Admin/js/validator.min.js"></script>-->
 		<script src="/Public/Admin/js/app.js"></script>
 <div class="body">
-	<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
-	<li id="sysmgr"><a>系统管理</a></li>
-	<li id="gdmgr"><a>商品管理</a></li>
-	<li id="mbmgr"><a>会员管理</a></li>
-	<li id="uimgr"><a>界面管理</a></li>
-</ul>
-<div id="subNavTabs">
+	
+<div id="subNavTabs" style="width: 220px;" >
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<?php if(ROLE == 1): ?><li id="usrmgr">
+		<?php if(ROLE == 1): ?><li id="usrmgr" class="head">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a href="/index.php/Admin/User">管理员列表</a></li>
-				<li id="addusr"><a href="/index.php/Admin/User/add">添加管理员</a></li>
-				<li id="chagpwd"><a href="/index.php/Admin/User/change">修改密码</a></li>
+				<li id="usrlst" class="set"><a href="/index.php/Admin/User">管理员列表</a></li>
+				<li id="addusr" class="set"><a href="/index.php/Admin/User/add">添加管理员</a></li>
+				<li id="chagpwd" class="set"><a href="/index.php/Admin/User/change">修改密码</a></li>
 			</ul>
 		</li><?php endif; ?>
 	</ul>
@@ -87,13 +109,13 @@
 				<li id="addms"><a href="/index.php/Admin/Miaosha/add">添加秒杀商品</a></li>
 			</ul>
 		</li>
-		<li id="xgmgr">
+		<!--<li id="xgmgr">
 			<a>限购商品管理</a>
 			<ul>
 				<li id="xglst"><a href="/index.php/Admin/Xiangou">限购商品列表</a></li>
 				<li id="addxg"><a href="/index.php/Admin/Xiangou/add">添加限购商品</a></li>
 			</ul>
-		</li>
+		</li>-->
 		<li id="pmmgr">
 			<a>拍卖商品管理</a>
 			<ul>
@@ -207,9 +229,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_256471509__=$minPageNum;$__FOR_END_256471509__=$pageNum;for($i=$__FOR_START_256471509__;$i < $__FOR_END_256471509__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_56289683__=$minPageNum;$__FOR_END_56289683__=$pageNum;for($i=$__FOR_START_56289683__;$i < $__FOR_END_56289683__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_535621324__=$pageNum+1;$__FOR_END_535621324__=$maxPageNum;for($i=$__FOR_START_535621324__;$i < $__FOR_END_535621324__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_1273946629__=$pageNum+1;$__FOR_END_1273946629__=$maxPageNum;for($i=$__FOR_START_1273946629__;$i < $__FOR_END_1273946629__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
