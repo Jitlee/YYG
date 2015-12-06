@@ -213,8 +213,7 @@ class PayController extends Controller {
 				if($status == 0) {
 					// 清空购物车
 					$cdb->where('uid='.$account['uid'])->delete();
-				}
-				
+				}				
 			} else {
 				$status = 2; // 查询购物车失败
 			}

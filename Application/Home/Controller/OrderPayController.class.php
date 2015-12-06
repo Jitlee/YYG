@@ -19,8 +19,7 @@ class OrderPayController extends Controller {
 		}
 		
 		$amount = $params->amount;
-		$channel = $params->channel;
-		 
+		$channel = $params->channel;		 
         $orderNo = substr(md5(time()), 0, 12);
 		//sourceType":"recharge
 		$sourceType=$params->sourceType;
@@ -29,21 +28,18 @@ class OrderPayController extends Controller {
 			$result["status"]=0;
 			$result["msg"]="操作成功。";
 			if(is_login()) {
-				//$db = M('member_addmoney_record');
-				
 				$db = M('member_addmoney_record');
-				$data = array(
+				$datasave = array(
 					'uid'		=>session("_uid"),
 					'code'		=>$orderNo,
 					'money'		=>$amount,
 					'pay_type'	=>$channel,
 					'status'	=>0,
-					'time'		=>time()
+					'time'		=>date('y-m-d-h-i-s')
 				);
-
-				if($db->add($data) != false) {		
-					//$result["status"]=1;
-				} 
+				session('_payno_no_', $orderNo);
+				if($db->add($datasave) != false) {
+				}
 				else 
 				{
 					$result["msg"]='保存订单失败。';
@@ -66,7 +62,6 @@ class OrderPayController extends Controller {
                 	'success_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '')
                 	, 'cancel_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '')
 				);
-					
                 break;
             case 'upmp_wap' :
                 $extra = array('result_url' => 'http://www.yourdomain.com/result?code=');
@@ -99,32 +94,56 @@ class OrderPayController extends Controller {
         }
     
 	}
-	
+	public function payStatus($orderno)
+	{
+		$db = M('member_addmoney_record');
+		$filter["code"]=$orderno;
+		$payitem = $db->where($filter)->find();
+		if($payitem)
+		{
+			$addMoney=floatval($payitem['money']);
+			$adduid=$payitem["uid"];
+			$payitem["status"]=1;
+			$db->save($payitem);
+			
+			$udb = M('member');
+			$menberfilter["uid"]=$adduid;
+			$dbmember = $udb->where($menberfilter)->find();
+			if($dbmember)
+			{
+				$dbmember['money'] = floatval($dbmember['money'])+$addMoney;
+				$udb->save($dbmember);
+				return 0;
+			}
+		}
+		return -1;
+	}
 	
 	// 第三方支付成功页面
 	public function thirdpaysuccess() {
 		layout(false);
 		$tradeNo = I('request.out_trade_no');
 		$result = I('request.result');
-		if($result != 'success') {
-			$this->assign('status', 18);
-			$this->display('error');	
-		} else if($tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
-			session('_trade_no_', null);
-			$_pay = session($tradeNo);
-			$status = $this->pay(false, $_pay);
+
+		if($tradeNo == session('_payno_no_')) {
+			session('_payno_no_', null);
+			$status = $this->payStatus($tradeNo);			
 			if($status == 0) {
+				$this->assign('orderno', $tradeNo);
+				$this->assign('status', $status);
 				$this->display('success');	
 			} else { // TODO: 失败了没有机制
 				$this->assign('status', $status);
 				$this->display('error');	
 			}
-			session($tradeNo, null);
+			//session($tradeNo, null);
 		} else {
 			$this->assign('status', 19);
 			$this->display('error');	
 		}
 	}
+	
+
 	
 	public function success() {
 		layout(false);
@@ -141,18 +160,5 @@ class OrderPayController extends Controller {
 		$this->display();
 	}
 	
-	
-public function demo(){
-    	$this->assign('title', '支付');
-		//$this->assign('pid', 'miaosha');
-		$arr=range(1,10000);
-		shuffle($arr);
-		$slides["rderNo"]='OY00001' . $arr[0];
-		$this->assign('data', $slides);
-		
-        $this->display();
-}
-
-
 }
 	

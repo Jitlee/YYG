@@ -10,6 +10,7 @@ class Card1Controller extends Controller {
  		$provinces=$_POST["provinces"];
 		$db = M('add');
 		$filter["addparent"] = $provinces;
+		$filter["addtype"] = 1;
 		$data= $db->where($filter)->select();		
 		$this->ajaxReturn($data,'JSON');
     }
@@ -17,6 +18,7 @@ class Card1Controller extends Controller {
  		$cityid=$_POST["city"];
 		$db = M('add');
 		$filter["addparent"] = $cityid;
+		$filter["addtype"] = 2;
 		$data= $db->where($filter)->select();		
 		$this->ajaxReturn($data,'JSON');
     }

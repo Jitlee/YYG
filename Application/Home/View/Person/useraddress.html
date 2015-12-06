@@ -3,12 +3,9 @@
 			<span class="mui-icon mui-icon-left-nav" ></span>
 	    	返回
 	  </button>
-	  <h1 class="mui-title">收货地址</h1>
+	  <h1 class="mui-title">{$title}</h1>
 </header>
 <div class="mui-content">
-	
-	
-</div>
 			<form>
 				<div class="mui-input-group">
 					<div class="mui-input-row">
@@ -51,36 +48,48 @@
 							<option value='33'>香港</option>
 							<option value='34'>澳门</option>
 						</select>					
-						<select class="cityselect"  id="city" nullmsg="请选择有效的省市区" name="city" required> <option value="">请选择</option></select>						
-						<select class="cityselect"  id="County" nullmsg="请选择有效的省市区" required><option value="">请选择</option></select>
+						
+						<select class="cityselect"  id="city" nullmsg="请选择有效的省市区" name="city" required> 
+								<option value="">请选择</option>
+								<foreach name="cityarr" item="c">
+									<option value="{$c.addid}">{$c.addname}</option>
+								</foreach>
+						</select>						
+						<select class="cityselect"  id="County" nullmsg="请选择有效的省市区" required>
+								<option value="">请选择</option>
+								<foreach name="xianarr" item="x">
+									<option value="{$x.addid}">{$x.addname}</option>
+								</foreach>
+						</select>
 						</div>
 					</div>
-					<div style="display:none;">
+					<div style="display: none;">
 						<input type="text" id='sheng'   name="sheng"  class="mui-input-clear mui-input">
 						<input type="text" id='shi'   name="shi"  class="mui-input-clear mui-input">
 						<input type="text" id='xian'   name="xian"  class="mui-input-clear mui-input">
 					</div>
 					<div class="mui-input-row">
 						<label>街道地址</label>
-						<input type="text" id='jiedao'   name="jiedao"  class="mui-input-clear mui-input" required placeholder="请填街道地址！">
+						<input type="text" id='jiedao'  value="{$data.jiedao}"  name="jiedao"  class="mui-input-clear mui-input" required placeholder="请填街道地址！">
 					</div>
 					<div class="mui-input-row">
 						<label>邮政编码</label>
-						<input type="text" id='youbian'   name="youbian" class="mui-input-clear mui-input" required placeholder="请填邮政编码">
+						<input type="text" id='youbian'  value="{$data.youbian}"    name="youbian" class="mui-input-clear mui-input" required placeholder="请填邮政编码">
 					</div> 
 					<div class="mui-input-row">
 						<label>收货人</label>
-						<input type="text" id='shouhuoren'   name="shouhuoren" class="mui-input-clear mui-input" required placeholder="请填收货人">
+						<input type="text" id='shouhuoren'  value="{$data.shouhuoren}"    name="shouhuoren" class="mui-input-clear mui-input" required placeholder="请填收货人">
 					</div> 
 					<div class="mui-input-row">
 						<label>手机号码</label>
-						<input type="text" id='mobile'   name="mobile" class="mui-input-clear mui-input" required placeholder="请填手机号码">
+						<input type="text" id='mobile'   value="{$data.mobile}"   name="mobile" class="mui-input-clear mui-input" required placeholder="请填手机号码">
 					</div> 
 				</div>
 				<div class="mui-content-padded">
 					<button id='btnsave' type="button" class="mui-btn mui-btn-block mui-btn-primary">保存</button>
 				</div>
 			</form>
+</div>
 <style>
 	.cityselect{ width: 15%; float: left;}
 </style>	
@@ -96,22 +105,37 @@
 					var p=$("#provinces").find("option:selected").text();
 					var c=$("#city").find("option:selected").text();
 					var x=$("#County").find("option:selected").text();
-					$("sheng").val(p);
-					$("shi").val(c);
-					$("xian").val(x);
-					
-					var self = $("form");					
-					$.post("{:U('Person/useraddress','','')}", self.serialize(), savesuccess, "json");					
+					$("#sheng").val(p);
+					$("#shi").val(c);
+					$("#xian").val(x);
+					var self = $("form");
+					$.post("{:U('Person/useraddress','','')}", self.serialize(), savesuccess, "json");
+					return;
 					function savesuccess(data) {
-						layer.alert(data);
 						if (data.status) {
-							 history.go(-1);
+							 window.location.href="{:U('Person/me', '', '')}";
 						} else {
 							layer.alert(data.msg);
 						}
 					}					
-				});
-			});
+				});		
+		//初使化省市区
+		var proid='{$data.shengid}';
+		if(proid)
+		{
+			$("#provinces").val(proid);
+		}
+		var shiid='{$data.shiid}';
+		if(shiid)
+		{
+			$("#city").val(shiid);
+		}
+		var xianid='{$data.xianid}';
+		if(xianid)
+		{
+			$("#County").val(xianid);
+		}
+});
 	
 	function successcity(data) {			
 			var city=$("#city");
@@ -125,7 +149,7 @@
 					city.append("<option value='"+pro2.addid+"'>"+pro2.addname+"</option>");						 
 				}
 			}
-
+			
 	}
 	function successCounty(data) {				
 		var County=$("#County");
@@ -148,7 +172,8 @@
 				if($("#provinces").val()=="0")
 				{
 					$("#city option").remove();
-					$("#city").append("<option value='0'>请选择</option>");
+					$("#County option").remove();
+					$("#city").append("<option value='0'>请选择</option>");					
 					return;
 				}						
 				var self = $("form");						
