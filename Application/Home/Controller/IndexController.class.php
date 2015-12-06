@@ -40,7 +40,7 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status, qishu, canyurenshu, zongrenshu,type')->select();
+		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
@@ -130,13 +130,13 @@ class IndexController extends Controller {
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
+			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time')->where($map)->find();
+			$data = $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time')->where($map)->find();
 			if(empty($data)) {
 				return $this->getGood($gid);
 			}

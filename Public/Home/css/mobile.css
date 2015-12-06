@@ -695,3 +695,24 @@ label.mui-input-row input[type=checkbox] {
 	display: inline-block;
 	width:60px;
 }
+
+.yyg-xiangou {
+	position: relative;
+	overflow: hidden;
+}
+.yyg-xiangou:before{
+	content: "限购";
+	display: block;
+	text-align: center;
+	line-height: 23px;
+	height: 20px;
+	width:120px;
+	font-size: 16px;
+	color:#fff;
+	background-color:#FF002B;
+	position: absolute;
+	left:-37px;
+	top:13px;
+	z-index: 100;
+	-webkit-transform: rotate(-45deg);
+}

@@ -1,6 +1,4 @@
 <style type="text/css">
-	
-
 	.mui-content {
 		padding-bottom: 100px;
 	}
@@ -17,12 +15,38 @@
 		line-height: 150px;
 	}
 	
+	.yyg-removed {
+		-webkit-filter: grayscale(100%); 
+		-moz-filter: grayscale(100%); 
+		-ms-filter: grayscale(100%); 
+		-o-filter: grayscale(100%); 
+		filter: grayscale(100%); 
+		filter: gray; 
+		position: relative;
+		overflow: hidden;
+	}
+	.yyg-removed:after{
+		content: "已结束";
+		display: block;
+		text-align: center;
+		line-height: 23px;
+		height: 23px !important;
+		width:120px;
+		font-size: 16px;
+		color:#333;
+		position: absolute;
+		left:-37px;
+		top:13px;
+		z-index: 100;
+		-webkit-transform: rotate(-45deg);
+	}
+	
 </style>
 
 <present name="list">
 <ul class="mui-table-view yyg-cart">
 	<foreach name="list" item="item">
-		<li class="mui-table-view-cell yyg-cart-item">
+		<li class="mui-table-view-cell yyg-cart-item <if condition="$item.status eq 1">yyg-removed</if>" id="{$item.id}">
 		<if condition="$item.type eq 3">
 			<div class="yyg-cart-img-container">
 				<img src="{$item.paimai.thumb}"/>
@@ -40,7 +64,7 @@
 			<div class="yyg-cart-body">
 				<p class="yyg-cart-title">(第 {$item.good.qishu} 期){$item.good.title}</p>
 				<h5>剩余{$item.good.shengyurenshu}人次</h5>
-				<input type="number" name="count" cid="{$item.id}" dj="{$item.good.danjia}" value="{$item.count}" bk="{$item.count}" class="mui-input" />
+				<input type="number" name="count" cid="{$item.id}" <if condition="$item.status eq 1">disabled="disabled"</if> xg="{$item.good.xiangou}" dj="{$item.good.danjia}" value="{$item.count}" bk="{$item.count}" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="{$item.id}"><i class="iconfont icon-remove"></i></a>
 			</div>
 		</if>
@@ -81,9 +105,15 @@
 				var id = $this.attr("cid");
 				var count = $this.val();
 				var bkCount = $this.attr("bk");
+				var xiangou = Number($this.attr("xg"));
 				if(count > 0) {
+					if(count > 0 && xiangou > 0 && count > xiangou) {
+						new Android_Toast({content: "该商品限购" + xiangou  + "人次" });
+						count = xiangou;
+						$this.val(count);
+					}
 					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
-						if(result.status == 1) {
+						if(result.status == 0) {
 							sum();
 							$this.attr("bk", count);
 						} else { // 失败
@@ -107,10 +137,11 @@
 		$(".yyg-cart-remove").click(function() {
 			$this = $(this);
 			var id = $this.attr("cid");
+			var bkCount = $this.attr("bk");
 			$.post("{:U('remove', '', '')}/" + id, null, function(result) {
 				if(result.status == 1) {
 					$this.closest(".yyg-cart-item").remove();
-					count();
+					sum();
 					if($(".yyg-cart-item").length == 0) {
 						$("#emptyBlock").show();
 						$("#footer").hide();
