@@ -22,22 +22,43 @@
 		<!-- Bootstrap core CSS -->
 		<link href="__B_CSS__" rel="stylesheet">
 		<link href="__CSS__/bootstrap.css" rel="stylesheet">
+		<link href="/Application/admin/View/css/index.css" rel="stylesheet">
+		<link href="/Application/admin/View/css/common.css" rel="stylesheet">	
+		<!--<link href="/Application/admin/View/css/global.css" rel="stylesheet">-->
+			<style type="text/css">
+				.navv .current{background:url(../images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
+				
+				.navv .current a{
+					display:block;
+					left:20px;
+					height:40px;
+					text-align:center;
+					padding-right:20px;
+					background:url(../images/nav_bg_1.png) no-repeat right top;
+					color:#2a8bbb;
+					top:0px;
+				}
+				#navbar ul li a{color: #ffffff;}
+				#navbar ul li p{color: #ffffff;}
+			</style>
 	</head>
 
-	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+	<body style="padding-top: 90px;">
+		<nav class="navbar navbar-inverse navbar-fixed-top" style="background: #2a8bbb; margin-bottom: 0px; height: 80px;">
 			<div class="container-fluid">
-				<div class="navbar-header">
+				<div class="navbar-header" id="header">
+					
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 						<span class="sr-only">Toggle navigation</span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="#">后台管理系统</a>
+					<div class="logo"></div>
+					<!--<a class="navbar-brand" href="#">后台管理系统</a>-->
 				</div>
 				<div id="navbar" class="navbar-collapse collapse">
-					<ul class="nav navbar-nav navbar-right">
+					<ul class="nav navbar-nav navbar-right" >
 						<li>
 							<p class="navbar-text">admin</p>
 						</li>
@@ -46,6 +67,12 @@
 					</ul>
 				</div>
 			</div>
+		<ul id="mainNavTabs" class="navv navbar-fixed-top" style="position: absolute; top:40px; left:500px; z-index: 100; background: none; border-bottom: none; ">
+		<li id="sysmgr" class="normal"><a>系统管理</a></li>
+		<li id="gdmgr" class="normal"><a>商品管理</a></li>
+		<li id="mbmgr" class="normal"><a>会员管理</a></li>
+		<li id="uimgr" class="normal"><a>界面管理</a></li>
+</ul>
 		</nav>
 
 		<!-- Bootstrap core JavaScript

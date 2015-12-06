@@ -6,68 +6,19 @@ use Think\Controller;
 class Card1Controller extends Controller {
 	
  
-	public function Get_Provinces(){
-    	$this->assign('title', '{购物车}');	
-		$data = array("userAccount"=>"10000");
-		$url="https://openapi.1card1.cn/OpenApi/Get_Provinces";
-		$data=$this->GetData($url,$data);
-		
-		$db=M("add");
-	
-		//$val=  str_split($data["data"];
-		$pro2=$data["data"];
-		$pro2= strtr($pro2,'\"','');
-		$pro2= strtr($pro2,"{","");
-		$pro2= strtr($pro2,"}","");
-		//$pro2= strtr(''/[|{|}| ]+/g'," ","");
-		
-		$pro=split(",",$pro2);
-							 
-		foreach ($array as $pro)
-		{
-			
-			$pro2=split(":",$array);			
-			//provinces.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
-			$item= array(
-				'addid'		=>$pro2[1],
-				'addname'	=>$pro2[0],
-				'addparent'	=>0,
-				'addtype'	=>0
-			);
-			
-			$db->add($item);
-			$this->ajaxReturn($array);		
-			//exit;
-		}
-		$this->ajaxReturn($pro);
-		
-		
-		//$this->display();
-    }
-	
  	public function Get_CitiesByProvince(){
- 		$provi=$_POST["provinces"];
-		$data = array(
-			"userAccount"	=>"10000",
-			"provinceId"			=>$provi
-		);
-		$url="https://openapi.1card1.cn/OpenApi/Get_CitiesByProvince";
-		$data=$this->GetData($url,$data);
-		
-		
-					
-					
-		$this->ajaxReturn($data);
+ 		$provinces=$_POST["provinces"];
+		$db = M('add');
+		$filter["addparent"] = $provinces;
+		$data= $db->where($filter)->select();		
+		$this->ajaxReturn($data,'JSON');
     }
 	public function Get_CountyByCity(){
  		$cityid=$_POST["city"];
-		$data = array(
-			"userAccount"	=>"10000",
-			"cityId"			=>$cityid
-		);
-		$url="https://openapi.1card1.cn/OpenApi/Get_CountyByCity";
-		$data=$this->GetData($url,$data);
-		$this->ajaxReturn($data);
+		$db = M('add');
+		$filter["addparent"] = $cityid;
+		$data= $db->where($filter)->select();		
+		$this->ajaxReturn($data,'JSON');
     }
 	
 	function GetData($url,$data)

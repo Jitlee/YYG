@@ -1,9 +1,169 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
-</html>
+<header class="mui-bar mui-bar-nav">
+	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+			<span class="mui-icon mui-icon-left-nav" ></span>
+	    	返回
+	  </button>
+	  <h1 class="mui-title">收货地址</h1>
+</header>
+<div class="mui-content">
+	
+	
+</div>
+			<form>
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label>所在地区：</label>
+						<div>
+						<select id="provinces" class="cityselect" nullmsg="请选择有效的省市区" name="provinces" required>
+							<option value="">请选择</option>
+							<option value='1'>北京</option>
+							<option value='2'>天津</option>
+							<option value='3'>河北</option>
+							<option value='4'>山西</option>
+							<option value='5'>内蒙古</option>
+							<option value='6'>辽宁</option>
+							<option value='7'>吉林</option>
+							<option value='8'>黑龙江</option>
+							<option value='9'>上海</option>
+							<option value='10'>江苏</option>
+							<option value='11'>浙江</option>
+							<option value='12'>安徽</option>
+							<option value='13'>福建</option>
+							<option value='14'>江西</option>
+							<option value='15'>山东</option>
+							<option value='16'>河南</option>
+							<option value='17'>湖北</option>
+							<option value='18'>湖南</option>
+							<option value='19'>广东</option>
+							<option value='20'>广西</option>
+							<option value='21'>海南</option>
+							<option value='22'>重庆</option>
+							<option value='23'>四川</option>
+							<option value='24'>贵州</option>
+							<option value='25'>云南</option>
+							<option value='26'>西藏</option>
+							<option value='27'>陕西</option>
+							<option value='28'>甘肃</option>
+							<option value='29'>青海</option>
+							<option value='30'>宁夏</option>
+							<option value='31'>新疆</option>
+							<option value='32'>台湾</option>
+							<option value='33'>香港</option>
+							<option value='34'>澳门</option>
+						</select>					
+						<select class="cityselect"  id="city" nullmsg="请选择有效的省市区" name="city" required> <option value="">请选择</option></select>						
+						<select class="cityselect"  id="County" nullmsg="请选择有效的省市区" required><option value="">请选择</option></select>
+						</div>
+					</div>
+					<div style="display:none;">
+						<input type="text" id='sheng'   name="sheng"  class="mui-input-clear mui-input">
+						<input type="text" id='shi'   name="shi"  class="mui-input-clear mui-input">
+						<input type="text" id='xian'   name="xian"  class="mui-input-clear mui-input">
+					</div>
+					<div class="mui-input-row">
+						<label>街道地址</label>
+						<input type="text" id='jiedao'   name="jiedao"  class="mui-input-clear mui-input" required placeholder="请填街道地址！">
+					</div>
+					<div class="mui-input-row">
+						<label>邮政编码</label>
+						<input type="text" id='youbian'   name="youbian" class="mui-input-clear mui-input" required placeholder="请填邮政编码">
+					</div> 
+					<div class="mui-input-row">
+						<label>收货人</label>
+						<input type="text" id='shouhuoren'   name="shouhuoren" class="mui-input-clear mui-input" required placeholder="请填收货人">
+					</div> 
+					<div class="mui-input-row">
+						<label>手机号码</label>
+						<input type="text" id='mobile'   name="mobile" class="mui-input-clear mui-input" required placeholder="请填手机号码">
+					</div> 
+				</div>
+				<div class="mui-content-padded">
+					<button id='btnsave' type="button" class="mui-btn mui-btn-block mui-btn-primary">保存</button>
+				</div>
+			</form>
+<style>
+	.cityselect{ width: 15%; float: left;}
+</style>	
+<script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	$(function(){				
+				$("#btnsave").click(function(){
+					var p=$("#provinces").find("option:selected").text();
+					var c=$("#city").find("option:selected").text();
+					var x=$("#County").find("option:selected").text();
+					$("sheng").val(p);
+					$("shi").val(c);
+					$("xian").val(x);
+					
+					var self = $("form");					
+					$.post("{:U('Person/useraddress','','')}", self.serialize(), savesuccess, "json");					
+					function savesuccess(data) {
+						layer.alert(data);
+						if (data.status) {
+							 history.go(-1);
+						} else {
+							layer.alert(data.msg);
+						}
+					}					
+				});
+			});
+	
+	function successcity(data) {			
+			var city=$("#city");
+			$("#city option").remove();			
+			city.append("<option value='0'>请选择</option>");		
+			for(var i=0;i< data.length;i++)
+			{
+				var pro2=data[i];
+				if(pro2[1]!="0")
+				{
+					city.append("<option value='"+pro2.addid+"'>"+pro2.addname+"</option>");						 
+				}
+			}
+
+	}
+	function successCounty(data) {				
+		var County=$("#County");
+		$("#County option").remove();	
+		County.append("<option value='0'>请选择</option>");
+		for(var i=0;i< data.length;i++)
+		{
+			var pro2=data[i];
+			if(pro2[1]!="0")
+			{
+				County.append("<option value='"+pro2.addid+"'>"+pro2.addname+"</option>");
+			}
+		}
+	}
+	
+	$(function() {	
+		 	var self = $("body");
+		 	
+			$("#provinces").change(function(){
+				if($("#provinces").val()=="0")
+				{
+					$("#city option").remove();
+					$("#city").append("<option value='0'>请选择</option>");
+					return;
+				}						
+				var self = $("form");						
+				$.post("{:U('Card1/Get_CitiesByProvince','','')}", self.serialize(), successcity, "json");					
+			});
+			
+			$("#city").change(function(){
+				if($("#city").val()=="0")
+				{
+					$("#County option").remove();
+					$("#County").append("<option value='0'>请选择</option>");
+					return;
+				}
+				var self = $("form");						
+				$.post("{:U('Card1/Get_CountyByCity','','')}", self.serialize(), successCounty, "json");					
+			});					
+	});
+</script>

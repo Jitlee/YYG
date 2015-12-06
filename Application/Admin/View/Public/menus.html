@@ -1,18 +1,13 @@
-<ul id="mainNavTabs" class="nav nav-tabs navbar-fixed-top">
-	<li id="sysmgr"><a>系统管理</a></li>
-	<li id="gdmgr"><a>商品管理</a></li>
-	<li id="mbmgr"><a>会员管理</a></li>
-	<li id="uimgr"><a>界面管理</a></li>
-</ul>
-<div id="subNavTabs">
+
+<div id="subNavTabs" style="width: 220px;" >
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
 		<if condition="ROLE eq 1">
-		<li id="usrmgr">
+		<li id="usrmgr" class="head">
 			<a>管理员管理</a>
 			<ul>
-				<li id="usrlst"><a href="__MODULE__/User">管理员列表</a></li>
-				<li id="addusr"><a href="__MODULE__/User/add">添加管理员</a></li>
-				<li id="chagpwd"><a href="__MODULE__/User/change">修改密码</a></li>
+				<li id="usrlst" class="set"><a href="__MODULE__/User">管理员列表</a></li>
+				<li id="addusr" class="set"><a href="__MODULE__/User/add">添加管理员</a></li>
+				<li id="chagpwd" class="set"><a href="__MODULE__/User/change">修改密码</a></li>
 			</ul>
 		</li>
 		</if>

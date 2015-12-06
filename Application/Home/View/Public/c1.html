@@ -11,69 +11,38 @@
 				$("button:submit").attr("disabled", false);
 			});
 			
-			function success(data) {
-				if (data.status==0) {
-					//layer.alert(data.data);
-					var provinces=$("#provinces");
-					$("#provinces option").remove();							
-					var pro=new Array;
-					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
-					pro=val.split(",");					 
-					for(var i=0;i< pro.length;i++)
-					{
-						var pro2=pro[i].split(":");
-						provinces.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
-					}
-				} else {
-					layer.alert(data.message);
-				}
-			}
 			
-			function successcity(data) {
-				if (data.status==0) {
+			function successcity(data) {			
 					var city=$("#city");
 					$("#city option").remove();			
-					city.append("<option value='0'>请选择</option>");
-					var pro=new Array;
-					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
-					pro=val.split(",");		
-					for(var i=0;i< pro.length;i++)
+					city.append("<option value='0'>请选择</option>");		
+					for(var i=0;i< data.length;i++)
 					{
-						var pro2=pro[i].split(":");
+						var pro2=data[i];
 						if(pro2[1]!="0")
 						{
-							city.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");	
-						}						
-					}
-				} else {
-					layer.alert(data.message);
-				}
-			}
-			function successCounty(data) {
-				if (data.status==0) {
-					var County=$("#County");
-					$("#County option").remove();	
-					County.append("<option value='0'>请选择</option>");
-					var pro=new Array;
-					var val=  data.data.replace(/[\"|{|}| ]+/g,"");
-					pro=val.split(",");		
-					for(var i=0;i< pro.length;i++)
-					{
-						var pro2=pro[i].split(":");
-						if(pro2[1]!="0")
-						{
-							County.append("<option value='"+pro2[1]+"'>"+pro2[0]+"</option>");
+							city.append("<option value='"+pro2.addid+"'>"+pro2.addname+"</option>");						 
 						}
 					}
-				} else {
-					layer.alert(data.message);
+
+			}
+			function successCounty(data) {				
+				var County=$("#County");
+				$("#County option").remove();	
+				County.append("<option value='0'>请选择</option>");
+				for(var i=0;i< data.length;i++)
+				{
+					var pro2=data[i];
+					if(pro2[1]!="0")
+					{
+						County.append("<option value='"+pro2.addid+"'>"+pro2.addname+"</option>");
+					}
 				}
 			}
 			
 			$(function() {	
 				 	var self = $("body");
-					$.post("{:U('Card1/Get_Provinces','','')}", self.serialize(), success, "json");
-					 
+				 	
 					$("#provinces").change(function(){
 						if($("#provinces").val()=="0")
 						{
@@ -102,19 +71,58 @@
 		<form>
 			<div class="mui-content">
 				
-			<select id="provinces" name="provinces">
-				<option>请选择</option>
-			</select>
-			省
-			<select id="city" name="city">
-				<option>请选择</option>
-			</select>
-			市
-			<select id="County">
-				<option>请选择</option>
-			</select>
-			县
+				<select id="provinces" name="provinces">
+					<option>请选择</option>
+					<option value='1'>北京</option>
+					<option value='2'>天津</option>
+					<option value='3'>河北</option>
+					<option value='4'>山西</option>
+					<option value='5'>内蒙古</option>
+					<option value='6'>辽宁</option>
+					<option value='7'>吉林</option>
+					<option value='8'>黑龙江</option>
+					<option value='9'>上海</option>
+					<option value='10'>江苏</option>
+					<option value='11'>浙江</option>
+					<option value='12'>安徽</option>
+					<option value='13'>福建</option>
+					<option value='14'>江西</option>
+					<option value='15'>山东</option>
+					<option value='16'>河南</option>
+					<option value='17'>湖北</option>
+					<option value='18'>湖南</option>
+					<option value='19'>广东</option>
+					<option value='20'>广西</option>
+					<option value='21'>海南</option>
+					<option value='22'>重庆</option>
+					<option value='23'>四川</option>
+					<option value='24'>贵州</option>
+					<option value='25'>云南</option>
+					<option value='26'>西藏</option>
+					<option value='27'>陕西</option>
+					<option value='28'>甘肃</option>
+					<option value='29'>青海</option>
+					<option value='30'>宁夏</option>
+					<option value='31'>新疆</option>
+					<option value='32'>台湾</option>
+					<option value='33'>香港</option>
+					<option value='34'>澳门</option>
+				</select>
+				省
+				<select id="city" name="city">
+					<option>请选择</option>
+				</select>
+				市
+				<select id="County">
+					<option>请选择</option>
+				</select>
+				县
 			</div>
+			aaa
+			<textarea id="arr" rows="10" cols="20">
+				</textarea>
+
+			 
 		</form>
 	</body>
 	

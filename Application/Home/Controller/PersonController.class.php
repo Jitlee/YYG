@@ -80,6 +80,26 @@ class PersonController extends CommonController {
 		if(IS_POST) {
 			$result["status"]=0;
 			$result["msg"]="成功。";
+			$db=M("member_dizhi");
+			$data['uid'] = session("_uid");
+			$add = $db->where($data)->find();
+			if(!$add) {				
+				$_POST['uid']=  session("_uid");
+				$db->create();
+				if($db->add() != false) {
+					$result["status"]=1;
+				} 
+				else 
+				{
+					$result["msg"]='数据错误';
+				}
+			}
+			else
+			{
+				$db->save($_POST);
+				$result["status"]=1;
+			}
+				
 		}
 		else
 		{
