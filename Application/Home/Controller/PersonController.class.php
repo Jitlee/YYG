@@ -44,13 +44,79 @@ class PersonController extends CommonController {
 		$this->assign('title', '充值');
 		$this->display();
 	}
+	public function rechargerecord()
+	{
+		$this->assign('title', '充值记录');
+		$list=$this->GetRecord(20,0);
+		$this->assign('data', $list);
+		$this->display();
+	}
 	
+	public function GetRecord($pageSize, $pageNum)
+	{
+		$Model = M('member_addmoney_record');
+		$filter['uid'] = session("_uid");
+		
+		$list =$Model					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		return $list;
+	}
+	public function pageAllRechargerecord($pageSize, $pageNum) {
+		// 分页
+		$list=$this->GetRecord($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
+		
 	public function miaoshaRecord()
 	{
 		$this->assign('title', '秒杀记录');
 		$this->display();
 	}
 	
+	public function userscore()
+	{
+		$this->assign('title', '积分记录');
+		$list=$this->Getscorelist(20,0);
+		$this->assign('data', $list);
+		$this->display();
+	}
+	
+	public function Getscorelist($pageSize, $pageNum)
+	{
+		$Model = M('member_score');
+		$filter['uid'] = session("_uid");		
+		$list =$Model					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		return $list;
+	}
+	public function pagescore()
+	{
+		$list=$this->Getscorelist($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
+	
+	
+	public function yaoqing()
+	{
+		$this->assign('title', '邀请好友');
+		$this->display();
+	}
+	
+	public function yaoqingma()
+	{
+		$this->assign('title', '填写邀请码');
+		$this->display();
+	}
+	
+	public function yaoqinglist()
+	{
+		$this->assign('title', '填写邀请码');
+		$this->display();
+	}
 		
 	public function userimg(){
 		if(IS_POST) {
@@ -76,6 +142,22 @@ class PersonController extends CommonController {
 			$this->display();
 		}
 	}
+	public function useraddressview()
+	{
+		$db=M("member_dizhi");
+		$data['uid'] = session("_uid");
+		$add = $db->where($data)->find();
+		$this->assign('title', '收货地址');
+		layout(true);
+		if($add) {
+			$this->assign("data", $add);
+			$this->display();
+		}
+		else
+		{			
+			$this->display("useraddress");
+		}				
+	}
 	public function useraddress(){
 		if(IS_POST) {
 			$result["status"]=0;
@@ -96,14 +178,58 @@ class PersonController extends CommonController {
 			}
 			else
 			{
-				$db->save($_POST);
+				//$db->save($_POST);
+				$add["sheng"]=$_POST['sheng'];
+				$add["shi"]=$_POST['shi'];
+				$add["xian"]=$_POST['xian'];
+				$add["jiedao"]=$_POST['jiedao'];
+				$add["youbian"]=$_POST['youbian'];
+				$add["shouhuoren"]=$_POST['shouhuoren'];
+				$add["mobile"]=$_POST['mobile'];
+				$add["time"]=time();
+								 
+				$db->save($add);
 				$result["status"]=1;
 			}
-				
+			$this->ajaxReturn($result, "JSON");
 		}
 		else
 		{
-			layout(true);
+			$data['uid'] = session("_uid");
+			$db=M("member_dizhi");
+			$add = $db->where($data)->find();
+			
+			
+			if($add)
+			{
+				$dbadd=M("add");
+				$data['addname'] = $add["sheng"];
+				$shengid= $dbadd->where($data)->find();				
+				$add["shengid"]=$shengid["addid"];		
+						
+				$data['addname'] = $add["shi"];				
+				$shiid=$dbadd->where($data)->find();				
+				$add["shiid"]=$shiid["addid"];		
+						
+				$data['addname'] = $add["xian"];
+				$xianid=$dbadd->where($data)->find();
+				$add["xianid"]=$xianid["addid"];
+	
+				$dbp = M('add');
+				$filter["addparent"] = $add["shengid"];
+				$filter["addtype"] = 1;
+				$cityarr= $dbp->where($filter)->select();	
+					
+				
+				$dbc = M('add');
+				$filter["addparent"] = $add["shiid"];
+				$filter["addtype"] = 2;
+				$xianarr= $dbc->where($filter)->select();
+				
+				$this->assign("cityarr", $cityarr);
+				$this->assign("xianarr", $xianarr);	
+			}
+			$this->assign("data", $add);
 			$this->display();
 		}
 	}

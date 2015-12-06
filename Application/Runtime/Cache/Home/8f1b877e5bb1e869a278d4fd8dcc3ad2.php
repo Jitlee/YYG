@@ -89,6 +89,15 @@
 				$("#userinfotop").click(function() {
 					window.location.href="<?php echo U('Person/userinfoitem', '', '');?>";
 				});
+				$("#rechargerecord").click(function() {
+					window.location.href="<?php echo U('Person/rechargerecord', '', '');?>";
+				});
+				$("#userscore").click(function() {
+					window.location.href="<?php echo U('Person/userscore', '', '');?>";
+				});
+				$("#yaoqing").click(function() {
+					window.location.href="<?php echo U('Person/yaoqing', '', '');?>";
+				});
 				
 			});
 		</script>
@@ -111,7 +120,7 @@
 				</li>
 				
 				 
-				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">
+				<li class="mui-table-view-cell " data-bind="visible: isLogin">
 						<a class="mui-navigate-right">
 								<div class="img-tip">
 									<img alt="我的钱包" src="/Public/Home/images/person/yyg_icon_wdqb.png"/>
@@ -126,18 +135,18 @@
 						</a>
 				</li>
 				<li class="userline land-cell" data-bind="visible: isLogin" id="loginUser">
-					<span class="cell-left" id="userinfo">
+					<span class="cell-left" id="userscore">
 						<img class="circle-img" alt="积分" src="/Public/Home/images/person/yyg_icon_jf.png">
 						<p data-bind="text: nickName">积分：<?php echo ($data["score"]); ?></p>
 					</span>
 					<a></a>
-					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="addAccount2">
+					<span class="cell-right" data-bind="style: { 'display': hasOtherhalf() ? 'none' : 'inline-block'}" id="rechargerecord">
 						<img class="circle-img" alt="红包" src="/Public/Home/images/person/iconfont-jiaofei.png">
 						<p>余额:<?php echo ($data["money"]); ?></p>
 					</span>					
 				</li>
 				
-				<li class="mui-table-view-cell " data-bind="visible: isLogin" id="setting">					 
+				<li class="mui-table-view-cell " data-bind="visible: isLogin">					 
 						<div class="img-tip">
 							<img alt="我的秒杀" src="/Public/Home/images/person/yyg_icon_wdms.png"/>
 						</div>
@@ -176,7 +185,7 @@
 					</span>
 				</li>
 				
-				<li class="mui-table-view-cell" id="feedback">
+				<!--<li class="mui-table-view-cell" id="feedback">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
 							<img alt="反馈" src="/Public/Home/images/person/yyg_icon_wdpl.png"/>
@@ -185,8 +194,8 @@
 							<p>我的评论</p>
 						</div>
 					</a>
-				</li>
-				<li class="mui-table-view-cell" id="about">
+				</li>-->
+				<li class="mui-table-view-cell" id="yaoqing">
 					<a class="mui-navigate-right">
 						<div class="img-tip">
 							<img alt="关于" src="/Public/Home/images/person/yyg_icon_wdyq.png"/>

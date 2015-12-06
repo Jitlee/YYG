@@ -50,7 +50,7 @@
     <span class="mui-icon mui-icon-left-nav" ></span>
     	返回
   </button>
-  <h1 class="mui-title">帐户充值</h1>
+  <h1 class="mui-title"><?php echo ($title); ?></h1>
 </header>
 
 <br/>
