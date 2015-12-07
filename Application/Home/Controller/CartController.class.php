@@ -99,13 +99,14 @@ class CartController extends Controller {
 		
 		$exists = $db->where($map)->relation(true)->find($id);
 		if($exists && $exists['good'] && 
-			intval($exists['good']['xiangou']) < $count) {
+			intval($exists['good']['xiangou']) < $count &&
+			intval($exists['good']['xiangou']) >0) {
 			$count = intval($exists['good']['xiangou']);
 		}
 		$data['id'] = $id;
 		$data['count'] = $count;
 		$row = $db->save($data);
-		if($row >= 0) {
+		if($row > 0) {
 			$result['status'] = 0;
 			$result['message'] = '修改成功';
 		} else {

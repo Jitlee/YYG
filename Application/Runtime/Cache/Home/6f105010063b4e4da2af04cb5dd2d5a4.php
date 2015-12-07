@@ -204,7 +204,7 @@
 			</a>
 			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
 				<span class="mui-icon iconfont icon-jiangbei"></span>
-				<span class="mui-tab-label">最新揭晓</span>
+				<span class="mui-tab-label">秒杀</span>
 			</a>
 			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>

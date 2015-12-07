@@ -1,52 +1,48 @@
-<!DOCTYPE html>
+<?php if (!defined('THINK_PATH')) exit();?><!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
-		<title>{$title}</title>
-		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/mobile.css" rel="stylesheet" type="text/css" />
-		<link href="__CSS__/android_toast.min.css" rel="stylesheet" type="text/css" />
+		<title><?php echo ($title); ?></title>
+		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1449475927_2126234.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
-		<script src="__JQ__"></script>
-		<script src="__JS__/android_toast.min.js"></script>
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="/Public/Home/js/android_toast.min.js"></script>
 	</head>
 
 	<body>
-		<script src="__PING__"></script>
+		<script src="https://one.pingxx.com/lib/pingpp_one.js"></script>
 		<div class="mui-content" style="padding-top: 0;padding-bottom: 54px;">
 			<ul class="mui-table-view yyg-cart">
-				<foreach name="list" item="item">
-					<li class="mui-table-view-cell yyg-cart-item">
-					<if condition="$item.type eq 3">
-						<div class="yyg-cart-img-container">
-							<img src="{$item.paimai.thumb}"/>
+				<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item">
+					<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
+							<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
 						</div>
 						<div class="yyg-cart-body">
-							<p class="yyg-cart-title">( 立即揭标 ) {$item.paimai.title}</p>
-							<h5>立即揭标价:{$item.paimai.lijijia}</h5>
+							<p class="yyg-cart-title">( 立即揭标 ) <?php echo ($item["paimai"]["title"]); ?></p>
+							<h5>立即揭标价:<?php echo ($item["paimai"]["lijijia"]); ?></h5>
 						</div>
-					<else/>
+					<?php else: ?>
 						<div class="yyg-cart-img-container">
-							<img src="{$item.good.thumb}"/>
+							<img src="<?php echo ($item["good"]["thumb"]); ?>"/>
 						</div>
 						<div class="yyg-cart-body">
-							<p class="yyg-cart-title">(第 {$item.good.qishu} 期){$item.good.title}</p>
-							<h5>{$item.count}人次/¥{$item.good.danjia}</h5>
-						</div>
-					</if>
-					</li>
-				</foreach>
+							<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
+							<h5><?php echo ($item["count"]); ?>人次/¥<?php echo ($item["good"]["danjia"]); ?></h5>
+						</div><?php endif; ?>
+					</li><?php endforeach; endif; ?>
 			</ul>
 			
-			<p class="yyg-pay-total">总共支付金额：¥ <r> {$total} </r></p>
+			<p class="yyg-pay-total">总共支付金额：¥ <r> <?php echo ($total); ?> </r></p>
 			
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<label id="yueButton" for="scoreCheckBox" class="mui-input-row mui-checkbox  mui-disabled">
-						<div>积分支付：<span class="yyg-gray">(积分¥{$account.score})</span></div>
+						<div>积分支付：<span class="yyg-gray">(积分¥<?php echo ($account["score"]); ?>)</span></div>
 						<input id="scoreCheckBox" type="checkbox">
 					</label>
 				</li>
@@ -55,7 +51,7 @@
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<label id="yueButton" for="yueCheckBox" class="mui-input-row mui-checkbox  mui-disabled">
-						<div>余额支付：<span class="yyg-gray">(余额¥{$account.money})</span></div>
+						<div>余额支付：<span class="yyg-gray">(余额¥<?php echo ($account["money"]); ?>)</span></div>
 						<input id="yueCheckBox" type="checkbox">
 					</label>
 				</li>
@@ -65,7 +61,7 @@
 				<li class="mui-table-view-cell mui-collapse">
 					<a class="mui-navigate-right">
 						第三方支付
-						<span class="yyg-cell-right yyg-gray">需要支付 <r id="thirdMoney">¥ {$total}</r></span>
+						<span class="yyg-cell-right yyg-gray">需要支付 <r id="thirdMoney">¥ <?php echo ($total); ?></r></span>
 					</a>
 				</li>
 			</ul>
@@ -80,9 +76,9 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		
-		var money = {$account.money};
-		var score = {$account.score};
-		var total = {$total};
+		var money = <?php echo ($account["money"]); ?>;
+		var score = <?php echo ($account["score"]); ?>;
+		var total = <?php echo ($total); ?>;
 		var _money = 0;
 		var _score = 0;
 		var _total = total;
@@ -132,13 +128,13 @@
 		});
 		
 		function localPay() {
-			$.post("{:U('localpay','','')}", {
+			$.post("<?php echo U('localpay','','');?>", {
 				score: 0, // 福分支付金额
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
 			}, function(result) {
 				if(result == 0) {
-					window.location.href ="{:U('success','','')}";
+					window.location.href ="<?php echo U('success','','');?>";
 				} else {
 					new Android_Toast({content: "支付失败,错误代码：" + result});
 				}
@@ -154,7 +150,7 @@
 	            // 壹收款页面上需要展示的渠道，数组，数组顺序即页面展示出的渠道的顺序
 	            // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
 	            channel:['alipay_wap','wx_pub','upacp_wap','yeepay_wap','jdpay_wap','bfb_wap'],
-	            charge_url:"{:U('thirdpay','','')}",  //商户服务端创建订单的url
+	            charge_url:"<?php echo U('thirdpay','','');?>",  //商户服务端创建订单的url
 	            charge_param:{				
 					third: _total,
 					money: _money,
