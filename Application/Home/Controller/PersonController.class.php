@@ -26,8 +26,11 @@ class PersonController extends CommonController {
     }
 	
 	public function me(){
-    	$this->assign('title', '一元购');  
-		$userinfo=session('wxUserinfo');
+    	$this->assign('title', '一元购'); 
+		 
+		$Model = M('member');
+		$filter['uid'] = session("_uid");		
+		$userinfo =$Model->where($filter)->find();
 		$this->assign('data', $userinfo);
 		
 		$this->display();
@@ -63,11 +66,24 @@ class PersonController extends CommonController {
 		->select();
 		return $list;
 	}
+	//充值记录分页
 	public function pageAllRechargerecord($pageSize, $pageNum) {
 		// 分页
 		$list=$this->GetRecord($pageSize,$pageNum);
 		$this->ajaxReturn($list, "JSON");
 	}
+	
+	public function wallet()
+	{
+		$Model = M('member');
+		$filter['uid'] = session("_uid");		
+		$userinfo =$Model->where($filter)->find();
+		$this->assign('data', $userinfo);		
+		
+		$this->assign('title', '我的钱包');
+		$this->display();
+	}
+	
 		
 	public function miaoshaRecord()
 	{
@@ -117,6 +133,12 @@ class PersonController extends CommonController {
 		$this->assign('title', '填写邀请码');
 		$this->display();
 	}
+	public function cashout()
+	{
+		$this->assign('title', '提现');
+		$this->display();
+	}
+	
 		
 	public function userimg(){
 		if(IS_POST) {

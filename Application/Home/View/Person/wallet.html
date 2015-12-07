@@ -1,0 +1,80 @@
+<header class="mui-bar mui-bar-nav">	
+  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+    <span class="mui-icon mui-icon-left-nav" ></span>
+    	返回
+  </button>
+  <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
+  <h1 class="mui-title">{$title}</h1>
+</header>
+
+			
+<div class="mui-content">
+	<div class="mui-content-padded">
+	<ul class="mui-table-view">
+		<li class="userline land-cell cell-center" data-bind="visible: isLogin" id="loginUser">					 
+			<span class="cell-right"   id="rechargerecord">
+				<img class="circle-img" alt="红包" src="__IMG__/person/iconfont-jiaofei.png">
+				<p>我的余额:{$data.money}</p>
+			</span>					
+		</li>
+	</ul>
+		<button id='btnrecharge' type="button" class="mui-btn mui-btn-block mui-btn-primary">充值</button>
+		<button id='btnoutcash' type="button" class="mui-btn mui-btn-block mui-btn-outlined">提现</button>
+	</div>	
+</div>
+
+<!--右上角弹出菜单-->
+<div id="topPopover" class="mui-popover">
+	<div class="mui-popover-arrow"></div>
+	<div class="mui-scroll-wrapper">
+		<div class="mui-scroll">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<a href="#">钱包明细</a>
+				</li>
+				<li class="mui-table-view-cell"><a href="#">我的提现</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+		
+<style>
+	.cell-center{ text-align: center;}
+</style>
+
+		
+   		<script type="text/javascript">
+	   		$(function() {
+	   			//充值
+				$("#btnrecharge").click(function() {
+					window.location.href="{:U('Person/recharge', '', '')}";
+				});
+				//充傎记录
+				$("#rechargerecord").click(function() {
+					window.location.href="{:U('Person/wallet', '', '')}";
+					//window.location.href="{:U('Person/rechargerecord', '', '')}";
+				});
+				$("#btnoutcash").click(function() {
+					window.location.href="{:U('Person/cashout', '', '')}";
+				});
+				 		
+			});
+		</script>
+		<script src="__JS__/mui.min.js"></script>
+				 
+		
+		<script>
+			mui.init({
+				swipeBack: true //启用右滑关闭功能
+			});
+			mui('.mui-scroll-wrapper').scroll();
+			mui('body').on('shown', '.mui-popover', function(e) {
+				//console.log('shown', e.detail.id);//detail为当前popover元素
+			});
+			mui('body').on('hidden', '.mui-popover', function(e) {
+				//console.log('hidden', e.detail.id);//detail为当前popover元素
+			});
+		</script>
+		
+		
