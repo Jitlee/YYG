@@ -10,6 +10,7 @@ a, a:link, a:focus{
 }
 .mui-bar {
 	background-color:#000000;
+	z-index: 99999;
 }
 
 .mui-bar-nav a{
@@ -713,6 +714,6 @@ label.mui-input-row input[type=checkbox] {
 	position: absolute;
 	left:-37px;
 	top:13px;
-	z-index: 100;
+	z-index: 9;
 	-webkit-transform: rotate(-45deg);
 }

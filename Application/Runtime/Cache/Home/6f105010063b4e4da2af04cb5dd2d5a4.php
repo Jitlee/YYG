@@ -10,7 +10,7 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1449475927_2126234.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -62,12 +62,12 @@
 	}
 	
 	.yyg-removed {
-		/*-webkit-filter: grayscale(100%); 
+		-webkit-filter: grayscale(100%); 
 		-moz-filter: grayscale(100%); 
 		-ms-filter: grayscale(100%); 
 		-o-filter: grayscale(100%); 
 		filter: grayscale(100%); 
-		filter: gray; */
+		filter: gray; 
 		position: relative;
 		overflow: hidden;
 	}
@@ -90,7 +90,7 @@
 </style>
 
 <?php if(isset($list)): ?><ul class="mui-table-view yyg-cart">
-	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item <?php if($item["status"] != 1): ?>yyg-removed<?php endif; ?>" id="<?php echo ($item["id"]); ?>">
+	<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="mui-table-view-cell yyg-cart-item <?php if($item["status"] == 1): ?>yyg-removed<?php endif; ?>" id="<?php echo ($item["id"]); ?>">
 		<?php if($item["type"] == 3): ?><div class="yyg-cart-img-container">
 				<img src="<?php echo ($item["paimai"]["thumb"]); ?>"/>
 			</div>
@@ -107,7 +107,7 @@
 			<div class="yyg-cart-body">
 				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
 				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" <?php if($item["status"] != 1): ?>disabled="disabled"<?php endif; ?> xg="<?php echo ($item["good"]["xiangou"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
+				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" <?php if($item["status"] == 1): ?>disabled="disabled"<?php endif; ?> xg="<?php echo ($item["good"]["xiangou"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
 			</div><?php endif; ?>
 		</li><?php endforeach; endif; ?>

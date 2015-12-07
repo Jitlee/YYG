@@ -183,7 +183,8 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
 	<table class="table">
@@ -247,7 +248,7 @@ $(function() {
 				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ((isset($data["danjia"]) && ($data["danjia"] !== ""))?($data["danjia"]):'0'); ?>" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ((isset($data["danjia"]) && ($data["danjia"] !== ""))?($data["danjia"]):'1'); ?>" maxlength="7" pattern="^\d+$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>

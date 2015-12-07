@@ -38,7 +38,27 @@
 	
 	.yyg-goods-list-item {
 		background-color: #fff;
+		position: relative;
 	}
+	
+	.yyg-good-cart{
+		display: block;
+		position:absolute;
+		top:10px;
+		right:10px;
+		height:30px;
+		width:30px;
+		border-radius: 15px;
+		line-height: 30px;
+		text-align: center;
+		background-color:#FF002B;
+		color:#fff;
+	}
+	
+	.yyg-good-cart .iconfont {
+		font-size:24px;
+	}
+	
 	.yyg-goods-media {
 		background:none;
 		position: relative;
@@ -170,7 +190,7 @@
 	}
 </style>
 <div id="goodNav" class="yyg-bar-nav">
-	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
+	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>{$categoryName|default='商品分类'}</span><i class="iconfont"></i></a>
 	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
 	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
 	<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
@@ -184,10 +204,13 @@
 </div>
 <ul id="goodList" class="yyg-goods-list">
 </ul>
-					
+				
 <li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
 	<a href="">
 		<div>
+			<div class="yyg-good-cart">
+				<i class="iconfont icon-jiarugouwuche"></i>
+			</div>
 			<div class="yyg-goods-img-container">
 			</div>
 			<div class="yyg-goods-media">
@@ -219,7 +242,7 @@
 		var pageNum = 0;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
-		var goodCid = 0;
+		var goodCid = {$category|default=0};
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
@@ -242,6 +265,7 @@
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
 	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
 	       			$("span.money", item).text(this.money);
+	       			$(".yyg-good-cart", item).attr("gid", this.gid);
 	       			$("r", item).text(this.danjia);
 	       			goodList.append(item);
 	       		});
@@ -283,7 +307,11 @@
 							.appendTo(ulCategories);
 					});
 					
-					$(">li:first-child",ulCategories).addClass("yyg-active");
+					if(goodCid == 0) {
+						$(">li:first-child",ulCategories).addClass("yyg-active");
+					} else {
+						$("li[cid='"+ goodCid +"']",ulCategories).addClass("yyg-active");
+					}
 				});
 			}
 			
@@ -325,6 +353,15 @@
 			window.removeEventListener("click", onclosecategory);
 		}
 		
+		goodList.on("click", ".yyg-good-cart", function(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			$.post("{:U('Cart/add', '', '')}/" + gid + "/1", null, function(result) {
+				new Android_Toast({content: result.message});
+			})
+		});
 		
 	});
 </script>

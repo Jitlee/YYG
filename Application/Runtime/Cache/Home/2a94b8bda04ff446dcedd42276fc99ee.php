@@ -10,7 +10,7 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1449475927_2126234.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -59,7 +59,6 @@
 		.yyg-bar-nav {
 			font-size: 12px;
 		}
-<<<<<<< HEAD
 	}
 	
 	.yyg-bar-nav a{
@@ -76,6 +75,10 @@
 	    bottom: 0;
 	    left: 50%;
 	    transform: translateX(-50%);
+	    -webkit-transform: translateX(-50%);
+	    -ms-transform: translateX(-50%);
+	    -o-transform: translateX(-50%);
+	    -moz-transform: translateX(-50%);
 	}
 	
 	.owl-theme .owl-controls .owl-page span {
@@ -88,6 +91,34 @@
 		background-color: #fff;
 	}
 	
+	.m_nav {
+		background-color:#fff;
+	}
+	
+	.m_nav:after {
+		display: block;
+		height: 1px;
+		visibility: hidden;
+		content: " ";
+		clear: both;
+	}
+	
+	.m_nav a {
+		margin-top:10px;
+		margin-bottom:10px;
+		display: block;
+		float:left;
+		width: 25%;
+		color:#333;
+		font-size: 14px;
+		text-align: center;
+	}
+	
+	.m_nav a img {
+		width:44px;
+		height: 44px;
+	}
+	
 	.yyg-bar-nav-btn {
 		flex:1;
 		-webkit-flex:1;
@@ -102,7 +133,27 @@
 	
 	.yyg-goods-list-item {
 		background-color: #fff;
+		position: relative;
 	}
+	
+	.yyg-good-cart{
+		display: block;
+		position:absolute;
+		top:10px;
+		right:10px;
+		height:30px;
+		width:30px;
+		border-radius: 15px;
+		line-height: 30px;
+		text-align: center;
+		background-color:#FF002B;
+		color:#fff;
+	}
+	
+	.yyg-good-cart .iconfont {
+		font-size:24px;
+	}
+	
 	.yyg-goods-media {
 		background:none;
 		position: relative;
@@ -232,226 +283,33 @@
 	.yyg-progress {
 		margin-bottom:5px;
 	}
-</style>
-<div class="top w">
-	<div class="m_banner" id="owl">
-		<?php if(is_array($slides)): foreach($slides as $key=>$s): ?><a href="<?php echo ((isset($s["link"]) && ($s["link"] !== ""))?($s["link"]):'#'); ?>" class="item"><img src="<?php echo ($s["img"]); ?>"></a><?php endforeach; endif; ?>
-	</div>
-	<div class="m_nav">
-		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
-	</div>
-</div>
-					
-<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
-	<a href="">
-		<div>
-			<div class="yyg-goods-img-container">
-			</div>
-			<div class="yyg-goods-media">
-				<p class="yyg-content-title"></p>
-				<div class="yyg-progress">
-					<div class="yyg-progressing" style="width:0%"></div>
-				</div>
-				<div class="yyg-list-price">
-					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
-					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
-				</div>
-			</div>
-		</div>
-	</a>
-</li>
-<script type="text/javascript">
-	$(function(){
-		
-		$(document).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-				pageAll();
-			}
-		}
-		
-		// 全部商品翻页
-		var pageNum = 0;
-		var goodList = $("#goodList");
-		var goodTemplate = $("#goodTemplate");
-		var goodCid = 0;
-		var orderType = 1;
-		function pageAll(clear) {
-			if(clear) {
-				pageNum = 0;
-			}
-			$.get("<?php echo U('pageAll', '', '');?>/8/" + (++pageNum), {
-				type: orderType,
-				cid: goodCid
-			}, function(list) {
-				if(clear) {
-					goodList.html("");
-				}
-	       		$.each(list, function() {
-	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "/index.php/Home/Index/" + this.gid);
-					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-					if(this.xiangou > 0) {
-						item.addClass('yyg-xiangou');
-					}
-	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
-=======
+	
+	.yyg-good-border{
+		margin: 10px;
 	}
 	
-	.yyg-bar-nav a{
-		color:#999;
-	}
-	
-	.yyg-bar-nav-primary {
-		width: 90px;
-		border-right:solid 1px #D5D5D5;
-	}
-	
-	.yyg-bar-nav-btn {
-		flex:1;
-		-webkit-flex:1;
-		-ms-flex:1;
-		-moz-flex:1;
-		-o-flex:1;
-	}
-	
-	.yyg-bar-nav-btn.yyg-active {
-		color: #db3652;
-	}
-	
-	.yyg-goods-list-item {
-		background-color: #fff;
-	}
-	.yyg-goods-media {
-		background:none;
+	.yyg-good-border-title{
 		position: relative;
-	}
-	
-	.yyg-goods-media span {
-		color:rgba(171,171,171,1);
-		margin:0 2px;
-	}
-	
-	.yyg-goods-media r{
-		font-size: 20px;
-	}
-	
-	p.yyg-content-title {
-		color:#333;
+		height:30px;
+		background-color: #fff;
+		line-height: 30px;
+		border-bottom: #D5D5D5 solid 1px;
+		padding-left:5px;
 		font-size:14px;
 	}
 	
-	.yyg-list-price {
-		position: relative;
-		
-	}
-	
-	.yyg-right {
-		display:block;
-		position: absolute;
-		top:50%;
+	.yyg-good-border-title .yyg-cell-right{
 		right:5px;
-		text-align: right;
-		transform: translateY(-50%);
-		-webkit-transform: translateY(-50%);
-		-ms-transform: translateY(-50%);
-		-moz-transform: translateY(-50%);
-		-o-transform: translateY(-50%);
+		color:#333;
 	}
 	
-	.yyg-list-buy{
-		background-color:rgba(255,102,0,1);
-		color:#fff!important;
-	    height: 18px;
-	    line-height: 18px;
-	    border-radius: 9px 0 0 9px;
-	    font-size:12px;
-	    padding-right:5px;
-	    padding-left:5px;
-	}
-	
-	.yyg-list-buy-sts {
+	.yyg-good-border-title i{
 		display: inline-block;
-		background-position:50% 50%;
-		background-repeat: no-repeat;
-		background-size: cover;
-		background-image: url(/Public/Home/images/sts.png);
-		width:11px;
-		height:11px;
+		background-color: #FF002B;
+		width:4px;
+		height:14px;
 		vertical-align: middle;
-	}
-	
-	.yyg-del {
-		text-decoration: line-through;
-	}
-	
-	.yyg-goods-list-item hr {
-		border: none;
-		border-top: 1px dotted rgba(252,226,198,1);
-	}
-	
-	
-	.yyg-category {
-		position: absolute;
-		background: rgba(0,0,0,0.1);
-		width:100%;
-		display:none;
-		z-index: 999;
-	}
-	
-	.yyg-category ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
-		background: #fff;
-	}
-	
-	.yyg-category ul:after {
-		content: " ";
-		display: block;
-		clear: both;
-		visibility: hidden;
-		height: 1px;
-	}
-	.yyg-category li {
-		width:33%;
-		color: #999;
-		box-sizing: border-box;
-		-ms-box-sizing: border-box;
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		-o-box-sizing: border-box;
-		border-left:solid 1px #D5D5D5;
-		border-bottom:solid 1px #D5D5D5;
-		float:left;
-		text-align: center;
-		line-height: 45px;
-	}
-	
-	.yyg-category li.yyg-active {
-		color:#FF002B;
-	}
-	
-	#buttonCategoy i:before{
-		content:"\e608";
-	}
-	
-	#buttonCategoy.yyg-active i:before{
-		content:"\e609";
-	}
-	
-	.yyg-category.yyg-active {
-		display:block;
-	}
-	
-	.yyg-progress, .yyg-progress .yyg-progressing {
-		height:4px;
-	}
-	
-	.yyg-progress {
-		margin-bottom:5px;
+		margin-right: 2px;
 	}
 </style>
 <div class="top w">
@@ -459,28 +317,26 @@
 		<?php if(is_array($slides)): foreach($slides as $key=>$s): ?><a href="<?php echo ((isset($s["link"]) && ($s["link"] !== ""))?($s["link"]):'#'); ?>" class="item"><img src="<?php echo ($s["img"]); ?>"></a><?php endforeach; endif; ?>
 	</div>
 	<div class="m_nav">
-		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="#"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><span><?php echo ($c["name"]); ?></span></a><?php endforeach; endif; ?>
+		<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('all','','');?>/<?php echo ($c["cid"]); ?>/<?php echo ($c["name"]); ?>"><img src="<?php echo ((isset($c["thumb"]) && ($c["thumb"] !== ""))?($c["thumb"]):'/Public/Home/images/m-index_10.png'); ?>"><h5><?php echo ($c["name"]); ?></h5></a><?php endforeach; endif; ?>
 	</div>
-</div>
-<div id="goodNav" class="yyg-bar-nav">
-	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
-	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
-	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
-	<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
-	<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
 </div>
 
-<div id="goodCategories" class="yyg-category">
-	<ul>
-		
+<div class="yyg-good-border">
+	<div class="yyg-good-border-title">
+		<i>&nbsp;</i>猜你喜欢的
+		<a href="<?php echo U('all','','');?>" class="yyg-cell-right">更多&gt;&gt;</a>
+	</div>
+	
+	<ul id="goodList" class="yyg-goods-list">
 	</ul>
 </div>
-<ul id="goodList" class="yyg-goods-list">
-</ul>
 					
 <li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
 	<a href="">
 		<div>
+			<div class="yyg-good-cart">
+				<i class="iconfont icon-jiarugouwuche"></i>
+			</div>
 			<div class="yyg-goods-img-container">
 			</div>
 			<div class="yyg-goods-media">
@@ -533,9 +389,9 @@
 						item.addClass('yyg-xiangou');
 					}
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
->>>>>>> origin/master
 	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
 	       			$("span.money", item).text(this.money);
+	       			$(".yyg-good-cart", item).attr("gid", this.gid);
 	       			$("r", item).text(this.danjia);
 	       			goodList.append(item);
 	       		});
@@ -619,6 +475,15 @@
 			window.removeEventListener("click", onclosecategory);
 		}
 		
+		goodList.on("click", ".yyg-good-cart", function(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			$.post("<?php echo U('Cart/add', '', '');?>/" + gid + "/1", null, function(result) {
+				new Android_Toast({content: result.message});
+			})
+		});
 		
 	});
 </script>

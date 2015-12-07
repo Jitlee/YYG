@@ -6,7 +6,7 @@
 		<meta name="format-detection" content="telephone=no">
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
-		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1449475927_2126234.css" rel="stylesheet" type="text/css" />
 		<?php if(isset($images)): ?><link href="/Public/Home/css/idangerous.swiper.css" rel="stylesheet"><?php endif; ?>
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
