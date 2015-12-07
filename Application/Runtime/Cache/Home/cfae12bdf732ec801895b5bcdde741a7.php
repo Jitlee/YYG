@@ -10,7 +10,7 @@
 		<title><?php echo ($title); ?></title>
 		<link href="/Public/Home/css/mui.min.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/owl.carousel.css" rel="stylesheet">
-		<link href="http://at.alicdn.com/t/font_1448782434_6313894.css" rel="stylesheet" type="text/css" />
+		<link href="http://at.alicdn.com/t/font_1449475927_2126234.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/mobile.css" rel="stylesheet" type="text/css" />
 		<link href="/Public/Home/css/android_toast.min.css" rel="stylesheet" type="text/css" />
 
@@ -172,7 +172,7 @@
 			</a>
 			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
 				<span class="mui-icon iconfont icon-jiangbei"></span>
-				<span class="mui-tab-label">最新揭晓</span>
+				<span class="mui-tab-label">秒杀</span>
 			</a>
 			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>

@@ -235,6 +235,18 @@
 		margin-bottom:5px;
 	}
 </style>
+<ul class="yyg-tab">
+	<li class="yyg-tab-item <?php if($tabId == 1): ?>yyg-active<?php endif; ?>">
+		<a href="<?php echo U('Index/all','','');?>">
+			热门秒杀
+		</a>
+	</li>
+	<li class="yyg-tab-item <?php if($tabId == 2): ?>yyg-active<?php endif; ?>">
+		<a href="<?php echo U('Jiexiao/index','','');?>">
+			最新揭晓
+		</a>
+	</li>
+</ul>
 <div id="goodNav" class="yyg-bar-nav">
 	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span><?php echo ((isset($categoryName) && ($categoryName !== ""))?($categoryName):'商品分类'); ?></span><i class="iconfont"></i></a>
 	<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
@@ -421,7 +433,7 @@
 			</a>
 			<a id="jiexiao" class="mui-tab-item" href="<?php echo U('Jiexiao/index', '', '');?>">
 				<span class="mui-icon iconfont icon-jiangbei"></span>
-				<span class="mui-tab-label">最新揭晓</span>
+				<span class="mui-tab-label">秒杀</span>
 			</a>
 			<a id="paimai" class="mui-tab-item" href="<?php echo U('Paimai/index', '', '');?>">
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>

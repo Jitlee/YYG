@@ -20,11 +20,13 @@ class IndexController extends Controller {
 	
 	public function all($category = 0, $categoryName = '商品分类'){
 		run_task();
-    	$this->assign('title', '一元购');
-		$this->assign('pid', 'home');
+    	$this->assign('title', '热门秒杀');
+		$this->assign('pid', 'jiexiao');
 		
 		$this->assign('category', $category);
 		$this->assign('categoryName', $categoryName);
+		
+		$this->assign('tabId', 1);
 		
 		$this->display();
     }
