@@ -6,6 +6,17 @@
 	  <h1 class="mui-title">{$title}</h1>
 </header>
 <div class="mui-content">
-	
+			<form action="{:U('login','','')}" role="form" method="post" class="mui-input-group">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label for="mobile" class="control-label">邀请码</label>
+						<input type="text" class="mui-input-clear mui-input" id="mobile" name="mobile" maxlength="11" placeholder="请输入对方的邀请码" required />
+					</div>					
+				</div>
 
+				<div class="mui-content-padded"> 
+					<button id='login' type="submit" class="mui-btn mui-btn-block mui-btn-primary">提交</button>
+				</div>				
+				
+			</form>
 </div>

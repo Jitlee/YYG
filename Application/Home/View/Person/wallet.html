@@ -3,7 +3,7 @@
     <span class="mui-icon mui-icon-left-nav" ></span>
     	返回
   </button>
-  <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right"></a>
+  <a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="{:U('Person/rechargerecord', '', '')}" id="menulist"></a>
   <h1 class="mui-title">{$title}</h1>
 </header>
 
@@ -44,23 +44,23 @@
 </style>
 
 		
-   		<script type="text/javascript">
-	   		$(function() {
-	   			//充值
-				$("#btnrecharge").click(function() {
-					window.location.href="{:U('Person/recharge', '', '')}";
-				});
-				//充傎记录
-				$("#rechargerecord").click(function() {
-					window.location.href="{:U('Person/wallet', '', '')}";
-					//window.location.href="{:U('Person/rechargerecord', '', '')}";
-				});
-				$("#btnoutcash").click(function() {
-					window.location.href="{:U('Person/cashout', '', '')}";
-				});
-				 		
-			});
-		</script>
+<script type="text/javascript">
+	$(function() {
+		//充值
+		$("#btnrecharge").click(function() {
+			window.location.href="{:U('Person/recharge', '', '')}";
+		});
+		//充傎记录 、提现
+		$("#menulist").click(function() {
+			window.location.href="{:U('Person/rechargerecord', '', '')}";
+			//window.location.href="{:U('Person/rechargerecord', '', '')}";
+		});
+		$("#btnoutcash").click(function() {
+			window.location.href="{:U('Person/cashout', '', '')}";
+		});
+		 		
+	});
+</script>
 		<script src="__JS__/mui.min.js"></script>
 				 
 		
