@@ -139,41 +139,44 @@ class PersonController extends CommonController {
 			$result["status"]=0;
 			$result["msg"]="成功。";
 			
-			$db = M('member_cashout');
-			$data['uid'] = session("_uid");
-			$user = $db->where($data)->find();
-			if(!$user) {
+			$udb = M('member');
+			$menberfilter["uid"]=session("_uid");
+			$dbmember = $udb->where($menberfilter)->find();
+			if(!$dbmember) {
 				$result["msg"]='用户不存在。';
 			}
-			//验证余额		
-			$money= floatval($_POST["money"]);			
-			$addMoney=floatval($payitem['money']);
-			if($money > $addMoney)
-			{
-				$result["msg"]="余额不足。";				
-			}
 			else
-			{					
-//				$db = M('member_addmoney_record');
-//				$addMoney=floatval($payitem['money']);
-//				$adduid=$payitem["uid"];
-//				$payitem["status"]=1;
-//				$db->save($payitem);
-//				
-//				$udb = M('member');
-//				$menberfilter["uid"]=$adduid;
-//				$dbmember = $udb->where($menberfilter)->find();
-//				if($dbmember)
-//				{
-//					$dbmember['money'] = floatval($dbmember['money'])+$addMoney;
-//					$udb->save($dbmember);
-//					return 0;
-//				}
-			}
-			
-			
-		
-		
+			{
+				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录					
+				$money= floatval($_POST["money"]);			
+				$addMoney=floatval($dbmember['money']);
+				//验证余额	
+				if($money > $addMoney)
+				{
+					$result["msg"]="余额不足。";				
+				}
+				else
+				{
+					//1. 扣减member数据 					
+					if($dbmember)
+					{
+						$dbmember['money'] = floatval($dbmember['money'])+($addMoney*-1);
+						$udb->save($dbmember);
+						return 0;
+					}
+					//3  写入提现记录
+					$db = M('member');
+					$_POST['uid']=  session("_uid");
+					$db->create();
+					if($db->add() != false) {
+						$result["status"]=1;
+					} 
+					else 
+					{
+						$result["msg"]='数据错误';
+					} 
+				}
+			} 
 		
 			$this->ajaxReturn($result, "JSON");
 		}
