@@ -129,8 +129,6 @@ class OrderPayController extends Controller {
 			session('_payno_no_', null);
 			$status = $this->payStatus($tradeNo);			
 			if($status == 0) {
-				$this->assign('orderno', $tradeNo);
-				$this->assign('status', $status);
 				$this->display('compaletesuccess');	
 			} else { // TODO: 失败了没有机制
 				$this->assign('status', $status);
