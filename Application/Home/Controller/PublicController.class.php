@@ -28,7 +28,7 @@ public function login() {
 				$db->save($data);
 				
 				// 将临时购物车的记录替换成真的			
-				$cdb = M('yyg_cart');
+				$cdb = M('cart');
 				$_uid = get_temp_uid();		
 				
 				// 清空之前的商品
@@ -36,7 +36,7 @@ public function login() {
 				$cdb->where($cmap)->delete();
 				
 				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
-				$row = new \Think\Model()->execute($sql);			
+				$row = M()->execute($sql);
 				
 				session("_uid", $user['uid']); 					
 				session('wxUserinfo', $user);
