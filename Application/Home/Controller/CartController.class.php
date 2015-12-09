@@ -78,6 +78,9 @@ class CartController extends Controller {
 				&& intval($exists['good']['xiangou']) == intval($exists['count'])) {
 				$result['status'] = 3;
 				$result['message'] = '该商品限购'.$exists['good']['xiangou'].'人次';
+			} else if($exists['good'] && intval($exists['count']) >= intval($exists['good']['shengyurenshu'])) {
+				$result['status'] = 4;
+				$result['message'] = '该商品剩余'.$exists['good']['shengyurenshu'].'人次';
 			} else {
 				// 存在，累加
 				$data['count'] = intval($exists['count']) + 1;
@@ -103,10 +106,16 @@ class CartController extends Controller {
 			intval($exists['good']['xiangou']) >0) {
 			$count = intval($exists['good']['xiangou']);
 		}
+		
+		if($exists['good'] && $count > intval($exists['good']['shengyurenshu'])) {
+			$count = intval($exists['good']['shengyurenshu']);
+		}
+		
 		$data['id'] = $id;
 		$data['count'] = $count;
 		$row = $db->save($data);
 		if($row > 0) {
+			$result['count'] = $count;
 			$result['status'] = 0;
 			$result['message'] = '修改成功';
 		} else {
