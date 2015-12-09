@@ -147,28 +147,34 @@ class PersonController extends CommonController {
 			}
 			else
 			{
-				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录					
-				$money= floatval($_POST["money"]);			
-				$addMoney=floatval($dbmember['money']);
+				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录	手费费				
+				$outMoney= floatval($_POST["money"]);			
+				$UserMoney=floatval($dbmember['money']);
 				//验证余额	
-				if($money > $addMoney)
+				if($outMoney > $UserMoney)
 				{
-					$result["msg"]="余额不足。";				
+					$result["msg"]="余额不足。".$dbmember['money'];				
 				}
 				else
 				{
+//					$result["msg"]='用户不存在。'.$money.'  '.$addMoney;
+//					$this->ajaxReturn($result, "JSON");
+//					return;
 					//1. 扣减member数据 					
 					if($dbmember)
 					{
-						$dbmember['money'] = floatval($dbmember['money'])+($addMoney*-1);
-						$udb->save($dbmember);
-						return 0;
+						$eMoney=$UserMoney-$outMoney;
+						$dbmember['money'] = $eMoney;
+						//$dbmember['money']=60;//$dbmember['money']-$addMoney;
+						$udb->save($dbmember);					
 					}
+					
 					//3  写入提现记录
-					$db = M('member');
+					$dbcash = M('member_cashout');
 					$_POST['uid']=  session("_uid");
-					$db->create();
-					if($db->add() != false) {
+					$_POST['time']= date('y-m-d-h-i-s');
+					$dbcash->create();
+					if($dbcash->add() != false) {
 						$result["status"]=1;
 					} 
 					else 
