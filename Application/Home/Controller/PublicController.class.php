@@ -22,13 +22,19 @@ public function login() {
 				$data = array(
 					'uid'			=> $user['uid'],
 					'login'			=> array('exp', '`login` + 1'),
-					'login_time'	=> date('y-m-d-h-i-s'),
+					'login_time'	=> date('y-m-d-H-i-s'),
 					'login_ip'		=> get_client_ip(),
 				);
 				$db->save($data);
+				
 				// 将临时购物车的记录替换成真的			
-				$cdb = M();
-				$_uid = get_temp_uid();			
+				$cdb = M('yyg_cart');
+				$_uid = get_temp_uid();		
+				
+				// 清空之前的商品
+				$cmap['uid'] = $data['uid'];
+				$cdb->where($cmap)->delete();
+				
 				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
 				$row = $cdb->execute($sql);			
 				

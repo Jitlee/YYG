@@ -3,7 +3,7 @@
 function get_temp_uid() {
 	$uid = session("_uid");
 	if(empty($uid)) {
-		$user = session('user');
+		$user = session('wxUserinfo');
 		if(empty($user)) {
 			$uid = mt_rand(10, 100000);
 		} else {

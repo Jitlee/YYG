@@ -39,10 +39,10 @@ class PayController extends Controller {
 				$this->assign('total', $total);
 			}
 			
-			$user = session('user');
-			$uid = $user['uid'];
+			$uid = get_temp_uid();
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
+			
 			$this->assign('account', $user);
 	    	$this->assign('title', '结算支付');
 			layout(false);
