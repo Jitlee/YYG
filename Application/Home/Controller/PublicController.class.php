@@ -36,7 +36,7 @@ public function login() {
 				$cdb->where($cmap)->delete();
 				
 				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
-				$row = $cdb->execute($sql);			
+				$row = new \Think\Model()->execute($sql);			
 				
 				session("_uid", $user['uid']); 					
 				session('wxUserinfo', $user);

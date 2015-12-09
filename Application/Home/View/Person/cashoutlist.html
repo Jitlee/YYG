@@ -1,4 +1,4 @@
-<header class="mui-bar mui-bar-nav">
+<header class="mui-bar mui-bar-nav">	
 	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left">
 			<span class="mui-icon mui-icon-left-nav" ></span>
 	    	<a href="{:U('Person/me','','')}">返回</a>
@@ -6,18 +6,18 @@
 	  <h1 class="mui-title">{$title}</h1>
 </header>
 <div class="mui-content">
-<ul class="yyg-tab">
-		<li class="yyg-tab-item yyg-active">
-			<a href="#">
+	<ul class="yyg-tab">
+		<li class="yyg-tab-item">
+			<a href="{:U('Person/rechargerecord','','')}">
 				钱包记录
 			</a>
 		</li>
-		<li class="yyg-tab-item">
-			<a href="{:U('Person/cashoutlist','','')}">
+		<li class="yyg-tab-item  yyg-active">
+			<a href="#">
 				提现记录
 			</a>
 		</li>
-</ul>
+	</ul>
 
 				
 	<h5 style="position: relative;" class="yyg-cell-left">金额<span class="yyg-cell-right yyg-right-margin">时间&nbsp;&nbsp;</span></h5>
@@ -57,7 +57,7 @@
 		var template = $("li:first-child", recrodList);		
 		function page() 
 		{
-				$.get("{:U('pageAllRechargerecord', '', '')}/20/" + (++pageNum), null, function(list) {
+				$.get("{:U('pagecashoutlist', '', '')}/20/" + (++pageNum), null, function(list) {
 						if(list && list.length > 0) 
 						{
 				       		$.each(list, function() {

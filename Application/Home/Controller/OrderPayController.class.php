@@ -60,7 +60,7 @@ class OrderPayController extends Controller {
             case 'alipay_wap' :
                 $extra = array(
                 	'success_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '')
-                	, 'cancel_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '')
+                	, 'cancel_url' => 'http://' . $_SERVER['HTTP_HOST'] . U('compaletecancel', '', '')
 				);
                 break;
             case 'upmp_wap' :
@@ -131,33 +131,33 @@ class OrderPayController extends Controller {
 			if($status == 0) {
 				$this->assign('orderno', $tradeNo);
 				$this->assign('status', $status);
-				$this->display('success');	
+				$this->display('compaletesuccess');	
 			} else { // TODO: 失败了没有机制
 				$this->assign('status', $status);
-				$this->display('error');	
+				$this->display('compaleteerror');	
 			}
 			//session($tradeNo, null);
 		} else {
 			$this->assign('status', 19);
-			$this->display('error');	
+			$this->display('compaleteerror');	
 		}
 	}
 	
 
 	
-	public function success() {
+	public function compaletesuccess() {
 		layout(false);
-		$this->display();
+		$this->display("success");
 	}
 	
-	public function cancel() {
+	public function compaletecancel() {
 		layout(false);
-		$this->display();
+		$this->display("cancel");
 	}
 	
-	public function error() {
+	public function compaleteerror() {
 		layout(false);
-		$this->display();
+		$this->display("error");
 	}
 	
 }
