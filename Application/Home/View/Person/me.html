@@ -40,11 +40,14 @@
 				$("#miaoshasdno").click(function() {
 					window.location.href="{:U('Person/miaoshasdno', '', '')}";
 				});
+				//用户信息
 				$("#userinfotop").click(function() {
 					window.location.href="{:U('Person/userinfoitem', '', '')}";
 				});
+				//充傎记录
 				$("#rechargerecord").click(function() {
-					window.location.href="{:U('Person/rechargerecord', '', '')}";
+					window.location.href="{:U('Person/wallet', '', '')}";
+					//window.location.href="{:U('Person/rechargerecord', '', '')}";
 				});
 				$("#userscore").click(function() {
 					window.location.href="{:U('Person/userscore', '', '')}";
@@ -162,7 +165,7 @@
 				<li class="mui-table-view-cell" id="about">
 					<a class="mui-navigate-right" href="{:U('Person/loginexit', '', '')}">
 						<div class="img-tip">
-							<img alt="关于" src="__IMG__/person/yyg_icon_wdyq.png"/>
+							<img alt="注销" src="__IMG__/person/exit.png"/>
 						</div>
 						<div class="menu-content">
 							<p>注销</p>

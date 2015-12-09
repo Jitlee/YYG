@@ -1,0 +1,72 @@
+<header class="mui-bar mui-bar-nav">	
+  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+    <span class="mui-icon mui-icon-left-nav" ></span>
+    	返回
+  </button>
+  <h1 class="mui-title">{$title}</h1>
+</header>
+
+			
+<div class="mui-content">
+			<form  role="form" method="post" class="mui-input-group">
+				<div class="mui-input-group">
+					<div class="mui-input-row">
+						<label for="username" class="control-label">申请提现金额</label>
+						<input type="text" class="mui-input-clear mui-input" id="money" name="money" maxlength="10" placeholder="请输入提现金额" required />
+					</div>
+					
+					<div class="mui-input-row">
+						<label for="username" class="control-label">开户人</label>
+						<input type="text" class="mui-input-clear mui-input" id="username" name="username" maxlength="10" placeholder="请输入您的开户姓名" required />
+					</div>
+
+					<div class="mui-input-row">
+						<label for="bankname" class="control-label">银行名称</label>
+						<input type="text" class="mui-input-clear mui-input" id="bankname" name="bankname" placeholder="请输入银行名称" required />
+					</div>
+					
+					<div class="mui-input-row">
+						<label for="branch" class="control-label">支行</label>
+						<input type="text" class="mui-input-clear mui-input" id="branch" name="branch" placeholder="请输入支行名称" required />
+					</div>
+					
+					<div class="mui-input-row">
+						<label for="banknumber" class="control-label">银行帐号</label>
+						<input type="text" class="mui-input-clear mui-input" id="banknumber" name="banknumber" placeholder="请输入您的银行帐号" required />
+					</div>
+					
+					<div class="mui-input-row">
+						<label for="linkphone" class="control-label">联系电话</label>
+						<input type="text" class="mui-input-clear mui-input" id="linkphone" name="linkphone" placeholder="请输入您的联系电话" required />
+					</div>
+				</div>
+
+				<div class="mui-content-padded"> 
+					<button id='btnsave' type="button" class="mui-btn mui-btn-block mui-btn-primary">申请提现</button>
+				</div>
+  
+			</form>
+</div>
+<script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	$(function(){				
+				$("#btnsave").click(function(){
+						var self = $("form");
+						$.post("{:U('Person/cashout','','')}", self.serialize(), savesuccess, "json");
+						return;
+						function savesuccess(data) {
+							if (data.status) {
+								 window.location.href="{:U('Person/me', '', '')}";
+							} else {
+								layer.alert(data.msg);
+							}
+						}					
+				});		
+		 
+});
+	

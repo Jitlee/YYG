@@ -10,6 +10,7 @@ a, a:link, a:focus{
 }
 .mui-bar {
 	background-color:#000000;
+	z-index: 99999;
 }
 
 .mui-bar-nav a{
@@ -713,6 +714,47 @@ label.mui-input-row input[type=checkbox] {
 	position: absolute;
 	left:-37px;
 	top:13px;
-	z-index: 100;
+	z-index: 9;
 	-webkit-transform: rotate(-45deg);
+}
+
+
+/** Tab页样式 **/
+.yyg-tab {
+	background-color: #fff;
+	list-style: none;
+	display: table;
+	margin:0;
+	padding: 0;
+	width:100%;
+	box-sizing: border-box;
+	-wekbkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+}
+
+.yyg-tab-item {
+	line-height: 40px;
+	display: table-cell;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	-wekbkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	border-bottom: 2px solid #d5d5d5;
+	cursor: pointer;
+	padding-bottom: 2px;
+}
+
+.yyg-tab-item a{
+	font-size: 16px;
+	color:#333;
+}
+
+.yyg-tab-item.yyg-active {
+	border-bottom-color:#FF5053;
+	color:#FF5053;
 }

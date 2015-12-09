@@ -26,19 +26,20 @@ html,body{ }
 }
 
 
-				.navv .normal{ background:url(../images/nav_bg_2.png) no-repeat 0px 0px;border:0px solid #f60;}
+.navv .normal{ background:url(../images/nav_bg_2.png) no-repeat 0px 0px;border:0px solid #f60;}
 				
 				
-				.navv .normal a{
-					display:block;
-					left:20px;
-					height:40px;
-					padding-right:20px;
-					text-align:center;
-					background:url(../images/nav_bg_2.png) no-repeat right top;
-					color:#fff;
-					top:0px;
-			}
+	.navv .normal a{
+		display:block;
+		left:20px;
+		height:40px;
+		padding-right:20px;
+		text-align:center;
+		background:url(../images/nav_bg_2.png) no-repeat right top;
+		color:#fff;
+		top:0px;
+		cursor: pointer;
+}
 
 
 /**下部***/

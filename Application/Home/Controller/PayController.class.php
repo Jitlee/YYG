@@ -26,6 +26,7 @@ class PayController extends Controller {
 //	20;  // 商品不允许立即价
 //	21;  // 保存出价记录失败
 //  22;  // 保存最高价失败
+//  23;  // 增加消费积分失败
 	
 	public function index(){
 		if(is_login()) {
@@ -83,7 +84,7 @@ class PayController extends Controller {
 	/**
 	 * 第三方支付
 	 */
-	public function thridpay() {
+	public function thirdpay() {
 		if(IS_POST) {
 			vendor( "PingppSDK.init");
 			
@@ -169,7 +170,7 @@ class PayController extends Controller {
 			if(is_login()) {
 				$_pay = array(
 					'money'				=> floatval($_POST['money']),
-					'score'				=> floatval($_POST['score']),
+					'score'				=> intval($_POST['score']),
 					'third'				=> floatval($_POST['third']),
 					'bgid'				=> $_POST['bgid'],
 				);
@@ -184,27 +185,27 @@ class PayController extends Controller {
 	/**
 	 * 普通商品和立即揭榜商品结算
 	 */
-	private function pay($needCheckThridPay, $_pay) {
+	private function pay($needCheckThirdPay, $_pay) {
 		$status = 0;
 		$uid = get_temp_uid();
 		$udb = M('member');
 		$udb->startTrans();
 		$account = $udb->field('uid, money,score')->find($uid);
 		$account['money'] = floatval($account['money']);
-		$account['score'] = floatval($account['score']);
+		$account['score'] = intval($account['score']);
 		if($_pay['bgid']) { // 缴纳保证金
-			$status = $this->doPayBaozhengjin($needCheckThridPay, $account, $_pay);
+			$status = $this->doPayBaozhengjin($needCheckThirdPay, $account, $_pay);
 		} else { // 购买商品
 			$cdb = D('cart');
 			$map['uid'] = get_temp_uid();
 			$list = $cdb->where($map)->relation(true)->select();
 			if(!empty($list)) {
-				$total =$total = $this->total($list);
-				if($_pay['money'] + $_pay['third'] < $total) {
+				$total = $this->total($list);
+				if($_pay['money'] + $_pay['third'] + $_pay['score'] / 100 < $total) {
 					$status = 16;  // 付款金额不对
 				} else if($account['money'] < $_pay['money']) {
 					$status = 14;  // 余额不足
-				} else if($needCheckThridPay && $_pay['third'] > 0) {
+				} else if($needCheckThirdPay && $_pay['third'] > 0) {
 					$status = 15;  // 需要第三方支付
 				}
 				if($status == 0) {
@@ -231,7 +232,7 @@ class PayController extends Controller {
 	/**
 	 * 结算保证金
 	 */
-	private function doPayBaozhengjin($needCheckThridPay, $account, $_pay) {
+	private function doPayBaozhengjin($needCheckThirdPay, $account, $_pay) {
 		$pdb = M('paimai');
 		$adb = M('account');
 		$udb = M('member');
@@ -247,7 +248,7 @@ class PayController extends Controller {
 				return 16;  // 付款金额不对
 			} else if($account['money'] < $_pay['money']) {
 				return 14;  // 余额不足
-			} else if($needCheckThridPay && $_pay['third'] > 0) {
+			} else if($needCheckThirdPay && $_pay['third'] > 0) {
 				return 15;  // 需要第三方支付
 			}
 				
@@ -261,10 +262,22 @@ class PayController extends Controller {
 			);
 			if($adb->add($adata)) {
 				// 扣除个人账户余额
-				if($_pay['money'] > 0) {
-					$account['money'] -= $_pay['money'];
-					if(!$udb->save($account)) {
-						return 12; // 扣除个人余额失败
+				$account['money'] -= $_pay['money'];
+				$account['score'] += $_pay['third']; // 增加消费积分
+				if(!$udb->save($account)) {
+					return 12; // 扣除个人余额失败
+				}
+				
+				if($_pay['third'] > 0) {
+					// 增加消费积分记录
+					$msdb = M('MemberScore');
+					$msdata = array(
+						'uid'			=> $account['uid'],
+						'scoresource'	=> '缴纳拍卖保证金',
+						'score'			=> $_pay['third'],
+					);
+					if(!$msdb->add($msdata)) {
+						return 23; // 增加消费积分失败
 					}
 				}
 			} else {
@@ -288,7 +301,7 @@ class PayController extends Controller {
 				'uid'			=> $account['uid'],
 				'type'			=> 1, // 付款
 				'third'			=> $_pay['third'], // 第三方支付类型
-				'content' => '退还商品保证金到余额',
+				'content' 		=> '退还商品保证金到余额',
 			);
 			if($adb->add($adata)) {
 				// 扣除个人账户余额
@@ -316,7 +329,11 @@ class PayController extends Controller {
 				$status = $this->paimai($cart, $account);
 			} else {
 				// 秒杀
-				return $this->miaosha($cart, $account);
+				$status = $this->miaosha($cart, $account);
+			}
+			
+			if($status != 0) {
+				return $status;
 			}
 		}
 		
@@ -331,13 +348,25 @@ class PayController extends Controller {
 			'content' => '购买商品',
 		);
 		if($adb->add($adata)) {
-			if($_pay['money'] > 0 || $_pay['score'] > 0) {
-				$udb = M('member');
-				// 扣除个人账户余额
-				$account['money'] -= $_pay['money'];
-				$account['score'] -= $_pay['score'];
-				if(!$udb->save($account)) {
-					return 12; // 扣除个人余额失败
+			$udb = M('member');
+			// 扣除个人账户余额
+			$account['money'] -= $_pay['money'];
+			// 第三方支付增加消费积分(1:1)
+			$account['score'] += $_pay['third'] - $_pay['score'];
+			if(!$udb->save($account)) {
+				return 12; // 扣除个人余额失败
+			}
+			
+			if($_pay['third'] > 0) {
+				// 增加消费积分记录(1:1)
+				$msdb = M('MemberScore');
+				$msdata = array(
+					'uid'			=> $account['uid'],
+					'scoresource'	=> '购买商品',
+					'score'			=> $_pay['third'],
+				);
+				if(!$msdb->add($msdata)) {
+					return 23; // 增加消费积分失败
 				}
 			}
 		} else {

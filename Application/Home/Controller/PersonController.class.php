@@ -26,8 +26,11 @@ class PersonController extends CommonController {
     }
 	
 	public function me(){
-    	$this->assign('title', '一元购');  
-		$userinfo=session('wxUserinfo');
+    	$this->assign('title', '一元购'); 
+		 
+		$Model = M('member');
+		$filter['uid'] = session("_uid");		
+		$userinfo =$Model->where($filter)->find();
 		$this->assign('data', $userinfo);
 		
 		$this->display();
@@ -63,11 +66,24 @@ class PersonController extends CommonController {
 		->select();
 		return $list;
 	}
+	//充值记录分页
 	public function pageAllRechargerecord($pageSize, $pageNum) {
 		// 分页
 		$list=$this->GetRecord($pageSize,$pageNum);
 		$this->ajaxReturn($list, "JSON");
 	}
+	
+	public function wallet()
+	{
+		$Model = M('member');
+		$filter['uid'] = session("_uid");		
+		$userinfo =$Model->where($filter)->find();
+		$this->assign('data', $userinfo);		
+		
+		$this->assign('title', '我的钱包');
+		$this->display();
+	}
+	
 		
 	public function miaoshaRecord()
 	{
@@ -114,10 +130,84 @@ class PersonController extends CommonController {
 	
 	public function yaoqinglist()
 	{
-		$this->assign('title', '填写邀请码');
+		$this->assign('title', '邀请记录');
 		$this->display();
 	}
+	public function cashout()
+	{
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+			
+			$db = M('member_cashout');
+			$data['uid'] = session("_uid");
+			$user = $db->where($data)->find();
+			if(!$user) {
+				$result["msg"]='用户不存在。';
+			}
+			//验证余额		
+			$money= floatval($_POST["money"]);			
+			$addMoney=floatval($payitem['money']);
+			if($money > $addMoney)
+			{
+				$result["msg"]="余额不足。";				
+			}
+			else
+			{					
+//				$db = M('member_addmoney_record');
+//				$addMoney=floatval($payitem['money']);
+//				$adduid=$payitem["uid"];
+//				$payitem["status"]=1;
+//				$db->save($payitem);
+//				
+//				$udb = M('member');
+//				$menberfilter["uid"]=$adduid;
+//				$dbmember = $udb->where($menberfilter)->find();
+//				if($dbmember)
+//				{
+//					$dbmember['money'] = floatval($dbmember['money'])+$addMoney;
+//					$udb->save($dbmember);
+//					return 0;
+//				}
+			}
+			
+			
 		
+		
+		
+			$this->ajaxReturn($result, "JSON");
+		}
+		else
+		{
+			$this->assign('title', '提现');
+			$this->display();
+		}
+	}
+	
+	public function cashoutlist()
+	{
+		$this->assign('title', '提现记录');		
+		$list=$this->GetCashoutlist(20,0);
+		$this->assign('data', $list);
+		$this->display();
+	}	
+	
+	public function GetCashoutlist($pageSize, $pageNum)
+	{
+		$Model = M('member_cashout');
+		$filter['uid'] = session("_uid");		
+		$list =$Model					
+			->where($filter)
+			->page($pageNum, $pageSize)
+			->select();
+		return $list;
+	}
+	public function pagecashoutlist()
+	{
+		$list=$this->GetCashoutlist($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
+	
 	public function userimg(){
 		if(IS_POST) {
 			$result["status"]=0;

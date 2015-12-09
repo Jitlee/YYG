@@ -7,6 +7,7 @@ class JiexiaoController extends Controller {
 		run_task();
     		$this->assign('title', '最新揭晓');
 		$this->assign('pid', 'jiexiao');
+		$this->assign('tabId', 2);
 		$this->display();
     }
 	
