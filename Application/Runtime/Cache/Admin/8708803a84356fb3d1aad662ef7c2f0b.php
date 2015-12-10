@@ -22,11 +22,11 @@
 		<!-- Bootstrap core CSS -->
 		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/Public/Admin/css/bootstrap.css" rel="stylesheet">
-		<link href="/Application/admin/View/css/index.css" rel="stylesheet">
-		<link href="/Application/admin/View/css/common.css" rel="stylesheet">	
+		<link href="/Public/Admin/css/index.css" rel="stylesheet">
+		<link href="/Public/Admin/css/common.css" rel="stylesheet">	
 		<!--<link href="/Application/admin/View/css/global.css" rel="stylesheet">-->
 			<style type="text/css">
-				.navv .current{background:url(../images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
+				.navv .current{background:url(/Public/Admin/images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
 				
 				.navv .current a{
 					display:block;
@@ -34,7 +34,7 @@
 					height:40px;
 					text-align:center;
 					padding-right:20px;
-					background:url(../images/nav_bg_1.png) no-repeat right top;
+					background:url(/Public/Admin/images/nav_bg_1.png) no-repeat right top;
 					color:#2a8bbb;
 					top:0px;
 				}
@@ -229,9 +229,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_17407__=$minPageNum;$__FOR_END_17407__=$pageNum;for($i=$__FOR_START_17407__;$i < $__FOR_END_17407__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_25036__=$minPageNum;$__FOR_END_25036__=$pageNum;for($i=$__FOR_START_25036__;$i < $__FOR_END_25036__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_21964__=$pageNum+1;$__FOR_END_21964__=$maxPageNum;for($i=$__FOR_START_21964__;$i < $__FOR_END_21964__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_31765__=$pageNum+1;$__FOR_END_31765__=$maxPageNum;for($i=$__FOR_START_31765__;$i < $__FOR_END_31765__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
