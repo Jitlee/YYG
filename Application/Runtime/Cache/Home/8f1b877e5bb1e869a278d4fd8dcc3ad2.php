@@ -211,7 +211,7 @@
 				<li class="mui-table-view-cell" id="about">
 					<a class="mui-navigate-right" href="<?php echo U('Person/loginexit', '', '');?>">
 						<div class="img-tip">
-							<img alt="注销" src="/Public/Home/images/person/exit.png"/>
+							<img alt="关于" src="/Public/Home/images/person/yyg_icon_wdyq.png"/>
 						</div>
 						<div class="menu-content">
 							<p>注销</p>

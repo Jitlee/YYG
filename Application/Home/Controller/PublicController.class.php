@@ -28,16 +28,15 @@ public function login() {
 				$db->save($data);
 				
 				// 将临时购物车的记录替换成真的			
-				$cdb = M('cart');
+				$cdb = M('yyg_cart');
 				$_uid = get_temp_uid();		
 				
 				// 清空之前的商品
 				$cmap['uid'] = $data['uid'];
 				$cdb->where($cmap)->delete();
-				$model = M();
 				
 				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
-				$row = $model->execute($sql);			
+				$row = new \Think\Model()->execute($sql);			
 				
 				session("_uid", $user['uid']); 					
 				session('wxUserinfo', $user);
