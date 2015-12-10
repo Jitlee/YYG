@@ -107,7 +107,7 @@
 			<div class="yyg-cart-body">
 				<p class="yyg-cart-title">(第 <?php echo ($item["good"]["qishu"]); ?> 期)<?php echo ($item["good"]["title"]); ?></p>
 				<h5>剩余<?php echo ($item["good"]["shengyurenshu"]); ?>人次</h5>
-				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" <?php if($item["status"] == 1): ?>disabled="disabled"<?php endif; ?> xg="<?php echo ($item["good"]["xiangou"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
+				<input type="number" name="count" cid="<?php echo ($item["id"]); ?>" sy="<?php echo ($item["good"]["shengyurenshu"]); ?>" <?php if($item["status"] == 1): ?>disabled="disabled"<?php endif; ?> xg="<?php echo ($item["good"]["xiangou"]); ?>" dj="<?php echo ($item["good"]["danjia"]); ?>" value="<?php echo ($item["count"]); ?>" bk="<?php echo ($item["count"]); ?>" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="<?php echo ($item["id"]); ?>"><i class="iconfont icon-remove"></i></a>
 			</div><?php endif; ?>
 		</li><?php endforeach; endif; ?>
@@ -146,16 +146,24 @@
 				var count = $this.val();
 				var bkCount = $this.attr("bk");
 				var xiangou = Number($this.attr("xg"));
+				var shengyu = Number($this.attr("sy"));
 				if(count > 0) {
 					if(count > 0 && xiangou > 0 && count > xiangou) {
 						new Android_Toast({content: "该商品限购" + xiangou  + "人次" });
 						count = xiangou;
 						$this.val(count);
 					}
+					if(count > shengyu) {
+						new Android_Toast({content: "该商品剩余" + shengyu  + "人次" });
+						count = shengyu;
+						$this.val(count);
+					}
+					
 					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
 						if(result.status == 0) {
 							sum();
-							$this.attr("bk", count);
+							$this.attr("bk", result.count);
+//							$this.val(result.count);
 						} else { // 失败
 							new Android_Toast({content: "修改失败"});
 							$this.val(bkCount);
@@ -163,14 +171,15 @@
 					});
 				}
 			}, 200);
-		}).bind("blur", function() {
-			$this = $(this);
-			var count = $this.val();
-			var bkCount = $this.attr("bk");
-			if(!(count > 0)) {
-				$this.val(bkCount);
-			}
 		});
+//		}).bind("blur", function() {
+//			$this = $(this);
+//			var count = $this.val();
+//			var bkCount = $this.attr("bk");
+//			if(!(count > 0)) {
+//				$this.val(bkCount);
+//			}
+//		});
 		
 		sum();
 		
