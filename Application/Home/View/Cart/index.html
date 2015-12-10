@@ -148,13 +148,14 @@
 			var id = $this.attr("cid");
 			var bkCount = $this.attr("bk");
 			$.post("{:U('remove', '', '')}/" + id, null, function(result) {
-				if(result.status == 1) {
+				if(result.status == 0) {
 					$this.closest(".yyg-cart-item").remove();
 					sum();
 					if($(".yyg-cart-item").length == 0) {
 						$("#emptyBlock").show();
 						$("#footer").hide();
 					}
+					countCart(-1);
 				} else { // 失败
 					new Android_Toast({content: "删除失败"});
 					$this.val(bkCount);

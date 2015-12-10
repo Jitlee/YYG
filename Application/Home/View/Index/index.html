@@ -232,6 +232,7 @@
 	
 	.yyg-progress, .yyg-progress .yyg-progressing {
 		height:4px;
+		border-radius:2px;
 	}
 	
 	.yyg-progress {
@@ -349,7 +350,7 @@
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
 	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
 	       			$("span.money", item).text(this.money);
-	       			$(".yyg-good-cart", item).attr("gid", this.gid);
+	       			$(".yyg-good-cart", item).attr("gid", this.gid).attr("src", this.thumb);
 	       			$("r", item).text(this.danjia);
 	       			goodList.append(item);
 	       		});
@@ -433,13 +434,37 @@
 			window.removeEventListener("click", onclosecategory);
 		}
 		
+		var offset = $("#cart").offset();
 		goodList.on("click", ".yyg-good-cart", function(evt) {
 			evt.stopPropagation();
 			evt.preventDefault();
 			var $this = $(this);
 			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left+30,
+					top: offset.top+30,
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
 			$.post("{:U('Cart/add', '', '')}/" + gid + "/1", null, function(result) {
 				new Android_Toast({content: result.message});
+				if(result.count > 0) {
+					countCart(1);	
+				}
 			})
 		});
 		

@@ -20,6 +20,7 @@
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 		<script src="/Public/Home/js/android_toast.min.js"></script>
+		<script src="/Public/Home/js/jquery.fly.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -278,6 +279,7 @@
 	
 	.yyg-progress, .yyg-progress .yyg-progressing {
 		height:4px;
+		border-radius:2px;
 	}
 	
 	.yyg-progress {
@@ -391,7 +393,7 @@
 	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
 	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
 	       			$("span.money", item).text(this.money);
-	       			$(".yyg-good-cart", item).attr("gid", this.gid);
+	       			$(".yyg-good-cart", item).attr("gid", this.gid).attr("src", this.thumb);
 	       			$("r", item).text(this.danjia);
 	       			goodList.append(item);
 	       		});
@@ -475,13 +477,37 @@
 			window.removeEventListener("click", onclosecategory);
 		}
 		
+		var offset = $("#cart").offset();
 		goodList.on("click", ".yyg-good-cart", function(evt) {
 			evt.stopPropagation();
 			evt.preventDefault();
 			var $this = $(this);
 			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left+30,
+					top: offset.top+30,
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
 			$.post("<?php echo U('Cart/add', '', '');?>/" + gid + "/1", null, function(result) {
 				new Android_Toast({content: result.message});
+				if(result.count > 0) {
+					countCart(1);	
+				}
 			})
 		});
 		
@@ -504,7 +530,7 @@
 				<span class="mui-tab-label">拍卖</span>
 			</a>
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <?php if($_SESSION['user_']['cartCount']== 0): ?>style="display:none"<?php endif; ?>><?php echo session('cartCount');?></span></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
@@ -538,5 +564,18 @@
 		});
 		
 		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
+		
+		var cartCount = <?php echo (session('cartCount')); ?> * 1;
+		var cartCountSpan = $("#cartCount");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+			if(cartCount <= 0) {
+				cartCountSpan.hide();
+			} else {
+				cartCountSpan.show();
+			}
+		}
+		window.countCart = countCart;
 	});
 </script>
