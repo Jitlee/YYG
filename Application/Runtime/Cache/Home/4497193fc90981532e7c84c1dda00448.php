@@ -147,8 +147,8 @@
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('record', '','');?>/<?php echo ($data["gid"]); ?>">出价记录(<span id="chujiacishuLabel"><?php echo ($data["chujiacishu"]); ?></span>)</a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('detail', '', '');?>/<?php echo ($data["gid"]); ?>">图文详情  <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">卖家承诺</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right">保证金须知</a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('article', '', '');?>/chengnuo">卖家承诺</a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="<?php echo U('article', '', '');?>/baozhengjin">保证金须知</a></li>
 </ul>
 <footer class="yyg-footer">
 	<div class="yyg-footer-block">

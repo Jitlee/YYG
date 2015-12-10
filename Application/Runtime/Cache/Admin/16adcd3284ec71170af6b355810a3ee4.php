@@ -63,7 +63,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Paimai/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -184,9 +184,10 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 <link href="/Public/Admin/css/bootstrap-datepicker3.min.css" rel="stylesheet"> 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
-	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
+
 	<table class="table">
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
@@ -236,39 +237,49 @@ $(function() {
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
+				<label for="inputQipaijia" class="control-label"><r>*</r>起拍价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="<?php echo ($data["money"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputQipaijia" name="qipaijia" value="<?php echo ($data["qipaijia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
+				<label for="inputBaoliujia" class="control-label">保留价</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="<?php echo ((isset($data["danjia"]) && ($data["danjia"] !== ""))?($data["danjia"]):'1'); ?>" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputBaoliujia" name="baoliujia" value="<?php echo ($data["baoliujia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<label class="control-label">元</label>
+				<span>中标结束，如果没有投标着出价高于或等于保留价，则本次拍卖流拍（该字段用户不可见，默认为0时表示没有保留价）</span>
+			</td>
+		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputLijijia" class="control-label">立即揭标价</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputLijijia" name="lijijia" value="<?php echo ($data["lijijia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+				<label class="control-label">元</label>
+				<span>用户可以选择以立即揭标价中标该商品（默认为0元，表示不能立即揭标）</span>
+			</td>
+		</tr>
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="inputBaozhengjin" class="control-label"><r>*</r>保证金</label>
+			</td>
+			<td>
+				<input type="number" class="form-control" style="width:100px" id="inputBaozhengjin" name="baozhengjin" value="<?php echo ($data["baozhengjin"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
+				<label for="inputJiafujia" class="control-label"><r>*</r>加价幅度</label>
 			</td>
 			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="<?php echo ((isset($data["xiangou"]) && ($data["xiangou"] !== ""))?($data["xiangou"]):'0'); ?>" maxlength="7" pattern="^\d+$" required/>
+				<input type="number" class="form-control" style="width:100px" id="inputJiafujia" name="jiafujia" value="<?php echo ($data["jiafujia"]); ?>" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
 				<label class="control-label">元</label>
-				<span>设置限购次数（默认为0，表示不限购）</span>
-			</td>
-		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
-			</td>
-			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="<?php echo ((isset($data["maxqishu"]) && ($data["maxqishu"] !== ""))?($data["maxqishu"]):100); ?>" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
@@ -331,36 +342,20 @@ $(function() {
 		</tr>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
-				<label for="jishiButton" class="control-label">即时揭晓</label>
+				<label for="datepicker" class="control-label">结束时间</label>
 			</td>
 			<td>
-  				<div class="btn-group dropup">
-					<button id="jishiButton" <?php if($isAllCategories): ?>disabled="true"<?php endif; ?> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						参与即时揭晓 <span class="caret"></span>
-					</button>
-					<ul id="jishiMenus" class="dropdown-menu">
-						<li hours="1"><a>1小时</a></li>
-						<li hours="2"><a>2小时</a></li>
-						<li hours="3"><a>3小时</a></li>
-						<li hours="5"><a>5小时</a></li>
-						<li hours="8"><a>10小时</a></li>
-						<li hours="12"><a>12小时</a></li>
-						<li hours="24"><a>1天</a></li>
-						<li hours="48"><a>2天</a></li>
-						<li hours="0"><a>不参与</a></li>
-					</ul>
-				</div>
-				<span id="jishiSpan" class="label <?php if($data["jishijiexiao"] == 0): ?>label-default<?php else: ?>label-success<?php endif; ?>">
-					<?php switch($data["jishijiexiao"]): case "1": ?>1小时<?php break;?>
-					    <?php case "2": ?>2小时<?php break;?>
-					    <?php case "3": ?>3小时<?php break;?>
-					    <?php case "5": ?>5小时<?php break;?>
-					    <?php case "12": ?>12小时<?php break;?>
-					    <?php case "24": ?>1天<?php break;?>
-					    <?php case "240": ?>2天<?php break;?>
-					    <?php default: ?>不参与<?php endswitch;?>
-				</span>
-				<input id="jishiInput" type="text" name="jishijiexiao" value="<?php echo ($data["jishijiexiao"]); ?>" class="hidden" />
+  				<input id="datepicker" type="text" style="width:150px" value="<?php echo (date('Y年m月d日',strtotime($data["end_time"]))); ?>" class="form-control" required/>
+  				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio1" value="36000">上午10点
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio2" value="54000">下午3点
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="endTimeRadio" id="endTimeRadio3" value="79200">晚上10点
+				</label>
+				<input id="inputEndTime" name="end_time" value="<?php echo ($data["end_time"]); ?>" class="hidden"/>
 			</td>
 		</tr>
 		<tr>
@@ -369,7 +364,10 @@ $(function() {
 			</td>
 			<td>
 				<label class="checkbox-inline">
-					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">人气
+					<input type="checkbox" id="checkTuijian" boolean name="tuijian" <?php if($data["tuijian"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["tuijian"]); ?>">推荐
+				</label>
+				<label class="checkbox-inline">
+					<input type="checkbox" id="checkBaoyou" boolean name="renqi" <?php if($data["renqi"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["baoyou"]); ?>">人气
 				</label>
 				<label class="checkbox-inline">
 					<input type="checkbox" id="checkBaoyou" boolean name="baoyou" <?php if($data["baoyou"] == 1): ?>checked="true"<?php endif; ?>  value="<?php echo ($data["baoyou"]); ?>">包邮
@@ -507,6 +505,8 @@ $(function() {
 		};
 	});
 </script>
+<script src="/Public/Admin/js/bootstrap-datepicker.min.js"></script>
+<script src="/Public/Admin/js/bootstrap-datepicker.zh-CN.min.js"></script>
 <script type="text/javascript">
 	//表单提交
 	$(document).ajaxStart(function() {
@@ -606,18 +606,42 @@ $(function() {
 			self.val(self.prop("checked") ? 1 : 0);
 		});
 		
-		// 设置即时
-		$("#jishiMenus").on("click", "li", function(){
-			$this = $(this);
-			var hours = $this.attr("hours");
-			var text = $this.text();
-			var css = hours > 0 ? "label-success" : "label-default";
-			$("#jishiInput").val(hours);
-			$("#jishiSpan").text(text)
-				.removeClass("label-success")
-				.removeClass("label-default")
-				.addClass(css);
+		// 设置日期
+		var datepicker = $("#datepicker").datepicker({
+		    startDate: "today",
+		    language: "zh-CN",
+		    autoclose: true,
+		    todayHighlight: true,
+		    zIndexOffset: 1000
+		}).on("changeDate", endTimeChanged);
+		
+		$('input[type="radio"][name="endTimeRadio"]').change(endTimeChanged);
+		var inputEndTime = $("#inputEndTime");
+		function endTimeChanged() {
+			var date = datepicker.data('datepicker').getDate();
+			var seconds = Number($('input[type="radio"][name="endTimeRadio"]:checked').val());
+			date.setSeconds(seconds);
+			inputEndTime.val([date.getFullYear(),"-",(date.getMonth() + 1),"-",date.getDate()," ",
+				date.getHours(),":",date.getMinutes(),":",date.getSeconds()].join(""));
+		}
+		$(window).bind("blur", function() {
+			datepicker.data('datepicker').hide();
 		});
+		
+		<?php if(isset($data["end_time"])): ?>// <?php echo ($data["end_time"]); ?>
+			
+			var hours = <?php echo (date('G',strtotime($data["end_time"]))); ?>;
+			if(hours == 10) {
+				$("#endTimeRadio1").attr("checked", "checked");
+			} else if(hours == 15) {
+				$("#endTimeRadio2").attr("checked", "checked");
+			} else {
+				$("#endTimeRadio3").attr("checked", "checked");
+			}
+		<?php else: ?> 
+		$("#endTimeRadio1").attr("checked", "checked");
+		var today = new Date();
+		$("#datepicker").val(today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate());<?php endif; ?> 
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

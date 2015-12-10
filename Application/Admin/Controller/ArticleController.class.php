@@ -7,7 +7,7 @@ class ArticleController extends CommonController {
         $list = $db->select();
 		$this->assign('list',$list);// 模板变量赋值
 		$this->assign('title', '文章管理');
-		$this->assign('pid', 'acmgr');
+		$this->assign('pid', 'uimgr');
 		$this->assign('mid', 'aclist');
 		$this->display();
 	}
@@ -25,7 +25,7 @@ class ArticleController extends CommonController {
 			$this->assign('data', $data);
 			
 			$this->assign('action', U('edit', '', ''));
-			$this->assign('pid', 'acmgr');
+			$this->assign('pid', 'uimgr');
 			$this->assign('mid', 'aclist');
 			$this->assign('title', '编辑文章');
 			$this->display('add');

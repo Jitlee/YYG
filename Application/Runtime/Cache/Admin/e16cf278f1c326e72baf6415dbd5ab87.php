@@ -63,7 +63,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Article/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -184,90 +184,61 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn"><?php echo ($addTitle); ?></a>
-</div>
-<table id="listTable" class="table table-bordered">
-	<thead>
-		<tr>
-			<th>商品标题</th>
-			<th>所属栏目</th>
-			<th>已参与/总参</th>
-			<th>单价/元</th>
-			<th>期数/最大期数</th>
-			<th>人气商品</th>
-			<?php if($type == 2): ?><th>限购次数</th><?php endif; ?>
-			<th style="width:200px">操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$good): ?><tr>
-			<td><?php echo ($good["title"]); ?></td>
-			<td><?php echo ($good["category"]["name"]); ?></td>
-			<td><?php echo ($good["canyurenshu"]); ?>/<?php echo ($good["shengyurenshu"]); ?></td>
-			<td><?php echo ($good["danjia"]); ?></td>
-			<td><?php echo ($good["qishu"]); ?>/<?php echo ($good["maxqishu"]); ?></td>
-			<td><?php echo ($good["renqi"]); ?></td>
-			<?php if($type == 2): ?><td><?php echo ($good["xiangou"]); ?></td><?php endif; ?>
-			<td gid="<?php echo ($good["gid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($good["gid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('history','','');?>/<?php echo ($good["gid"]); ?>'>查看往期</a>
+		 <form id="addForm" class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post" data-toggle="validator">
+	<?php if(isset($data["id"])): ?><input type="hidden" name="id" value="<?php echo ($data["id"]); ?>" /><?php endif; ?>
+	<table class="table">
+		<tr class="form-inline">
+			<td class="col-sm-2 control-label">
+				<label for="contentEdtior" class="control-label">名称</label>
 			</td>
-		</tr><?php endforeach; endif; ?>
-	</tbody>
-</table>
-<nav>
-  <ul class="pagination">
-  	<?php if($minPageNum > 1): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-  	<?php else: ?>
-    <li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_1088712932__=$minPageNum;$__FOR_END_1088712932__=$pageNum;for($i=$__FOR_START_1088712932__;$i < $__FOR_END_1088712932__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
-	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1210050162__=$pageNum+1;$__FOR_END_1210050162__=$maxPageNum;for($i=$__FOR_START_1210050162__;$i < $__FOR_END_1210050162__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
-	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  	<?php else: ?>
-    <li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </span>
-    </li><?php endif; ?>
-  </ul>
-</nav>
+			<td>
+				<span><?php echo ($data["name"]); ?></span>
+			</td>
+		</tr>
+		<tr>
+			<td class="col-sm-2 control-label">
+				<label for="contentEdtior" class="control-label">内容</label>
+			</td>
+			<td>
+				
+<script type="text/javascript" charset="utf-8" src="/Public/UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/Public/UEditor/ueditor.all.js"></script>
+<script type="text/plain" id="contentEdtior" name="content" style=""><?php echo ($data["content"]); ?></script>
+<script type="text/javascript">var ue_contentEdtior = UE.getEditor("contentEdtior");</script>
+
+			</td>
+		</tr>
+		<tr>
+			<td class="col-sm-2">
+			</td>
+			<td>
+				<button type="submit" class="btn btn-primary"> 提交 </button>
+				<a class="btn btn-default" href="<?php echo U('index','','');?>"> 取消 </a>
+			</td>
+		</tr>
+	</table>
+</form>
 <script type="text/javascript">
-	$(function(){
-		$("#listTable").on("click",".delete", function(evt) {
-			var ths = $(this);
-			var gid = ths.parent().attr("gid");
-			var tr = ths.closest("tr");
-			UI.confirm("是否删除", {
-				ok: function() {
-					remove(tr, gid);
-				}
-			});
-		});
-		
-		function remove(tr, gid) {
-			$.post("<?php echo U('remove','','');?>/" + gid, null, function(data) {
-				if(data.status) {
-					tr.remove();
+	//表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	$(function() {
+		// 提交数据
+		$("#addForm").submit(function() {
+			var self = $(this);
+			$.post(self.attr("action"), self.serialize(), success, "json");
+			return false;
+			function success(data) {
+				if (data.status) {
+					window.location.href = data.url;
 				} else {
 					$("#tips").text(data.info);
 				}
-			}, "json");
-		}
+			}
+		});
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

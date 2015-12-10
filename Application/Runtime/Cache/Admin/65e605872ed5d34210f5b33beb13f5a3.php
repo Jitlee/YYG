@@ -22,11 +22,11 @@
 		<!-- Bootstrap core CSS -->
 		<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 		<link href="/Public/Admin/css/bootstrap.css" rel="stylesheet">
-		<link href="/Application/admin/View/css/index.css" rel="stylesheet">
-		<link href="/Application/admin/View/css/common.css" rel="stylesheet">	
+		<link href="/Public/Admin/css/index.css" rel="stylesheet">
+		<link href="/Public/Admin/css/common.css" rel="stylesheet">	
 		<!--<link href="/Application/admin/View/css/global.css" rel="stylesheet">-->
 			<style type="text/css">
-				.navv .current{background:url(../images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
+				.navv .current{background:url(/Public/Admin/images/nav_bg_1.png) no-repeat 0px 0px;border:0px solid #000;}
 				
 				.navv .current a{
 					display:block;
@@ -34,7 +34,7 @@
 					height:40px;
 					text-align:center;
 					padding-right:20px;
-					background:url(../images/nav_bg_1.png) no-repeat right top;
+					background:url(/Public/Admin/images/nav_bg_1.png) no-repeat right top;
 					color:#2a8bbb;
 					top:0px;
 				}
@@ -149,6 +149,7 @@
 			<a>界面管理</a>
 			<ul>
 				<li id="wxhdlist"><a href="/index.php/Admin/Slide">微信幻灯管理</a></li>
+				<li id="aclist"><a href="/index.php/Admin/Article">文章管理</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -229,9 +230,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_626__=$minPageNum;$__FOR_END_626__=$pageNum;for($i=$__FOR_START_626__;$i < $__FOR_END_626__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_1464041108__=$minPageNum;$__FOR_END_1464041108__=$pageNum;for($i=$__FOR_START_1464041108__;$i < $__FOR_END_1464041108__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_30403__=$pageNum+1;$__FOR_END_30403__=$maxPageNum;for($i=$__FOR_START_30403__;$i < $__FOR_END_30403__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_1991011418__=$pageNum+1;$__FOR_END_1991011418__=$maxPageNum;for($i=$__FOR_START_1991011418__;$i < $__FOR_END_1991011418__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

@@ -63,7 +63,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Paimai/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -185,34 +185,38 @@ $(function() {
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
 		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn"><?php echo ($addTitle); ?></a>
+	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加拍卖商品</a>
 </div>
 <table id="listTable" class="table table-bordered">
 	<thead>
 		<tr>
 			<th>商品标题</th>
 			<th>所属栏目</th>
-			<th>已参与/总参</th>
-			<th>单价/元</th>
-			<th>期数/最大期数</th>
-			<th>人气商品</th>
-			<?php if($type == 2): ?><th>限购次数</th><?php endif; ?>
-			<th style="width:200px">操作</th>
+			<th>起拍价(元)</th>
+			<th>保留价(元)</th>
+			<th>立即揭标价(元)</th>
+			<th>加价幅度(元)</th>
+			<th>保证金(元)</th>
+			<th>出价次数(次)</th>
+			<th>最高价(元)</th>
+			<th>结束时间</th>
+			<th style="width:150px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$good): ?><tr>
-			<td><?php echo ($good["title"]); ?></td>
-			<td><?php echo ($good["category"]["name"]); ?></td>
-			<td><?php echo ($good["canyurenshu"]); ?>/<?php echo ($good["shengyurenshu"]); ?></td>
-			<td><?php echo ($good["danjia"]); ?></td>
-			<td><?php echo ($good["qishu"]); ?>/<?php echo ($good["maxqishu"]); ?></td>
-			<td><?php echo ($good["renqi"]); ?></td>
-			<?php if($type == 2): ?><td><?php echo ($good["xiangou"]); ?></td><?php endif; ?>
-			<td gid="<?php echo ($good["gid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($good["gid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('history','','');?>/<?php echo ($good["gid"]); ?>'>查看往期</a>
+		<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
+			<td><?php echo ($item["title"]); ?></td>
+			<td><?php echo ($item["category"]["name"]); ?></td>
+			<td><?php echo ($item["qipaijia"]); ?></td>
+			<td><?php echo ($item["baoliujia"]); ?></td>
+			<td><?php echo ($item["lijijia"]); ?></td>
+			<td><?php echo ($item["jiafujia"]); ?></td>
+			<td><?php echo ($item["baozhengjin"]); ?></td>
+			<td><?php echo ($item["chujiacishu"]); ?></td>
+			<td><?php echo ($item["zuigaojia"]); ?></td>
+			<td><?php echo ($item["end_time"]); ?></td>
+			<td gid="<?php echo ($item["gid"]); ?>">
+				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($item["gid"]); ?>'>编辑</a>
 			</td>
 		</tr><?php endforeach; endif; ?>
 	</tbody>
@@ -220,7 +224,7 @@ $(function() {
 <nav>
   <ul class="pagination">
   	<?php if($minPageNum > 1): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
+      <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -230,11 +234,11 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_1088712932__=$minPageNum;$__FOR_END_1088712932__=$pageNum;for($i=$__FOR_START_1088712932__;$i < $__FOR_END_1088712932__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_116523892__=$minPageNum;$__FOR_END_116523892__=$pageNum;for($i=$__FOR_START_116523892__;$i < $__FOR_END_116523892__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1210050162__=$pageNum+1;$__FOR_END_1210050162__=$maxPageNum;for($i=$__FOR_START_1210050162__;$i < $__FOR_END_1210050162__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_1188768395__=$pageNum+1;$__FOR_END_1188768395__=$maxPageNum;for($i=$__FOR_START_1188768395__;$i < $__FOR_END_1188768395__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
+      <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
@@ -248,26 +252,6 @@ $(function() {
 </nav>
 <script type="text/javascript">
 	$(function(){
-		$("#listTable").on("click",".delete", function(evt) {
-			var ths = $(this);
-			var gid = ths.parent().attr("gid");
-			var tr = ths.closest("tr");
-			UI.confirm("是否删除", {
-				ok: function() {
-					remove(tr, gid);
-				}
-			});
-		});
-		
-		function remove(tr, gid) {
-			$.post("<?php echo U('remove','','');?>/" + gid, null, function(data) {
-				if(data.status) {
-					tr.remove();
-				} else {
-					$("#tips").text(data.info);
-				}
-			}, "json");
-		}
 	});
 </script>
 		 <p id="tips" class="check-tips text-danger"></p>

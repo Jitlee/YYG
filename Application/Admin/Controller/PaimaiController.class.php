@@ -23,7 +23,7 @@ class PaimaiController extends GoodsBaseController {
 		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
 		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 		
-		$list = $db->relation(true)->page($pageNum, $pageSize)->select();
+		$list = $db->relation(true)->order("time desc")->page($pageNum, $pageSize)->select();
 		$this->assign('list',$list);// 模板变量赋值
 		
 		$this->assign('title', '拍卖商品列表');

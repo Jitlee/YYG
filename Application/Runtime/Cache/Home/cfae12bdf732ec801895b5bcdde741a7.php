@@ -20,7 +20,6 @@
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 		<script src="/Public/Home/js/android_toast.min.js"></script>
-		<script src="/Public/Home/js/jquery.fly.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -55,7 +54,7 @@
 				<h5><i class="iconfont icon-renminbi"></i><label>当前价格</label><r class="small">¥</r> <r class="larger"><?php echo ($tuijian["zuigaojia"]); ?></r></h5>
 				<h5><i class="iconfont icon-add"></i><label>出价次数</label><?php echo ($tuijian["chujiacishu"]); ?>次</h5>
 				<h5><i class="iconfont icon-weibiaoti5"></i><label>剩余时间</label><time class="normal" _countdown="<?php echo (strtotime($tuijian["end_time"])); ?>"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></h5>
-				<a type="button" style="padding-left:30px; padding-right: 30px;" class="yyg-btn yyg-btn-primary">我要出价</a>
+				<div type="button" style="padding-left:30px; padding-right: 30px;" class="yyg-btn yyg-btn-primary">我要出价</div>
 			</div>
 		</section>
 	</a><?php endif; ?>
@@ -180,7 +179,7 @@
 				<span class="mui-tab-label">拍卖</span>
 			</a>
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <?php if($_SESSION['user_']['cartCount']== 0): ?>style="display:none"<?php endif; ?>><?php echo session('cartCount');?></span></span>
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
@@ -214,18 +213,5 @@
 		});
 		
 		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
-		
-		var cartCount = <?php echo (session('cartCount')); ?> * 1;
-		var cartCountSpan = $("#cartCount");
-		function countCart(count) {
-			cartCount += count;
-			cartCountSpan.text(cartCount);
-			if(cartCount <= 0) {
-				cartCountSpan.hide();
-			} else {
-				cartCountSpan.show();
-			}
-		}
-		window.countCart = countCart;
 	});
 </script>

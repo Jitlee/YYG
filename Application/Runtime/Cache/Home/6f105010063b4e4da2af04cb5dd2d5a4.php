@@ -20,7 +20,6 @@
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 		<script src="/Public/Home/js/android_toast.min.js"></script>
-		<script src="/Public/Home/js/jquery.fly.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -222,7 +221,7 @@
 				<span class="mui-tab-label">拍卖</span>
 			</a>
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <?php if($_SESSION['user_']['cartCount']== 0): ?>style="display:none"<?php endif; ?>><?php echo session('cartCount');?></span></span>
+				<span class="mui-icon iconfont icon-yyg_cart"></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
@@ -256,18 +255,5 @@
 		});
 		
 		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
-		
-		var cartCount = <?php echo (session('cartCount')); ?> * 1;
-		var cartCountSpan = $("#cartCount");
-		function countCart(count) {
-			cartCount += count;
-			cartCountSpan.text(cartCount);
-			if(cartCount <= 0) {
-				cartCountSpan.hide();
-			} else {
-				cartCountSpan.show();
-			}
-		}
-		window.countCart = countCart;
 	});
 </script>
