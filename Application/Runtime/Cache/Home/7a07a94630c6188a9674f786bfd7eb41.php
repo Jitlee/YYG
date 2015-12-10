@@ -119,6 +119,10 @@
 			width: auto;
 		}
 		
+		.yyg-chujia-inner .yyg-btn {
+			margin-top:30px;
+		}
+		
 	</style>
 	<div id="chujiaBlock" class="yyg-chujia-bg" style="display: none;">
 		<div class="yyg-chujia-inner">
@@ -216,6 +220,12 @@
 			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/3", null, function(result) {
 				window.location.href = "<?php echo U('Cart/index', '','');?>";
 			})
+		});
+		
+		document.getElementById("chujiaBlock").addEventListener("click", function(evt) {
+			if(evt.srcElement.id == "chujiaBlock") {
+				chujiaBlock.hide();
+			}
 		});
 	});
 </script>

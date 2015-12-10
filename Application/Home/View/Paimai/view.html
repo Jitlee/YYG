@@ -84,6 +84,10 @@
 			width: auto;
 		}
 		
+		.yyg-chujia-inner .yyg-btn {
+			margin-top:30px;
+		}
+		
 	</style>
 	<div id="chujiaBlock" class="yyg-chujia-bg" style="display: none;">
 		<div class="yyg-chujia-inner">
@@ -184,6 +188,12 @@
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/3", null, function(result) {
 				window.location.href = "{:U('Cart/index', '','')}";
 			})
+		});
+		
+		document.getElementById("chujiaBlock").addEventListener("click", function(evt) {
+			if(evt.srcElement.id == "chujiaBlock") {
+				chujiaBlock.hide();
+			}
 		});
 	});
 </script>
