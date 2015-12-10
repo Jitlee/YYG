@@ -27,6 +27,19 @@ function is_login() {
 	}
 }
 
+function count_cart($count = 0) {
+	if(!session('?cartCount')) {
+		session('cartCount', 0);
+	}
+	if($count != 0) {
+		session('cartCount', session('cartCount') + $count);
+	}
+}
+
+function empty_cart() {
+	session('cartCount', 0);
+}
+
 function run_task() {
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/task';
 	$is_running = false;

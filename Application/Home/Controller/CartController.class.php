@@ -7,7 +7,7 @@ use Think\Controller;
 class CartController extends Controller {
 	
 	public function index(){
-    		$this->assign('title', '购物车');
+    	$this->assign('title', '购物车');
 		$this->assign('pid', 'cart');
 		
 		$db = D('cart');
@@ -64,6 +64,8 @@ class CartController extends Controller {
 			$data['flag'] = is_login() ? 1 : 0; // 0 没有登陆， 1登陆
 			
 			if($db->add($data)) {
+				count_cart(1);
+				$result['count'] = 1;
 				$result['status'] = 0;
 				$result['message'] = '添加成功';
 			} else {
@@ -128,10 +130,11 @@ class CartController extends Controller {
 	public function remove($id) {
 		$db = M('cart');
 		if($db->delete($id)) {
-			$result['status'] = 1;
+			count_cart(-1);
+			$result['status'] = 0;
 			$result['message'] = '删除成功';
 		} else {
-			$result['status'] = 0;
+			$result['status'] = 1;
 			$result['message'] = '删除失败';
 		}
 		$this->ajaxReturn($result);
