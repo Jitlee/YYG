@@ -206,3 +206,12 @@ function finish_paimai() {
 		}
 	}
 }
+
+function saveImage($folder, $content) {
+	$tmpId = \Org\Util\String::keyGen();
+	$fileName = '/Uploads/'.$folder.'/'.array('date','Ymd').'/'.$tmpId.'.jpg';
+	list($type, $data) = explode(';', $content);
+	list(, $data)      = explode(',', $content);
+	file_put_contents($fileName, base64_decode($content));
+	return 
+}
