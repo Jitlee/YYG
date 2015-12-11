@@ -7,7 +7,7 @@ use Think\Controller;
 class CartController extends Controller {
 	
 	public function index(){
-    		$this->assign('title', '购物车');
+    	$this->assign('title', '购物车');
 		$this->assign('pid', 'cart');
 		
 		$db = D('cart');
@@ -64,6 +64,8 @@ class CartController extends Controller {
 			$data['flag'] = is_login() ? 1 : 0; // 0 没有登陆， 1登陆
 			
 			if($db->add($data)) {
+				count_cart(1);
+				$result['count'] = 1;
 				$result['status'] = 0;
 				$result['message'] = '添加成功';
 			} else {
@@ -78,6 +80,9 @@ class CartController extends Controller {
 				&& intval($exists['good']['xiangou']) == intval($exists['count'])) {
 				$result['status'] = 3;
 				$result['message'] = '该商品限购'.$exists['good']['xiangou'].'人次';
+			} else if($exists['good'] && intval($exists['count']) >= intval($exists['good']['shengyurenshu'])) {
+				$result['status'] = 4;
+				$result['message'] = '该商品剩余'.$exists['good']['shengyurenshu'].'人次';
 			} else {
 				// 存在，累加
 				$data['count'] = intval($exists['count']) + 1;
@@ -103,10 +108,16 @@ class CartController extends Controller {
 			intval($exists['good']['xiangou']) >0) {
 			$count = intval($exists['good']['xiangou']);
 		}
+		
+		if($exists['good'] && $count > intval($exists['good']['shengyurenshu'])) {
+			$count = intval($exists['good']['shengyurenshu']);
+		}
+		
 		$data['id'] = $id;
 		$data['count'] = $count;
 		$row = $db->save($data);
 		if($row > 0) {
+			$result['count'] = $count;
 			$result['status'] = 0;
 			$result['message'] = '修改成功';
 		} else {
@@ -119,10 +130,11 @@ class CartController extends Controller {
 	public function remove($id) {
 		$db = M('cart');
 		if($db->delete($id)) {
-			$result['status'] = 1;
+			count_cart(-1);
+			$result['status'] = 0;
 			$result['message'] = '删除成功';
 		} else {
-			$result['status'] = 0;
+			$result['status'] = 1;
 			$result['message'] = '删除失败';
 		}
 		$this->ajaxReturn($result);

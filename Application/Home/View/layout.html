@@ -20,6 +20,7 @@
 		<script src="__JS__/jquery.lazy.min.js"></script>
 		<script src="__JS__/jquery.touchSwipe.min.js"></script>
 		<script src="__JS__/android_toast.min.js"></script>
+		<script src="__JS__/jquery.fly.min.js"></script>
 		
 		<script src="__JS__/mobile.js"></script>
 
@@ -62,7 +63,7 @@
 				<span class="mui-tab-label">拍卖</span>
 			</a>
 			<a id="cart" class="mui-tab-item" href="{:U('Cart/index', '', '')}">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <if condition="$Think.session.cartCount eq 0">style="display:none"</if>>{:session('cartCount')}</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="{:U('Person/me', '', '')}">
@@ -96,5 +97,18 @@
 		});
 		
 		$("#{$pid|default='index'}").addClass("mui-active");
+		
+		var cartCount = {$Think.session.cartCount} * 1;
+		var cartCountSpan = $("#cartCount");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+			if(cartCount <= 0) {
+				cartCountSpan.hide();
+			} else {
+				cartCountSpan.show();
+			}
+		}
+		window.countCart = countCart;
 	});
 </script>

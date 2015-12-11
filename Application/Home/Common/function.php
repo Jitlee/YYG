@@ -27,6 +27,19 @@ function is_login() {
 	}
 }
 
+function count_cart($count = 0) {
+	if(!session('?cartCount')) {
+		session('cartCount', 0);
+	}
+	if($count != 0) {
+		session('cartCount', session('cartCount') + $count);
+	}
+}
+
+function empty_cart() {
+	session('cartCount', 0);
+}
+
 function run_task() {
 	$path = $_SERVER['DOCUMENT_ROOT'] . '/task';
 	$is_running = false;
@@ -192,4 +205,13 @@ function finish_paimai() {
 			}
 		}
 	}
+}
+
+function saveImage($folder, $content) {
+	$tmpId = \Org\Util\String::keyGen();
+	$fileName = '/Uploads/'.$folder.'/'.array('date','Ymd').'/'.$tmpId.'.jpg';
+	list($type, $data) = explode(';', $content);
+	list(, $data)      = explode(',', $content);
+	file_put_contents($fileName, base64_decode($content));
+	return 
 }
