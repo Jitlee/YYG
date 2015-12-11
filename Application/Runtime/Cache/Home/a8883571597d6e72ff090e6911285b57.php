@@ -20,6 +20,7 @@
 		<script src="/Public/Home/js/jquery.lazy.min.js"></script>
 		<script src="/Public/Home/js/jquery.touchSwipe.min.js"></script>
 		<script src="/Public/Home/js/android_toast.min.js"></script>
+		<script src="/Public/Home/js/jquery.fly.min.js"></script>
 		
 		<script src="/Public/Home/js/mobile.js"></script>
 
@@ -104,7 +105,7 @@
 								a:1,
 								b:2
 	            },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
-	            open_id:''                             //(可选，使用微信公众号支付时必须传入)
+	            open_id:'5K8yzLfvnT4Gaj1S'                             //(可选，使用微信公众号支付时必须传入)
 	        },function(res){
 	           // alert(res);
 	            if(!res.status){
@@ -221,7 +222,7 @@ body, button, input, select, textarea {
 				<span class="mui-tab-label">拍卖</span>
 			</a>
 			<a id="cart" class="mui-tab-item" href="<?php echo U('Cart/index', '', '');?>">
-				<span class="mui-icon iconfont icon-yyg_cart"></span>
+				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <?php if($_SESSION['user_']['cartCount']== 0): ?>style="display:none"<?php endif; ?>><?php echo session('cartCount');?></span></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>
 			<a id="person" class="mui-tab-item" href="<?php echo U('Person/me', '', '');?>">
@@ -255,5 +256,18 @@ body, button, input, select, textarea {
 		});
 		
 		$("#<?php echo ((isset($pid) && ($pid !== ""))?($pid):'index'); ?>").addClass("mui-active");
+		
+		var cartCount = <?php echo (session('cartCount')); ?> * 1;
+		var cartCountSpan = $("#cartCount");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+			if(cartCount <= 0) {
+				cartCountSpan.hide();
+			} else {
+				cartCountSpan.show();
+			}
+		}
+		window.countCart = countCart;
 	});
 </script>

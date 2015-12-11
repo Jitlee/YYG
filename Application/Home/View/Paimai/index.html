@@ -40,7 +40,7 @@
 			</div>
 			<div class="yyg-goods-media">
 				<p class="tuijian-content-title"></p>
-				<h5 style="margin: 7px 0;"><label>最高出价</label><r class="small">¥</r> <r class="larger">{$item.zuigaojia}</r></h5>
+				<h5 style="margin: 7px 0;"><label class="label">最高出价</label><r class="small">¥</r> <r class="larger">{$item.zuigaojia}</r></h5>
 				<h5><label>结束时间</label><span class="end-time"></span></h5>
 			</div>
 			<div style="width: 100%;"  type="button" class="yyg-btn yyg-btn-disabed">竞拍已结束</div>
@@ -102,6 +102,7 @@
 		       			$("h5 r:last-child", item).text(this.zuigaojia);
 		       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
 		       			$(".end-time", item).text(this.end_time);
+		       			$(".label", item).text("成交价格");
 						goodList.append(item);
 					} else {
 						var item = emptyTemplate.clone().removeAttr("id").removeClass("mui-hidden");

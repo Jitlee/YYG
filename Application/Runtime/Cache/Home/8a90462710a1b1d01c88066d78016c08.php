@@ -42,7 +42,7 @@
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<label id="yueButton" for="scoreCheckBox" class="mui-input-row mui-checkbox  mui-disabled">
-						<div>积分支付：<span class="yyg-gray">(积分¥<?php echo ($account["score"]); ?>)</span></div>
+						<div>积分支付：<span class="yyg-gray">(可用积分¥<?php echo ($account["score"]); ?>)</span></div>
 						<input id="scoreCheckBox" type="checkbox">
 					</label>
 				</li>
@@ -58,10 +58,10 @@
 			</ul>
 			
 			<ul class="mui-table-view yyg-margin20">
-				<li class="mui-table-view-cell mui-collapse">
-					<a class="mui-navigate-right">
+				<li class="mui-table-view-cell">
+					<a>
 						第三方支付
-						<span class="yyg-cell-right yyg-gray">需要支付 <r id="thirdMoney">¥ <?php echo ($total); ?></r></span>
+						<span class="yyg-cell-right yyg-gray yyg-right-margin">需要支付 <r id="thirdMoney">¥ <?php echo ($total); ?></r></span>
 					</a>
 				</li>
 			</ul>
@@ -129,7 +129,7 @@
 		
 		function localPay() {
 			$.post("<?php echo U('localpay','','');?>", {
-				score: 0, // 福分支付金额
+				score: _score, // 福分支付金额
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
 			}, function(result) {
@@ -159,9 +159,10 @@
 	            open_id:''                             //(可选，使用微信公众号支付时必须传入)
 	        },function(res){
 	           // alert(res);
+	           console.info(res);
 	            if(!res.status){
 	                //处理错误
-					new Android_Toast("支付异常");
+					new Android_Toast({ content: "支付异常", position: "top" });
 //					console.error(res.chargeUrlOutput);
 	            }
 	            else{
@@ -171,13 +172,12 @@
 	                pingpp_one.success(function(res){
 	                    if(!res.status){
 //	                        alert(res.msg);
-							new Android_Toast({content: res.msg});
+							new Android_Toast({content: res.msg, position: "top" });
 	                    }
 	                },function(res){
 	                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，
 	                    //则在该方法内写入 window.location.href = "你的购买页面 url"
 //	                    window.location.href='http://yourdomain.com/payment_succeeded';//示例
-						console.info(res);
 	                });
 	            }
 	        });
