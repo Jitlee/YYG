@@ -1,0 +1,69 @@
+<div class="layout980 clearfix">
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-home.css"/>
+<include file="left" />
+<script>
+ $("#wdwzg").attr('class','sid-cur');    
+</script>
+<div class="center">
+	<div class="per-info">
+		<ul>
+			<li class="info-mane gray02">
+				<b class="gray01">
+				 {$data.username}
+				<br>
+				<span><a href="{:U('Home/mypage', '', '')}?uid={$data.uid}" target="_blank" class="blue"><s></s>
+					我的主页
+				</a></span>
+			</li>
+			 
+			<li class="account-money">
+				<em class="gray02">帐户余额：</em>
+				<span class="money-red"><s></s>{$data.money}</span>&nbsp;&nbsp;
+				<a href="{:U('Main/userrecharge', '', '')}" title="充值" class="blue">充值</a>
+			</li>
+			<li class="account-money">
+			<em class="gray02">我的积分：</em><b class="orange">{$data.score}		 
+			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="{:U('Main/userscore', '', '')}" title="点击查看" class="blue">点击查看</a>
+			</li>
+		</ul>
+	    <div class="tips orange" style="height: 40px;">
+				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
+				<a href="{:U('Home/address', '', '')}" class="blue">立即确认收货地址</a>
+		</div>
+		<if condition="($data.mobile eq '') OR ($data.username gt '') ">
+			<div class="tips orange">
+				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠1000福分！
+				<a href="{:U('Home/modify', '', '')}" class="blue">立即完善</a><a class="close"></a>
+			</div>
+		</if>
+	 
+            <script type="text/javascript">
+                      $(".close").click(function () {
+                               $(this).parent(".tips").hide(1000);
+                        });    
+            </script>
+	</div>
+	<div class="New-content">
+	    <br>
+	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
+	</div>
+<!--center_center_end-->
+<div class="right">				
+	<div class="groups-shadow clearfix">
+                 <div class="R-grtit"><h3>公告栏</h3></div>
+		<ul class="gg-list">
+		<!--获取圈子最新动态5条-->
+			<!--{wc:m=group.group mod=get_group_tiezi(5)}
+			{wc:loop $datas $row}	
+			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
+				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
+			{wc:loop:end}-->
+			<!--/获取圈子最新动态5条-->
+		</ul>
+	</div> 
+	<p class="r-line"></p>
+         <br/>
+</div>
+<!--center_rjght_end-->
+
+</div>
