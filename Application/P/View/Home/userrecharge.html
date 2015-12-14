@@ -1,9 +1,85 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
-</html>
+<div class="main-content clearfix">
+<include file="left" />
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
+<script>
+$(function(){
+	var je=$("#ulMoneyList li");
+	var dx=/\D/;
+	je.click(function(){
+		je.removeClass("selected");
+		je.find("input").removeAttr("checked");
+		var radio=je.index(this);
+			//je.eq(radio).find("input").attr('checked','checked');
+			je.eq(radio).addClass("selected");
+		var valx=je.eq(radio).find("input").val();
+		$("#Money").text(valx);
+		$("#hidMoney").val(valx);
+	});
+	var tel=$("#txtOtherMoney").val();
+	$("#txtOtherMoney").keyup(function(){	
+		if(dx.test($("#txtOtherMoney").val())){
+			$("#txtOtherMoney").val(tel);			
+		}else{
+			tel=$("#txtOtherMoney").val();
+		}
+		$("#Money").text(tel);
+		$("#hidMoney").val(tel);
+	}); 
+})
+</script>
+<form id="toPayForm" name="toPayForm" action="{WEB_PATH}/member/cart/addmoney" method="post" target="_blank">
+<div class="R-content">
+	<div class="member-t"><h2>账户充值</h2></div>
+	<div class="select">
+		<b class="gray01">请您选择充值金额</b>
+		<ul id="ulMoneyList">
+			<li class="selected" style="margin-left:0;"><input  type="radio" id="rd10" name="money" value="10" checked="checked">
+				<label for="rd10">充值 <strong>￥</strong><b>10</b></label></li>
+			<li><input type="radio" name="money" value="50" id="rd50"> <label for="rd50">充值 <strong>￥</strong><b>50</b></label></li>
+			<li><input type="radio" name="money" value="100" id="rd100"> <label for="rd100">充值 <strong>￥</strong><b>100</b></label></li>
+			<li><input type="radio" name="money" value="200" id="rd200"> <label for="rd200">充值 <strong>￥</strong><b>200</b></label></li>
+			<li><input type="radio" name="money" value="200" id="rd200"> <label for="rd200">充值 <strong>￥</strong><b>500</b></label></li>
+			
+		</ul>
+	</div>
+	<div class="charge_money_list"> 
+		<p class="much">应付金额：<span class="yf"><strong>￥</strong><span id="Money">10</span></span></p>
+		<h6>			
+				<input type="hidden" id="hidPayName" name="payName" value="">
+				<input type="hidden" id="hidPayBank" name="payBank" value="0">
+				<input type="hidden" id="hidMoney" name="money" value="10">
+				<input id="submit_ok" class="bluebut imm" type="submit" name="submit" value="立即充值" title="立即充值">
+			</form>
+		</h6>
+		<div id="payAltBox" style="display:none;">
+			<div class="prompt_box">
+				<p class="pic"><em></em>请您在新开的页面上完成支付！</p>
+				<p class="ts">付款完成之前，请不要关闭本窗口！<br>完成付款后跟据您的个人情况完成此操作！</p>
+				<ul>
+					<li><a href="{WEB_PATH}/member/home/userbalance" class="look" title="查看充值记录">查看充值记录 </a></li>
+					<li><a href="javascript:gotoClick();" class="look" id="btnReSelect" title="重选支付方式">重选支付方式</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>  
+</div>
+</div>
+<script>
+$(function(){
+		
+	$("#submit_ok").click(function(){	
+		if(!this.cc){
+			this.cc = 1;		
+			return true;
+		}else{		
+			return false;
+		}		
+		return false;
+	});
+	
+	$(".yeepay_click li>img").click(function(){			
+			$(this).prev().prop("checked",true);
+	});
+
+});
+</script>

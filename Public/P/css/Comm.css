@@ -726,3 +726,4 @@ input[type=button]::-moz-focus-inner {
 }
 #Page_Ul #Page_Total{line-height:26px; display:none;}
 #Page_Ul .Page_This{color:#333; line-height:26px;}
+.mui-hidden{display: none;}

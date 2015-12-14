@@ -1,9 +1,110 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
-</html>
+<div class="main-content clearfix">
+<include file="left" />
+	<link rel="stylesheet" type="text/css" href="__CSS__/layout-records.css"/>
+	<div class="R-content">
+		<div class="member-t"><h2>云购记录</h2></div>
+		<div id="GoodsList" class="goods_show">
+			<ul class="gtitle">
+				<li>商品图片</li>
+				<li class="gname">商品名称</li>
+				<li class="yg_status">云购状态</li>
+				<li class="joinInfo">参与人次</li>
+				<li class="do">操作</li>
+			</ul>	
+			 
+	        
+	        <style>
+				#divPageNav{ padding-top:10px;text-align:right}
+				#divPageNav li a{ padding:5px;}
+				.mui-hidden{display: none;}
+			</style>
+			<!--<div id="divPageNav" class="page_nav">
+	        	{wc:page:one} <li>共 {wc:$total} 条</li>
+	        </div>-->
+		</div>
+	</div>
+</div>
+		 <ul class="goods_list mui-hidden" id="goodTemplate">	
+				<li><a title="" target="_blank" class="pic" href=""><img src=""></a></li>
+				<li class="gname"style="margin:10px 0 0 0;">
+					<a target="_blank" href="" class="blue">
+						<span class="zcontent"></span>
+					</a>
+					<p class="gray02">获得者：<a href="{WEB_PATH}/uname/{wc:fun:idjia($jiexiao['q_uid'])}" target="_blank" class="blue">
+	                {wc:fun:get_user_name($jiexiao['q_user'])}
+	                </a></p>
+					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
+				</li>
+				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">已揭晓</span></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em>{wc:$rt['gonumber']}</em>人次</p></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="详情">详情</a></li>
+			</ul>
+			
+			<ul class="goods_list mui-hidden" id="goodTemplateing">	
+				<li><a title="" target="_blank" class="pic goodurl" href="{WEB_PATH}/goods/{wc:$rt['shopid']}"><img src=""></a></li>
+				<li class="gname" style="margin:15px 0 0 0;">
+					<a target="_blank" href="" class="blue goodurl">
+						<span class="zcontent"></span>
+					</a>				
+					<p class="gray02 ">购买时间：<span class="ztime"></span></p>
+				</li>
+				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">正在进行...</span></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="查看云购码">查看云购码</a></li>
+			</ul>
+			
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#GoodsList");
+		var goodTemplate = $("#goodTemplate");
+		var goodTemplateing=$("#goodTemplateing");
+		var useTemplate;
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("{:U('pageAllMR', '', '')}/8/" + (++pageNum), {
+				type: orderType
+				 
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+	       		$.each(list, function() {
+	       			useTemplate=goodTemplateing;
+	       			if(this.jishijiexiao==1)
+	       			{
+	       				useTemplate=goodTemplate;
+	       			}	       			
+	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+//	       			$(".money", item).text(this.zongrenshu);
+	       			$("r", item).text(this.canyurenshu);
+	       			
+	       			$(".pl", item).text(this.canyurenshu);
+					$(".pc", item).text(this.zongrenshu);
+					$(".pr", item).text(this.shengyurenshu);
+	       			
+	       			$(".ztime", item).text(this.time);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 		
+	});
+</script>

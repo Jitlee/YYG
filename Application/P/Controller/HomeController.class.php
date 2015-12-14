@@ -27,11 +27,41 @@ class HomeController extends Controller {
     	$this->assign('title', '一元购');
 		$this->display();
     }
-	
+	public function pageAllMR($pageSize, $pageNum) {
+		// 分页
+		$Model = M('miaosha');
+		$filter['yyg_member_miaosha.uid'] = session("_uid");
+		
+		
+		$list =$Model
+		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid")			
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
+		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid")
+		->select();
+			
+		$this->ajaxReturn($list, "JSON");
+	}
+	/*		中奖记录	*/
 	public function orderlist(){		
     	$this->assign('title', '一元购');
 		$this->display();
     }
+	public function pageAllzj($pageSize, $pageNum) {
+		// 分页
+		$Model = M('miaosha_history');
+		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+		
+		
+		$list =$Model
+		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
+		->where($filter)
+		->page($pageNum, $pageSize)		
+		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->select();
+		$this->ajaxReturn($list, "JSON");
+	}
 	
 	public function singlelist(){		
     	$this->assign('title', '一元购');
