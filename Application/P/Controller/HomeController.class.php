@@ -93,6 +93,8 @@ class HomeController extends Controller {
 	/*******账户管理********/
 	public function userbalance(){		
     	$this->assign('title', '一元购');
+    	$data=session('wxUserinfo');
+		$this->assign("data", $data);
 		$this->display();
     }
 	public function userrecharge(){		
@@ -102,6 +104,10 @@ class HomeController extends Controller {
 	/*******end账户管理********/
 	public function userscore(){		
     	$this->assign('title', '一元购');
+		$data=session('wxUserinfo');
+		$this->assign("data", $data);
+		$scoremoney=$data.score/100;
+		$this->assign("scoremoney", $scoremoney);
 		$this->display();
     }
 	public function address(){		

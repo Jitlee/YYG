@@ -3,19 +3,14 @@
 <include file="left" />
 <link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
 <div class="R-content">
-	<div class="member-t"><h2>账户福分</h2></div>
+	<div class="member-t"><h2>账户积分</h2></div>
 	<div class="last">
 		<ul>
-			<li><h3>可用福分：</h3><b class="orange">{wc:$member['score']}</b>	</li>
+			<li><h3>可用积分：</h3><b class="orange">{$data.score}</b>	</li>
 			<li>			
 				<h3>可用金钱：</h3>	<b class="orange">
-				{wc:php:start}
-					$conf = System::load_app_config("user_fufen",'','member');
-					$fufen_to_money  = intval($member['score'] / $conf['fufen_yuan']);			
-					
-				{wc:php:end}
-				{wc:$member['score']}福分 / {wc:$conf['fufen_yuan']}福分<h3>(1元={wc:$conf['fufen_yuan']}福分)</h3>	 = 
-				{wc:$fufen_to_money}元<h3>(取整)</h3>	
+				
+				{$data.score}积分 / 100积分<h3>(1元=100积分)</h3>	 = {$data["score"]/100}元<h3>(取整)</h3>	
 				</b>
 			</li>
 		</ul>
