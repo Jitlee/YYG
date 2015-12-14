@@ -1,0 +1,82 @@
+<style>
+	.ac{ text-align:center;}
+	#showimg{ float:initial;}
+	td{padding: 5px;}
+</style>
+<div class="main-content clearfix">	 
+ <include file="left" />
+		 
+ 		<div class="mui-slider-item">
+ 			<table>
+ 				<tr>
+ 					<td></td>
+ 					<td><img id="showimg" src="__TIMG__/{$data.img}" border=0/></td>
+ 					<td>
+ 						<form   method="post" id="crop_form">
+							<input type="hidden" id="membimg" name="membimg" value="{$data.img}" />
+							<input id="crop_submit" type="submit" name="submit" class="bluebut" value="保存头像" title="保存头像" />
+						</form>
+ 					</td>
+ 				</tr>
+ 				<tr>
+					<td><img id="tx/2211274314672928.jpg" src="__TIMG__/tx/2211274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/2111274314672928.jpg" src="__TIMG__/tx/2111274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/2011274314672928.jpg" src="__TIMG__/tx/2011274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1911274314672928.jpg" src="__TIMG__/tx/1911274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/111274314672928.jpg" src="__TIMG__/tx/111274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/211274314672928.jpg" src="__TIMG__/tx/211274314672928.jpg" onclick="checked(this);"></td>					
+ 				</tr>
+ 				<tr>
+ 					<td><img id="tx/311274314672928.jpg" src="__TIMG__/tx/311274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/411274314672928.jpg" src="__TIMG__/tx/411274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/511274314672928.jpg" src="__TIMG__/tx/511274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/611274314672928.jpg" src="__TIMG__/tx/611274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/711274314672928.jpg" src="__TIMG__/tx/711274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/811274314672928.jpg" src="__TIMG__/tx/811274314672928.jpg" onclick="checked(this);"></td>
+				</tr>
+				<tr>
+					<td><img id="tx/911274314672928.jpg" src="__TIMG__/tx/911274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1011274314672928.jpg" src="__TIMG__/tx/1011274314672928.jpg" onclick="checked(this);"></td>					
+					<td><img id="tx/1111274314672928.jpg" src="__TIMG__/tx/1111274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1211274314672928.jpg" src="__TIMG__/tx/1211274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1311274314672928.jpg" src="__TIMG__/tx/1311274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1411274314672928.jpg" src="__TIMG__/tx/1411274314672928.jpg" onclick="checked(this);"></td>
+				</tr>
+				<tr>	
+					<td><img id="tx/1511274314672928.jpg" src="__TIMG__/tx/1511274314672928.jpg" onclick="checked(this);"></td>
+					<td><img id="tx/1611274314672928.jpg" src="__TIMG__/tx/1611274314672928.jpg" onclick="checked(this);"></td>					
+					<td><img id="tx/1711274314672928.jpg" src="__TIMG__/tx/1711274314672928.jpg" onclick="checked(this);"></td>					
+					<td><img id="tx/1811274314672928.jpg" src="__TIMG__/tx/1811274314672928.jpg" onclick="checked(this);"></td>
+				</tr>	
+ 			</table>
+ 							
+		</div>
+</div>
+<script type="text/javascript">
+	function checked(ss){
+		$("#showimg").attr("src",ss.src);
+		$("#membimg").val(ss.id);
+	}
+	
+	$(document).ajaxStart(function() {
+				$("button:submit").attr("disabled", true);
+			}).ajaxStop(function() {
+				$("button:submit").attr("disabled", false);
+			});
+			$(function() {		
+				$("form").submit(function() {
+					var self = $(this);
+					$.post("{:U('Home/userphoto','','')}", self.serialize(), success, "json");
+					return false;
+					function success(data) {
+						if (data.status) {
+							window.location.href="{:U('Home/index','','')}";
+						} else {
+							layer.alert(data.msg);
+						}
+					}
+				});
+			});
+			
+</script>
+  

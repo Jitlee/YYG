@@ -26,7 +26,6 @@ public function login() {
 					'login_ip'		=> get_client_ip(),
 				);
 				$db->save($data);
-				
 				// 将临时购物车的记录替换成真的			
 				$cdb = M('cart');
 				$_uid = get_temp_uid();		
@@ -70,6 +69,7 @@ public function reg(){
 				$result["msg"]="操作成功。";
 				if(!$records)
 				{
+					$_POST['img']='tx/211274314672928.jpg';
 					$db->create();
 					if($db->add() != false) {
 						$records = $db->where($data)->find();
@@ -228,12 +228,7 @@ public function setmobile(){
 			}
 	}
 
-	 
-	public function c1(){
-    	$this->assign('title', '省市区测试');			 
-		$this->display();
-    }
-	
+ 
 	
 	 
 

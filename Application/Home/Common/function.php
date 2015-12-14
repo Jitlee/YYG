@@ -14,7 +14,6 @@ function get_temp_uid() {
 	return $uid;
 }
 
-
 function is_login() {
 	$admin = session('wxUserinfo');
 	if(empty($admin)) {
@@ -38,6 +37,18 @@ function count_cart($count = 0) {
 
 function empty_cart() {
 	session('cartCount', 0);
+}
+function get_user_img()
+{
+	$db = M('member');
+	$data['uid'] = session("_uid");
+	$user = $db->where($data)->find();
+	$img=$user['img'];
+	if (!ereg('^http://', $user['img'])) 
+	{
+		$img='/Public/Home/images/'.$user['img'];
+	}	 
+	return $img;	
 }
 
 function run_task() {
@@ -205,4 +216,13 @@ function finish_paimai() {
 			}
 		}
 	}
+}
+
+function saveImage($folder, $content) {
+	$tmpId = \Org\Util\String::keyGen();
+	$fileName = '/Uploads/'.$folder.'/'.array('date','Ymd').'/'.$tmpId.'.jpg';
+	list($type, $data) = explode(';', $content);
+	list(, $data)      = explode(',', $content);
+	file_put_contents($fileName, base64_decode($content));
+	return;
 }

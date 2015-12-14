@@ -27,6 +27,7 @@ class PayController extends Controller {
 //	21;  // 保存出价记录失败
 //  22;  // 保存最高价失败
 //  23;  // 增加消费积分失败
+//  24;  // 积分不足
 	
 	public function index(){
 		if(is_login()) {
@@ -42,7 +43,9 @@ class PayController extends Controller {
 			$uid = get_temp_uid();
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
-			
+			$score = intval($user['score']);
+			$score = floor($score / 100) * 100;
+			$user['score'] = $score;
 			$this->assign('account', $user);
 	    	$this->assign('title', '结算支付');
 			layout(false);
@@ -169,9 +172,9 @@ class PayController extends Controller {
 		if(IS_POST) {
 			if(is_login()) {
 				$_pay = array(
-					'money'				=> floatval($_POST['money']),
+					'money'				=> intval($_POST['money']),
 					'score'				=> intval($_POST['score']),
-					'third'				=> floatval($_POST['third']),
+					'third'				=> intval($_POST['third']),
 					'bgid'				=> $_POST['bgid'],
 				);
 				$status = $this->pay(true, $_pay);
@@ -191,7 +194,7 @@ class PayController extends Controller {
 		$udb = M('member');
 		$udb->startTrans();
 		$account = $udb->field('uid, money,score')->find($uid);
-		$account['money'] = floatval($account['money']);
+		$account['money'] = intval($account['money']);
 		$account['score'] = intval($account['score']);
 		if($_pay['bgid']) { // 缴纳保证金
 			$status = $this->doPayBaozhengjin($needCheckThirdPay, $account, $_pay);
@@ -201,8 +204,10 @@ class PayController extends Controller {
 			$list = $cdb->where($map)->relation(true)->select();
 			if(!empty($list)) {
 				$total = $this->total($list);
-				if($_pay['money'] + $_pay['third'] + $_pay['score'] / 100 < $total) {
+				if($_pay['money'] + $_pay['third'] + ($_pay['score'] / 100) < $total) {
 					$status = 16;  // 付款金额不对
+				} else if($account['score'] < $_pay['score']) {
+					$status = 24;  // 积分不足
 				} else if($account['money'] < $_pay['money']) {
 					$status = 14;  // 余额不足
 				} else if($needCheckThirdPay && $_pay['third'] > 0) {
@@ -244,7 +249,7 @@ class PayController extends Controller {
 			// 商品还存在，还没结束
 			
 			// 验证
-			$total = floatval($good['baozhengjin']);
+			$total = intval($good['baozhengjin']);
 			if($_pay['money'] + $_pay['third'] < $total) {
 				return 16;  // 付款金额不对
 			} else if($account['money'] < $_pay['money']) {
@@ -502,7 +507,7 @@ class PayController extends Controller {
 
 	function paimai($cart, $account) {
 		$good = $cart['paimai'];
-		$lijijia = floatval($good['lijijia']);
+		$lijijia = intval($good['lijijia']);
 		$good['chujiacishu'] = intval($good['chujiacishu']);
 		$status = intval($good['status']);
 		$mpdb = M('MemberPaimai');
@@ -537,7 +542,7 @@ class PayController extends Controller {
 								// 将保证金退还给个人余额
 								$member = $mdb->field('uid, money')->find($record['uid']);
 								if($member) {
-									$member['money'] = floatval($member['money']) + floatval($record['money']);
+									$member['money'] = intval($member['money']) + intval($record['money']);
 									if(!$mdb->save($member)) {
 										return 23;
 									}

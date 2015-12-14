@@ -31,6 +31,12 @@ class PersonController extends CommonController {
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		
 		$userinfo =$Model->where($filter)->find();
+		$userinfo['sstatus']=TRUE;
+		if (!ereg('^http://', $userinfo['img'])) 
+		{
+			$userinfo['sstatus']=FALSE;
+		}
+		
 		$this->assign('data', $userinfo);
 		
 		$this->display();

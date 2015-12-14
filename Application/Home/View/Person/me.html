@@ -11,13 +11,13 @@
 		<script src="__JQ__"></script>
 		<link href="__CSS__/me.css" rel="stylesheet" type="text/css" />
 		
-		<script type="text/javascript">
+		<!--<script type="text/javascript">
 	   		seajs.initReady(function(){
 				seajs.use(["util", "ko", "md5"],function(){
 					seajs.use("me");
 				});				
 			});
-   		</script>
+   		</script>-->
    		<script type="text/javascript">
 	   		$(function() {
 	   			
@@ -61,14 +61,14 @@
 	</head>
 	
 	<body>
-
+		
 		<div class="mui-content">
 			<ul class="mui-table-view"> 
 				<li class="mui-table-view-cell cell-top"  id="userinfotop">
 					<a class="mui-navigate-right">
 						<span class="user-cell4">
-							<img class="user-img" alt="" src="__IMG__/{$data.img}">						 
-						</span>						 
+								<img class="user-img" alt="" src="{:get_user_img()}" />
+						</span>
 						<span class="user-cell_right">							 
 							<p data-bind="text: nickName">{$data.username}</p>
 							<p data-bind="text: nickName">{$data.mobile}</p>

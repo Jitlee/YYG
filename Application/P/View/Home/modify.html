@@ -1,0 +1,80 @@
+<div class="main-content clearfix">
+<include file="left" />
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-setUp.css"/>
+ 
+
+
+	<div class="R-content">
+		<div class="prompt orange">完善以下资料，{:config('web_name_two')}不会以任何形式公开您的个人隐私，请放心填写！<s></s></div>
+		<div class="info">
+		<form class="registerform" method="post">
+			<table border="0" cellpadding="0" cellspacing="8">
+				<tr>
+							
+					<td align="right"><em><font>*</font><label>手机：</label></em></td>
+					<td>
+						<b>{$data.mobile}</b>
+						<if condition="$data.mobilecode eq 1">
+						 已验证
+						</if>
+					</td>
+					<td>
+						 <if condition="$data.mobilecode eq 0">				 	
+							<a style="margin-left:0;" href="{:U('Home/mobilechecking', '', '')}" title="绑定手机">绑定手机</a>
+						</if>
+					 </td>
+				</tr>
+				
+	
+				<tr>
+					<td align="right"><em><font>*</font><label>昵称：</label></em></td>
+					<td>
+						<input id="nicxx" datatype="nic" nullmsg="昵称不能为空" name="username" value="{$data.username}" type="text"  class="txt gray" maxlength="20" />					
+					</td>					
+					<td><div class="Validform_checktip">昵称为2-20个汉字、字母、数字、“_”字符组成</div></td>
+				</tr>
+				<tr>
+					<td align="right"><em><font>&nbsp;</font><label>签名：</label></em></td>
+					<if condition="$data.qianming eq ''">
+						<td><textarea name="qianming" class="info_txtarea gray03" >让别人看到不一样的你！</textarea></td>
+					<else/>
+						<td><textarea name="qianming" class="info_txtarea gray03" >{$data.qianming}</textarea></td>
+					</if>
+				</tr>
+				<tr>
+					<td><em>&nbsp;</em></td>
+					<td><input name="submit" type="submit"  class="bluebut" value="保存"></td>
+				</tr>
+			</table>
+		</form>	
+		</div>
+	</div>
+</div>
+ <script type="text/javascript">
+	function checked(ss){
+		$("#showimg").attr("src",ss.src);
+		$("#membimg").val(ss.id);
+	}
+	
+	$(document).ajaxStart(function() {
+				$("button:submit").attr("disabled", true);
+			}).ajaxStop(function() {
+				$("button:submit").attr("disabled", false);
+			});
+			$(function() {		
+				$("form").submit(function() {
+					var self = $(this);
+					//alert(self.serialize());
+					$.post("{:U('Home/modify','','')}", self.serialize(), success, "json");
+					return false;
+					function success(data) {
+						if (data.status) {
+							window.location.href="{:U('Home/index','','')}";
+						} else {
+							alert(data.msg);
+						}
+					}
+				});
+			});
+			
+</script>

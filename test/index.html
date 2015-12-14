@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    
+	<script type="text/javascript" src="js/imageeditor.js"></script>
+	<script type="text/javascript" src="js/imageviewer.js"></script>
+	<script type="text/javascript" src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <style type="text/css">
+    	html {
+    		overflow: hidden;	
+    	}
+    	body {
+    		overflow: hidden;	
+    		-webkit-touch-callout: none;
+		    -webkit-user-select: none;
+		    -khtml-user-select: none;
+		    -moz-user-select: none;
+		    -ms-user-select: none;
+		    user-select: none;
+    	}
+    	
+    	#imageContainer{
+    		overflow: hidden;
+    		width: 100%;
+    		height:400px;
+    	}
+    </style>
+</head>
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<button id="action-back" class="mui-action-back mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-left">
+			<span class="mui-icon mui-icon-left-nav"></span>
+		</button>
+		<h1 id="title" class="mui-title">图片</h1>
+		<button id="okButton" class=" mui-btn mui-btn-blue mui-btn-link mui-btn-nav mui-pull-right">
+			使用
+		</button>
+	</header>
+	<div class="mui-content">
+		<input type="file" id="inputFile" accept="image/png,image/jpeg,image/gif" />
+		<div id="imageContainer"></div>
+		<img id="output" style="width:64px;height:64px;position: absolute;top:44px;right:44px;"/>
+	</div>
+</body>
+    <script type="text/javascript" charset="utf-8">
+    	$(function() {
+    		var imageEditor = new ImageEditor("imageContainer", 66);
+    		var inputFile = $("#inputFile").change(function() {
+    			var files = document.getElementById("inputFile").files;
+    			if(files.length > 0) {
+    				var file = files[0];
+    				var reader = new FileReader();
+    				reader.onload = function(evt) {
+//  					render(evt.target.result);
+						imageEditor.edit(evt.target.result);
+    				}
+    				reader.readAsDataURL(file);
+    			}
+    		});
+    		
+    		$("#okButton").click(function() {
+    			document.getElementById("output").src = imageEditor.clip(64,64);
+    		});
+    	});
+    </script>
+</html>
