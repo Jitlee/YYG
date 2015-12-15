@@ -8,25 +8,13 @@
 			<li><h3>您的账户可用余额为：</h3><b class="orange">{$data.money}</b>元 <a href="{:U('Home/userrecharge', '', '')}" class="bluebut" title="充值">充值</a></li>
 		</ul>
 	</div>
-	<div id="divList0" class="list-tab recordList">
-	<ul class="listTitle">
-		<li class="leftTitle">充值时间</li>
-		<li class="price">资金渠道</li>
-		<li class="regard">收入/支出</li>
-	</ul>
-	{wc:loop $account $at}
-	<ul>
-		<li class="leftTitle fontAri">{wc:fun:date("Y-m-d H:i:s",$at['time'])}</li>
-		<li class="price">{wc:$at['content']}</li>
-		<li class="regard">
-		{wc:if $at['type'] == 1}
-			<font color="#0c0">￥{wc:$at['money']}</font>
-		{wc:else}
-			<font color="red">￥{wc:$at['money']}</font>
-		{wc:if:end}		
-		</li>
-	</ul>
-	{wc:loop:end}
+	<div id="listitems" class="list-tab recordList">
+		<ul class="listTitle">
+			<li class="leftTitle">充值时间</li>
+			<li class="regard">资金渠道</li>
+			<li class="price">收入/支出</li>
+		</ul>
+	 
 	</div>
     
         <style>
@@ -34,14 +22,54 @@
 			#divPageNav li a{ padding:5px;}
 		</style>
 		<div id="divPageNav" class="page_nav">
-        	{wc:page:one} <li>共 {wc:$total} 条</li>
+        	 
         </div>
         
-	<div id="divPageNav0" class="page_nav" style="display: none;"> </div>
-	<div id="divList1" class="list-tab recordList" style="display:none;"></div>
-	<div id="divPageNav1" class="page_nav" style="display:none;"></div>
-	<div id="divDetailInfo" class="count" style="display:none;"></div>
-	<div id="divbuyDetail" class="list-tab recordList buyDetail" style="display:none;"></div>
+	 
 </div>
-
+	<ul id="divList0" class="mui-hidden">
+		<li class="leftTitle fontAri ztime"></li>
+		<li class="regard"></li>
+		<li class="price"></li>
+	</ul>
 </div>
+<script>
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumfinish = 0;
+		var goodListfinish = $("#listitems");
+		var goodTemplatefinish = $("#divList0");
+		 
+		var useTemplatefinish;
+		var orderTypefinish = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumfinish = 0;
+			}
+			$.get("{:U('pageAllRechargerecord', '', '')}/20/" + (++pageNumfinish), {
+				type: orderTypefinish
+				 
+			}, function(list) {
+				if(clear) {goodListfinish.html("");}
+				if(pageNumfinish ==1 && list && list.length==0){
+					goodListfinish.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+				
+	       		$.each(list, function() {
+	       			useTemplatefinish=goodTemplatefinish;
+	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
+					$(".ztime", item).text(this.time);
+					$(".price", item).text(this.money);
+					var regard="";
+					if(this.pay_type=='alipay_wap'){regard="支付宝"}
+					else if(this.pay_type=='wx_pub'){regard="微信"}
+					$(".regard", item).text(regard);  
+	       			goodListfinish.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>

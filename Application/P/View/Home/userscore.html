@@ -1,53 +1,80 @@
  
 <div class="main-content clearfix">
 <include file="left" />
-<link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
-<div class="R-content">
-	<div class="member-t"><h2>账户积分</h2></div>
-	<div class="last">
-		<ul>
-			<li><h3>可用积分：</h3><b class="orange">{$data.score}</b>	</li>
-			<li>			
-				<h3>可用金钱：</h3>	<b class="orange">
-				
-				{$data.score}积分 / 100积分<h3>(1元=100积分)</h3>	 = {$data["score"]/100}元<h3>(取整)</h3>	
-				</b>
-			</li>
+	<link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
+	<div class="R-content">
+		<div class="member-t"><h2>账户积分</h2></div>
+		<div class="last">
+			<ul>
+				<li><h3>可用积分：</h3><b class="orange">{$data.score}</b>	</li>
+				<li>			
+					<h3>可用金钱：</h3>	<b class="orange">
+					
+					{$data.score}积分 / 100积分<h3>(1元=100积分)</h3>	 = {$data["score"]/100}元<h3>(取整)</h3>	
+					</b>
+				</li>
+			</ul>
+		</div>
+		<div id="divList0" class="list-tab recordList">
+		<ul class="listTitle">
+			<li class="leftTitle">时间</li>
+			<li class="price">渠道</li>
+			<li class="regard">获得/支出</li>
 		</ul>
+		 
+		</div>
+	          <style>
+				#divPageNav{ padding-top:10px;text-align:right}
+				#divPageNav li a{ padding:5px;}
+			</style>
+			<div id="divPageNav" class="page_nav">
+	        	 
+	        </div>
+	 
 	</div>
-	<div id="divList0" class="list-tab recordList">
-	<ul class="listTitle">
-		<li class="leftTitle">时间</li>
-		<li class="price">渠道</li>
-		<li class="regard">获得/支出</li>
-	</ul>
-	{wc:loop $account $at}
-	<ul>
-		<li class="leftTitle fontAri">{wc:fun:date("Y-m-d H:i:s",$at['time'])}</li>
-		<li class="price">{wc:$at['content']}</li>
-		<li class="regard">
-		{wc:if $at['type']==1}
-			<font color="#0c0">+ {wc:$at['money']}</font>
-		{wc:else}
-			<font color="red">- {wc:$at['money']}</font>
-		{wc:if:end}
-		</li>
-	</ul>
-	{wc:loop:end}
-	</div>
-          <style>
-			#divPageNav{ padding-top:10px;text-align:right}
-			#divPageNav li a{ padding:5px;}
-		</style>
-		<div id="divPageNav" class="page_nav">
-        	{wc:page:one} <li>共 {wc:$total} 条</li>
-        </div>
-	<div id="divPageNav0" class="page_nav" style="display: none;"></div>
-	<div id="divList1" class="list-tab recordList" style="display:none;"></div>
-	<div id="divPageNav1" class="page_nav" style="display:none;"></div>
-	<div id="divDetailInfo" class="count" style="display:none;"></div>
-	<div id="divbuyDetail" class="list-tab recordList buyDetail" style="display:none;"></div>
-</div>
 
 </div>
+<ul id="Template" class="mui-hidden">
+	<li class="leftTitle ztime"></li>
+	<li class="scoresource"></li>
+	<li class="regard"> 
+		<font color="#0c0" class="score"> </font> 
+	</li>
+</ul>
+<script>
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumfinish = 0;
+		var goodListfinish = $("#divList0");
+		var Template = $("#Template");
+		 
+		var useTemplatefinish;
+		var orderTypefinish = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumfinish = 0;
+			}
+			$.get("{:U('pagescore', '', '')}/20/" + (++pageNumfinish), {
+				type: orderTypefinish
+				 
+			}, function(list) {
+				if(clear) {goodListfinish.html("");}
+				if(pageNumfinish ==1 && list && list.length==0){
+					goodListfinish.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+	       		$.each(list, function() {
+	       			useTemplatefinish=Template;
+	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
+					$(".ztime", item).text(this.time);
+					$(".score", item).text(this.score);
+					$(".scoresource", item).text(this.scoresource);
+	       			goodListfinish.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>
  

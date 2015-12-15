@@ -2,24 +2,20 @@
 	<include file="left" />
 	<link rel="stylesheet" type="text/css" href="__CSS__/layout-topic.css"/>
 	<link rel="stylesheet" type="text/css" href="__CSS__/layout-invitation.css"/>
+	<link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
 	
 	 <div class="R-content">
-		<div class="subMenu">
-			<a id="linkApply" class="current">提现申请</a>
-			<a id="linkRecharge">充值到云购账户</a>
+		<div class="member-t"><h2>申请提现</h2></div>
+		<div class="last">
+			<ul>
+				<li><h3>您的账户可用余额为：</h3><b class="orange">{$data.money}</b>元 </li>
+			</ul>
 		</div>
-	 
-		<div class="total">
-		<dt>
-			</dt><dd>佣金总余额：<b class="orange">{wc:$total}</b>元</dd>  <dd>活动佣金：<b class="orange">{wc:$cashouthdtotal}</b>元</dd> <dd>正在佣金提现审核（冻结）：<b class="orange">{wc:$cashoutdjtotal}</b>元</dd>
-		
-		<dd class=" "id="divTip">为确保您申请的金额能够正确无误的转入您的账户，请填写真实有效的账户信息，以下信息均为必填项！</dd>
-	   </div>
 		<div id="divSQTX" class="Apply-con">
 		  <form name="form1" action="" method="post">
 			<dl>
-				<dt>佣金余额：</dt>
-				<dd><span id="spanBrokerage" class="orange">{wc:$cashouthdtotal}</span> 元&nbsp;<span class="gray02" style="color:#999999">余额满100元时才可以申请提现</span></dd>
+				<dt></dt>
+				<dd>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="gray02" style="color:#999999">余额满100元时才可以申请提现</span></dd>
 			</dl>
 			<dl>
 				<dt>申请提现金额：</dt>
@@ -27,47 +23,31 @@
 			</dl>
 			<dl>
 				<dt>开&nbsp;&nbsp;户&nbsp;人：</dt>
-				<dd><input name="txtUserName" type="text" id="txtUserName" class="input-txt" maxlength="10" tip="2" />&nbsp;<span id="tip2"></span></dd>
+				<dd><input name="username" type="text" id="txtUserName" class="input-txt" maxlength="10" tip="2" />&nbsp;<span id="tip2"></span></dd>
 			</dl>
 			<dl>
 				<dt>银行名称：</dt>
-				<dd><input name="txtBankName" type="text" id="txtBankName" class="input-txt" tip="3" />&nbsp;<span id="tip3"></span></dd>
+				<dd><input name="bankname" type="text" id="txtBankName" class="input-txt" tip="3" />&nbsp;<span id="tip3"></span></dd>
 			</dl>
 			<dl>
 				<dt>开户支行：</dt>
-				<dd><input name="txtSubBank" type="text" id="txtSubBank" class="input-txt" tip="4" />&nbsp;<span id="tip4"></span></dd>
+				<dd><input name="branch" type="text" id="txtSubBank" class="input-txt" tip="4" />&nbsp;<span id="tip4"></span></dd>
 			</dl>
 			<dl>
 				<dt>银行帐号：</dt>
-				<dd><input name="txtBankNo" type="text" id="txtBankNo" class="input-txt txtAri" maxlength="23" tip="5" />&nbsp;<span id="tip5"></span></dd>
+				<dd><input name="banknumber" type="text" id="txtBankNo" class="input-txt txtAri" maxlength="23" tip="5" />&nbsp;<span id="tip5"></span></dd>
 			</dl>
 			<dl>
 				<dt>联系电话：</dt>
-				<dd><input name="txtPhone" type="text" id="txtPhone" class="input-txt txtAri" maxlength="13" tip="6" />&nbsp;<span id="tip6">格式输入186****2310</span></dd>
+				<dd><input name="linkphone" type="text" id="txtPhone" class="input-txt txtAri" maxlength="13" tip="6" />&nbsp;<span id="tip6">格式输入186****2310</span></dd>
 			</dl>
 			
 			<div class="Apply-button">
-				<input type="submit" name="submit1" id="btnSQTX" class="bluebut" title="提交申请" value="提交申请">
+				<input type="button" name="submit1" id="btnSQTX" class="bluebut" title="提交申请" value="提交申请">
 			</div>
 		 </form>
 		</div>
-		<div id="divSQCZ" class="Apply-con recharge" style="display:none;">
-		 <form name="form2" action="" method="post">
-			<dl>
-				<dt>当前可充值金额：</dt>
-				<dd><span id="spanBrokerage2" class="orange">{wc:$cashouthdtotal}</span> 元 <span class="gray02">当佣金余额满1元即可充值</span></dd>
-			</dl>
-			<dl>
-				<dt>申请充值金额：</dt>
-				<dd><input id="txtCZMoney" name="txtCZMoney" type="text" onkeyup="value=value.replace(/\D/g,'')" class="inp-money txtAri" value="" tip="请输入充值金额"/><b>元</b>&nbsp;<span class="gray02" id="tip7">以整数为单位提取</span></dd>
-			</dl>	
-		
-			<div class="Apply-button">
-				<input type="submit" name="submit2" id="btnSQCZ" class="bluebut" title="充值" value="充值">
-			</div>					
-			
-		</form>
-		</div>
+		 
 	 </div>
 	  
 	     
@@ -76,7 +56,7 @@
 	</style>
 	<script>
 	$("#sqtx").attr('class','sid-cur');
-	$(function(){
+	$(function(){				
 		$(".subMenu a").click(function(){
 			var id=$(".subMenu a").index(this);
 			$(".subMenu a").removeClass().eq(id).addClass("current");
@@ -142,20 +122,31 @@
 			}else if(Phone==''){
 			    $("#tip6").html("*&nbsp;&nbsp;请输入联系电话");
 				return false;
-			}else{
-			  return true;
 			}
+			
+			var self = $("form");
+			$.post("{:U('Home/cashout','','')}", self.serialize(), savesuccess, "json");
+			return;
+			function savesuccess(data) {
+				if (data.status) {
+					 alert("申请成功。");
+					 window.location.href="{:U('Home/index', '', '')}";
+				} else {
+					alert(data.msg);
+				}
+			}	
+				
 		});
 		
 	  $("#txtAppMoney").blur(function(){
 	     var Money=trim($("#txtAppMoney").val());
 		   if(Money==''){
 		      $("#tip1").html("*&nbsp;&nbsp;请输入提现金额");
-		   }else if(Money>{wc:$cashouthdtotal}){
+		   }else if(Money>{$data.money}){
 		      $("#tip1").html("*&nbsp;&nbsp;输入额超出可提现金额");
 			  $(this).val("");
 		   }else if(Money<100){
-		      $("#tip1").html("*&nbsp;&nbsp;佣金余额未满100元,不能提现!");	
+		      $("#tip1").html("*&nbsp;&nbsp;余额未满100元,不能提现!");	
 	  		  $(this).val("");
 		   }else{
 		       $("#tip1").html("");
@@ -241,7 +232,7 @@
 	       var CZMoney=trim($("#txtCZMoney").val());
 		   if(CZMoney==''){
 		      $("#tip7").html("<font color='#FF6600'>*&nbsp;&nbsp;请输入提现金额</font>");
-		   }else if(CZMoney>{wc:$cashouthdtotal}){
+		   }else if(CZMoney>{$data.money}){
 		      $("#tip7").html("<font color='#FF6600'>*&nbsp;&nbsp;输入额超出可提现金额</font>");
 			  $(this).val("");
 		   }else{
@@ -262,9 +253,7 @@
 			    return true;
 			}
 		});
-		
-	
-		
+		 
 		
 		//检验汉字
 		function isChinese(s)

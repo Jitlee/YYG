@@ -6,12 +6,11 @@ $(function(){
 	var je=$("#ulMoneyList li");
 	var dx=/\D/;
 	je.click(function(){
-		je.removeClass("selected");
-		je.find("input").removeAttr("checked");
+		je.removeClass("selected");		
 		var radio=je.index(this);
 			//je.eq(radio).find("input").attr('checked','checked');
 			je.eq(radio).addClass("selected");
-		var valx=je.eq(radio).find("input").val();
+		var valx=je.eq(radio).find("b").text();
 		$("#Money").text(valx);
 		$("#hidMoney").val(valx);
 	});
@@ -27,18 +26,17 @@ $(function(){
 	}); 
 })
 </script>
-<form id="toPayForm" name="toPayForm" action="{WEB_PATH}/member/cart/addmoney" method="post" target="_blank">
+<form id="toPayForm" name="toPayForm" action="" method="post" target="_blank">
 <div class="R-content">
 	<div class="member-t"><h2>账户充值</h2></div>
 	<div class="select">
 		<b class="gray01">请您选择充值金额</b>
 		<ul id="ulMoneyList">
-			<li class="selected" style="margin-left:0;"><input  type="radio" id="rd10" name="money" value="10" checked="checked">
-				<label for="rd10">充值 <strong>￥</strong><b>10</b></label></li>
-			<li><input type="radio" name="money" value="50" id="rd50"> <label for="rd50">充值 <strong>￥</strong><b>50</b></label></li>
-			<li><input type="radio" name="money" value="100" id="rd100"> <label for="rd100">充值 <strong>￥</strong><b>100</b></label></li>
-			<li><input type="radio" name="money" value="200" id="rd200"> <label for="rd200">充值 <strong>￥</strong><b>200</b></label></li>
-			<li><input type="radio" name="money" value="200" id="rd200"> <label for="rd200">充值 <strong>￥</strong><b>500</b></label></li>
+			<li class="selected" style="margin-left:0;"><label for="rd10">充值 <strong>￥</strong><b>10</b></label></li>
+			<li><label for="rd50">充值 <strong>￥</strong><b>50</b></label></li>
+			<li><label for="rd100">充值 <strong>￥</strong><b>100</b></label></li>
+			<li><label for="rd200">充值 <strong>￥</strong><b>200</b></label></li>
+			<li><label for="rd200">充值 <strong>￥</strong><b>500</b></label></li>
 			
 		</ul>
 	</div>
@@ -56,7 +54,7 @@ $(function(){
 				<p class="pic"><em></em>请您在新开的页面上完成支付！</p>
 				<p class="ts">付款完成之前，请不要关闭本窗口！<br>完成付款后跟据您的个人情况完成此操作！</p>
 				<ul>
-					<li><a href="{WEB_PATH}/member/home/userbalance" class="look" title="查看充值记录">查看充值记录 </a></li>
+					<li><a href="{:U('userbalance', '', '')}" class="look" title="查看充值记录">查看充值记录 </a></li>
 					<li><a href="javascript:gotoClick();" class="look" id="btnReSelect" title="重选支付方式">重选支付方式</a></li>
 				</ul>
 			</div>

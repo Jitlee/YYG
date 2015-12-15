@@ -6,49 +6,118 @@
 		<a class="current">已晒单</a>
 		<a >未晒单</a>
 	</div>
-	<div class="list-tab topic" style="display: block;">
+	<div class="list-tab topic" style="display: block;" id="listsdfinish">
 		<ul class="listTitle">
 			<li style="text-align:center;" class="w100">晒单图片</li>
 			<li class="w400">晒单信息</li>
 			<li class="w130">晒单状态</li>
 			<li class="w85 fr">操作</li>
-		</ul>
-		{wc:if $shaidan==null}
-		<div class="tips-con"><i></i>暂无记录！</div>
-		{wc:else}
-		{wc:loop $shaidan $sd}
-		<ul class="listCon">
-			<li class="w100" style="text-align:center;"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="blue"><img width="50" src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"/></a></li>
-			<li class="w400"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="gray01">{wc:$sd['sd_title']}</a></li>
-			<li class="w85 fr">
-			<font color="#666">不可修改</font>
-			</li>
-		</ul>
-		{wc:loop:end}
-		<div id="divPageNav" class="page_nav">
-        	{wc:page:two} <li>共 {wc:$total} 条</li>
-        </div>
-		{wc:if:end}
+		</ul> 
 	</div>
-	<div class="list-tab topic" style="display: none;">
+	<div class="list-tab topic" style="display: none;" id="listsdno">
 		<ul class="listTitle">
 			<li style="text-align:center;" class="w100">商品图片</li>
 			<li class="w630">商品信息</li>
 			<li class="w85 fr">操作</li>
-		</ul>
-		{wc:if $record==null}
-		<div class="tips-con"><i></i>暂无记录！</div>
-		{wc:else}
-		{wc:loop $record $sd}
-		<ul class="listCon">
-			<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="{G_UPLOAD_PATH}/{wc:fun:shoplisext($sd['shopid'],'thumb')}"/></div></li>
-			<li style="text-indent:1em;" class="w400"><a href="{WEB_PATH}/goods/{wc:$sd['shopid']}" target="_blank">{wc:fun:shoplisext($sd['shopid'],'title')}</a></li>
-			<li class="w50 fr"><a name="delete" href="{WEB_PATH}/member/home/singleinsert/{wc:$sd['id']}" class="blue">添加晒单</a></li>
-		</ul>
-		{wc:loop:end}
-		{wc:if:end}
+		</ul> 
+		 
 	</div>
 </div>
+<ul class="listCon mui-hidden" id="sdfinish">
+	<li class="w100" style="text-align:center;"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="blue">
+		<img width="50" class="iteminfo" src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"/></a></li>
+	<li class="w400"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="gray01"><span class="zcontent"></span></a></li>
+	<li class="w85 fr">
+	<font color="#666">不可修改</font>
+	</li>
+</ul>
+
+<ul class="listCon mui-hidden" id="sdno">
+	<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="{G_UPLOAD_PATH}/{wc:fun:shoplisext($sd['shopid'],'thumb')}"/></div></li>
+	<li style="text-indent:1em;" class="w400"><a class="iteminfo" href="{WEB_PATH}/goods/{wc:$sd['shopid']}" target="_blank"><span class="zcontent"></span></a></li>
+	<li class="w50 fr"><a name="delete" class="iteminfosd" href="{:U('pageAllsdfinish', '', '')}/singleinsert/{wc:$sd['id']}" class="blue">添加晒单</a></li>
+</ul>
+<script type="text/javascript">
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumfinish = 0;
+		var goodListfinish = $("#listsdfinish");
+		var goodTemplatefinish = $("#sdfinish");
+		 
+		var useTemplatefinish;
+		var orderTypefinish = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumfinish = 0;
+			}
+			$.get("{:U('pageAllsdfinish', '', '')}/8/" + (++pageNumfinish), {
+				type: orderTypefinish
+				 
+			}, function(list) {
+				if(clear) {
+					goodListfinish.html("");
+				}
+				if(pageNumfinish ==1 && list && list.length==0)
+				{
+					goodListfinish.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+				
+	       		$.each(list, function() {
+	       			useTemplatefinish=goodTemplatefinish;
+	       			
+	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+					
+					$("img", item).attr("src", this.thumb);
+					$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+	       			$(".iteminfo", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid); 
+	       			goodListfinish.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>
+<script type="text/javascript">
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumNo = 0;
+		var goodListNo = $("#listsdno");
+		var goodTemplateNo = $("#sdno");
+		 
+		var useTemplateNo;
+		var orderTypeNo = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumNo = 0;
+			}
+			$.get("{:U('pageAllsdno', '', '')}/8/" + (++pageNumNo), {
+				type: orderTypeNo
+				 
+			}, function(list) {
+				if(clear) {goodListNo.html("");}
+				if(pageNumNo ==1 && list && list.length==0){
+					goodListNo.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+	       		$.each(list, function() {
+	       			useTemplateNo=goodTemplateNo;
+	       			var item = useTemplateNo.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);	       			
+	       			$(".iteminfo", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".iteminfosd", item).attr("href", "{:U('Home/singleinsert', '', '')}/" + this.gid);
+	       			goodListNo.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 		
+	});
+</script>
 <style>
 #foucs_big{background:#999; filter:alpha(opacity=30); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;}
 #foucs_min{background:#999; filter:alpha(opacity=50); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;}

@@ -117,7 +117,7 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
              <li>
                  <div class="u-menu-hd">
-                     <a id="btnTopQQ" href="http://wpa.qq.com/msgrd?v=3&uin={wc:fun:_cfg('qq')}&site=qq&menu=yes" title="在线客服" class="u-service-off u-service"><i></i>在线客服</a>
+                     <a id="btnTopQQ" href="http://wpa.qq.com/msgrd?v=3&uin={:config('qq')}&site=qq&menu=yes" title="在线客服" class="u-service-off u-service"><i></i>在线客服</a>
                  </div>
              </li>
          </ul>
@@ -153,7 +153,7 @@ window.onerror=function(){return true;}
  
              <div class="search">
                  <div class="form">
-                     <input id="txtSearch" type="text" value="输入“汽车”试试" />
+                     <input id="txtSearch" type="text" value="输入“手机”试试" />
                      <span>
                          <a href="{WEB_PATH}/s_tag/苹果" target="_blank">苹果</a>
                          <a href="{WEB_PATH}/s_tag/电脑" target="_blank">电脑</a>
@@ -325,7 +325,7 @@ $(function(){
 	$("#txtSearch").focus(function(){
 		$("#txtSearch").css({background:"#FFFFCC"});
 		var va1=$("#txtSearch").val();
-		if(va1=='输入“汽车”试试'){
+		if(va1=='输入“手机”试试'){
 			$("#txtSearch").val("");
 		}
 	});
@@ -333,7 +333,7 @@ $(function(){
 		$("#txtSearch").css({background:"#FFF"});
 		var va2=$("#txtSearch").val();
 		if(va2==""){
-			$("#txtSearch").val('输入“汽车”试试');
+			$("#txtSearch").val('输入“手机”试试');
 		}			
 	});
 	$("#butSearch").click(function(){

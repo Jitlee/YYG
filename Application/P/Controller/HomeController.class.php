@@ -43,7 +43,7 @@ class HomeController extends Controller {
 			
 		$this->ajaxReturn($list, "JSON");
 	}
-	/*		中奖记录	*/
+	/*	中奖记录	*/
 	public function orderlist(){		
     	$this->assign('title', '一元购');
 		$this->display();
@@ -63,10 +63,44 @@ class HomeController extends Controller {
 		$this->ajaxReturn($list, "JSON");
 	}
 	
-	public function singlelist(){		
-    	$this->assign('title', '一元购');
+	public function singleinsert(){		
+    	$this->assign('title', '晒单');
 		$this->display();
     }
+	public function singlelist(){		
+    	$this->assign('title', '晒单列表');
+		$this->display();
+    }
+	public function pageAllsdno($pageSize, $pageNum) {
+		// 分页
+		$Model = M('miaosha_history');
+		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+		 
+		$list =$Model
+		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
+		->where($filter)
+		->page($pageNum, $pageSize)		
+		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->select();
+		$this->ajaxReturn($list, "JSON");
+	}
+	
+	public function pageAllsdfinish($pageSize, $pageNum) {
+		// 分页
+		$Model = M('miaosha_history');
+		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+		
+		
+		$list =$Model
+		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
+		->where($filter)
+		->page($pageNum, $pageSize)		
+		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->select();
+		$this->ajaxReturn($list, "JSON");
+	}
+	
+	
 	/*******end我的云购********/
 	/*******邀请管理********/
 	public function invitefriends(){		
@@ -79,15 +113,83 @@ class HomeController extends Controller {
 		$this->display();
     }
 	
-	public function cashout(){		
-    	$this->assign('title', '一元购');
-		$this->display();
+	public function cashout(){
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+			
+			$udb = M('member');
+			$menberfilter["uid"]=session("_uid");
+			$dbmember = $udb->where($menberfilter)->find();
+			if(!$dbmember) {
+				$result["msg"]='用户不存在。';
+			}
+			else
+			{
+				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录	手费费				
+				$outMoney= floatval($_POST["money"]);			
+				$UserMoney=floatval($dbmember['money']);
+				//验证余额	
+				if($outMoney > $UserMoney)
+				{
+					$result["msg"]="余额不足。".$dbmember['money'];				
+				}
+				else
+				{
+					//1. 扣减member数据 					
+					if($dbmember)
+					{
+						$eMoney=$UserMoney-$outMoney;
+						$dbmember['money'] = $eMoney;
+						//$dbmember['money']=60;//$dbmember['money']-$addMoney;
+						$udb->save($dbmember);					
+					}
+					
+					//3  写入提现记录
+					$dbcash = M('member_cashout');
+					$_POST['uid']=  session("_uid");
+					$_POST['time']= date('y-m-d-h-i-s');
+					$dbcash->create();
+					if($dbcash->add() != false) {
+						$result["status"]=1;
+					} 
+					else 
+					{
+						$result["msg"]='数据错误';
+					} 
+				}
+			} 
+		
+			$this->ajaxReturn($result, "JSON");
+		}
+		else
+		{		
+	    	$this->assign('title', '一元购');
+	    	$data=session('wxUserinfo');
+			$this->assign("data", $data);
+			$this->display();
+		}
     }
 	
 	public function record(){		
-    	$this->assign('title', '一元购');
+    	$this->assign('title', '提现记录');
 		$this->display();
     }
+	public function GetCashoutlist($pageSize, $pageNum)
+	{
+		$Model = M('member_cashout');
+		$filter['uid'] = session("_uid");		
+		$list =$Model					
+			->where($filter)
+			->page($pageNum, $pageSize)
+			->select();
+		return $list;
+	}
+	public function pagecashoutlist()
+	{
+		$list=$this->GetCashoutlist($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
 	/*******end邀请管理********/
 	
 	/*******账户管理********/
@@ -97,6 +199,24 @@ class HomeController extends Controller {
 		$this->assign("data", $data);
 		$this->display();
     }
+    //充值记录分页
+	public function pageAllRechargerecord($pageSize, $pageNum) {
+		// 分页
+		$list=$this->GetRecord($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
+    public function GetRecord($pageSize, $pageNum)
+	{
+		$Model = M('member_addmoney_record');
+		$filter['uid'] = session("_uid");
+		
+		$list =$Model					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		return $list;
+	}
+	
 	public function userrecharge(){		
     	$this->assign('title', '一元购');
 		$this->display();
@@ -110,6 +230,23 @@ class HomeController extends Controller {
 		$this->assign("scoremoney", $scoremoney);
 		$this->display();
     }
+		
+	public function Getscorelist($pageSize, $pageNum)
+	{
+		$Model = M('member_score');
+		$filter['uid'] = session("_uid");		
+		$list =$Model					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		return $list;
+	}
+	public function pagescore()
+	{
+		$list=$this->Getscorelist($pageSize,$pageNum);
+		$this->ajaxReturn($list, "JSON");
+	}
+	
 	public function address(){		
     	$this->assign('title', '一元购');
 		$this->display();
