@@ -36,7 +36,7 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/layout-commodity.css"/>
 <div class="R-content">
 	<div class="member-t"><h2>获得的商品</h2></div>
-	<div class="get-pro gray02">您总共成功云购获得商品 <b id="goodsCount" class="orange">{wc:fun:count($record)}</b> 个
+	<div class="get-pro gray02">您总共成功云购获得商品 <b id="goodsCount" class="orange"></b> 个
     	  <a href="#" id="wuliu_select">查询物流</a>
     </div>	
     
@@ -134,11 +134,15 @@ $(function(){
 				if(clear) {
 					goodList.html("");
 				}
+				
 				if(pageNum ==1 && list && list.length==0)
 				{
+					$("#goodsCount").text("0");
 					goodList.append('<div class="tips-con"><i></i>无相应的获得商品记录</div>');
 					return;
 				}
+				$("#goodsCount").text(list.length);
+				
 				$('.orange').text((pageNum-1)*10 + list.length);
 	       		$.each(list, function() {
 	       			useTemplate=goodTemplate;
@@ -149,7 +153,7 @@ $(function(){
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
 	       			$(".money", item).text(this.zongrenshu);
-//	       			$("r", item).text(this.canyurenshu);
+
 					if(this.company){
 	       				$(".company", item).text(this.company);
 	       				$(".company_code", item).text(this.company_code);

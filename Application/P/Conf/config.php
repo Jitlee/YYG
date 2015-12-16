@@ -14,6 +14,7 @@ return array(
 		'__B_JS__'				=> '//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js',
 		'__JQ__'				=> '//cdn.bootcss.com/jquery/1.11.3/jquery.min.js',
 		'__STATIC__' 			=> __ROOT__ . '/Public/Static',
+		'__Uploadify__' 			=> __ROOT__ . '/Public/uploadify',
 		'__HOME__'				=> __ROOT__ . '/Public/' . MODULE_NAME,
 		'__IMG__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/images',
 		'__TIMG__'				=> __ROOT__ . '/Public/Home/images',
