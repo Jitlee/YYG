@@ -497,6 +497,7 @@ class PayController extends Controller {
 			}
 
 			if($mdb->save($good)) {
+				add_renci($data['count']);
 				return 0;
 			}
 			
