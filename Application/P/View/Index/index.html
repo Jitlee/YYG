@@ -49,6 +49,27 @@
             </cite>
         </div>
     </div>
+    <div class="g-list">
+   		<ul id="ulNewAwary">
+		<foreach name="zuixins" item="item">
+            <li >
+                <dl>
+                    <dt><a href="" target="_blank" title="第{$item.qishu}期 {$item.title}" rel="nofollow">
+                        <img src="{$item.thumb}" alt="第{$item.qishu}期 {$item.title}" width="300" height="300" /></a></dt>
+                    <dd class="f-gx">
+                        <div class="f-gx-user">
+                            <span>恭喜</span>
+                            <span class="blue"><a href="" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
+                            <span>获得</span>
+                        </div>
+                    </dd>
+                    <dd class="u-name"><a href="" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>
+                </dl>
+                <cite></cite>
+            </li>
+        </foreach>
+    		</ul>
+	</div>
     
     <div class="g-title">
         <h3 class="fl">热门推荐</h3>
@@ -93,6 +114,52 @@
     		</div>
     </div>
     
+    <div class="g-title m-sort">
+        <h3 class="fl">即将揭晓</h3>
+        <div class="fr">
+            <foreach name="allCategories" item="c">
+            <a href="{:U('Category/index', '', '')}/" target="_blank" title="{$c.name}">{$c.name}</a>		
+            </foreach>
+            <a href="" target="_blank" title="全部">全部</a>
+        </div>
+    </div>
+    <div class="announced-soon clrfix" id="divSoonGoodsList">
+    	<foreach name="jijiagns" item="j">
+    		<div class="soon-list-con">
+			<div class="soon-list">
+				<ul>
+					<li class="g-soon-pic">
+						<a title="{$j.title}" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
+							<img id="img_274277" src="{$j.thumb}" alt="{$j.title}">
+						</a>
+					</li>
+					<li class="soon-list-name">
+						<a title="{$j.title}" target="_blank" href="">{$j.title}</a>
+					</li>
+					<li class="gray">价值：￥{$j.money}</li>
+					<li class="g-progress">
+						<dl class="m-progress">
+							<dt title="">
+								<b style="width:{$j['canyurenshu']*100/$j['zongrenshu']}%;"></b>
+							</dt>
+							<dd>
+								<span class="orange fl"><em>{$j.canyurenshu}</em>已参与</span>
+								<span class="gray6 fl"><em>{$j.zongrenshu}</em>总需人次</span>
+								<span class="blue fr"><em>{$j.shengyurenshu}</em>剩余</span>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<a class="u-now" title="立即1元云购" target="_blank" href="">立即1元云购</a>
+						<a class="u-cart" title="加入到购物车" href="javascript:;">
+							<s></s>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</foreach>
+    </div>
 </div>
 
 <script type="text/javascript">

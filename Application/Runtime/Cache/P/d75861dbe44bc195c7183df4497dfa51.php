@@ -241,6 +241,25 @@ window.onerror=function(){return true;}
             </cite>
         </div>
     </div>
+    <div class="g-list">
+   		<ul id="ulNewAwary">
+		<?php if(is_array($zuixins)): foreach($zuixins as $key=>$item): ?><li >
+                <dl>
+                    <dt><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" rel="nofollow">
+                        <img src="<?php echo ($item["thumb"]); ?>" alt="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" width="300" height="300" /></a></dt>
+                    <dd class="f-gx">
+                        <div class="f-gx-user">
+                            <span>恭喜</span>
+                            <span class="blue"><a href="" target="_blank" title="<?php echo ($item["username"]); ?>" class="blue" ><?php echo ($item["username"]); ?></a></span>
+                            <span>获得</span>
+                        </div>
+                    </dd>
+                    <dd class="u-name"><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a></dd>
+                </dl>
+                <cite></cite>
+            </li><?php endforeach; endif; ?>
+    		</ul>
+	</div>
     
     <div class="g-title">
         <h3 class="fl">热门推荐</h3>
@@ -283,6 +302,48 @@ window.onerror=function(){return true;}
     		</div>
     </div>
     
+    <div class="g-title m-sort">
+        <h3 class="fl">即将揭晓</h3>
+        <div class="fr">
+            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
+            <a href="" target="_blank" title="全部">全部</a>
+        </div>
+    </div>
+    <div class="announced-soon clrfix" id="divSoonGoodsList">
+    	<?php if(is_array($jijiagns)): foreach($jijiagns as $key=>$j): ?><div class="soon-list-con">
+			<div class="soon-list">
+				<ul>
+					<li class="g-soon-pic">
+						<a title="<?php echo ($j["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
+							<img id="img_274277" src="<?php echo ($j["thumb"]); ?>" alt="<?php echo ($j["title"]); ?>">
+						</a>
+					</li>
+					<li class="soon-list-name">
+						<a title="<?php echo ($j["title"]); ?>" target="_blank" href=""><?php echo ($j["title"]); ?></a>
+					</li>
+					<li class="gray">价值：￥<?php echo ($j["money"]); ?></li>
+					<li class="g-progress">
+						<dl class="m-progress">
+							<dt title="">
+								<b style="width:<?php echo ($j['canyurenshu']*100/$j['zongrenshu']); ?>%;"></b>
+							</dt>
+							<dd>
+								<span class="orange fl"><em><?php echo ($j["canyurenshu"]); ?></em>已参与</span>
+								<span class="gray6 fl"><em><?php echo ($j["zongrenshu"]); ?></em>总需人次</span>
+								<span class="blue fr"><em><?php echo ($j["shengyurenshu"]); ?></em>剩余</span>
+							</dd>
+						</dl>
+					</li>
+					<li>
+						<a class="u-now" title="立即1元云购" target="_blank" href="">立即1元云购</a>
+						<a class="u-cart" title="加入到购物车" href="javascript:;">
+							<s></s>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div><?php endforeach; endif; ?>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -460,8 +521,26 @@ window.onerror=function(){return true;}
 		</dd>
 	</dl>
 </div>
+<script type="text/javascript">
+	$(function(){
+		var sp_ServerTime = $("#sp_ServerTime");
+		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		function showTime() {
+			serverTime += 1000;
+			var now = new Date(serverTime);
+			var hours = now.getHours();
+			var muintes = now.getMinutes();
+			var seconds = now.getSeconds();
+			hours = hours > 9 ? String(hours) : "0" + hours;
+			muintes = muintes > 9 ? String(muintes) : "0" + muintes;
+			seconds = seconds > 9 ? String(seconds) : "0" + seconds;
+			sp_ServerTime.html([hours, muintes, seconds].join(":"));
+		}
+		showTime();
+		window.setInterval(showTime, 1000);
+	});
+</script>
 <!--end右侧导航-->
-
 </body>
 
 </html>

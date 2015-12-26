@@ -14,6 +14,8 @@ class CommonController extends Controller {
 				$this->assign('goCountRenci'.($len - $i), $renci[$i]);
 			}
 		}
+		
+		$this->assign('serverTime', time());
 	}
 }
 	
