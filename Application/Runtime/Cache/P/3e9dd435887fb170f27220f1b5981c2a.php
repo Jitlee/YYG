@@ -199,132 +199,408 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	
-<link rel="stylesheet" type="text/css" href="/Public/P/css/header.css?date=20140731">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsList.css?date=20140731">
-<style>
-.wrap{width:1190px;}.Current_nav{width:1190px;}.list_Curtit{width:1190px;}.list_class{width:1190px;}.list_Sort{width:1190px;}.goods-iten{width:228px;margin:13px 0 0 11px;}.g-width{width:1190px;}.list_class dd{width:1118px;}.list_class dd li{width:123px;}
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsDetail.css"/>
+<link rel="stylesheet" type="text/css" href="__css__/js/cloud-zoom.css"/>
+<script type="text/javascript" src="/Public/P/js/gdjs.js"></script>
+<script type="text/javascript" src="/Public/P/js/cloud-zoom.min.js"></script>
+<script type="text/javascript">
+$.fn.CloudZoom.defaults = {
+	zoomWidth: '400',
+	zoomHeight: '310',
+	position: 'right',
+	tint: false,
+	tintOpacity: 0.5,
+	lensOpacity: 0.5,
+	softFocus: false,
+	smoothMove: 7,
+	showTitle: false,
+	titleOpacity: 0.5,
+	adjustX: 0,
+	adjustY: 0
+};
+</script>
+<style type="text/css">
+.zoom-section{clear:both;margin-top:20px;}
+.zoom-small-image{border:2px solid #dedede;float:left;margin-bottom:20px; width:400px; height:400px;}
+.zoom-small-image img{ width:400px; height:400px;}
+.zoom-desc{float:left;width:404px; height:52px;margin-bottom:20px; overflow:hidden;}
+.zoom-desc p{ width:10000px; height:52px; float:left; display:block; position:absolute; top:0; z-index:3; overflow:hidden;}
+.zoom-desc label{ width:50px; height:52px; margin:0 5px 0 0; _margin-right:4px; display:block; float:left; overflow:hidden;}
+.zoom-tiny-image{border:1px solid #CCC;margin:0px; width:48px; height:50px;}
+.zoom-tiny-image:hover{border:1px solid #C00;}
 </style>
-<div class="wrap" id="loadingPicBlock">
-	<div class="Current_nav"><a href="/index.php/P">首页</a> &gt; <?php echo ($title); ?></div>
-	<div id="current" class="list_Curtit">
-		<h1 class="fl"><?php echo ($title); ?></h1>
-		<span id="spTotalCount">(共<em class="orange"><?php echo ((isset($total) && ($total !== ""))?($total):0); ?></em>件相关商品)</span>
-	</div>	
-	<div class="list_class">
-		<dl>
-			<dt>分类</dt>
-			<dd id="ddBrandList">
-				<ul>
-	                <li><a href="<?php echo U('Category/index', '', '');?>/" <?php if($cid == 0): ?>class="ClassCur"<?php endif; ?>>全部</a></li>
-					<?php if(is_array($allCategories)): foreach($allCategories as $key=>$item): ?><li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($item["cid"]); ?>" <?php if($cid == $item['cid']): ?>class="ClassCur"<?php endif; ?>><?php echo ($item["name"]); ?></a></li><?php endforeach; endif; ?>
-				</ul>
-			</dd>
-		</dl>
+
+<div class="Current_nav">
+	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
+	<span>&gt;</span>商品详情
+</div>
+<div class="show_content">
+	<!-- 商品期数 -->
+	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
+		<div class="period_Open"><a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a></div>
+		{wc:$loopqishu}
 	</div>
-	
-	<div class="list_class">
-		<dl>
-			<dt>品牌</dt>
-			
-			<dd id="ddBrandList_brand" <?php if($brandsCount > 17): ?>style="height:54px"<?php endif; ?>>
-				<ul>
-					<li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>" <?php if($bid == 0): ?>class="ClassCur"<?php endif; ?>>全部</a></li> 
-					<?php if(is_array($brands)): foreach($brands as $key=>$item): ?><li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($item["bid"]); ?>" <?php if($bid == $item['bid']): ?>class="ClassCur"<?php endif; ?>><?php echo ($item["name"]); ?></a></li><?php endforeach; endif; ?>
-				</ul>
-			</dd>
-		</dl>
-		<?php if($brandsCount > 17): ?><a id="listClassMore" class="list_classMore" href="javascript:void(0);">展开<i></i></a><?php endif; ?>
-	</div>
-    <div class="list_Sort">
-	    <dl>
-		    <dt>排序</dt>
-		    <dd>
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/0" <?php if($sort == 0): ?>class="SortCur"<?php endif; ?>>最新</a>
-			    	<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/1" <?php if($sort == 1): ?>class="SortCur"<?php endif; ?>>即将揭晓</a>
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/2" <?php if($sort == 2): ?>class="SortCur"<?php endif; ?>>人气</a>
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/3" <?php if($sort == 3): ?>class="SortCur"<?php endif; ?>>剩余人次</a>
-		        <?php if($sort == 4): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/5" class="Price_Sort SortCur">价格 <i></i></a>
-		        	<?php elseif($sort == 5): ?>
-		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort SortCur">价格 <s></s></a>
-		        	<?php else: ?>
-		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort">价格 <s></s></a><?php endif; ?>
-	        </dd>
-	    </dl>
-	</div>
-	
-	<?php if(isset($list)): ?><!--商品列表-->
-	<div class="listContent">
-		<ul class="item" id="ulGoodsList">		
-			<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="goods-iten" >
-				<div class="pic">
-					<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>">
-						<?php if($item["_time"] < 86400): ?><i class="goods_xp"></i>
-						<?php elseif($item["tuijian"] == 1): ?>
-							<i class="goods_tj"></i>
-						<?php elseif($item["renqi"] == 1): ?>
-							<i class="goods_rq"></i><?php endif; ?>
-						<img alt="<?php echo ($item["title"]); ?>" src="<?php echo ($item["thumb"]); ?>">
-					</a>
-					<p name="buyCount" style="display:none;"></p>
-				</div>
-				<p class="name">
-					<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>"><?php echo ($item["title"]); ?></a>
+	<script>
+		$("#btnOpenPeriod").click(function(){
+				var ui_obj = $("#divPeriodList > ul");
+				if($(this).attr("click")=='off'){
+					$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
+					$(this).attr("click","on");
+					$(this).html("收起<s></s>");
+					
+				}else{
+					$("#divPeriodList").css("max-height","99px");	
+					$(this).attr("click","off");
+					$(this).html("展开<i></i>");
+				}			
+		});
+	</script>	
+	<!-- 商品信息 -->
+	<div class="Pro_Details">
+		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><span><?php echo ($data["title"]); ?></span></h1>
+		<div class="Pro_Detleft">
+			<div class="zoom-small-image">
+				<span href="<?php echo ($data["thumb"]); ?>" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
+                <img width="80px" height="80px" src="<?php echo ($data["thumb"]); ?>" /></span>
+			</div>
+
+			<div class="zoom-desc"> 
+				<div class="jcarousel-prev jcarousel-prev-disabled"></div>
+				<div class="jcarousel-clip" style="height:55px;width:384px;">
+				<p>
+					{wc:loop $item['picarr'] $imgtu}                  
+					<label href="<?php echo ($data["thumb"]); ?>" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '<?php echo ($data["thumb"]); ?>'">
+					<img class="zoom-tiny-image" src="<?php echo ($data["thumb"]); ?>" /></label>			
+					{wc:loop:end} 
 				</p>
-				<p class="money">价值：<span class="rmbgray"><?php echo ($item["money"]); ?></span></p>
-				<div class="Progress-bar">
-					<p><span style="width:<?php echo ($item['canyurenshu']*100/$item['zongrenshu']); ?>%"></span></p>
-					<ul class="Pro-bar-li">
-						<li class="P-bar01"><em><?php echo ($item["canyurenshu"]); ?></em>已参与人次</li>
-						<li class="P-bar02"><em><?php echo ($item["zongrenshu"]); ?></em>总需人次</li>
-						<li class="P-bar03"><em><?php echo ($item["shengyurenshu"]); ?></em>剩余人次</li>
+				</div>
+				<div class="jcarousel-next jcarousel-next-disabled"></div>
+			</div>
+			<script>
+				var si=$(".jcarousel-clip label").size();
+				var label=si*55;
+				$(".jcarousel-clip p").css({width:label,left:"0"});
+				if(label>395){
+					$(".jcarousel-prev,.jcarousel-next").show();
+				}else{
+					$(".jcarousel-prev,.jcarousel-next").hide();
+				}
+				$(".jcarousel-prev").click(function(){
+					var le=$(".jcarousel-clip p").css("left");
+					var le2=le.replace(/px/,"");
+					if(le!='0px'){
+						$(".jcarousel-clip p").css({left:le2*1+55});
+					}						
+				})
+				$(".jcarousel-next").click(function(){
+					var le=$(".jcarousel-clip p").css("left");
+					var le2=le.replace(/px/,"");
+					var max_next=-(si-7)*55+"px";
+					if(le!=max_next){						
+						$(".jcarousel-clip p").css({left:le2*1-55});
+					}
+				})
+			</script>			
+			
+			{wc:if $sid_code}			
+			{wc:if $sid_code['q_showtime']=='N'}
+			<div class="Pro_GetPrize">				
+				<h2>上期获得者</h2>
+				<div class="GetPrize">				    
+					<dl>
+						<dt><a rel="nofollow" href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank"><img width="80" height="80" alt="" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sid_code['q_uid'],'img')}"></a></dt>
+						<dd class="gray02">
+							<p>恭喜 <a href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank" class="blue">{wc:fun:get_user_name($sid_code['q_uid'])}</a>获得了本商品</p>
+							{wc:if $sid_go_record['ip']}
+							{wc:fun:get_ip($sid_go_record['id'],'ipcity')}
+							{wc:if:end}
+							<p>揭晓时间：{wc:fun:microt($sid_code['q_end_time'])}</p>
+							<p>云购时间：{wc:fun:microt($sid_go_record['time'])}</p>
+							<p>幸运云购码：<em class="orange Fb">{wc:$sid_code['q_user_code']}</em></p>
+						</dd>
+					</dl>				
+				</div>
+			</div>
+			{wc:if:end}
+			{wc:if:end}
+		</div>
+		<div class="Pro_Detright">
+			<p class="Det_money">价值：<span class="rmbgray"><?php echo ($data["money"]); ?></span></p>
+			<!--显示揭晓动画 start-->
+			{wc:if ($q_showtime=='Y')}
+				{wc:templates "index","item_animation"}
+			{wc:else}
+				{wc:templates "index","item_contents"}
+			{wc:if:end}	
+			<!--显示揭晓动画 end-->		
+			<div class="Security">
+				<ul>
+					<li><a href="{WEB_PATH}/help/4" target="_blank"><i></i>100%公平公正</a></li>
+					<li><a href="{WEB_PATH}/help/5" target="_blank"><s></s>100%正品保证</a></li>
+					<li><a href="{WEB_PATH}/help/7" target="_blank"><b></b>全国免费配送</a></li>
+				</ul>
+			</div>			
+			<div class="Pro_Record">
+				<ul id="ulRecordTab" class="Record_tit">
+					<li class="NewestRec Record_titCur">最新云购记录</li>
+					<li class="MytRec">我的云购记录</li>
+					<li class="Explain orange">什么是1元云购？</li>
+				</ul>
+				<div class="Newest_Con hide">
+					<ul>
+						{wc:loop $us $user}
+						<li>
+						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank">
+						{wc:if !empty($user['uphoto'])}
+							<img src="{G_UPLOAD_PATH}/{wc:$user['uphoto']}" border="0" alt="" width="20" height="20">
+						{wc:else}
+							<img src="{G_UPLOAD_PATH}/photo/member.jpg" border="0" alt="" width="20" height="20">
+						{wc:if:end}
+						</a>					
+						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank" class="blue">{wc:$user['username']}</a>
+						{wc:if $user['ip']}
+						({wc:fun:get_ip($user['id'],'ipcity')}) 
+						{wc:if:end}				
+						{wc:fun:_put_time($user['time'])} 云购了
+						<em class="Fb gray01">{wc:$user['gonumber']}</em>人次</li>
+						{wc:loop:end}
 					</ul>
+					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>					
 				</div>
-				<div class="gl_buybtn">
-					<div class="go_buy">
-						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
-						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr add-cart" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">加入购物车</a>
+				
+				<!--我的云购记录-->
+				<div class="My_Record hide" style="display:none;">
+					{wc:if get_user_uid()}				
+					<ul>				
+						{wc:m=member.member mod=get_record(get_user_uid(),$item['id'],9)}
+						{wc:loop $datas $row}									
+						<li>{wc:fun:_put_time($user['time'])}  云购了  {wc:$user['gonumber']}  个云购码</li>						
+						{wc:loop:end} 
+					</ul>
+					{wc:else}					
+					<div class="My_RecordReg">
+						<b class="gray01">看不到？是不是没登录或是没注册？ 登录后看看</b>
+						<a href="{WEB_PATH}/member/user/login" class="My_Signbut">登录</a><a href="{WEB_PATH}/member/user/register" class="My_Regbut">注册</a>
 					</div>
+					{wc:if:end}
 				</div>
-			</li><?php endforeach; endif; ?>
-		</ul>
-		<?php if($num < $total): ?><div class="pagesx">
-			<ul id="Page_Ul">
-				<li id="Page_Total"><?php echo ($total); ?>条</li>
-				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
-				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_1022634381__=$minPageNo;$__FOR_END_1022634381__=$pageNo;for($i=$__FOR_START_1022634381__;$i < $__FOR_END_1022634381__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
-				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_662277901__=$pageNo+1;$__FOR_END_662277901__=$maxPageNo;for($i=$__FOR_START_662277901__;$i < $__FOR_END_662277901__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
-				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
-				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
-			</ul>
-		</div><?php endif; ?>
+				<!--/我的云购记录-->
+				<div class="Newest_Con hide" style="display:none;">
+					<p class="MsgIntro">{wc:fun:_cfg("web_name_two")}购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
+					<p class="MsgIntro1">{wc:fun:_cfg("web_name_two")}以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{WEB_PATH}/help/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
+				</div>
+			</div>			
+		</div>
 	</div>
-	<!--商品列表完-->
-	<?php else: ?>
-	<!--未找到商品-->
-	<div class="NoConMsg"><span>无相关商品记录哦~！</span></div>
-	<!--未找到商品--><?php endif; ?>
-	
+</div>
+<!-- 商品信息导航 -->
+<div class="ProductTabNav">
+	<div id="divProductNav" class="DetailsT_Tit">
+		<div class="DetailsT_TitP">
+			<ul>
+				<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">商品详情</span></li>
+				<li id="liUserBuyAll" class="All_RecordT"><span class="">所有参与记录</span></li>
+				<li class="Single_ConT"><span class="">晒单</span></li>
+			</ul>
+			<!-- <p><a id="btnAdd2Cart" href="javascript:;" class="white DetailsT_Cart"><s></s>加入购物车</a></p> -->
+		</div>
+	</div>
 </div>
 
+<!--补丁3.1.6_b.0.1-->
+<div id="divContent" class="Product_Content">
+	<!-- 商品内容 -->
+	<div class="Product_Con">{wc:$item['content']}</div>
+    <!-- 商品内容 -->
+    
+    <!-- 购买记录20条 -->
+	<div id="bitem" class="AllRecordCon">
+		<iframe id="iframea_bitem" g_src="{WEB_PATH}/go/goods/go_record_ifram/{wc:$itemid}/20" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>		
+	</div>	
+   <!-- /购买记录20条 -->
+    
+	<!-- 晒单 -->
+	<div id="divPost" class="Single_Content">
+		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>
+	</div>
+    <!-- 晒单 -->	
+</div>
+<!--补丁3.1.6_b.0.1-->
+
+
 <script type="text/javascript">
-	$(function() {
-		var classMore = $("#listClassMore").click(function() {
-			var height = $("#ddBrandList_brand").height();
-			if(height == 54) {
-				$("#ddBrandList_brand").css("height", "auto");
-				classMore.addClass("MoreClick");
-				classMore.html("收起<i></i>");
-			} else {
-				$("#ddBrandList_brand").css("height", "54px");
-				classMore.removeClass("MoreClick");
-				classMore.html("展开<i></i>");
-			}
-		});
+<!--补丁3.1.6_b.0.2-->
+function set_iframe_height(fid,did,height){	
+	$("#"+fid).css("height",height);	
+}
+
+$(function(){
+	$("#ulRecordTab li").click(function(){
+		var add=$("#ulRecordTab li").index(this);
+		$("#ulRecordTab li").removeClass("Record_titCur").eq(add).addClass("Record_titCur");
+		$(".Pro_Record .hide").hide().eq(add).show();
 	});
-</script>
+	
+	var DetailsT_TitP = $(".DetailsT_TitP ul li");
+	var divContent    = $("#divContent div");	
+	DetailsT_TitP.click(function(){
+		var index = $(this).index();
+			DetailsT_TitP.removeClass("DetailsTCur").eq(index).addClass("DetailsTCur");
+	
+			var iframe = divContent.hide().eq(index).find("iframe");
+			if (typeof(iframe.attr("g_src")) != "undefined") {
+			  	 iframe.attr("src",iframe.attr("g_src"));
+				 iframe.removeAttr("g_src");
+			}
+			divContent.hide().eq(index).show();
+	});
+	<!--补丁3.1.6_b.0.2-->
+	
+	
+	$("#btnUserBuyMore").click(function(){
+		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+		
+		$("#divContent .hide").hide().eq(1).show();
+		$("html,body").animate({scrollTop:941},1500);
+		$("#divProductNav").addClass("nav-fixed");
+	});
+	$(window).scroll(function(){
+		if($(window).scrollTop()>=941){
+			$("#divProductNav").addClass("nav-fixed");
+		}else if($(window).scrollTop()<941){
+			$("#divProductNav").removeClass("nav-fixed");
+		}
+	});
+})
+var shopinfo={'shopid':{wc:$item['id']},'money':{wc:$item['yunjiage']},'shenyu':{wc:$syrs}};
+
+	
+$(function(){
+	function baifenshua(aa,n){
+	n = n || 2;
+	return ( Math.round( aa * Math.pow( 10, n + 2 ) ) / Math.pow( 10, n ) ).toFixed( n ) + '%';
+}
+	var shopnum = $("#num_dig");
+		var ten_per = Math.floor(parseInt({wc:$item['zongrenshu']})) || 1;
+	var max_num = (ten_per > parseInt(shopinfo['shenyu'])) ? parseInt(shopinfo['shenyu']) : ten_per;
+	shopnum.keyup(function(){
+		if(shopnum.val()>=max_num){
+			shopnum.val(max_num);
+		}
+		var numshop=shopnum.val();
+		if(numshop=={wc:$item['zongrenshu']}){
+			var baifenbi='100%';
+		}else{
+			var showbaifen=numshop/{wc:$item['zongrenshu']};
+			var baifenbi=baifenshua(showbaifen,2);
+		}
+		$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
+	});
+	
+	$("#shopadd").click(function(){
+		var shopnum = $("#num_dig");
+			var resshopnump='';
+			var ten_per = Math.floor(parseInt({wc:$item['zongrenshu']})) || 1;
+			var max_num = (ten_per > parseInt(shopinfo['shenyu'])) ? parseInt(shopinfo['shenyu']) : ten_per;
+			var num = parseInt(shopnum.val());
+			if(num >= max_num){
+				shopnum.val(max_num);
+				resshopnump = max_num;
+			}else{
+				resshopnump=parseInt(shopnum.val())+1;
+				shopnum.val(resshopnump);
+			}
+			if(resshopnump=={wc:$item['zongrenshu']}){
+				var baifenbi='100%';
+			}else{
+				var showbaifen=resshopnump/{wc:$item['zongrenshu']};
+				var baifenbi=baifenshua(showbaifen,2);
+			}
+			$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
+	});
+	
+	
+	$("#shopsub").click(function(){
+		var shopnum = $("#num_dig");
+		var num = parseInt(shopnum.val());
+		if(num<2){
+			shopnum.val(1);			
+		}else{
+			shopnum.val(parseInt(shopnum.val())-1);
+		}
+		var shopnums=parseInt(shopnum.val());
+		if(shopnums=={wc:$item['zongrenshu']}){
+				var baifenbi='100%';
+			}else{
+				var showbaifen=shopnums/{wc:$item['zongrenshu']};
+				var baifenbi=baifenshua(showbaifen,2);
+			}
+			$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
+	});
+});
+
+$(function(){
+$(".Det_Cart").click(function(){ 
+	//添加到购物车动画
+	var src=$("#zoom1 img").attr('src');  
+	var $shadow = $('<img id="cart_dh" style="display: none; border:1px solid #aaa; z-index: 99999;" width="400" height="400" src="'+src+'" />').prependTo("body"); 
+	var $img = $(".mousetrap").first("img");
+	$shadow.css({ 
+	   'width' : $img.css('width'), 
+	   'height': $img.css('height'),
+	   'position' : 'absolute',      
+	   'top' : $img.offset().top,
+	   'left' : $img.offset().left, 
+	   'opacity' :1    
+	}).show();
+	var $cart =$("#btnMyCart");
+	var numdig=$(".num_dig").val();
+	$shadow.animate({   
+		width: 1, 
+		height: 1, 
+		top: $cart.offset().top, 
+		left: $cart.offset().left,
+		opacity: 0
+	},500,function(){
+		Cartcookie(false);
+	});		
+});
+	$(".Det_Shopbut").click(function(){	
+		Cartcookie(true);
+	});	
+});
+
+
+
+function Cartcookie(cook){
+	var shopid=shopinfo['shopid'];
+	var number=parseInt($("#num_dig").val());
+	if(number<=1){number=1;}
+	var Cartlist = $.cookie('Cartlist');
+	if(!Cartlist){
+		var info = {};
+	}else{
+		var info = $.evalJSON(Cartlist);
+		if((typeof info) !== 'object'){
+			var info = {};
+		}
+	}		
+	if(!info[shopid]){
+		var CartTotal=$("#sCartTotal").text();
+			$("#sCartTotal").text(parseInt(CartTotal)+1);
+			$("#btnMyCart em").text(parseInt(CartTotal)+1);
+	}	
+	info[shopid]={};
+	info[shopid]['num']=number;
+	info[shopid]['shenyu']=shopinfo['shenyu'];
+	info[shopid]['money']=shopinfo['money'];
+	info['MoenyCount']='0.00';	
+	$.cookie('Cartlist',$.toJSON(info),{expires:7,path:'/'});
+	if(cook){
+		window.location.href="{WEB_PATH}/member/cart/cartlist/"+new Date().getTime();//+new Date().getTime()
+	}
+}  
+</script> 
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

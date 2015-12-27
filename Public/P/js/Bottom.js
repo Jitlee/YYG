@@ -1,0 +1,1 @@
+Base.getScript("http://ww.yiyuansha.com/statics/templates/yungou/js/BottomFun.js?date=20141118");
