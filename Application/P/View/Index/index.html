@@ -54,16 +54,16 @@
 		<foreach name="zuixins" item="item">
             <li >
                 <dl>
-                    <dt><a href="" target="_blank" title="第{$item.qishu}期 {$item.title}" rel="nofollow">
+                    <dt><a href="{:U('Index/end','','')}/{$item.gid}" target="_blank" title="第{$item.qishu}期 {$item.title}" rel="nofollow">
                         <img src="{$item.thumb}" alt="第{$item.qishu}期 {$item.title}" width="300" height="300" /></a></dt>
                     <dd class="f-gx">
                         <div class="f-gx-user">
                             <span>恭喜</span>
-                            <span class="blue"><a href="" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
+                            <span class="blue"><a href="{:U('Index/end','','')}/{$item.gid}" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
                             <span>获得</span>
                         </div>
                     </dd>
-                    <dd class="u-name"><a href="" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>
+                    <dd class="u-name"><a href="{:U('Index/end','','')}/{$item.gid}" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>
                 </dl>
                 <cite></cite>
             </li>
@@ -84,12 +84,12 @@
 				<div class="g-hotL-con">
 					<ul>
 						<li class="g-hot-pic">
-						<a title="{$r.title}" target="_blank" href="#">
+						<a title="{$r.title}" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">
 						<img src="{$r.thumb}" alt="{$r.title}">
 						</a>
 						</li>
 						<li class="g-hot-name">
-						<a title="{$r.title}" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/43">{$r.title}</a>
+						<a title="{$r.title}" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">{$r.title}</a>
 						</li>
 						<li class="gray">价值：￥{$r.money}</li>
 						<li class="g-progress">
@@ -105,7 +105,7 @@
 							</dl>
 						</li>
 						<li>
-							<a class="u-imm" title="立即1元云购" target="_blank" href="">立即1元云购</a>
+							<a class="u-imm" title="立即1元云购" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即1元云购</a>
 						</li>
 					</ul>
 				</div>
@@ -124,34 +124,34 @@
         </div>
     </div>
     <div class="announced-soon clrfix" id="divSoonGoodsList">
-    	<foreach name="jijiagns" item="j">
+    	<foreach name="jijiagns" item="item">
     		<div class="soon-list-con">
 			<div class="soon-list">
 				<ul>
 					<li class="g-soon-pic">
-						<a title="{$j.title}" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
-							<img id="img_274277" src="{$j.thumb}" alt="{$j.title}">
+						<a title="{$item.title}" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
+							<img id="img_274277" src="{$item.thumb}" alt="{$item.title}">
 						</a>
 					</li>
 					<li class="soon-list-name">
-						<a title="{$j.title}" target="_blank" href="">{$j.title}</a>
+						<a title="{$item.title}" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">{$item.title}</a>
 					</li>
-					<li class="gray">价值：￥{$j.money}</li>
+					<li class="gray">价值：￥{$item.money}</li>
 					<li class="g-progress">
 						<dl class="m-progress">
 							<dt title="">
 								<b style="width:{$j['canyurenshu']*100/$j['zongrenshu']}%;"></b>
 							</dt>
 							<dd>
-								<span class="orange fl"><em>{$j.canyurenshu}</em>已参与</span>
-								<span class="gray6 fl"><em>{$j.zongrenshu}</em>总需人次</span>
-								<span class="blue fr"><em>{$j.shengyurenshu}</em>剩余</span>
+								<span class="orange fl"><em>{$item.canyurenshu}</em>已参与</span>
+								<span class="gray6 fl"><em>{$item.zongrenshu}</em>总需人次</span>
+								<span class="blue fr"><em>{$item.shengyurenshu}</em>剩余</span>
 							</dd>
 						</dl>
 					</li>
 					<li>
-						<a class="u-now" title="立即1元云购" target="_blank" href="">立即1元云购</a>
-						<a class="u-cart" title="加入到购物车" href="javascript:;">
+						<a class="u-now" title="立即1元云购" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即1元云购</a>
+						<a class="u-cart" title="加入到购物车" href="javascript:void(0);" src="{$item.thumb}" gid="{$item.gid}">
 							<s></s>
 						</a>
 					</li>

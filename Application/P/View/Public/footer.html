@@ -135,7 +135,7 @@
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em>0</em></a>
+			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count">{:session('cartCount')}</span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
 				<ul style="display: none;"></ul>
 				<div class="quick_goods_loding" id="rCartLoading">
@@ -176,6 +176,50 @@
 		}
 		showTime();
 		window.setInterval(showTime, 1000);
+		
+		// 计算购物车
+		var cartCount = {$Think.session.cartCount} * 1;
+		var cartCountSpan = $(".cart-count");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+		}
+		window.countCart = countCart;
+		
+		$(".u-cart").click(function(evt) {
+			var offset = $("#btnMyCart").offset();
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left,
+					top: offset.top - $(document).scrollTop(),
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
+			$.post("{:U('Cart/add', '', '')}/" + gid + "/1", null, function(result) {
+				if(result.count > 0) {
+					countCart(1);	
+				} else {
+					
+				}
+			})
+		});
 	});
 </script>
 <!--end右侧导航-->

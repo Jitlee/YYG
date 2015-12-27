@@ -1,10 +1,9 @@
 <?php
-namespace Home\Controller;
-use Think\Controller;
+namespace P\Controller;
 /**
  * 购物车控制器
  */
-class CartController extends Controller {
+class CartController extends CommonController {
 	
 	public function index(){
     		$this->assign('title', '购物车');
@@ -16,12 +15,15 @@ class CartController extends Controller {
 		$list = $db->where($map)->relation(true)->select();
 		if(!empty($list)) {
 			// 检测商品状态
+			$total = 0;
 			foreach($list as $cart) {
 				$count = intval($cart['count']);
 				if($cart['paimai']) {
 					if(intval($cart['paimai']['status']) == 2) {
 						$db->delete($cart['id']);
 						$cart['status'] = 1; // 竞拍已结束
+					} else {
+						$total += intval($cart['paimai']['lijijia']);
 					}
 				} else if($cart['good']) {
 					if(intval($cart['good']['status']) == 2) {
@@ -40,13 +42,18 @@ class CartController extends Controller {
 							$db->save($data);
 							$cart['qishu'] = $cart['good']['qishu'];
 						}
+						
+						$total += $count * intval($cart['good']['danjia']);
 					}
 				}
 			}
-			
+			$this->assign('total', $total);
 			$this->assign('list', $list);
+			
+			session('cartCount', count($list));
 		}
 		
+		layout(false);
 		$this->display();
     }
 	

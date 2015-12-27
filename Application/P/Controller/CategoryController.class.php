@@ -60,7 +60,7 @@ class CategoryController extends CommonController {
 		$total = 0;
 		
 		$list = $mdb->where($mmap)->field(array('gid','title','thumb','money',
-				'danjia','xiangou','status','qishu','canyurenshu','zongrenshu',
+				'danjia','xiangou','status','qishu','canyurenshu','zongrenshu','shengyurenshu',
 				'type','renqi','tuijian','time', 'now() - time' => '_time'))
 			->order($order)->page($pageNo, 20)->select();
 		if($list) {

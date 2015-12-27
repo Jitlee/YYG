@@ -14,6 +14,7 @@
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/Public/P/js/jquery.cookie.js"></script>
     <script type="text/javascript" id="pageJS" data="/Public/P/js/Index.js"></script>
+    <script type="text/javascript" src="/Public/P/js/jquery.fly.min.js"></script>
 </head>
 
 <body id="loadingPicBlock" class="home" rf="1" >
@@ -174,7 +175,7 @@ window.onerror=function(){return true;}
          </div>
          <div class="nav-main fl">
              <ul>
-                 <li class="f-nav-home f-active"><a href="/">首页</a></li>
+                 <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="{WEB_PATH}/go/shaidan">晒单分享</a></li>
                  <li class="f-nav-group"><a href="{WEB_PATH}/group">云购圈</a></li>
@@ -183,7 +184,7 @@ window.onerror=function(){return true;}
          </div>
          <div id="divHCart" class="nav-cart fr">
              <div class="nav-cart-btn">
-                 <a href="{WEB_PATH}/member/cart/cartlist" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(0)</span></a>
+                 <a href="<?php echo U('Cart/index', '', '');?>" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(<span class="cart-count"><?php echo session('cartCount');?></span>)</span></a>
              </div>
              <div class="nav-cart-con">
                  <div class="m-loading-2014"><em></em></div>
@@ -195,7 +196,6 @@ window.onerror=function(){return true;}
  
      </div>
  </div>
-</script>
 
 <div style="position: relative;" class="w1190">
 	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsList.css?date=20140731">
@@ -252,7 +252,7 @@ window.onerror=function(){return true;}
 		<ul class="item" id="ulGoodsList">		
 			<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="goods-iten" >
 				<div class="pic">
-					<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>">
+					<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>">
 						<?php if($item["_time"] < 86400): ?><i class="goods_xp"></i>
 						<?php elseif($item["tuijian"] == 1): ?>
 							<i class="goods_tj"></i>
@@ -263,21 +263,21 @@ window.onerror=function(){return true;}
 					<p name="buyCount" style="display:none;"></p>
 				</div>
 				<p class="name">
-					<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>"><?php echo ($item["title"]); ?></a>
+					<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>"><?php echo ($item["title"]); ?></a>
 				</p>
 				<p class="money">价值：<span class="rmbgray"><?php echo ($item["money"]); ?></span></p>
 				<div class="Progress-bar">
 					<p><span style="width:<?php echo ($item['canyurenshu']*100/$item['zongrenshu']); ?>%"></span></p>
 					<ul class="Pro-bar-li">
-						<li class="P-bar01"><em><?php echo ($canyurenshu); ?></em>已参与人次</li>
-						<li class="P-bar02"><em><?php echo ($zongrenshu); ?></em>总需人次</li>
-						<li class="P-bar03"><em><?php echo ($shengyurenshu); ?></em>剩余人次</li>
+						<li class="P-bar01"><em><?php echo ($item["canyurenshu"]); ?></em>已参与人次</li>
+						<li class="P-bar02"><em><?php echo ($item["zongrenshu"]); ?></em>总需人次</li>
+						<li class="P-bar03"><em><?php echo ($item["shengyurenshu"]); ?></em>剩余人次</li>
 					</ul>
 				</div>
 				<div class="gl_buybtn">
 					<div class="go_buy">
 						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
-						<a href="javascript:;" title="加入购物车" class="go_cart fr">加入购物车</a>
+						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr u-cart" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">加入购物车</a>
 					</div>
 				</div>
 			</li><?php endforeach; endif; ?>
@@ -287,9 +287,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_1482593274__=$minPageNo;$__FOR_END_1482593274__=$pageNo;for($i=$__FOR_START_1482593274__;$i < $__FOR_END_1482593274__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_112886440__=$minPageNo;$__FOR_END_112886440__=$pageNo;for($i=$__FOR_START_112886440__;$i < $__FOR_END_112886440__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_141178715__=$pageNo+1;$__FOR_END_141178715__=$maxPageNo;for($i=$__FOR_START_141178715__;$i < $__FOR_END_141178715__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_126151132__=$pageNo+1;$__FOR_END_126151132__=$maxPageNo;for($i=$__FOR_START_126151132__;$i < $__FOR_END_126151132__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -458,7 +458,7 @@ window.onerror=function(){return true;}
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em>0</em></a>
+			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count"><?php echo session('cartCount');?></span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
 				<ul style="display: none;"></ul>
 				<div class="quick_goods_loding" id="rCartLoading">
@@ -499,6 +499,50 @@ window.onerror=function(){return true;}
 		}
 		showTime();
 		window.setInterval(showTime, 1000);
+		
+		// 计算购物车
+		var cartCount = <?php echo (session('cartCount')); ?> * 1;
+		var cartCountSpan = $(".cart-count");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+		}
+		window.countCart = countCart;
+		
+		$(".u-cart").click(function(evt) {
+			var offset = $("#btnMyCart").offset();
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left,
+					top: offset.top - $(document).scrollTop(),
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
+			$.post("<?php echo U('Cart/add', '', '');?>/" + gid + "/1", null, function(result) {
+				if(result.count > 0) {
+					countCart(1);	
+				} else {
+					
+				}
+			})
+		});
 	});
 </script>
 <!--end右侧导航-->

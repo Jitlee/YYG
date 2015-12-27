@@ -3,6 +3,8 @@ namespace P\Controller;
 class IndexController extends CommonController {
 		
 	public function index(){
+		
+		run_task();
     		$this->assign('title', '一元购');
 		$sdb = M('slide');
 		$slides = $sdb->select();

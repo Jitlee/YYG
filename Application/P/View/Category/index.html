@@ -62,7 +62,7 @@
 			<foreach name="list" item="item">
 			<li class="goods-iten" >
 				<div class="pic">
-					<a href="{:U('Index/view')}/{$item.gid}" target="_blank" title="{$item.title}">
+					<a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" title="{$item.title}">
 						<if condition="$item._time lt 86400">
 							<i class="goods_xp"></i>
 						<elseif condition="$item.tuijian eq 1"/>
@@ -75,21 +75,21 @@
 					<p name="buyCount" style="display:none;"></p>
 				</div>
 				<p class="name">
-					<a href="{:U('Index/view')}/{$item.gid}" target="_blank" title="{$item.title}">{$item.title}</a>
+					<a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" title="{$item.title}">{$item.title}</a>
 				</p>
 				<p class="money">价值：<span class="rmbgray">{$item.money}</span></p>
 				<div class="Progress-bar">
 					<p><span style="width:{$item['canyurenshu']*100/$item['zongrenshu']}%"></span></p>
 					<ul class="Pro-bar-li">
-						<li class="P-bar01"><em>{$canyurenshu}</em>已参与人次</li>
-						<li class="P-bar02"><em>{$zongrenshu}</em>总需人次</li>
-						<li class="P-bar03"><em>{$shengyurenshu}</em>剩余人次</li>
+						<li class="P-bar01"><em>{$item.canyurenshu}</em>已参与人次</li>
+						<li class="P-bar02"><em>{$item.zongrenshu}</em>总需人次</li>
+						<li class="P-bar03"><em>{$item.shengyurenshu}</em>剩余人次</li>
 					</ul>
 				</div>
 				<div class="gl_buybtn">
 					<div class="go_buy">
 						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
-						<a href="javascript:;" title="加入购物车" class="go_cart fr">加入购物车</a>
+						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr u-cart" src="{$item.thumb}" gid="{$item.gid}">加入购物车</a>
 					</div>
 				</div>
 			</li>

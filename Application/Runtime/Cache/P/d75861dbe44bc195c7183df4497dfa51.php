@@ -14,6 +14,7 @@
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/Public/P/js/jquery.cookie.js"></script>
     <script type="text/javascript" id="pageJS" data="/Public/P/js/Index.js"></script>
+    <script type="text/javascript" src="/Public/P/js/jquery.fly.min.js"></script>
 </head>
 
 <body id="loadingPicBlock" class="home" rf="1" >
@@ -174,7 +175,7 @@ window.onerror=function(){return true;}
          </div>
          <div class="nav-main fl">
              <ul>
-                 <li class="f-nav-home f-active"><a href="/">首页</a></li>
+                 <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="{WEB_PATH}/go/shaidan">晒单分享</a></li>
                  <li class="f-nav-group"><a href="{WEB_PATH}/group">云购圈</a></li>
@@ -183,7 +184,7 @@ window.onerror=function(){return true;}
          </div>
          <div id="divHCart" class="nav-cart fr">
              <div class="nav-cart-btn">
-                 <a href="{WEB_PATH}/member/cart/cartlist" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(0)</span></a>
+                 <a href="<?php echo U('Cart/index', '', '');?>" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(<span class="cart-count"><?php echo session('cartCount');?></span>)</span></a>
              </div>
              <div class="nav-cart-con">
                  <div class="m-loading-2014"><em></em></div>
@@ -195,7 +196,6 @@ window.onerror=function(){return true;}
  
      </div>
  </div>
-</script>
 
 <div style="position: relative;" class="w1190">
 	<!-- 商品分类 -->
@@ -245,16 +245,16 @@ window.onerror=function(){return true;}
    		<ul id="ulNewAwary">
 		<?php if(is_array($zuixins)): foreach($zuixins as $key=>$item): ?><li >
                 <dl>
-                    <dt><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" rel="nofollow">
+                    <dt><a href="<?php echo U('Index/end','','');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" rel="nofollow">
                         <img src="<?php echo ($item["thumb"]); ?>" alt="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" width="300" height="300" /></a></dt>
                     <dd class="f-gx">
                         <div class="f-gx-user">
                             <span>恭喜</span>
-                            <span class="blue"><a href="" target="_blank" title="<?php echo ($item["username"]); ?>" class="blue" ><?php echo ($item["username"]); ?></a></span>
+                            <span class="blue"><a href="<?php echo U('Index/end','','');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["username"]); ?>" class="blue" ><?php echo ($item["username"]); ?></a></span>
                             <span>获得</span>
                         </div>
                     </dd>
-                    <dd class="u-name"><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a></dd>
+                    <dd class="u-name"><a href="<?php echo U('Index/end','','');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a></dd>
                 </dl>
                 <cite></cite>
             </li><?php endforeach; endif; ?>
@@ -273,12 +273,12 @@ window.onerror=function(){return true;}
 				<div class="g-hotL-con">
 					<ul>
 						<li class="g-hot-pic">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="#">
+						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">
 						<img src="<?php echo ($r["thumb"]); ?>" alt="<?php echo ($r["title"]); ?>">
 						</a>
 						</li>
 						<li class="g-hot-name">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/43"><?php echo ($r["title"]); ?></a>
+						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>"><?php echo ($r["title"]); ?></a>
 						</li>
 						<li class="gray">价值：￥<?php echo ($r["money"]); ?></li>
 						<li class="g-progress">
@@ -294,7 +294,7 @@ window.onerror=function(){return true;}
 							</dl>
 						</li>
 						<li>
-							<a class="u-imm" title="立即1元云购" target="_blank" href="">立即1元云购</a>
+							<a class="u-imm" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
 						</li>
 					</ul>
 				</div>
@@ -310,33 +310,33 @@ window.onerror=function(){return true;}
         </div>
     </div>
     <div class="announced-soon clrfix" id="divSoonGoodsList">
-    	<?php if(is_array($jijiagns)): foreach($jijiagns as $key=>$j): ?><div class="soon-list-con">
+    	<?php if(is_array($jijiagns)): foreach($jijiagns as $key=>$item): ?><div class="soon-list-con">
 			<div class="soon-list">
 				<ul>
 					<li class="g-soon-pic">
-						<a title="<?php echo ($j["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
-							<img id="img_274277" src="<?php echo ($j["thumb"]); ?>" alt="<?php echo ($j["title"]); ?>">
+						<a title="<?php echo ($item["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
+							<img id="img_274277" src="<?php echo ($item["thumb"]); ?>" alt="<?php echo ($item["title"]); ?>">
 						</a>
 					</li>
 					<li class="soon-list-name">
-						<a title="<?php echo ($j["title"]); ?>" target="_blank" href=""><?php echo ($j["title"]); ?></a>
+						<a title="<?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>"><?php echo ($item["title"]); ?></a>
 					</li>
-					<li class="gray">价值：￥<?php echo ($j["money"]); ?></li>
+					<li class="gray">价值：￥<?php echo ($item["money"]); ?></li>
 					<li class="g-progress">
 						<dl class="m-progress">
 							<dt title="">
 								<b style="width:<?php echo ($j['canyurenshu']*100/$j['zongrenshu']); ?>%;"></b>
 							</dt>
 							<dd>
-								<span class="orange fl"><em><?php echo ($j["canyurenshu"]); ?></em>已参与</span>
-								<span class="gray6 fl"><em><?php echo ($j["zongrenshu"]); ?></em>总需人次</span>
-								<span class="blue fr"><em><?php echo ($j["shengyurenshu"]); ?></em>剩余</span>
+								<span class="orange fl"><em><?php echo ($item["canyurenshu"]); ?></em>已参与</span>
+								<span class="gray6 fl"><em><?php echo ($item["zongrenshu"]); ?></em>总需人次</span>
+								<span class="blue fr"><em><?php echo ($item["shengyurenshu"]); ?></em>剩余</span>
 							</dd>
 						</dl>
 					</li>
 					<li>
-						<a class="u-now" title="立即1元云购" target="_blank" href="">立即1元云购</a>
-						<a class="u-cart" title="加入到购物车" href="javascript:;">
+						<a class="u-now" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
+						<a class="u-cart" title="加入到购物车" href="javascript:void(0);" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">
 							<s></s>
 						</a>
 					</li>
@@ -497,7 +497,7 @@ window.onerror=function(){return true;}
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em>0</em></a>
+			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count"><?php echo session('cartCount');?></span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
 				<ul style="display: none;"></ul>
 				<div class="quick_goods_loding" id="rCartLoading">
@@ -538,6 +538,50 @@ window.onerror=function(){return true;}
 		}
 		showTime();
 		window.setInterval(showTime, 1000);
+		
+		// 计算购物车
+		var cartCount = <?php echo (session('cartCount')); ?> * 1;
+		var cartCountSpan = $(".cart-count");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+		}
+		window.countCart = countCart;
+		
+		$(".u-cart").click(function(evt) {
+			var offset = $("#btnMyCart").offset();
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left,
+					top: offset.top - $(document).scrollTop(),
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
+			$.post("<?php echo U('Cart/add', '', '');?>/" + gid + "/1", null, function(result) {
+				if(result.count > 0) {
+					countCart(1);	
+				} else {
+					
+				}
+			})
+		});
 	});
 </script>
 <!--end右侧导航-->

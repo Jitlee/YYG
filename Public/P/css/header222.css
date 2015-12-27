@@ -5207,3 +5207,12 @@ dl.hover span.u-close {
 	right:13px;
 	top:13px;
 }
+
+.u-flyer {
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	position: fixed;
+	z-index: 9999;
+}

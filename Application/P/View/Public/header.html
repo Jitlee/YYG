@@ -14,6 +14,7 @@
 	<script src="__JQ__"></script>	
 	<script type="text/javascript" src="__JS__/jquery.cookie.js"></script>
     <script type="text/javascript" id="pageJS" data="__JS__/Index.js"></script>
+    <script type="text/javascript" src="__JS__/jquery.fly.min.js"></script>
 </head>
 
 <body id="loadingPicBlock" class="home" rf="1" >
@@ -185,7 +186,7 @@ window.onerror=function(){return true;}
          </div>
          <div id="divHCart" class="nav-cart fr">
              <div class="nav-cart-btn">
-                 <a href="{WEB_PATH}/member/cart/cartlist" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(0)</span></a>
+                 <a href="{:U('Cart/index', '', '')}" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(<span class="cart-count">{:session('cartCount')}</span>)</span></a>
              </div>
              <div class="nav-cart-con">
                  <div class="m-loading-2014"><em></em></div>
@@ -197,4 +198,3 @@ window.onerror=function(){return true;}
  
      </div>
  </div>
-</script>
