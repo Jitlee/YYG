@@ -1,5 +1,7 @@
+ <link rel="stylesheet" type="text/css" href="__CSS__/header1.css?date=20140731">
+	
 <!-- 商品分类 -->
-<div id="divSortList" class="m-all-sort">
+<div id="divSortList" class="m-all-sort" style="display: block;">
 	<foreach name="allCategories" item="c">
 		<dl>
 		     <dt><a href="">{$c.name}</a></dt>
@@ -15,28 +17,65 @@
  <!-- 幻灯片 -->
 <link rel="stylesheet" href="__CSS__/swiper.min.css" />
 <script src="__JS__/swiper.jquery.min.js"></script>
- <!-- Slider main container -->
-<div class="swiper-container">
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-        <!-- Slides -->
-        <foreach name="slides" item="item">
-    			<div class="swiper-slide"><a href="{$item.link}" class="swiper-img" style="background-image: url('{$item.img}');"></a></div>
-        </foreach>
+
+<div class="home-banner fl">
+	<div id="div_slide" class="slide-scroll">
+		 <!-- Slider main container -->
+		<div class="swiper-container">
+		    <!-- Additional required wrapper -->
+		    <div class="swiper-wrapper">
+		        <!-- Slides -->
+		        <foreach name="slides" item="item">
+		    			<div class="swiper-slide"><a href="{$item.link}" class="swiper-img" style="background-image: url('{$item.img}');"></a></div>
+		        </foreach>
+		    </div>
+		    <!-- If we need pagination -->
+		    <div class="swiper-pagination"></div>
+		</div>
     </div>
-    <!-- If we need pagination -->
-    <div class="swiper-pagination"></div>
+    <div class="slide-comd">  
+    	<foreach name="tuijians" item="item">
+	    	<div class="commodity">
+	        <ul>
+	            <li class="comm-info fl">
+	                <span><a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" title="{$item.title}">{$item.title}</a></span>
+	                <p class="gray">已参与<em class="orange">0</em>人次</p>
+	            </li>
+	            <li class="comm-pic fr">
+	            		<a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" title="{$item.title}" rel="nofollow">
+	                		<cite>
+	                   		<img alt="{$item.title}" src="{$item.thumb}" border="0"  width="100" height="100"/>
+	                		</cite>
+                			<span class="F_goods_xp"><i>新品</i></span>
+	           	 </a>
+	            </li>
+	        </ul>
+	    </div>
+	</foreach>                
+	</div>
 </div>
 
-<!-- 幻灯片下方推荐位 -->
-<div class="yyg-tuijian">
-	<foreach name="tuijians" item="t">
-		<div class="yyg-tuijian-item">
-			<p class="title"><a>{$t.title}</a></p>
-			<p class="gray">已参与 {$t.canyurenshu} 人次</p>
-			<img src="{$t.thumb}" style="width:100px;height:100px;"/>
-		</div>
-	</foreach>
+<div class="home-event fr">
+    <div class="what-1yyg">
+        <a id="what_1yyg" href="http://192.168.0.102:8080/YYYGCMS/?/single/newbie" title="什么是1元云购？30秒了解">
+            <img src="http://skin.1yyg.com/images/index-come.gif" alt=""></a>
+    </div>
+    <div class="honesty">
+        <ul>
+            <li><a href="#" target="_blank" title="诚信网站"><i class="i1"></i>诚信网站</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="可信网站"><i class="i2"></i>可信网站</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="电商诚信"><i class="i3"></i>电商诚信</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="安信宝"><i class="i4"></i>安信宝</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="监督管理局"><i class="i5"></i>监督管理局</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="更多"><i class="i6"></i>更多</a></li>
+        </ul>
+    </div>
+    <div class="index_news">
+        <dl>
+            <dt>新闻公告</dt>
+                         				
+        </dl>
+    </div>
 </div>
 
 <!-- 商品列表 -->
@@ -105,13 +144,30 @@
 							</dl>
 						</li>
 						<li>
-							<a class="u-imm" title="立即1元云购" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即1元云购</a>
+							<a class="u-imm add-cart" title="立即1元云购" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即1元云购</a>
 						</li>
 					</ul>
 				</div>
 			</div>
     			</foreach>
     		</div>
+    		<div class="g-hotR fr">
+            <div class="u-are">正在云购</div>
+            <div class="g-zzyging">
+                <input name="hidBuyID" type="hidden" id="hidBuyID" value="29773149" />
+                <ul id="UserBuyNewList">
+                    <li>
+                        <span class="fl"><a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
+                            <img alt="" src="{G_UPLOAD_PATH}/{wc:fun:shopimg($gorecord['shopid'])}" /><i></i></a></span>
+                        <p>
+                            <a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank"  title="{wc:fun:get_user_name($gorecord)}" class="blue">{wc:fun:get_user_name($gorecord)}</a><br />
+                            <a href="http://www.1yyg.com/product/268224.html"  target="_blank" title="{wc:$gorecord['shopname']}" class="u-ongoing">{wc:$gorecord['shopname']}</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="u-see100"><a href="{WEB_PATH}/buyrecordbai" target="_blank">查看最新100条记录</a></div>
+        </div>
     </div>
     
     <div class="g-title m-sort">

@@ -6,10 +6,12 @@
     <meta name="description" content=""/>
     <title><?php echo ($title); ?></title>
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
-	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	
+	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
 	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+    <link rel="stylesheet" type="text/css" href="/Public/P/css/header.css?date=20140731">
+    <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/Public/P/js/jquery.cookie.js"></script>
@@ -198,8 +200,10 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<!-- 商品分类 -->
-<div id="divSortList" class="m-all-sort">
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
+	
+<!-- 商品分类 -->
+<div id="divSortList" class="m-all-sort" style="display: block;">
 	<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><dl>
 		     <dt><a href=""><?php echo ($c["name"]); ?></a></dt>
 		     <dd>
@@ -211,24 +215,61 @@ window.onerror=function(){return true;}
  <!-- 幻灯片 -->
 <link rel="stylesheet" href="/Public/P/css/swiper.min.css" />
 <script src="/Public/P/js/swiper.jquery.min.js"></script>
- <!-- Slider main container -->
-<div class="swiper-container">
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-        <!-- Slides -->
-        <?php if(is_array($slides)): foreach($slides as $key=>$item): ?><div class="swiper-slide"><a href="<?php echo ($item["link"]); ?>" class="swiper-img" style="background-image: url('<?php echo ($item["img"]); ?>');"></a></div><?php endforeach; endif; ?>
+
+<div class="home-banner fl">
+	<div id="div_slide" class="slide-scroll">
+		 <!-- Slider main container -->
+		<div class="swiper-container">
+		    <!-- Additional required wrapper -->
+		    <div class="swiper-wrapper">
+		        <!-- Slides -->
+		        <?php if(is_array($slides)): foreach($slides as $key=>$item): ?><div class="swiper-slide"><a href="<?php echo ($item["link"]); ?>" class="swiper-img" style="background-image: url('<?php echo ($item["img"]); ?>');"></a></div><?php endforeach; endif; ?>
+		    </div>
+		    <!-- If we need pagination -->
+		    <div class="swiper-pagination"></div>
+		</div>
     </div>
-    <!-- If we need pagination -->
-    <div class="swiper-pagination"></div>
+    <div class="slide-comd">  
+    	<?php if(is_array($tuijians)): foreach($tuijians as $key=>$item): ?><div class="commodity">
+	        <ul>
+	            <li class="comm-info fl">
+	                <span><a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>"><?php echo ($item["title"]); ?></a></span>
+	                <p class="gray">已参与<em class="orange">0</em>人次</p>
+	            </li>
+	            <li class="comm-pic fr">
+	            		<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>" rel="nofollow">
+	                		<cite>
+	                   		<img alt="<?php echo ($item["title"]); ?>" src="<?php echo ($item["thumb"]); ?>" border="0"  width="100" height="100"/>
+	                		</cite>
+                			<span class="F_goods_xp"><i>新品</i></span>
+	           	 </a>
+	            </li>
+	        </ul>
+	    </div><?php endforeach; endif; ?>                
+	</div>
 </div>
 
-<!-- 幻灯片下方推荐位 -->
-<div class="yyg-tuijian">
-	<?php if(is_array($tuijians)): foreach($tuijians as $key=>$t): ?><div class="yyg-tuijian-item">
-			<p class="title"><a><?php echo ($t["title"]); ?></a></p>
-			<p class="gray">已参与 <?php echo ($t["canyurenshu"]); ?> 人次</p>
-			<img src="<?php echo ($t["thumb"]); ?>" style="width:100px;height:100px;"/>
-		</div><?php endforeach; endif; ?>
+<div class="home-event fr">
+    <div class="what-1yyg">
+        <a id="what_1yyg" href="http://192.168.0.102:8080/YYYGCMS/?/single/newbie" title="什么是1元云购？30秒了解">
+            <img src="http://skin.1yyg.com/images/index-come.gif" alt=""></a>
+    </div>
+    <div class="honesty">
+        <ul>
+            <li><a href="#" target="_blank" title="诚信网站"><i class="i1"></i>诚信网站</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="可信网站"><i class="i2"></i>可信网站</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="电商诚信"><i class="i3"></i>电商诚信</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="安信宝"><i class="i4"></i>安信宝</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="监督管理局"><i class="i5"></i>监督管理局</a></li>
+            <li><a href="#" target="_blank" rel="nofollow" title="更多"><i class="i6"></i>更多</a></li>
+        </ul>
+    </div>
+    <div class="index_news">
+        <dl>
+            <dt>新闻公告</dt>
+                         				
+        </dl>
+    </div>
 </div>
 
 <!-- 商品列表 -->
@@ -300,6 +341,23 @@ window.onerror=function(){return true;}
 				</div>
 			</div><?php endforeach; endif; ?>
     		</div>
+    		<div class="g-hotR fr">
+            <div class="u-are">正在云购</div>
+            <div class="g-zzyging">
+                <input name="hidBuyID" type="hidden" id="hidBuyID" value="29773149" />
+                <ul id="UserBuyNewList">
+                    <li>
+                        <span class="fl"><a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
+                            <img alt="" src="{G_UPLOAD_PATH}/{wc:fun:shopimg($gorecord['shopid'])}" /><i></i></a></span>
+                        <p>
+                            <a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank"  title="{wc:fun:get_user_name($gorecord)}" class="blue">{wc:fun:get_user_name($gorecord)}</a><br />
+                            <a href="http://www.1yyg.com/product/268224.html"  target="_blank" title="{wc:$gorecord['shopname']}" class="u-ongoing">{wc:$gorecord['shopname']}</a>
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            <div class="u-see100"><a href="{WEB_PATH}/buyrecordbai" target="_blank">查看最新100条记录</a></div>
+        </div>
     </div>
     
     <div class="g-title m-sort">

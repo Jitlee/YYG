@@ -3411,3 +3411,65 @@ input[type=button]::-moz-focus-inner {
 	text-align: center;
 	color: #999;
 }
+
+
+
+.swiper-container {
+	width:100%;
+}
+
+.swiper-img {
+	display: block;
+	height:300px;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.yyg-tuijian {
+	width:594px;
+	float:left;
+	height:137px;
+	border-top: solid 1px #e6e6e6;
+	border-bottom: solid 1px #e6e6e6;
+}
+
+.yyg-tuijian-item {
+	position: relative;
+	border-right: solid 1px #e6e6e6;
+	width: 296px;
+	float:left;
+	height:100%;
+}
+
+.yyg-tuijian-item .title {
+	color:#333;
+	font-size:14px;
+	height:43px;
+	display: block;
+	width:160px;
+	overflow: hidden;
+	margin-top:25px;
+	margin-left:15px;
+}
+
+.yyg-tuijian-item .gray {
+	padding-top:6px;
+	margin-left:15px;
+	width:160px;
+}
+
+.yyg-tuijian-item img {
+	position: absolute;
+	right:13px;
+	top:13px;
+}
+
+.u-flyer {
+	display: block;
+	width: 50px;
+	height: 50px;
+	border-radius: 50px;
+	position: fixed;
+	z-index: 9999;
+}

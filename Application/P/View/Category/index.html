@@ -1,4 +1,8 @@
+
 <link rel="stylesheet" type="text/css" href="__CSS__/GoodsList.css?date=20140731">
+<style>
+.wrap{width:1190px;}.Current_nav{width:1190px;}.list_Curtit{width:1190px;}.list_class{width:1190px;}.list_Sort{width:1190px;}.goods-iten{width:228px;margin:13px 0 0 11px;}.g-width{width:1190px;}.list_class dd{width:1118px;}.list_class dd li{width:123px;}
+</style>
 <div class="wrap" id="loadingPicBlock">
 	<div class="Current_nav"><a href="__MODULE__">首页</a> &gt; {$title}</div>
 	<div id="current" class="list_Curtit">
@@ -23,7 +27,7 @@
 		<dl>
 			<dt>品牌</dt>
 			
-			<dd id="ddBrandList_brand" <if condition="$brandsCount gt 17">style="height:78px"</if>>
+			<dd id="ddBrandList_brand" <if condition="$brandsCount gt 17">style="height:54px"</if>>
 				<ul>
 					<li><a href="{:U('Category/index', '', '')}/{$cid}" <if condition="$bid eq 0">class="ClassCur"</if>>全部</a></li> 
 					<foreach name="brands" item="item">
@@ -33,7 +37,7 @@
 			</dd>
 		</dl>
 		<if condition="$brandsCount gt 17">
-		<a id="listClassMore" class="list_classMore" href="javascript:;">展开<i></i></a>
+		<a id="listClassMore" class="list_classMore" href="javascript:void(0);">展开<i></i></a>
 		</if>
 	</div>
     <div class="list_Sort">
@@ -89,7 +93,7 @@
 				<div class="gl_buybtn">
 					<div class="go_buy">
 						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
-						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr u-cart" src="{$item.thumb}" gid="{$item.gid}">加入购物车</a>
+						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr add-cart" src="{$item.thumb}" gid="{$item.gid}">加入购物车</a>
 					</div>
 				</div>
 			</li>
@@ -133,12 +137,12 @@
 	$(function() {
 		var classMore = $("#listClassMore").click(function() {
 			var height = $("#ddBrandList_brand").height();
-			if(height == 78) {
+			if(height == 54) {
 				$("#ddBrandList_brand").css("height", "auto");
 				classMore.addClass("MoreClick");
 				classMore.html("收起<i></i>");
 			} else {
-				$("#ddBrandList_brand").css("height", "78px");
+				$("#ddBrandList_brand").css("height", "54px");
 				classMore.removeClass("MoreClick");
 				classMore.html("展开<i></i>");
 			}

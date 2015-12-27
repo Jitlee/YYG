@@ -6,10 +6,12 @@
     <meta name="description" content=""/>
     <title><?php echo ($title); ?></title>
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
-	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	
+	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
 	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+    <link rel="stylesheet" type="text/css" href="/Public/P/css/header.css?date=20140731">
+    <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/Public/P/js/jquery.cookie.js"></script>
@@ -198,7 +200,11 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsList.css?date=20140731">
+	
+<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsList.css?date=20140731">
+<style>
+.wrap{width:1190px;}.Current_nav{width:1190px;}.list_Curtit{width:1190px;}.list_class{width:1190px;}.list_Sort{width:1190px;}.goods-iten{width:228px;margin:13px 0 0 11px;}.g-width{width:1190px;}.list_class dd{width:1118px;}.list_class dd li{width:123px;}
+</style>
 <div class="wrap" id="loadingPicBlock">
 	<div class="Current_nav"><a href="/index.php/P">首页</a> &gt; <?php echo ($title); ?></div>
 	<div id="current" class="list_Curtit">
@@ -221,14 +227,14 @@ window.onerror=function(){return true;}
 		<dl>
 			<dt>品牌</dt>
 			
-			<dd id="ddBrandList_brand" <?php if($brandsCount > 17): ?>style="height:78px"<?php endif; ?>>
+			<dd id="ddBrandList_brand" <?php if($brandsCount > 17): ?>style="height:54px"<?php endif; ?>>
 				<ul>
 					<li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>" <?php if($bid == 0): ?>class="ClassCur"<?php endif; ?>>全部</a></li> 
 					<?php if(is_array($brands)): foreach($brands as $key=>$item): ?><li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($item["bid"]); ?>" <?php if($bid == $item['bid']): ?>class="ClassCur"<?php endif; ?>><?php echo ($item["name"]); ?></a></li><?php endforeach; endif; ?>
 				</ul>
 			</dd>
 		</dl>
-		<?php if($brandsCount > 17): ?><a id="listClassMore" class="list_classMore" href="javascript:;">展开<i></i></a><?php endif; ?>
+		<?php if($brandsCount > 17): ?><a id="listClassMore" class="list_classMore" href="javascript:void(0);">展开<i></i></a><?php endif; ?>
 	</div>
     <div class="list_Sort">
 	    <dl>
@@ -277,7 +283,7 @@ window.onerror=function(){return true;}
 				<div class="gl_buybtn">
 					<div class="go_buy">
 						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
-						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr u-cart" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">加入购物车</a>
+						<a href="javascript:void(0);" title="加入购物车" class="go_cart fr add-cart" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">加入购物车</a>
 					</div>
 				</div>
 			</li><?php endforeach; endif; ?>
@@ -287,9 +293,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_112886440__=$minPageNo;$__FOR_END_112886440__=$pageNo;for($i=$__FOR_START_112886440__;$i < $__FOR_END_112886440__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_1802315865__=$minPageNo;$__FOR_END_1802315865__=$pageNo;for($i=$__FOR_START_1802315865__;$i < $__FOR_END_1802315865__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_126151132__=$pageNo+1;$__FOR_END_126151132__=$maxPageNo;for($i=$__FOR_START_126151132__;$i < $__FOR_END_126151132__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_493040497__=$pageNo+1;$__FOR_END_493040497__=$maxPageNo;for($i=$__FOR_START_493040497__;$i < $__FOR_END_493040497__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -307,12 +313,12 @@ window.onerror=function(){return true;}
 	$(function() {
 		var classMore = $("#listClassMore").click(function() {
 			var height = $("#ddBrandList_brand").height();
-			if(height == 78) {
+			if(height == 54) {
 				$("#ddBrandList_brand").css("height", "auto");
 				classMore.addClass("MoreClick");
 				classMore.html("收起<i></i>");
 			} else {
-				$("#ddBrandList_brand").css("height", "78px");
+				$("#ddBrandList_brand").css("height", "54px");
 				classMore.removeClass("MoreClick");
 				classMore.html("展开<i></i>");
 			}
@@ -509,7 +515,7 @@ window.onerror=function(){return true;}
 		}
 		window.countCart = countCart;
 		
-		$(".u-cart").click(function(evt) {
+		$(".add-cart").click(function(evt) {
 			var offset = $("#btnMyCart").offset();
 			evt.stopPropagation();
 			evt.preventDefault();
