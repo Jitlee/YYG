@@ -198,166 +198,127 @@ window.onerror=function(){return true;}
 </script>
 
 <div style="position: relative;" class="w1190">
-	<!-- 商品分类 -->
-<div id="divSortList" class="m-all-sort">
-	<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><dl>
-		     <dt><a href=""><?php echo ($c["name"]); ?></a></dt>
-		     <dd>
-			     <?php if(is_array($c['brands'])): foreach($c['brands'] as $key=>$b): ?><a ><?php echo ($b["name"]); ?></a><?php endforeach; endif; ?>
-		     </dd>
-		 </dl><?php endforeach; endif; ?>
- </div>
- 
- <!-- 幻灯片 -->
-<link rel="stylesheet" href="/Public/P/css/swiper.min.css" />
-<script src="/Public/P/js/swiper.jquery.min.js"></script>
- <!-- Slider main container -->
-<div class="swiper-container">
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-        <!-- Slides -->
-        <?php if(is_array($slides)): foreach($slides as $key=>$item): ?><div class="swiper-slide"><a href="<?php echo ($item["link"]); ?>" class="swiper-img" style="background-image: url('<?php echo ($item["img"]); ?>');"></a></div><?php endforeach; endif; ?>
-    </div>
-    <!-- If we need pagination -->
-    <div class="swiper-pagination"></div>
-</div>
-
-<!-- 幻灯片下方推荐位 -->
-<div class="yyg-tuijian">
-	<?php if(is_array($tuijians)): foreach($tuijians as $key=>$t): ?><div class="yyg-tuijian-item">
-			<p class="title"><a><?php echo ($t["title"]); ?></a></p>
-			<p class="gray">已参与 <?php echo ($t["canyurenshu"]); ?> 人次</p>
-			<img src="<?php echo ($t["thumb"]); ?>" style="width:100px;height:100px;"/>
-		</div><?php endforeach; endif; ?>
-</div>
-
-<!-- 商品列表 -->
-<div class="g-wrap w1190">
-	<div class="g-title">
-        <h3 class="fl">最新揭晓</h3>
-        <div class="m-other fr">
-            <cite>
-                <a href="" target="_blank" title="查看全部商品">查看全部商品</a>
-            </cite>
-        </div>
-    </div>
-    <div class="g-list">
-   		<ul id="ulNewAwary">
-		<?php if(is_array($zuixins)): foreach($zuixins as $key=>$item): ?><li >
-                <dl>
-                    <dt><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" rel="nofollow">
-                        <img src="<?php echo ($item["thumb"]); ?>" alt="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" width="300" height="300" /></a></dt>
-                    <dd class="f-gx">
-                        <div class="f-gx-user">
-                            <span>恭喜</span>
-                            <span class="blue"><a href="" target="_blank" title="<?php echo ($item["username"]); ?>" class="blue" ><?php echo ($item["username"]); ?></a></span>
-                            <span>获得</span>
-                        </div>
-                    </dd>
-                    <dd class="u-name"><a href="" target="_blank" title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a></dd>
-                </dl>
-                <cite></cite>
-            </li><?php endforeach; endif; ?>
-    		</ul>
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsList.css?date=20140731">
+<div class="wrap" id="loadingPicBlock">
+	<div class="Current_nav"><a href="/index.php/P">首页</a> &gt; <?php echo ($title); ?></div>
+	<div id="current" class="list_Curtit">
+		<h1 class="fl"><?php echo ($title); ?></h1>
+		<span id="spTotalCount">(共<em class="orange"><?php echo ((isset($total) && ($total !== ""))?($total):0); ?></em>件相关商品)</span>
+	</div>	
+	<div class="list_class">
+		<dl>
+			<dt>分类</dt>
+			<dd id="ddBrandList">
+				<ul>
+	                <li><a href="<?php echo U('Category/index', '', '');?>/" <?php if($cid == 0): ?>class="ClassCur"<?php endif; ?>>全部</a></li>
+					<?php if(is_array($allCategories)): foreach($allCategories as $key=>$item): ?><li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($item["cid"]); ?>" <?php if($cid == $item['cid']): ?>class="ClassCur"<?php endif; ?>><?php echo ($item["name"]); ?></a></li><?php endforeach; endif; ?>
+				</ul>
+			</dd>
+		</dl>
 	</div>
-    
-    <div class="g-title">
-        <h3 class="fl">热门推荐</h3>
-        <div class="m-other fr">
-            <a href="#" target="_blank" title="更多" class="u-more">更多</a>
-        </div>
-    </div>
-    <div class="g-hot clrfix">
-    		<div class="g-hotL fl">
-    			<?php if(is_array($remens)): foreach($remens as $key=>$r): ?><div class="g-hotL-list">
-				<div class="g-hotL-con">
-					<ul>
-						<li class="g-hot-pic">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="#">
-						<img src="<?php echo ($r["thumb"]); ?>" alt="<?php echo ($r["title"]); ?>">
-						</a>
-						</li>
-						<li class="g-hot-name">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/43"><?php echo ($r["title"]); ?></a>
-						</li>
-						<li class="gray">价值：￥<?php echo ($r["money"]); ?></li>
-						<li class="g-progress">
-							<dl class="m-progress">
-								<dt title="已完成">
-									<b style="width:<?php echo ($r['canyurenshu']*100/$r['zongrenshu']); ?>%"></b>
-								</dt>
-								<dd>
-									<span class="orange fl"><em><?php echo ($r["canyurenshu"]); ?></em>已参与</span>
-									<span class="gray6 fl"><em><?php echo ($r["zongrenshu"]); ?></em>总需人次</span>
-									<span class="blue fr"><em><?php echo ($r["shengyurenshu"]); ?></em>剩余</span>
-								</dd>
-							</dl>
-						</li>
-						<li>
-							<a class="u-imm" title="立即1元云购" target="_blank" href="">立即1元云购</a>
-						</li>
+	
+	<div class="list_class">
+		<dl>
+			<dt>品牌</dt>
+			
+			<dd id="ddBrandList_brand" <?php if($brandsCount > 17): ?>style="height:78px"<?php endif; ?>>
+				<ul>
+					<li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>" <?php if($bid == 0): ?>class="ClassCur"<?php endif; ?>>全部</a></li> 
+					<?php if(is_array($brands)): foreach($brands as $key=>$item): ?><li><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($item["bid"]); ?>" <?php if($bid == $item['bid']): ?>class="ClassCur"<?php endif; ?>><?php echo ($item["name"]); ?></a></li><?php endforeach; endif; ?>
+				</ul>
+			</dd>
+		</dl>
+		<?php if($brandsCount > 17): ?><a id="listClassMore" class="list_classMore" href="javascript:;">展开<i></i></a><?php endif; ?>
+	</div>
+    <div class="list_Sort">
+	    <dl>
+		    <dt>排序</dt>
+		    <dd>
+		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/0" <?php if($sort == 0): ?>class="SortCur"<?php endif; ?>>最新</a>
+			    	<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/1" <?php if($sort == 1): ?>class="SortCur"<?php endif; ?>>即将揭晓</a>
+		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/2" <?php if($sort == 2): ?>class="SortCur"<?php endif; ?>>人气</a>
+		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/3" <?php if($sort == 3): ?>class="SortCur"<?php endif; ?>>剩余人次</a>
+		        <?php if($sort == 4): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/5" class="Price_Sort SortCur">价格 <i></i></a>
+		        	<?php elseif($sort == 5): ?>
+		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort SortCur">价格 <s></s></a>
+		        	<?php else: ?>
+		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort">价格 <s></s></a><?php endif; ?>
+	        </dd>
+	    </dl>
+	</div>
+	
+	<?php if(isset($list)): ?><!--商品列表-->
+	<div class="listContent">
+		<ul class="item" id="ulGoodsList">		
+			<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="goods-iten" >
+				<div class="pic">
+					<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>">
+						<?php if($item["_time"] < 86400): ?><i class="goods_xp"></i>
+						<?php elseif($item["tuijian"] == 1): ?>
+							<i class="goods_tj"></i>
+						<?php elseif($item["renqi"] == 1): ?>
+							<i class="goods_rq"></i><?php endif; ?>
+						<img alt="<?php echo ($item["title"]); ?>" src="<?php echo ($item["thumb"]); ?>">
+					</a>
+					<p name="buyCount" style="display:none;"></p>
+				</div>
+				<p class="name">
+					<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>"><?php echo ($item["title"]); ?></a>
+				</p>
+				<p class="money">价值：<span class="rmbgray"><?php echo ($item["money"]); ?></span></p>
+				<div class="Progress-bar">
+					<p><span style="width:<?php echo ($item['canyurenshu']*100/$item['zongrenshu']); ?>%"></span></p>
+					<ul class="Pro-bar-li">
+						<li class="P-bar01"><em><?php echo ($canyurenshu); ?></em>已参与人次</li>
+						<li class="P-bar02"><em><?php echo ($zongrenshu); ?></em>总需人次</li>
+						<li class="P-bar03"><em><?php echo ($shengyurenshu); ?></em>剩余人次</li>
 					</ul>
 				</div>
-			</div><?php endforeach; endif; ?>
-    		</div>
-    </div>
-    
-    <div class="g-title m-sort">
-        <h3 class="fl">即将揭晓</h3>
-        <div class="fr">
-            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
-            <a href="" target="_blank" title="全部">全部</a>
-        </div>
-    </div>
-    <div class="announced-soon clrfix" id="divSoonGoodsList">
-    	<?php if(is_array($jijiagns)): foreach($jijiagns as $key=>$j): ?><div class="soon-list-con">
-			<div class="soon-list">
-				<ul>
-					<li class="g-soon-pic">
-						<a title="<?php echo ($j["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
-							<img id="img_274277" src="<?php echo ($j["thumb"]); ?>" alt="<?php echo ($j["title"]); ?>">
-						</a>
-					</li>
-					<li class="soon-list-name">
-						<a title="<?php echo ($j["title"]); ?>" target="_blank" href=""><?php echo ($j["title"]); ?></a>
-					</li>
-					<li class="gray">价值：￥<?php echo ($j["money"]); ?></li>
-					<li class="g-progress">
-						<dl class="m-progress">
-							<dt title="">
-								<b style="width:<?php echo ($j['canyurenshu']*100/$j['zongrenshu']); ?>%;"></b>
-							</dt>
-							<dd>
-								<span class="orange fl"><em><?php echo ($j["canyurenshu"]); ?></em>已参与</span>
-								<span class="gray6 fl"><em><?php echo ($j["zongrenshu"]); ?></em>总需人次</span>
-								<span class="blue fr"><em><?php echo ($j["shengyurenshu"]); ?></em>剩余</span>
-							</dd>
-						</dl>
-					</li>
-					<li>
-						<a class="u-now" title="立即1元云购" target="_blank" href="">立即1元云购</a>
-						<a class="u-cart" title="加入到购物车" href="javascript:;">
-							<s></s>
-						</a>
-					</li>
-				</ul>
-			</div>
-		</div><?php endforeach; endif; ?>
-    </div>
+				<div class="gl_buybtn">
+					<div class="go_buy">
+						<a href="javascript:;" title="立即云购" class="go_Shopping fl">立即云购</a>
+						<a href="javascript:;" title="加入购物车" class="go_cart fr">加入购物车</a>
+					</div>
+				</div>
+			</li><?php endforeach; endif; ?>
+		</ul>
+		<?php if($num < $total): ?><div class="pagesx">
+			<ul id="Page_Ul">
+				<li id="Page_Total"><?php echo ($total); ?>条</li>
+				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
+				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_1482593274__=$minPageNo;$__FOR_END_1482593274__=$pageNo;for($i=$__FOR_START_1482593274__;$i < $__FOR_END_1482593274__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<li class="Page_This"><?php echo ($pageNo); ?></li>
+				<?php $__FOR_START_141178715__=$pageNo+1;$__FOR_END_141178715__=$maxPageNo;for($i=$__FOR_START_141178715__;$i < $__FOR_END_141178715__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
+				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
+			</ul>
+		</div><?php endif; ?>
+	</div>
+	<!--商品列表完-->
+	<?php else: ?>
+	<!--未找到商品-->
+	<div class="NoConMsg"><span>无相关商品记录哦~！</span></div>
+	<!--未找到商品--><?php endif; ?>
+	
 </div>
 
 <script type="text/javascript">
 	$(function() {
-		var mySwiper = new Swiper ('.swiper-container', {
-	      // Optional parameters
-	      direction: 'horizontal',
-	      pagination: '.swiper-pagination',
-	      autoplay: 3000,
-	      loop: true
-	   });
+		var classMore = $("#listClassMore").click(function() {
+			var height = $("#ddBrandList_brand").height();
+			if(height == 78) {
+				$("#ddBrandList_brand").css("height", "auto");
+				classMore.addClass("MoreClick");
+				classMore.html("收起<i></i>");
+			} else {
+				$("#ddBrandList_brand").css("height", "78px");
+				classMore.removeClass("MoreClick");
+				classMore.html("展开<i></i>");
+			}
+		});
 	});
 </script>
-
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

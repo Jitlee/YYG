@@ -1,6 +1,6 @@
 <?php
 
-function is_login() {
+function a_is_login() {
 	$admin = session('admin');
 	if(empty($admin)) {
 		return 0;

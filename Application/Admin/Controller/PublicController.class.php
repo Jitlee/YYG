@@ -46,7 +46,7 @@ class PublicController extends Controller {
 			session('admin', $auth);
 //			echo dump(session('admin'));
 			$this->success('登陆成功', U('Index/index', '', ''));
-		} else if(is_login()) {
+		} else if(a_is_login()) {
 			$this->redirect("Index/index");
 		} else {
 			layout(false);
@@ -98,7 +98,7 @@ class PublicController extends Controller {
 	
 	/* 退出登录 */
     public function logout(){
-        if(is_login()){
+        if(a_is_login()){
 			session('user', null);
             session('[destroy]');
             $this->success('退出成功！', U('login', '', ''));

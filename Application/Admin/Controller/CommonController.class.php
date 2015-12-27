@@ -6,7 +6,7 @@ class CommonController extends Controller {
 	protected $ROOT_PATH = "/Public";
 	
 	protected function _initialize() {
-		if(!is_login()) {
+		if(!a_is_login()) {
 			$this->redirect('Public/login');
 		}
 	}
