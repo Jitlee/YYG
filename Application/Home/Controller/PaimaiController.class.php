@@ -157,6 +157,7 @@ class PaimaiController extends Controller {
 						$good['zuigaojia'] = $money;
 						$good['chujiazhe'] = $uid;
 						if($pdb->save($good)) {
+							add_renci(1);
 							$result['status'] = 0;
 							$result['message'] = '出价成功';
 						} else {
