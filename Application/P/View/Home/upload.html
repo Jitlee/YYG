@@ -1,0 +1,118 @@
+<div id="modalUpload" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 id="modelUploadTitle" class="modal-title">图片上传</h4>
+			</div>
+			<div class="modal-body">
+				<p>
+					最多上传
+					<span id="modelUploadLimitLabel" class="label label-info">1</span> 个附件,单文件最大
+					<span class="label label-info">488KB</span> 类型:
+					<span class="label label-info"> *.png;*.jpg;*.gif;*.jpeg;</span>
+				</p>
+				<input id="modalUploadFile" type="file" name="file" accept="image/*" />
+				<div id="uploadPreviewImageTemplate" class="hidden col-xs-4 col-md-3">
+					<a href="#" class="thumbnail">
+						<img alt=""/>
+						<button type="button" class="btn btn-link">删除</button>
+					</a>
+				</div>
+				<div id="uploadPreviewBody" class="row">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="modalUploadCancelButton" type="button" class="btn cancel" data-dismiss="modal">取消</button>
+				<button id="modalUploadOKButton" type="button" class="btn btn-primary ok" data-dismiss="modal">确定</button>
+			</div>
+		</div>
+	</div>
+</div>
+<link href="__CSS__/uploadify.css" rel="stylesheet">
+<script src='__STATIC__/js/jquery.uploadify.min.js'></script>
+<script type="text/javascript">
+	$(function() {
+		var modalUploadCancelButton = $("#modalUploadCancelButton");
+		var modelUploadLimitLabel = $("#modelUploadLimitLabel");
+		var modalUploadOKButton = $("#modalUploadOKButton");
+		var modelUploadTitle = $("#modelUploadTitle");
+		var modalUpload = $("#modalUpload");
+		var ui = window.UI || (window.UI = {});
+		var cancel = null;
+		var ok = null;
+		var files = [];
+		modalUploadCancelButton.click(function() {
+			if (cancel) {
+				cancel();
+				cancel = null;
+			}
+		});
+		modalUploadOKButton.click(function() {
+			if (ok) {
+				ok(files);
+				ok = null;
+			}
+		});
+		var uploadify = $("#modalUploadFile");
+		var uploadPreviewImageTemplate = $("#uploadPreviewImageTemplate");
+		var uploadPreviewBody = $("#uploadPreviewBody").on("click", "button", function() {
+			var self = $(this);
+			var url = self.attr("url");
+			var key = self.attr("key");
+			$.post("{:U('removefile','','')}/" + key);
+			self.closest("div").remove();
+			var num = files.length;
+			while(num--) {
+				if(files[num].url == url) {
+					files.splice(num, 1);
+					break;
+				}
+			}
+		});
+
+		function initUploadify(options) {
+			files.length = 0;
+			var data = uploadify.data("uploadify");
+			if (data) {
+				$("#modalUploadFile").uploadify("destroy");
+				uploadPreviewBody.empty();
+			}
+			uploadify.uploadify({
+				swf: "__STATIC__/swf/uploadify.swf",
+				buttonText: '选择文件上传',
+				multi: options.limit > 1,
+				uploadLimit: options.limit,
+				removeCompleted: true,
+				fileTypeDesc : "图片文件",
+        			fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
+				uploader: "{:U('upload','','')}",
+				onUploadSuccess: function(file, data) {
+					var data = JSON.parse(data);
+					if (data && data.status == 0) {
+						files.push(data);
+						var previewImage = uploadPreviewImageTemplate
+							.clone()
+							.removeAttr("id")
+							.removeClass("hidden");
+						uploadPreviewBody.append(previewImage);
+						
+						$(".btn",previewImage).attr("key", data.key).attr("url", data.url);
+						$("img",previewImage).attr("src", data.url);
+					}
+				}
+			});
+		}
+		ui.upload = function(title, options) {
+			if (options) {
+				modelUploadTitle.text(title);
+				modelUploadLimitLabel.text(options.limit||1);
+				options.limit = options.limit||1;
+				initUploadify(options);
+				ok = options.ok;
+				cancel = options.cancel;
+			}
+			modalUpload.modal();
+		};
+	});
+</script>

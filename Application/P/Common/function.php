@@ -21,3 +21,5 @@ function config($key)
 		return '';
 	return $user["value"];	
 }
+
+

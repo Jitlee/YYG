@@ -6,14 +6,16 @@
     <meta name="description" content=""/>
     <title><?php echo ($title); ?></title>
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
-	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	
+	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
 	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+    <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
 	<script type="text/javascript" src="/Public/P/js/jquery.cookie.js"></script>
     <script type="text/javascript" id="pageJS" data="/Public/P/js/Index.js"></script>
+    <script type="text/javascript" src="/Public/P/js/jquery.fly.min.js"></script>
 </head>
 
 <body id="loadingPicBlock" class="home" rf="1" >
@@ -133,17 +135,17 @@ window.onerror=function(){return true;}
                  <a href="{WEB_PATH}/buyrecord" target="_blank">
                      <ul id="spHeadTotalNum">			 
       					<li class="nobor gray6">累计参与</li>
-                         <li class="num"><cite><em>0</em></cite><i></i></li>
-                         <li class="num"><cite><em>0</em></cite><i></i></li>
-                         <li class="num"><cite><em>0</em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci9) && ($goCountRenci9 !== ""))?($goCountRenci9):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci8) && ($goCountRenci8 !== ""))?($goCountRenci8):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci7) && ($goCountRenci7 !== ""))?($goCountRenci7):0); ?></em></cite><i></i></li>
                          <li class="nobor">,</li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci6()}</em></cite><i></i></li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci5()}</em></cite><i></i></li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci4()}</em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci6) && ($goCountRenci6 !== ""))?($goCountRenci6):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci5) && ($goCountRenci5 !== ""))?($goCountRenci5):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci4) && ($goCountRenci4 !== ""))?($goCountRenci4):0); ?></em></cite><i></i></li>
                          <li class="nobor">,</li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci3()}</em></cite><i></i></li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci2()}</em></cite><i></i></li>
-                         <li class="num"><cite><em>{wc:fun:go_count_renci1()}</em></cite><i></i></li> 
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci3) && ($goCountRenci3 !== ""))?($goCountRenci3):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci2) && ($goCountRenci2 !== ""))?($goCountRenci2):0); ?></em></cite><i></i></li>
+                         <li class="num"><cite><em><?php echo ((isset($goCountRenci1) && ($goCountRenci1 !== ""))?($goCountRenci1):0); ?></em></cite><i></i></li> 
                          <li class="nobor gray6 u-secondary">人次<b><s></s></b></li>
                      </ul>
                  </a>
@@ -163,65 +165,18 @@ window.onerror=function(){return true;}
          </div>
      </div>
  </div>
- 
- 
- 
  <!--导航-->
  <div class="g-nav">
      <div class="w1190">
          <div id="divGoodsSort" class="m-menu fl">
              <div class="m-menu-all">
-                 <h3><a href="{WEB_PATH}/goods_list">全部商品分类</a><em></em></h3>
-             </div>
-             <div id="divSortList" class="m-all-sort" style="display: none;">
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/5_0_0">手机数码</a></dt>
-                     <dd>
-                         <a href="{WEB_PATH}/goods_list/49_0_0">手机</a>
-                         <a href="{WEB_PATH}/goods_list/62_0_0">数码影像</a>
-                         <a href="{WEB_PATH}/goods_list/63_0_0">时尚影音</a>
-                     </dd>
-                 </dl>
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/13_0_0">电脑办公</a></dt>
-                     <dd>
-                         <a href="{WEB_PATH}/goods_list/64_0_0">电脑配件</a>
-                         <a href="{WEB_PATH}/goods_list/65_0_0">外设产品</a>
-                         <a href="{WEB_PATH}/goods_list/69_0_0">网络产品</a>
-                     </dd>
-                 </dl>
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/6_0_0">家用电器</a></dt>
-                     <dd>
-                         <a href="{WEB_PATH}/goods_list/66_0_0">大家电</a>
-                         <a href="{WEB_PATH}/goods_list/67_0_0">生活电器</a>
-                         <a href="{WEB_PATH}/goods_list/70_0_0">个人护理</a>
-                     </dd>
-                 </dl>
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/12_0_0">化妆个护</a></dt>
-                     <dd>
-                        <a href="{WEB_PATH}/">面部护理</a>
-                         <a href="{WEB_PATH}/">香水</a>
-                     </dd>
-                 </dl>
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/14_0_0">钟表首饰</a></dt>
-                     <dd><a href="{WEB_PATH}/goods_list/68_0_0">珠宝首饰</a></dd>
-                 </dl>
-                 <dl>
-                     <dt><a href="{WEB_PATH}/goods_list/15_0_0">其他商品</a></dt>
-                     <dd>
-                        <a href="{WEB_PATH}/goods_list/21_0_0">腾讯QQ</a>
-                         <a href="{WEB_PATH}/goods_list/55_0_0">手机话费</a>
-                     </dd>
-                 </dl>
+                 <h3><a href="<?php echo U('Category/index', '', '');?>">全部商品分类</a><em></em></h3>
              </div>
  
          </div>
          <div class="nav-main fl">
              <ul>
-                 <li class="f-nav-home"><a href="/">首页</a></li>
+                 <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="{WEB_PATH}/go/shaidan">晒单分享</a></li>
                  <li class="f-nav-group"><a href="{WEB_PATH}/group">云购圈</a></li>
@@ -230,7 +185,7 @@ window.onerror=function(){return true;}
          </div>
          <div id="divHCart" class="nav-cart fr">
              <div class="nav-cart-btn">
-                 <a href="{WEB_PATH}/member/cart/cartlist" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(0)</span></a>
+                 <a href="<?php echo U('Cart/index', '', '');?>" target="_blank"><i class="f-cart-icon"></i>购物车<span id="sCartTotal">(<span class="cart-count"><?php echo session('cartCount');?></span>)</span></a>
              </div>
              <div class="nav-cart-con">
                  <div class="m-loading-2014"><em></em></div>
@@ -242,167 +197,9 @@ window.onerror=function(){return true;}
  
      </div>
  </div>
- <!--所有商品下拉特效-->
-	<script>
-		$(document).ready(function(){
-				$("#divGoodsSortList").hover(function() {
-				$(this).addClass("U-goods-hover").children("div.U-goods-class").show().prev().find("b").addClass("b_Triangle")
-				}
-				,function() {
-					$(this).removeClass("U-goods-hover").children("div.U-goods-class").hide().prev().find("b").removeClass("b_Triangle")
-				}
-				).find("dl").each(function() {
-					$(this).hover(function() {
-					$(this).addClass("U-list-hover")
-				}
-				,function() {
-					$(this).removeClass("U-list-hover")
-				}
-				)});
 
-		});
-	</script>
-	<script>
-$(function(){
-	$("#sCart,#liTopCart").hover(
-		function(){			
-			$("#sCartlist,#sCartLoading").show();
-			$("#sCartlist p,#sCartlist h3").hide();
-			$("#sCart .mycartcur").remove();
-			$("#sCartTotal2").html("");
-			$("#sCartTotalM").html("");
-			$.getJSON("{WEB_PATH}/member/cart/cartheader/="+ new Date().getTime(),function(data){
-				$("#sCart .mycartcur").remove();
-				$("#sCartLoading").before(data.li);
-				$("#sCartTotal2").html(data.num);
-				$("#sCartTotalM").html(data.sum);
-
-				$("#sCartLoading").hide();
-				$("#sCartlist p,#sCartlist h3").show();
-			});
-		},
-		function(){
-			$("#sCartlist").hide();
-		}
-	);
-	$("#sGotoCart").click(function(){
-		window.location.href="{WEB_PATH}/member/cart/cartlist";
-	});
-})
-function delheader(id){
-	var Cartlist = $.cookie('Cartlist');
-	var info = $.evalJSON(Cartlist);
-	var num=$("#sCartTotal2").html()-1;
-	var sum=$("#sCartTotalM").html();
-	info['MoenyCount'] = sum-info[id]['money']*info[id]['num'];
-		
-	delete info[id];
-	//$.cookie('Cartlist','',{path:'/'});
-	$.cookie('Cartlist',$.toJSON(info),{expires:30,path:'/'});
-	$("#sCartTotalM").html(info['MoenyCount']);
-	$('#sCartTotal2').html(num);
-	$('#sCartTotal').text(num);											
-	$('#btnMyCart em').text(num);
-	$("#mycartcur"+id).remove();
-}
-$(function(){
-	$(".M-my-1yyg").mouseover(function(){
-		$(this).addClass("menu-hd-hover");
-	});
-	$(".M-shop").mouseover(function(){
-		$(this).addClass("menu-hd-hover");
-	});
-	$(".M-my-1yyg").mouseout(function(){
-		$(this).removeClass("menu-hd-hover");
-	});
-	$(".M-shop").mouseout(function(){
-		$(this).removeClass("menu-hd-hover");
-	});
-});
-$(function(){
-	$("#txtSearch").focus(function(){
-		$("#txtSearch").css({background:"#FFFFCC"});
-		var va1=$("#txtSearch").val();
-		if(va1=='输入“手机”试试'){
-			$("#txtSearch").val("");
-		}
-	});
-	$("#txtSearch").blur(function(){
-		$("#txtSearch").css({background:"#FFF"});
-		var va2=$("#txtSearch").val();
-		if(va2==""){
-			$("#txtSearch").val('输入“手机”试试');
-		}			
-	});
-	$("#butSearch").click(function(){
-		window.location.href="{WEB_PATH}/s_tag/"+$("#txtSearch").val();
-	});
-});
-
-var getAllNum = function(){
-	var a = $("#spBuyCount");
-	var b = a.text();
-	$.ajax({
-		url: "{WEB_PATH}/api/wrenciajax/get",
-		type:"POST",
-		success: function(data){
-			if(b == data){				
-			}else{
-				a.css({
-					color:"white",background:"red"
-				}).html(data);
-				a.animate({
-					opacity:0.1
-				}
-				,{
-					queue:false,duration:1000,complete:function(){
-						a.show().css({
-							color:"#22AAFF",background:"#F5F5F5",opacity:1
-						})
-					}
-				})
-
-			}
-		}
-	});
-	//setTimeout(getAllNum,3000);
-};
-getAllNum();
-</script>
- <script language="javascript" type="text/javascript">
-     var Base = { 
-     	head: document.getElementsByTagName("head")[0] || document.documentElement
-     	, Myload: function (B, A) { 
-     		this.done = false; 
-     		B.onload = B.onreadystatechange = function () { 
-     			if (!this.done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) { 
-     				this.done = true; 
-     				A(); 
-     				B.onload = B.onreadystatechange = null; 
-     				if (this.head && B.parentNode) { this.head.removeChild(B) } } } 
-     	}
-     	, getScript: function (A, C) { 
-     		var B = function () { }; 
-     		if (C != undefined) { B = C } 
-     		var D = document.createElement("script"); 
-     		D.setAttribute("language", "javascript"); 
-     		D.setAttribute("type", "text/javascript"); 
-     		D.setAttribute("src", A); this.head.appendChild(D); this.Myload(D, B) 
-     	}, getStyle: function (A, CB) { 
-     		var B = function () { }; if (CB != undefined) { B = CB } 
-     		var C = document.createElement("link"); 
-     		C.setAttribute("type", "text/css"); C.setAttribute("rel", "stylesheet"); C.setAttribute("href", A); this.head.appendChild(C); this.Myload(C, B) } 
-     }
-     function GetVerNum() { var D = new Date(); return D.getFullYear().toString().substring(2, 4) + '.' + (D.getMonth() + 1) + '.' + D.getDate() + '.' + D.getHours() + '.' + (D.getMinutes() < 10 ? '0' : D.getMinutes().toString().substring(0, 1)) }
-     Base.getScript('{G_TEMPLATES_JS}/Bottom.js?v=' + GetVerNum());
- </script>
- <script>
-$("body").attr('class','lottery');
-</script>
-<!--end所有商品下拉特效-->
-<link rel="stylesheet" type="text/css" href="/Public/P/css/Home.css?date=20140731">	
-
-<div class="layout980 clearfix">
+<div style="position: relative;" class="w1190">
+	<div class="layout980 clearfix">
 <link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
 <link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
 <div class="left">
@@ -520,7 +317,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 			</li>
 			<li class="account-money">
 			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Main/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
+			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
 			</li>
 		</ul>
 	    <div class="tips orange" style="height: 40px;">
@@ -561,6 +358,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 </div>
 <!--center_rjght_end-->
 
+</div>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />
@@ -700,7 +498,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em>0</em></a>
+			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count"><?php echo session('cartCount');?></span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
 				<ul style="display: none;"></ul>
 				<div class="quick_goods_loding" id="rCartLoading">
@@ -724,8 +522,70 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 		</dd>
 	</dl>
 </div>
+<script type="text/javascript">
+	$(function(){
+		var sp_ServerTime = $("#sp_ServerTime");
+		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		function showTime() {
+			serverTime += 1000;
+			var now = new Date(serverTime);
+			var hours = now.getHours();
+			var muintes = now.getMinutes();
+			var seconds = now.getSeconds();
+			hours = hours > 9 ? String(hours) : "0" + hours;
+			muintes = muintes > 9 ? String(muintes) : "0" + muintes;
+			seconds = seconds > 9 ? String(seconds) : "0" + seconds;
+			sp_ServerTime.html([hours, muintes, seconds].join(":"));
+		}
+		showTime();
+		window.setInterval(showTime, 1000);
+		
+		// 计算购物车
+		var cartCount = <?php echo (session('cartCount')); ?> * 1;
+		var cartCountSpan = $(".cart-count");
+		function countCart(count) {
+			cartCount += count;
+			cartCountSpan.text(cartCount);
+		}
+		window.countCart = countCart;
+		
+		$(".add-cart").click(function(evt) {
+			var offset = $("#btnMyCart").offset();
+			evt.stopPropagation();
+			evt.preventDefault();
+			var $this = $(this);
+			var gid = $this.attr("gid");
+			
+			var img = $this.attr("src");
+			var flyer = $('<img class="u-flyer" src="'+img+'">');
+			var goodOffset = $this.offset();
+			flyer.fly({
+				start: {
+					left: goodOffset.left,
+					top: goodOffset.top - $(document).scrollTop()
+				},
+				end: {
+					left: offset.left,
+					top: offset.top - $(document).scrollTop(),
+					width: 0,
+					height: 0
+				},
+				onEnd: function(){
+					this.destory();
+				}
+			});
+			
+			$.post("<?php echo U('Cart/add', '', '');?>/" + gid + "/1", null, function(result) {
+				if(result.count > 0) {
+					countCart(1);	
+				} else {
+					
+				}
+			})
+		});
+	});
+</script>
 <!--end右侧导航-->
-
 </body>
 
 </html>

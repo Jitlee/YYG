@@ -6,6 +6,7 @@
 		<a class="current">已晒单</a>
 		<a >未晒单</a>
 	</div>
+	
 	<div class="list-tab topic" style="display: block;" id="listsdfinish">
 		<ul class="listTitle">
 			<li style="text-align:center;" class="w100">晒单图片</li>
@@ -24,17 +25,19 @@
 	</div>
 </div>
 <ul class="listCon mui-hidden" id="sdfinish">
-	<li class="w100" style="text-align:center;"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="blue">
-		<img width="50" class="iteminfo" src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"/></a></li>
-	<li class="w400"><a href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank" class="gray01"><span class="zcontent"></span></a></li>
-	<li class="w85 fr">
-	<font color="#666">不可修改</font>
+	<li class="w100" style="text-align:center;">
+		<a href="#" target="_blank" class="blue gray01 goodurl">
+		<img width="50" class="iteminfo" src="#"/>
+		</a>
 	</li>
+	<li class="w400"><a href="#" target="_blank" class="gray01 goodurl"><span class="zcontent">(第一期)</span></a></li>
+	<li class="w100" style="text-align:right;"><font color="#666"><a href="#" class="sdview"><span>查看晒单</span></a></font></li>
+	<li class="w85 fr"><font color="#666">不可修改</font></li>
 </ul>
 
 <ul class="listCon mui-hidden" id="sdno">
-	<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="{G_UPLOAD_PATH}/{wc:fun:shoplisext($sd['shopid'],'thumb')}"/></div></li>
-	<li style="text-indent:1em;" class="w400"><a class="iteminfo" href="{WEB_PATH}/goods/{wc:$sd['shopid']}" target="_blank"><span class="zcontent"></span></a></li>
+	<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="#"/></div></li>
+	<li style="text-indent:1em;" class="w400"><a class="iteminfo goodurl" href="#" target="_blank"><span class="zcontent"></span></a></li>
 	<li class="w50 fr"><a name="delete" class="iteminfosd" href="{:U('pageAllsdfinish', '', '')}/singleinsert/{wc:$sd['id']}" class="blue">添加晒单</a></li>
 </ul>
 <script type="text/javascript">
@@ -66,8 +69,11 @@
 	       		$.each(list, function() {
 	       			useTemplatefinish=goodTemplatefinish;
 	       			
+	       			//{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}
+	       			
 	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+					$(".sdview", item).attr("href", "{:U('Saidan/detail', '', '')}/" + this.gid +"/"+this.qishu);
 					
 					$("img", item).attr("src", this.thumb);
 					$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
@@ -106,11 +112,11 @@
 	       			useTemplateNo=goodTemplateNo;
 	       			var item = useTemplateNo.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
-
+					
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);	       			
 	       			$(".iteminfo", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
-	       			$(".iteminfosd", item).attr("href", "{:U('Home/singleinsert', '', '')}/" + this.gid);
+	       			$(".iteminfosd", item).attr("href", "{:U('Home/singleinsert', '', '')}/" + this.gid +"/"+this.qishu);
 	       			goodListNo.append(item);
 	       		});
 	       });
@@ -120,62 +126,7 @@
 </script>
 <style>
 #foucs_big{background:#999; filter:alpha(opacity=30); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;}
-#foucs_min{background:#999; filter:alpha(opacity=50); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;}
-
-#w3foucs{position:absolute;width:200px; overflow:hidden; left:50%; top:50%; height:auto; z-index:100;background-color:#fff; border:1px #999 solid; padding:1px;}
-#w3foucs #foucs_close{
-	width:22px;
-	height:22px;
-	position:absolute;
-	z-index:100;
-	right:10px;
-	top:10px;
-	background: url(http://skin.1yyg.com/Images/message.png) -80px -70px no-repeat;
-	display: block;
-	cursor: pointer;
-}
-#w3foucs #page_close{
-	width:30px;
-	height:30px;
-	position:absolute;
-	z-index:100;
-	right:-15px;
-	top:-15px;
-	display: block;
-	cursor: pointer;
-	background:url(fancy_close.png) no-repeat;
-}
-#w3foucs #foucs_main{}
-#w3foucs #foucs_main div.title{
-    background-color: #F2F2F2;
-    color: #666666;
-    font-size: 14px;
-    font-weight: bold;
-    height: 30px;
-    line-height: 30px;
-    padding-left: 10px;
-    padding-top: 3px;
-}
-#w3foucs #foucs_main div.content{
-    padding: 5px;overflow:hidden;z-index:100;
-}
-#w3foucs #foucs_main .content img{
-    z-index:200;
-}
-.PopMsgC {
-    color: #999999;
-    font-size: 14px;
-    padding: 15px 0;
-    text-align: center;
-}
-.PopMsgC s {
-	background:url(http://skin.1yyg.com/Member/images/new-admin.png) -57px -96px no-repeat;
-    display: inline-block;
-    height: 21px;
-    margin-right: 5px;
-    vertical-align: top;
-    width: 21px;
-}
+#foucs_min{background:#999; filter:alpha(opacity=50); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;} 
 .PopMsgbtn {
     height: 30px;
     text-align: center;
@@ -216,78 +167,10 @@ function shaidan(id){
 	if(confirm("您确认要删除该条信息吗？")){
 		window.location.href="{WEB_PATH}/member/home/shaidandel/"+id;
 	}
-	//FixedConfirm('你确定要删除？',240);
 }
-/*$("#btnShow6").click(function(){
-		FixedConfirm('你确定要删除？',240);
-});*/
-function FixedConfirm(content,minwidth){
-	var div=FixedStar();
-		div+='<div id="foucs_close"></div>';
-		div+='<div id="foucs_main">';
-		div+='<div class="title" style="display:black">提示</div>';
-		div+='<div class="content"><div class="PopMsgC"  style="display:black"><s></s>'+content+'</div>';
-		div+='<div class="PopMsgbtn" style="display:black">';
-		div+='<a class="orangebut" id="btnMsgOK" href="javascript:;">确认</a>&nbsp;&nbsp;';
-		div+='<a class="cancelBtn" id="btnMsgCancel" href="javascript:;">取消</a>';
-		div+='</div></div></div>';
-		div+='</div>';
-	$("body").append(div);
-	Fixed(minwidth);
-	FixedClose();
-}
-$(function(){
-	$(window).resize(function(){
-		Fixed();
-	})
-})
-//关闭弹窗
-function FixedClose(){
-	$("#foucs_close,#page_close,#btnMsgCancel").click(function(){
-		$("#foucs_big,#foucs_min,#w3foucs").fadeOut(200,function(){
-			$("#foucs_big,#foucs_min,#w3foucs").remove();
-		});
-	})
-};
-function FixedStar(){
-	var div='<div id="foucs_big"></div>';
-		div+='<div id="foucs_min"></div>';
-		div+='<div id="w3foucs">';
-	return div;
-}
-function Fixed(w,h){
-	var bigheight=document.body.clientHeight,
-	    bigwidth=document.body.clientWidth;
-	var big=$("#foucs_big"),
-	    min=$("#foucs_min");
-	var w3foucs=$("#w3foucs");
-	if(w==null){
-		if(w3foucs.text()!=null){
-			w = w3foucs.width();
-		}else{
-			w = 200;
-		}
-	}
-	if(h==null){
-		var h = w3foucs.height();
-	}
-	big.height(bigheight);
-    big.width(bigwidth);
-    big.fadeTo(500,0.5);
-	min.width(w+14);
-    min.height(h+14);
-    min.fadeTo(500,0.5);
+ 
+ 
 
-	w3foucs.css("height",h);
-	w3foucs.width(w);
-    var t = ($(window).height()/2) - (h/2);
-    if(t < 0) t = 0;
-    $("#w3foucs,#foucs_min").css({display:"block",position:"fixed"});
-	$("#foucs_close").css({display:"block"});
-    var l = ($(window).width()/2) - (w/2);
-    if(l < 0) l = 0;
-    $("#foucs_min").css({left: l-5+'px', top: t-5+'px'});
-    w3foucs.css({left: l+'px', top: t+'px'});
-}
+
 </script>
 </div>

@@ -10,7 +10,6 @@
 	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
 	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
 	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
-    <link rel="stylesheet" type="text/css" href="/Public/P/css/header.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
@@ -179,9 +178,9 @@ window.onerror=function(){return true;}
              <ul>
                  <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
-                 <li class="f-nav-share"><a href="{WEB_PATH}/go/shaidan">晒单分享</a></li>
-                 <li class="f-nav-group"><a href="{WEB_PATH}/group">云购圈</a></li>
-                 <li class="f-nav-guide"><a href="{WEB_PATH}/single/newbie">新手指南</a></li>
+                 <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
+                 <li class="f-nav-group"><a href="{WEB_PATH}/group">拍卖</a></li>
+                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">
@@ -200,8 +199,7 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
-	
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/header.css?date=20140731">
 <!-- 商品分类 -->
 <div id="divSortList" class="m-all-sort" style="display: block;">
 	<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><dl>
@@ -335,7 +333,7 @@ window.onerror=function(){return true;}
 							</dl>
 						</li>
 						<li>
-							<a class="u-imm" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
+							<a class="u-imm add-cart" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
 						</li>
 					</ul>
 				</div>
@@ -606,7 +604,7 @@ window.onerror=function(){return true;}
 		}
 		window.countCart = countCart;
 		
-		$(".u-cart").click(function(evt) {
+		$(".add-cart").click(function(evt) {
 			var offset = $("#btnMyCart").offset();
 			evt.stopPropagation();
 			evt.preventDefault();

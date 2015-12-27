@@ -1,0 +1,116 @@
+
+<link rel="stylesheet" type="text/css" href="__CSS__/Detail.css"/>
+<!--晒单详情-->
+<div class="Current_nav">
+	<a href="{WEB_PATH}">首页</a> &gt; <a href="#">晒单分享</a> &gt; 晒单详请</div>
+<div class="share_box" id="loadingPicBlock">
+	<div id="DCMainLeft" class="share_box_left">
+		<div class="share_main">
+			<!--用户晒单部分-->
+			<div class="share_title">
+				<h3>{$sditem.title}</h3>
+				<div class="share_time">
+					晒单时间：<span>{$sditem.time}</span></div>
+			</div>
+			<div class="share_goods">
+				<div class="share-get">
+					
+				<b class="sh_num" style="width: 67px;  height: 36px;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
+">{wc:$shaidan['sd_jlfufen']}</b>
+					
+					<a class="fl-img" href="#" target="_blank"><img src="/Public/Home/images/{$oldgoods.prizer.img}"></a>
+					<div class="share-getinfo">
+						<p class="getinfo-name">幸运获得者：<a class="blue Fb" href="#" target="_blank">{$oldgoods.prizer.username}</a></p>
+						<p>总共云购：<b class="orange">{$oldgoods.prizer.count}</b>人次</p>	
+						<p>幸运云购码：{$oldgoods.prizecode}</p>
+						<p>揭晓时间：{$oldgoods.end_time}</p> 
+					</div>
+				</div>
+				<div class="share-Conduct">
+					<div class="arrow arrow_Rleft"><em>◆</em><span>◆</span></div>
+					<a class="fl-img" href="#" target="_blank">
+					<img src="{$cgoods.thumb}" border="0"></a>
+					<div class="share-getinfo">
+						<p class="getinfo-title"><a class="gray01" href="{WEB_PATH}/dataserver/{wc:$jikxiao['id']}" target="_blank">(第{$cgoods.qishu}期){$cgoods.title}</a></p>
+						<p>价值：￥{$cgoods.money}</p>
+						<p id="GoToBuy"><a class="getbut-a" href="{WEB_PATH}/goods/{$cgoods.id}" target="_blank">
+							第{$cgoods.qishu}期正在进行中...
+						</span></a></p>
+					</div>
+				</div> 
+			</div>
+			
+			<div class="share_content">
+				<p class="content-pad">{$sditem.content}</p>				 
+				<p><img src="{$sditem.thumbs}" border="0"></p>
+			</div>
+			<!--用户晒单部分结束-->
+			<!-- 分享按钮 -->
+			<div class="mood">
+				<div class="moodwm">
+					<div class="moodm hidden" style="display: block;">
+						 <span class="smile" id="emHits"><i></i><b>羡慕嫉妒恨(<em>{$sditem.zhan}</em>)</b></span>
+						 <span class="much"> <i></i>评论(<em id="emReplyCount">{$sditem.ping}</em>)</span>
+					</div>
+					<div class="share">
+						<span class="fen">分享到：</span>						
+						<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+						<a class="bds_qzone"></a>
+						<a class="bds_tsina"></a>
+						<a class="bds_tqq"></a>
+						<a class="bds_renren"></a>
+						<a class="bds_t163"></a>
+						<span class="bds_more"></span>
+						</div>
+						<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=671207" ></script>
+						<script type="text/javascript" id="bdshell_js"></script>
+						<script type="text/javascript">
+						document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<!--用户评论部分结束-->
+	</div>
+	<!--晒单左侧结束-->
+	<!--晒单右侧-->
+	<div class="Comment_right" id="PostDetailRight">
+		<div class="Comment_victory">
+ 
+		<div class="Comment_share">
+			<h4>最新晒单</h4>			
+			<foreach name="newitem" item="c">
+				<div class="New-single">
+					<p class="New-single-time"><a class="blue" href="#" target="_blank">{$c.uid}</a>{$c.time}</p>
+					<p class="New-single-C"><a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a></p>
+					<div class="New-singleImg"><div class="arrow arrow_Rleft"><em>◆</em></div>
+						<a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">
+							<img border="0" src="{$c.thumbs}">
+						</a>
+					</div>
+				</div>
+			</foreach>
+		</div>
+		</div>
+	</div>
+</div>
+<script>
+$(function(){
+	if($.cookie('xianmu')=={$sditem.sid}){
+		$("#emHits").addClass("smile-have");
+		return false;
+	}
+	$("#emHits").click(function(){		
+		$.post(
+			"{:U('Saidan/xianmu', '', '')}",
+			{id:"{$sditem.sid}"},
+			function(data){
+				$("#emHits em").text(data);
+				$("#emHits").addClass("smile-have");
+				$.cookie("xianmu","{$sditem.sid}", { expires:7,path: '/'});
+			}
+		);
+	})
+})
+</script>

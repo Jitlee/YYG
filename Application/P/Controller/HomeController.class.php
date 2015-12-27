@@ -63,44 +63,96 @@ class HomeController extends Controller {
 		$this->ajaxReturn($list, "JSON");
 	}
 	
-	public function singleinsert(){		
-    	$this->assign('title', '晒单');
-		$this->display();
-    }
+	
 	public function singlelist(){		
     	$this->assign('title', '晒单列表');
 		$this->display();
     }
-	public function pageAllsdno($pageSize, $pageNum) {
+	public function pageAllsdno($pageSize, $pageNum) {//未晒单
 		// 分页
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+		$filter['yyg_miaosha_history.sdstatus'] = 0;
 		 
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
 		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
-	public function pageAllsdfinish($pageSize, $pageNum) {
+	public function pageAllsdfinish($pageSize, $pageNum) {//已晒单
 		// 分页
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
-		
+		$filter['yyg_miaosha_history.sdstatus'] = 1;
 		
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
 		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
-	
+	public function singleinsert($gid=null,$qishu=null){
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="成功。";
+			$db=M("shaidan");
+			$data['uid'] = session("_uid");
+			$add = $db->where($data)->find();
+			
+			$_POST['uid']=  session("_uid");
+			$_POST['time'] = date('y-m-d-h-i-s');
+			$_POST['ip'] = get_client_ip(1);
+								
+			$db->create();
+			if($db->add() != false) {
+				//修改状态
+				$fit['gid'] = $_POST['gid'];
+				$fit['qishu'] = $_POST['qishu'];
+				
+				$dbzt=M("miaosha_history");					
+				$addzt = $dbzt->where($fit)->find();
+				if($addzt)
+				{
+					$addzt["sdstatus"]=1;
+					$dbzt->save($addzt);	
+				}
+				//添加晒单积分				
+				$m = D('P/MemberScore');
+				$resultr = $m->AddLessScore('晒单赠送积分。',100);
+				if($resultr && $resultr["status"]=1)
+				{
+					$result["status"]=1;					
+				}					
+				else
+				{
+					$result["msg"]=$resultr["msg"];
+				}
+			} 
+			else 
+			{
+				$result["msg"]='数据错误';
+			}
+			 
+			$this->ajaxReturn($result, "JSON");
+		}
+		else
+		{
+	    	$this->assign('title', '晒单');
+			$data=session('wxUserinfo');
+			$this->assign("data", $data);
+			$this->assign("gid", $gid);
+			$this->assign("qishu", $qishu);
+			
+			$this->display();
+		}
+    }
 	/*******end我的云购********/
 	/*******邀请管理********/
 	public function invitefriends(){		
@@ -143,8 +195,7 @@ class HomeController extends Controller {
 						$dbmember['money'] = $eMoney;
 						//$dbmember['money']=60;//$dbmember['money']-$addMoney;
 						$udb->save($dbmember);					
-					}
-					
+					}					
 					//3  写入提现记录
 					$dbcash = M('member_cashout');
 					$_POST['uid']=  session("_uid");
@@ -152,7 +203,7 @@ class HomeController extends Controller {
 					$dbcash->create();
 					if($dbcash->add() != false) {
 						$result["status"]=1;
-					} 
+					}
 					else 
 					{
 						$result["msg"]='数据错误';

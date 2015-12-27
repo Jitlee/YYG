@@ -212,10 +212,17 @@ function count_cart($count = 0) {
 function empty_cart() {
 	session('cartCount', 0);
 }
-function get_user_img()
+function get_user_img($id=null)
 {
 	$db = M('member');
-	$data['uid'] = session("_uid");
+	if($id)
+	{
+		$data['uid'] =$id;
+	}
+	else
+	{
+		$data['uid'] = session("_uid");
+	}
 	$user = $db->where($data)->find();
 	$img=$user['img'];
 	if (!ereg('^http://', $user['img'])) 
