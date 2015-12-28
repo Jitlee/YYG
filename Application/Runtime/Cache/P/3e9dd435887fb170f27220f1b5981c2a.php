@@ -178,9 +178,9 @@ window.onerror=function(){return true;}
              <ul>
                  <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
-                 <li class="f-nav-share"><a href="{WEB_PATH}/go/shaidan">晒单分享</a></li>
-                 <li class="f-nav-group"><a href="{WEB_PATH}/group">云购圈</a></li>
-                 <li class="f-nav-guide"><a href="{WEB_PATH}/single/newbie">新手指南</a></li>
+                 <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
+                 <li class="f-nav-group"><a href="{WEB_PATH}/group">拍卖</a></li>
+                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">
@@ -238,40 +238,38 @@ $.fn.CloudZoom.defaults = {
 	<!-- 商品期数 -->
 	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
 		<div class="period_Open"><a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a></div>
-		{wc:$loopqishu}
+		<?php echo ($data["qishu"]); ?>
 	</div>
 	<script>
 		$("#btnOpenPeriod").click(function(){
-				var ui_obj = $("#divPeriodList > ul");
-				if($(this).attr("click")=='off'){
-					$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
-					$(this).attr("click","on");
-					$(this).html("收起<s></s>");
-					
-				}else{
-					$("#divPeriodList").css("max-height","99px");	
-					$(this).attr("click","off");
-					$(this).html("展开<i></i>");
-				}			
+			var ui_obj = $("#divPeriodList > ul");
+			if($(this).attr("click")=='off'){
+				$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
+				$(this).attr("click","on");
+				$(this).html("收起<s></s>");
+				
+			}else{
+				$("#divPeriodList").css("max-height","99px");	
+				$(this).attr("click","off");
+				$(this).html("展开<i></i>");
+			}			
 		});
 	</script>	
 	<!-- 商品信息 -->
 	<div class="Pro_Details">
-		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><span><?php echo ($data["title"]); ?></span></h1>
+		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><em><?php echo ($data["subtitle"]); ?></em></h1>
 		<div class="Pro_Detleft">
 			<div class="zoom-small-image">
-				<span href="<?php echo ($data["thumb"]); ?>" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
-                <img width="80px" height="80px" src="<?php echo ($data["thumb"]); ?>" /></span>
+				<span href="<?php echo ($firstImage["image_url"]); ?>" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
+                <img width="80px" height="80px" src="<?php echo ($firstImage["image_url"]); ?>" /></span>
 			</div>
 
 			<div class="zoom-desc"> 
 				<div class="jcarousel-prev jcarousel-prev-disabled"></div>
 				<div class="jcarousel-clip" style="height:55px;width:384px;">
 				<p>
-					{wc:loop $item['picarr'] $imgtu}                  
-					<label href="<?php echo ($data["thumb"]); ?>" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '<?php echo ($data["thumb"]); ?>'">
-					<img class="zoom-tiny-image" src="<?php echo ($data["thumb"]); ?>" /></label>			
-					{wc:loop:end} 
+					<?php if(is_array($images)): foreach($images as $key=>$item): ?><label href="<?php echo ($item["image_url"]); ?>" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '<?php echo ($item["image_url"]); ?>'">
+					<img class="zoom-tiny-image" src="<?php echo ($item["image_url"]); ?>" /></label><?php endforeach; endif; ?>
 				</p>
 				</div>
 				<div class="jcarousel-next jcarousel-next-disabled"></div>
@@ -302,27 +300,20 @@ $.fn.CloudZoom.defaults = {
 				})
 			</script>			
 			
-			{wc:if $sid_code}			
-			{wc:if $sid_code['q_showtime']=='N'}
-			<div class="Pro_GetPrize">				
+			<?php if(isset($prizer)): ?><div class="Pro_GetPrize">				
 				<h2>上期获得者</h2>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank"><img width="80" height="80" alt="" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sid_code['q_uid'],'img')}"></a></dt>
+						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($prizer["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ($prizer["img"]); ?>"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank" class="blue">{wc:fun:get_user_name($sid_code['q_uid'])}</a>获得了本商品</p>
-							{wc:if $sid_go_record['ip']}
-							{wc:fun:get_ip($sid_go_record['id'],'ipcity')}
-							{wc:if:end}
-							<p>揭晓时间：{wc:fun:microt($sid_code['q_end_time'])}</p>
-							<p>云购时间：{wc:fun:microt($sid_go_record['time'])}</p>
-							<p>幸运云购码：<em class="orange Fb">{wc:$sid_code['q_user_code']}</em></p>
+							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($prizer["uid"]); ?>" target="_blank" class="blue"><?php echo ($prizer["username"]); ?></a>获得了本商品</p>
+							<p>揭晓时间：<?php echo ($prizer["end_time"]); ?></p>
+							<p>云购时间：<?php echo ($prizer["record_time"]); ?></p>
+							<p>幸运云购码：<em class="orange Fb"><?php echo ($przer['prizecode']+10000001); ?></em></p>
 						</dd>
 					</dl>				
 				</div>
-			</div>
-			{wc:if:end}
-			{wc:if:end}
+			</div><?php endif; ?>
 		</div>
 		<div class="Pro_Detright">
 			<p class="Det_money">价值：<span class="rmbgray"><?php echo ($data["money"]); ?></span></p>
@@ -410,7 +401,7 @@ $.fn.CloudZoom.defaults = {
 <!--补丁3.1.6_b.0.1-->
 <div id="divContent" class="Product_Content">
 	<!-- 商品内容 -->
-	<div class="Product_Con">{wc:$item['content']}</div>
+	<div class="Product_Con"><?php echo ($data["content"]); ?></div>
     <!-- 商品内容 -->
     
     <!-- 购买记录20条 -->

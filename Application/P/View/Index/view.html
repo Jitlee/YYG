@@ -37,40 +37,40 @@ $.fn.CloudZoom.defaults = {
 	<!-- 商品期数 -->
 	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
 		<div class="period_Open"><a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a></div>
-		{wc:$loopqishu}
+		{$data.qishu}
 	</div>
 	<script>
 		$("#btnOpenPeriod").click(function(){
-				var ui_obj = $("#divPeriodList > ul");
-				if($(this).attr("click")=='off'){
-					$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
-					$(this).attr("click","on");
-					$(this).html("收起<s></s>");
-					
-				}else{
-					$("#divPeriodList").css("max-height","99px");	
-					$(this).attr("click","off");
-					$(this).html("展开<i></i>");
-				}			
+			var ui_obj = $("#divPeriodList > ul");
+			if($(this).attr("click")=='off'){
+				$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
+				$(this).attr("click","on");
+				$(this).html("收起<s></s>");
+				
+			}else{
+				$("#divPeriodList").css("max-height","99px");	
+				$(this).attr("click","off");
+				$(this).html("展开<i></i>");
+			}			
 		});
 	</script>	
 	<!-- 商品信息 -->
 	<div class="Pro_Details">
-		<h1><span>(第{$data.qishu}期)</span><span >{$data.title}</span><span>{$data.title}</span></h1>
+		<h1><span>(第{$data.qishu}期)</span><span >{$data.title}</span><em>{$data.subtitle}</em></h1>
 		<div class="Pro_Detleft">
 			<div class="zoom-small-image">
-				<span href="{$data.thumb}" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
-                <img width="80px" height="80px" src="{$data.thumb}" /></span>
+				<span href="{$firstImage.image_url}" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
+                <img width="80px" height="80px" src="{$firstImage.image_url}" /></span>
 			</div>
 
 			<div class="zoom-desc"> 
 				<div class="jcarousel-prev jcarousel-prev-disabled"></div>
 				<div class="jcarousel-clip" style="height:55px;width:384px;">
 				<p>
-					{wc:loop $item['picarr'] $imgtu}                  
-					<label href="{$data.thumb}" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '{$data.thumb}'">
-					<img class="zoom-tiny-image" src="{$data.thumb}" /></label>			
-					{wc:loop:end} 
+					<foreach name="images" item="item">           
+					<label href="{$item.image_url}" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '{$item.image_url}'">
+					<img class="zoom-tiny-image" src="{$item.image_url}" /></label>			
+					</foreach>
 				</p>
 				</div>
 				<div class="jcarousel-next jcarousel-next-disabled"></div>
@@ -101,27 +101,22 @@ $.fn.CloudZoom.defaults = {
 				})
 			</script>			
 			
-			{wc:if $sid_code}			
-			{wc:if $sid_code['q_showtime']=='N'}
+			<present name="prizer">
 			<div class="Pro_GetPrize">				
 				<h2>上期获得者</h2>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank"><img width="80" height="80" alt="" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sid_code['q_uid'],'img')}"></a></dt>
+						<dt><a rel="nofollow" href="{:U(Person/index)}/{$prizer.uid}" target="_blank"><img width="80" height="80" alt="" src="{$prizer.img}"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="{WEB_PATH}/uname/{wc:fun:idjia($sid_code['q_uid'])}" target="_blank" class="blue">{wc:fun:get_user_name($sid_code['q_uid'])}</a>获得了本商品</p>
-							{wc:if $sid_go_record['ip']}
-							{wc:fun:get_ip($sid_go_record['id'],'ipcity')}
-							{wc:if:end}
-							<p>揭晓时间：{wc:fun:microt($sid_code['q_end_time'])}</p>
-							<p>云购时间：{wc:fun:microt($sid_go_record['time'])}</p>
-							<p>幸运云购码：<em class="orange Fb">{wc:$sid_code['q_user_code']}</em></p>
+							<p>恭喜 <a href="{:U(Person/index)}/{$prizer.uid}" target="_blank" class="blue">{$prizer.username}</a>获得了本商品</p>
+							<p>揭晓时间：{$prizer.end_time}</p>
+							<p>云购时间：{$prizer.record_time}</p>
+							<p>幸运云购码：<em class="orange Fb">{$przer['prizecode']+10000001}</em></p>
 						</dd>
 					</dl>				
 				</div>
 			</div>
-			{wc:if:end}
-			{wc:if:end}
+			</present>
 		</div>
 		<div class="Pro_Detright">
 			<p class="Det_money">价值：<span class="rmbgray">{$data.money}</span></p>
@@ -209,7 +204,7 @@ $.fn.CloudZoom.defaults = {
 <!--补丁3.1.6_b.0.1-->
 <div id="divContent" class="Product_Content">
 	<!-- 商品内容 -->
-	<div class="Product_Con">{wc:$item['content']}</div>
+	<div class="Product_Con">{$data.content}</div>
     <!-- 商品内容 -->
     
     <!-- 购买记录20条 -->

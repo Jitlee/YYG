@@ -76,7 +76,7 @@
 			<div class="yyg-prize-content">
 				<a >{$data.prizer.username}</a>
 				<h5>本次参与:<r>{$data.prizer.count}</r></h5>
-				<h5>幸运云购码:<r>{$data.prizecode}</r></h5>
+				<h5>幸运云购码:<r>{$data['prizecode'] + 10000001}</r></h5>
 				<h5>揭晓时间：{$data.end_time}</h5>
 			</div>
 			<a class="yyg-prize-all" href="{:U('prizerecord','','')}/{$data.qishu}/{$data.gid}/{$data.prizeuid}/{$data.prizer.username}">

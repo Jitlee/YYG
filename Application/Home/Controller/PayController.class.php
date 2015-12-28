@@ -465,7 +465,7 @@ class PayController extends Controller {
 				}
 				
 				$good['status'] = 2;
-				$good['prizecode'] = 10000001 + $prize;
+				$good['prizecode'] = $prize;
 				$good['prizeuid'] = $presult['uid'];
 				$good['end_time'] = date('y-m-d-H-i-s');
 				
@@ -485,6 +485,7 @@ class PayController extends Controller {
 					$good['prizecode'] = null;
 					$good['canyurenshu'] = 0;
 					$good['shengyurenshu'] = $good['zongrenshu'];
+					$good['time'] = date('y-m-d-H-i-s');
 					$jishi = intval($good['jishijiexiao']);
 					if($jishi > 0) {
 						$now = time();

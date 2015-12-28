@@ -53,7 +53,27 @@ class IndexController extends CommonController {
 		$this->assign('title', '商品详情');
 		
 		$data = $this->getGood($gid, $qishu);
+		$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
+		
+		
 		$this->assign('data', $data);
+		
+		// 图片
+		$imgdb = M('GoodsImages');
+		$imgmap['gid'] = $gid;
+		$images = $imgdb->where($imgmap)->select();
+		$this->assign('images', $images);
+			
+		if(count($images) > 0) {
+			$this->assign('firstImage', $images[0]);
+		}
+		
+		// 上期获得者
+		$qishu = intval($data['qishu']);
+		if($qishu > 1) {
+			$prizer = $this->getPrizer($gid, $qishu - 1);
+			$this->assign('prizer', $prizer);
+		}		
 		
 		if($data['status'] == 2) {
 			$this->display('end');
@@ -61,17 +81,34 @@ class IndexController extends CommonController {
 			$this->display('view');
 		}
 	}
+
+	private function getPrizer($gid, $qishu) {
+		$udb = M('member');
+		$umap = array(
+			'yyg_miaosha_history.qishu' => $qishu,
+			'yyg_miaosha_history.gid
+			' => $gid,
+		);
+		return $udb->field(array('yyg_miaosha_history.end_time', 'yyg_miaosha_history.prizecode',
+				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))'  => 'username',
+				'yyg_member.uid', 'yyg_member.img', 'yyg_member.login_ip', 
+				'yyg_miaosha_code.time' => 'record_time'))
+			->join('yyg_miaosha_history on yyg_miaosha_history.prizeuid = yyg_member.uid')
+			->join('yyg_miaosha_code on yyg_miaosha_code.uid = yyg_member.uid and yyg_miaosha_history.gid = yyg_miaosha_code.gid and yyg_miaosha_code.qishu = yyg_miaosha_history.qishu')
+			->where($umap)
+			->find();
+	}
 	
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
+			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time')->where($map)->find();
+			$data = $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
 			if(empty($data)) {
 				return $this->getGood($gid);
 			}
