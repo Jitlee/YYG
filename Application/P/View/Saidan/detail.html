@@ -41,7 +41,7 @@
 			</div>
 			
 			<div class="share_content">
-				<p class="content-pad">{$sditem.content}</p>				 
+				<div>{$content}</div>				 
 				<p><img src="{$sditem.thumbs}" border="0"></p>
 			</div>
 			<!--用户晒单部分结束-->
@@ -49,7 +49,7 @@
 			<div class="mood">
 				<div class="moodwm">
 					<div class="moodm hidden" style="display: block;">
-						 <span class="smile" id="emHits"><i></i><b>羡慕嫉妒恨(<em>{$sditem.zhan}</em>)</b></span>
+						 <span class="smile" id="emHits"><i></i><b>羡慕嫉妒恨(<em>{$sditem.zan}</em>)</b></span>
 						 <span class="much"> <i></i>评论(<em id="emReplyCount">{$sditem.ping}</em>)</span>
 					</div>
 					<div class="share">
@@ -82,7 +82,7 @@
 			<h4>最新晒单</h4>			
 			<foreach name="newitem" item="c">
 				<div class="New-single">
-					<p class="New-single-time"><a class="blue" href="#" target="_blank">{$c.uid}</a>{$c.time}</p>
+					<p class="New-single-time"><a class="blue" href="#" target="_blank">{$c.username}</a>{$c.time}</p>
 					<p class="New-single-C"><a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a></p>
 					<div class="New-singleImg"><div class="arrow arrow_Rleft"><em>◆</em></div>
 						<a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">

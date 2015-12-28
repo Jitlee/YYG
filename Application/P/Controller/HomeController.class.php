@@ -115,6 +115,8 @@ class HomeController extends Controller {
 				//修改状态
 				$fit['gid'] = $_POST['gid'];
 				$fit['qishu'] = $_POST['qishu'];
+				$fit['zan'] = 0;
+				$fit['ping'] = 0;
 				
 				$dbzt=M("miaosha_history");					
 				$addzt = $dbzt->where($fit)->find();

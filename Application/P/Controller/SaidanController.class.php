@@ -3,7 +3,7 @@ namespace P\Controller;
 use Think\Controller;
 use P\Model;
 
-class SaidanController extends Controller {
+class SaidanController extends BaseController {
 	
 		public function detail($gid=null,$qishu=null)
 		{
@@ -13,10 +13,13 @@ class SaidanController extends Controller {
 			$db=M("shaidan");					
 			$sditem= $db->where($fit)->find();
 			$this->assign("sditem", $sditem);
-
+			
+			$content = htmlspecialchars_decode(html_entity_decode($sditem['content']));
+			$this->assign('content', $content);
+			
 			//最新评论
 			$Model = M();
-			$newitem=$Model->query('SELECT  * FROM yyg_shaidan order by time desc');		
+			$newitem=$Model->query('SELECT  sid,yyg_shaidan.uid, gid,qishu,gtype,ip,title,content,photos,thumbs,zan,ping, yyg_shaidan.time,yyg_member.username,yyg_member.img userimg FROM yyg_shaidan inner join yyg_member ON yyg_member.uid=yyg_shaidan.uid order by time desc limit 10 ');		
 			$this->assign("newitem", $newitem);
 			
 			 
@@ -53,48 +56,36 @@ class SaidanController extends Controller {
 			// 分页
 			$db = D('shaidan');
 			$total = $db->where($map)->count();
-			if(!$pageSize) {
-				$pageSize = 40;
-			}
-			$pageNum = intval($pageNum);
-			$pageCount = ceil($count / $pageSize);
-			if($pageNum > $pageCount) {
-				$pageNum = $pageCount;
-			}
-			$this->assign('pageSize', $pageSize);
-			$this->assign('pageNum', $pageNum);
-			$this->assign('count', $count);
-			$this->assign('pageCount', $pageCount);
-			$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
-			$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 			
-			$list = $db
-			->join(" yyg_member ON yyg_member.uid=yyg_shaidan.uid")
-			->field("sid,yyg_shaidan.uid, gid,qishu,gtype,ip,title,content,photos,thumbs,zan,ping, yyg_shaidan.time,yyg_member.username,yyg_member.img userimg")
-			->order('time desc')->page($pageNum, $pageSize)->select();
+			$this->SetPage($pageSize,$pageNum,$total);
 			
-				
-			$sa_one=array();
-			$sa_two=array();
-			$sa_tree=array();
-			$sa_for=array();		
+			$list = $db->join(" yyg_member ON yyg_member.uid=yyg_shaidan.uid")
+					->field("sid,yyg_shaidan.uid, gid,qishu,gtype,ip,title,content,photos,thumbs,zan,ping, yyg_shaidan.time,yyg_member.username,yyg_member.img userimg")
+					->order('time desc')->page($pageNum, $pageSize)->select();
 			
-			if($list){
+			$sa_one=array();$sa_two=array();$sa_tree=array();$sa_for=array();	
+			$dn=count($list);				
+			if($dn>0)$sa_one[]=$list[0];
+			if($dn>1)$sa_two[]=$list[1];
+			if($dn>2)$sa_tree[]=$list[2];
+			if($dn>3)$sa_for[]=$list[3];
+			
+			if($list && count($list)>3){
 				$n=0;
-				for($i=0;$i<count($list);$i++){
-					if($n=4)
-					{
-						$n=0;
-					}
-					 
-					if($i==0){
-						$sa_one[]=$list[$i];
-					}else if($i==1){
-						$sa_two[]=$list[$n];
-					}else if($i==2){
-						$sa_tree[]=$list[$n];
-					}else if($i==3){
-						$sa_for[]=$list[$n];
+				for($i=4;$i<count($list);$i++){
+					
+					$n=$i%4;
+					if($n==0){
+						array_push($sa_one,$list[$i]);
+					}else if($n==1){
+						$sa_two[]=$list[$i];
+						//array_push($sa_two,$list[$i]);
+					}else if($n==2){
+						$sa_tree[]=$list[$i];
+						//array_push($sa_tree,$list[$i]);
+					}else if($n==3){
+						$sa_for[]=$list[$i];
+						//array_push($sa_for,$list[$i]);
 					}
 					$n+=$lie;				 
 					$n++;
@@ -102,7 +93,8 @@ class SaidanController extends Controller {
 			}
 			//总数
 			$this->assign("total", $total);
-			$this->assign("sa_one", $sa_one);
+			
+			$this->assign("list", $list);
 			$this->assign("sa_one", $sa_one);
 			$this->assign("sa_two", $sa_two);
 			$this->assign("sa_tree",$sa_tree);
