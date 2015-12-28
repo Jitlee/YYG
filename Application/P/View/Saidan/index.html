@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/List.css"/>
+<link href="__B_CSS__" rel="stylesheet">
 <script>
  $("body").attr('class','share');
 </script>
@@ -18,12 +19,6 @@
 					<foreach name="sa_one" item="c">
 					<div class="share_list_content">
 						<dl>
-						<b class="sh_num" style="width: 67px;z-index: 16;  height: 36px;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
-">{wc:$sd['sd_jlfufen']}</b>			
-							
-							{wc:if $sd['sd_level']}
-							<div style="bottom: 20px;right: 10px;position: absolute;"><img src="{G_UPLOAD_PATH}/sdLevel/{wc:$sd['sd_level']}.gif" data-bd-imgshare-binded="1" style="width: 100px;"></div>
-							{wc:if:end}
 							<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
 							<dd class="share-name gray02"> 
 								<a href="#" class="name-img">								
@@ -35,7 +30,7 @@
 								</div> 
 							</dd>
 							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zhan}</em>)</b></span>
+								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
 								<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
 							</dd>
 						</dl>
@@ -48,31 +43,20 @@
 					<foreach name="sa_two" item="c">
 					<div class="share_list_content">
 						<dl>
-							{wc:if $sd['sd_jlfufen']}
-						<b class="sh_num" style="width: 67px;  height: 36px;z-index: 16;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
-">{wc:$sd['sd_jlfufen']}</b>			
-							{wc:if:end}
-							{wc:if $sd['sd_level']}
-
-							<div style="bottom: 20px;right: 10px;position: absolute;"><img src="{G_UPLOAD_PATH}/sdLevel/{wc:$sd['sd_level']}.gif" data-bd-imgshare-binded="1" style="width: 100px;"></div>
-							{wc:if:end}
-							<dt><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}"><img src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"></a></dt>
+							<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
 							<dd class="share-name gray02"> 
-								<a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="name-img">
-								
-								<img id="imgUserPhoto" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sd['sd_userid'],'img','3030')}" width="50" height="50" border="0"/>
-									
+								<a href="#" class="name-img">								
+									<img id="imgUserPhoto" src="/Public/Home/images/{$c.userimg}" width="50" height="50" border="0"/>									
 								</a>
 								<div class="share-name-r"> 
-									<span class="gray03"> <a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="blue">{wc:fun:get_user_name($sd['sd_userid'],'username')}</a>{wc:fun:date("Y-m-d H:i",$sd['sd_time'])}</span>
-									<a class="Fb gray01" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank">{wc:$sd['sd_title']}</a>
+									<span class="gray03"> <a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="blue">{$c.username}</a>{$c.time}</span>
+									<a class="Fb gray01" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a>
 								</div> 
-							</dd> 
-							<dd class="share_info gray01">{wc:fun:_strcut($sd['sd_content'],50)}</dd> 
+							</dd>
 							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{wc:$sd['sd_zhan']}</em>)</b></span>
-								<span class="much"><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" class="gray03"><i></i>评论<em>({wc:$sd['sd_ping']})</em></a></span>
-							</dd> 
+								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
+								<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
+							</dd>
 						</dl>
 						<p class="text-h10"></p>
 					</div>	
@@ -83,30 +67,20 @@
 					<foreach name="sa_tree" item="c">
 					<div class="share_list_content">
 						<dl>
-							{wc:if $sd['sd_jlfufen']}
-						<b class="sh_num" style="width: 67px;  height: 36px;z-index: 16;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
-">{wc:$sd['sd_jlfufen']}</b>			
-							{wc:if:end}
-							{wc:if $sd['sd_level']}
-							<div style="bottom: 20px;right: 10px;position: absolute;"><img src="{G_UPLOAD_PATH}/sdLevel/{wc:$sd['sd_level']}.gif" data-bd-imgshare-binded="1" style="width: 100px;"></div>
-							{wc:if:end}
-							<dt><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}"><img src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"></a></dt>
+							<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
 							<dd class="share-name gray02"> 
-								<a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="name-img">
-								
-								<img id="imgUserPhoto" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sd['sd_userid'],'img','3030')}" width="50" height="50" border="0"/>
-								
+								<a href="#" class="name-img">								
+									<img id="imgUserPhoto" src="/Public/Home/images/{$c.userimg}" width="50" height="50" border="0"/>									
 								</a>
 								<div class="share-name-r"> 
-									<span class="gray03"> <a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="blue">{wc:fun:get_user_name($sd['sd_userid'],'username')}</a>{wc:fun:date("Y-m-d H:i",$sd['sd_time'])}</span>
-									<a class="Fb gray01" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank">{wc:$sd['sd_title']}</a>
+									<span class="gray03"> <a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="blue">{$c.username}</a>{$c.time}</span>
+									<a class="Fb gray01" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a>
 								</div> 
-							</dd> 
-							<dd class="share_info gray01">{wc:fun:_strcut($sd['sd_content'],50)}</dd> 
+							</dd>
 							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{wc:$sd['sd_zhan']}</em>)</b></span>
-								<span class="much"><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" class="gray03"><i></i>评论<em>({wc:$sd['sd_ping']})</em></a></span>
-							</dd> 
+								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
+								<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
+							</dd>
 						</dl>
 						<p class="text-h10"></p>
 					</div>	
@@ -116,30 +90,20 @@
 					<foreach name="sa_for" item="c">
 						<div class="share_list_content">
 							<dl>
-								{wc:if $sd['sd_jlfufen']}
-							<b class="sh_num" style="width: 67px;z-index: 16;  height: 36px;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
-	">{wc:$sd['sd_jlfufen']}</b>			
-								{wc:if:end}
-								{wc:if $sd['sd_level']}
-	
-								<div style="bottom: 20px;right: 10px;position: absolute;"><img src="{G_UPLOAD_PATH}/sdLevel/{wc:$sd['sd_level']}.gif" data-bd-imgshare-binded="1" style="width: 100px;"></div>
-								{wc:if:end}
-								<dt><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}"><img src="{G_UPLOAD_PATH}/{wc:$sd['sd_thumbs']}"></a></dt>
+								<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
 								<dd class="share-name gray02"> 
-									<a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="name-img">								
-									<img id="imgUserPhoto" src="{G_UPLOAD_PATH}/{wc:fun:get_user_key($sd['sd_userid'],'img','3030')}" width="50" height="50" border="0"/>
-									
+									<a href="#" class="name-img">								
+										<img id="imgUserPhoto" src="/Public/Home/images/{$c.userimg}" width="50" height="50" border="0"/>									
 									</a>
 									<div class="share-name-r"> 
-										<span class="gray03"> <a href="{WEB_PATH}/uname/{wc:fun:idjia($sd['sd_userid'])}" class="blue">{wc:fun:get_user_name($sd['sd_userid'],'username')}</a>{wc:fun:date("Y-m-d H:i",$sd['sd_time'])}</span>
-										<a class="Fb gray01" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" target="_blank">{wc:$sd['sd_title']}</a>
+										<span class="gray03"> <a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="blue">{$c.username}</a>{$c.time}</span>
+										<a class="Fb gray01" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a>
 									</div> 
-								</dd> 
-								<dd class="share_info gray01">{wc:fun:_strcut($sd['sd_content'],50)}</dd> 
+								</dd>
 								<dd class="message hidden" style="display: block;"> 
-									<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{wc:$sd['sd_zhan']}</em>)</b></span>
-									<span class="much"><a target="_blank" href="{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}" class="gray03"><i></i>评论<em>({wc:$sd['sd_ping']})</em></a></span>
-								</dd> 
+									<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
+									<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
+								</dd>
 							</dl>
 							<p class="text-h10"></p>
 						</div>	
@@ -147,45 +111,9 @@
 				</li>				
 			</ul>				
 		</div>
-		<nav>
-			  <ul class="pagination">
-			  	<if condition="$minPageNum gt 1">
-			    <li>
-			      <a href="__ACTION__/{$pageSize}/{$minPageNum-1}" aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </a>
-			    </li>
-			  	<else/>
-			    <li class="disabled">
-			      <span aria-label="Previous">
-			        <span aria-hidden="true">&laquo;</span>
-			      </span>
-			    </li>
-			  	</if>
-			  	<if condition="$pageNum gt 1">
-				  <for start="$minPageNum" end="$pageNum">
-				    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:#008000">{$i}</a></li>
-					</for>
-				</if>
-				<li class="active"><a>{$pageNum}</a></li>
-			  <for start="$pageNum+1" end="$maxPageNum">
-			    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:red">{$i}</a></li>
-				</for>
-				<if condition="$maxPageNum lt $pageCount AND $maxPageNum gt 0">
-			    <li>
-			      <a href="__ACTION__/{$pageSize}/{$maxPageNum}" aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </a>
-			    </li>
-			  	<else/>
-			    <li class="disabled">
-			      <span aria-label="Next">
-			        <span aria-hidden="true">&raquo;</span>
-			      </span>
-			    </li>
-			  	</if>
-			  </ul>
-		</nav>
+		
+			<include file="Public:pager"/>
+		
 	</div>
 </div>
 
