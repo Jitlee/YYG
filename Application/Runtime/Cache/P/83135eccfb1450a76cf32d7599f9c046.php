@@ -71,7 +71,7 @@
 							</dl>
 		                    	<p id="message_<?php echo ($item["id"]); ?>" class="message"></p>
 						</span>
-						<span class="xj"><?php echo ($item['good']['danjia'] * $item['count']); ?></span>
+						<span id="xj_<?php echo ($item["id"]); ?>" class="xj">¥<?php echo ($item['good']['danjia'] * $item['count']); ?></span>
 						<span class="do"><a href="javascript:;void(0)" class="delgood" val="<?php echo ($item["id"]); ?>" >删除</a></span>
 					</li><?php endforeach; endif; ?>
 					<li class="ts">
@@ -98,7 +98,9 @@
 					var bkCount = Number(input.attr('bk'));
 					var shengyu = Number(input.attr('sy'));
 					var xiangou = Number(input.attr("xg"));
+					var danjia = Number(input.attr("dj"));
 					var message = $("#message_" + id);
+					var xj = $("#xj_" + id);
 					var flag = $this.hasClass("jia") ? 1 : ($this.hasClass("jian") ? -1 : 0);
 					
 					if(xiangou > 0 && (count + flag > xiangou)) {
@@ -122,15 +124,19 @@
 					if(count + flag == bkCount) {
 						return;
 					}
-					
-					input.val(count + flag);
+					count += flag;
+					input.val(count);
+					xj.text(count * danjia);
 					sum();
+					message.text("");
 					
-					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + (count + flag), null, function(result) {
+					$.post("<?php echo U('edit', '', '');?>/" + id + "/" + count, null, function(result) {
 						if(result.status == 0) {
 							input.attr("bk", result.count);
 						} else { // 失败
 							message.text("修改失败");
+							
+							xj.text(bkCount * danjia);
 							input.val(bkCount);
 							sum();
 						}
@@ -354,7 +360,7 @@
 		}
 		window.countCart = countCart;
 		
-		$(".u-cart").click(function(evt) {
+		$(".add-cart").click(function(evt) {
 			var offset = $("#btnMyCart").offset();
 			evt.stopPropagation();
 			evt.preventDefault();

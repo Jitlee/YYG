@@ -63,7 +63,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Miaosha/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/User/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -185,42 +185,42 @@ $(function() {
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
 		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn"><?php echo ($addTitle); ?></a>
+	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加管理员</a>
 </div>
-<table id="listTable" class="table table-bordered">
+<table id="adminTable" class="table table-bordered">
 	<thead>
 		<tr>
-			<th>商品标题</th>
-			<th>所属栏目</th>
-			<th>已参与/总参</th>
-			<th>单价/元</th>
-			<th>期数/最大期数</th>
-			<th>人气商品</th>
-			<?php if($type == 2): ?><th>限购次数</th><?php endif; ?>
-			<th style="width:200px">操作</th>
+			<th>用户名</th>
+			<th>所属角色</th>
+			<th>Email</th>
+			<th>最后登陆IP</th>
+			<th>最后登陆时间</th>
+			<th>历史登陆次数</th>
+			<th style="width:150px">操作</th>
 		</tr>
 	</thead>
 	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$good): ?><tr>
-			<td><?php echo ($good["title"]); ?></td>
-			<td><?php echo ($good["category"]["name"]); ?></td>
-			<td><?php echo ($good["canyurenshu"]); ?>/<?php echo ($good["shengyurenshu"]); ?></td>
-			<td><?php echo ($good["danjia"]); ?></td>
-			<td><?php echo ($good["qishu"]); ?>/<?php echo ($good["maxqishu"]); ?></td>
-			<td><?php echo ($good["renqi"]); ?></td>
-			<?php if($type == 2): ?><td><?php echo ($good["xiangou"]); ?></td><?php endif; ?>
-			<td gid="<?php echo ($good["gid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($good["gid"]); ?>'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('history','','');?>/<?php echo ($good["gid"]); ?>'>查看往期</a>
-			</td>
-		</tr><?php endforeach; endif; ?>
+		<?php if(is_array($list)): foreach($list as $key=>$admin): ?><tr>
+				<td><?php echo ($admin["username"]); ?></td>
+				<td>
+					<?php if($admin["role"] == 1): ?>超级管理员
+						<?php else: ?>管理员<?php endif; ?>
+				</td>
+				<td><?php echo ($admin["email"]); ?></td>
+				<td><?php echo ($admin["login_ip"]); ?></td>
+				<td><?php echo ($admin["login_time"]); ?></td>
+				<td><?php echo ($admin["login"]); ?></td>
+				<td uid="<?php echo ($admin["uid"]); ?>">
+					<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($admin["uid"]); ?>'>编辑</a>
+					<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+				</td>
+			</tr><?php endforeach; endif; ?>
 	</tbody>
 </table>
 <nav>
   <ul class="pagination">
   	<?php if($minPageNum > 1): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
+      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
@@ -230,11 +230,11 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_474932326__=$minPageNum;$__FOR_END_474932326__=$pageNum;for($i=$__FOR_START_474932326__;$i < $__FOR_END_474932326__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_1300224957__=$minPageNum;$__FOR_END_1300224957__=$pageNum;for($i=$__FOR_START_1300224957__;$i < $__FOR_END_1300224957__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1651330577__=$pageNum+1;$__FOR_END_1651330577__=$maxPageNum;for($i=$__FOR_START_1651330577__;$i < $__FOR_END_1651330577__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_1673180396__=$pageNum+1;$__FOR_END_1673180396__=$maxPageNum;for($i=$__FOR_START_1673180396__;$i < $__FOR_END_1673180396__;$i+=1){ ?><li><a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
-      <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
+      <a href="/index.php/Admin/User/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
@@ -248,19 +248,19 @@ $(function() {
 </nav>
 <script type="text/javascript">
 	$(function(){
-		$("#listTable").on("click",".delete", function(evt) {
+		$("#adminTable").on("click",".delete", function(evt) {
 			var ths = $(this);
-			var gid = ths.parent().attr("gid");
+			var uid = ths.parent().attr("uid");
 			var tr = ths.closest("tr");
 			UI.confirm("是否删除", {
 				ok: function() {
-					remove(tr, gid);
+					remove(tr, uid);
 				}
 			});
 		});
 		
-		function remove(tr, gid) {
-			$.post("<?php echo U('remove','','');?>/" + gid, null, function(data) {
+		function remove(tr, uid) {
+			$.post("<?php echo U('remove','','');?>/" + uid, null, function(data) {
 				if(data.status) {
 					tr.remove();
 				} else {

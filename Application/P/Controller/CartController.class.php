@@ -57,7 +57,7 @@ class CartController extends CommonController {
 		$this->display();
     }
 	
-	public function add($gid, $type) {
+	public function add($gid, $type, $count = 1) {
 		$db = D('cart');
 		$map['gid'] = $gid;
 		$map['type'] = $type;
@@ -68,11 +68,12 @@ class CartController extends CommonController {
 			$data['gid'] = $gid;
 			$data['uid'] = get_temp_uid();
 			$data['type'] = $type;
+			$data['count'] = $count;
 			$data['flag'] = is_login() ? 1 : 0; // 0 没有登陆， 1登陆
 			
 			if($db->add($data)) {
-				count_cart(1);
-				$result['count'] = 1;
+				count_cart($count);
+				$result['count'] = $count;
 				$result['status'] = 0;
 				$result['message'] = '添加成功';
 			} else {
@@ -92,7 +93,7 @@ class CartController extends CommonController {
 				$result['message'] = '该商品剩余'.$exists['good']['shengyurenshu'].'人次';
 			} else {
 				// 存在，累加
-				$data['count'] = intval($exists['count']) + 1;
+				$data['count'] = intval($exists['count']) + $count;
 				$data['id'] = $exists['id'];
 				if($db->save($data)) {
 					$result['status'] = 0;

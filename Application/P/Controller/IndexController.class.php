@@ -50,6 +50,8 @@ class IndexController extends CommonController {
     }
 
 	public function view($gid, $qishu = null) {
+		run_task();
+		
 		$this->assign('title', '商品详情');
 		
 		$data = $this->getGood($gid, $qishu);
@@ -70,6 +72,7 @@ class IndexController extends CommonController {
 		
 		// 上期获得者
 		$qishu = intval($data['qishu']);
+		
 		if($qishu > 1) {
 			$prizer = $this->getPrizer($gid, $qishu - 1);
 			$this->assign('prizer', $prizer);
@@ -102,13 +105,13 @@ class IndexController extends CommonController {
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
+			return $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
+			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
 			if(empty($data)) {
 				return $this->getGood($gid);
 			}

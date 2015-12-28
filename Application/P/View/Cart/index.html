@@ -72,7 +72,7 @@
 							</dl>
 		                    	<p id="message_{$item.id}" class="message"></p>
 						</span>
-						<span class="xj">{$item['good']['danjia'] * $item['count']}</span>
+						<span id="xj_{$item.id}" class="xj">¥{$item['good']['danjia'] * $item['count']}</span>
 						<span class="do"><a href="javascript:;void(0)" class="delgood" val="{$item.id}" >删除</a></span>
 					</li>
 					</foreach>
@@ -100,7 +100,9 @@
 					var bkCount = Number(input.attr('bk'));
 					var shengyu = Number(input.attr('sy'));
 					var xiangou = Number(input.attr("xg"));
+					var danjia = Number(input.attr("dj"));
 					var message = $("#message_" + id);
+					var xj = $("#xj_" + id);
 					var flag = $this.hasClass("jia") ? 1 : ($this.hasClass("jian") ? -1 : 0);
 					
 					if(xiangou > 0 && (count + flag > xiangou)) {
@@ -124,15 +126,19 @@
 					if(count + flag == bkCount) {
 						return;
 					}
-					
-					input.val(count + flag);
+					count += flag;
+					input.val(count);
+					xj.text(count * danjia);
 					sum();
+					message.text("");
 					
-					$.post("{:U('edit', '', '')}/" + id + "/" + (count + flag), null, function(result) {
+					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
 						if(result.status == 0) {
 							input.attr("bk", result.count);
 						} else { // 失败
 							message.text("修改失败");
+							
+							xj.text(bkCount * danjia);
 							input.val(bkCount);
 							sum();
 						}

@@ -179,7 +179,7 @@ window.onerror=function(){return true;}
                  <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
-                 <li class="f-nav-group"><a href="{WEB_PATH}/group">拍卖</a></li>
+                 <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
                  <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
              </ul>
          </div>
@@ -333,7 +333,7 @@ window.onerror=function(){return true;}
 							</dl>
 						</li>
 						<li>
-							<a class="u-imm add-cart" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
+							<a class="u-imm" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
 						</li>
 					</ul>
 				</div>
@@ -392,7 +392,7 @@ window.onerror=function(){return true;}
 					</li>
 					<li>
 						<a class="u-now" title="立即1元云购" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">立即1元云购</a>
-						<a class="u-cart" title="加入到购物车" href="javascript:void(0);" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">
+						<a class="u-cart add-cart" title="加入到购物车" href="javascript:void(0);" src="<?php echo ($item["thumb"]); ?>" gid="<?php echo ($item["gid"]); ?>">
 							<s></s>
 						</a>
 					</li>

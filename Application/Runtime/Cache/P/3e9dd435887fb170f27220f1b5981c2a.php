@@ -179,7 +179,7 @@ window.onerror=function(){return true;}
                  <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
-                 <li class="f-nav-group"><a href="{WEB_PATH}/group">拍卖</a></li>
+                 <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
                  <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
              </ul>
          </div>
@@ -237,14 +237,21 @@ $.fn.CloudZoom.defaults = {
 <div class="show_content">
 	<!-- 商品期数 -->
 	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
-		<div class="period_Open"><a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a></div>
-		<?php echo ($data["qishu"]); ?>
+		<div class="period_Open">
+			<a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a>
+			
+		</div>
+		<ul class="Period_list">
+			<li><a href=""><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["qishu"]); ?>期<i></i></b></a></li>
+			<?php $__FOR_START_1877205294__=$data['qishu'] - 1;$__FOR_END_1877205294__=0;for($i=$__FOR_START_1877205294__;$i > $__FOR_END_1877205294__;$i+=-1){ ?><li><a href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/${i}" class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<p style="clear:both;display: block;height: 100px;"></p>
+		</ul>
 	</div>
 	<script>
 		$("#btnOpenPeriod").click(function(){
-			var ui_obj = $("#divPeriodList > ul");
+			var ui_obj = $("#divPeriodList li");
 			if($(this).attr("click")=='off'){
-				$("#divPeriodList").css("max-height",ui_obj.length*33+"px");	
+				$("#divPeriodList").css("max-height",(Math.ceil(ui_obj.length / 9) * 33)+"px");	
 				$(this).attr("click","on");
 				$(this).html("收起<s></s>");
 				
@@ -317,12 +324,227 @@ $.fn.CloudZoom.defaults = {
 		</div>
 		<div class="Pro_Detright">
 			<p class="Det_money">价值：<span class="rmbgray"><?php echo ($data["money"]); ?></span></p>
-			<!--显示揭晓动画 start-->
-			{wc:if ($q_showtime=='Y')}
-				{wc:templates "index","item_animation"}
-			{wc:else}
-				{wc:templates "index","item_contents"}
-			{wc:if:end}	
+			<?php if(isset($end_time)): ?><div id="divLotteryTimer" class="Announced_Frame">
+		<div class="Announced_FrameTin">揭晓倒计时</div>
+		<div class="Announced_FrameCode">
+			<div class="Announced_FrameClock"><img src="/Public/P/images/Announced_Clock.gif" border="0" alt=""></div>
+				 <ul class="Announced_FrameClockMar">
+					<li id="liMinute1" class="Code_9">9<b></b></li>
+					<li id="liMinute2" class="Code_9">9<b></b></li>
+					<li class="Code_Point">:<b></b></li>
+					<li id="liSecond1" class="Code_9">9<b></b></li>
+					<li id="liSecond2" class="Code_9">9<b></b></li>
+					<li class="Code_Point">:<b></b></li>
+					<li id="liMilliSecond1" class="Code_9">9<b></b></li>
+					<li id="last" class="Code_9">9<b></b></li>
+				</ul>
+		</div>
+			<div class="Announced_FrameGet">
+				<p class="Announced_FrameLanguage"><img id="imgFunny" src="/Public/P/images/10.gif" border="0" alt=""></p>
+			</div>
+			<div class="Announced_FrameBm"></div>
+</div>
+		
+<div id="divLotteryTiming" class="Announced_Frame" style="display:none;">
+		<div class="Announced_FrameTin">正在计算</div>
+		<div class="Announced_FrameCal">
+			<p><img src="/Public/P/images/Announced_6.png" border="0" alt=""></p>
+			<span><img src="/Public/P/images/Announced_4.gif" border="0" alt=""></span>
+		</div>
+		<div class="Announced_FrameBm"></div>
+</div>
+<div id="span_a"></div>
+<div id="span_b"></div>
+		
+		
+<script type="text/javascript">	 
+	function show_date_time_location(){
+		window.setTimeout(function(){
+			$("#divLotteryTimer").hide();
+			$("#divLotteryTiming").show();	
+			//$.post("{WEB_PATH}/api/getshop/lottery_shop_set/",{"lottery_sub":"true","gid":{wc:$item['id']}},null);
+			//window.setTimeout(function(){window.location.href="{WEB_PATH}/dataserver/{wc:$item['id']}";},5000);
+		},1000);
+	}
+	function show_date_time(endTime,obj){	
+		if(!this.endTime){
+			this.endTime=endTime;this.obj=obj;
+		}
+		rTimeout = window.setTimeout("show_date_time()",30);	
+		timeold = this.endTime-(new Date().getTime());
+		if(timeold <= 0){		
+			$("#liMinute1").attr("class","Code_0");
+			$("#liMinute2").attr("class","Code_0");
+			$("#liSecond1").attr("class","Code_0");
+			$("#liSecond2").attr("class","Code_0");
+			$("#liMilliSecond1").attr("class","Code_0");
+			$("#last").attr("class","Code_0");	
+			rTimeout && clearTimeout(rTimeout);	
+			show_date_time_location();	
+			return;
+		}
+		sectimeold=timeold/1000
+		secondsold=Math.floor(sectimeold); 
+		msPerDay=24*60*60*1000
+		e_daysold=timeold/msPerDay 	
+		daysold=Math.floor(e_daysold); 				//天	
+		e_hrsold=(e_daysold-daysold)*24; 
+		hrsold=Math.floor(e_hrsold); 				//时
+		e_minsold=(e_hrsold-hrsold)*60;	
+		//分
+		minsold=Math.floor((e_hrsold-hrsold)*60);
+		minsold = (minsold<10?'0'+minsold:minsold)
+		minsold = new String(minsold);
+		minsold_1 = minsold.substr(0,1);
+		minsold_2 = minsold.substr(1,1);	
+
+		//秒
+		e_seconds = (e_minsold-minsold)*60;	
+		seconds=Math.floor((e_minsold-minsold)*60);
+		seconds = (seconds<10?'0'+seconds:seconds)
+		seconds = new String(seconds);
+		seconds_1 = seconds.substr(0,1);
+		seconds_2 = seconds.substr(1,1);	
+		//毫秒	
+		ms = e_seconds-seconds;
+		ms = new String(ms)
+		ms_1 = ms.substr(2,1);
+		ms_2 = ms.substr(3,1);
+		
+		$("#liMinute1").attr("class","Code_"+minsold_1);
+		$("#liMinute2").attr("class","Code_"+minsold_2);
+		$("#liSecond1").attr("class","Code_"+seconds_1);
+		$("#liSecond2").attr("class","Code_"+seconds_2);
+		$("#liMilliSecond1").attr("class","Code_"+ms_1);
+		$("#last").attr("class","Code_"+ms_2);
+		//this.obj.innerHTML=daysold+"天"+(hrsold<10?'0'+hrsold:hrsold)+"小时"+(minsold<10?'0'+minsold:minsold)+"分"+(seconds<10?'0'+seconds:seconds)+"秒."+ms;
+	}
+
+	$(function(){
+//		$.ajaxSetup({async:false});
+//		$.post("{WEB_PATH}/api/getshop/lottery_shop_get",{"lottery_shop_get":true,"gid":{wc:$item['id']},"times":Math.random()},function(sdata){	
+//			if(sdata!='no'){
+//				show_date_time((new Date().getTime())+(parseInt(sdata))*1000,null);
+//			}
+//		});
+		show_date_time(<?php echo (strtotime($data["end_time"])); ?> * 1000, null);
+	});
+</script>
+			<?php else: ?>
+				<div class="Progress-bar">
+	<p title="已完成<?php echo round($data['canyurenshu']*100 / $data['shengyurenshu'], 2);?>%"><span style="width:<?php echo ($data['canyurenshu']*100 / $data['shengyurenshu']); ?>%;"></span></p>
+	<ul class="Pro-bar-li">
+		<li class="P-bar01"><em><?php echo ($data["canyurenshu"]); ?></em>已参与人次</li>
+		<li class="P-bar02"><em id="CodeQuantity"><?php echo ($data["zongrenshu"]); ?></em>总需人次</li>
+		<li class="P-bar03"><em id="CodeLift"><?php echo ($data["shengyurenshu"]); ?></em>剩余人次</li>
+	</ul>
+</div>
+
+<?php if(empty($data['prizeuid']) AND empty($data['end_time']) AND $data['shengyurenshu'] == 0): ?><div class="Immediate">
+      <span style="left:10px;right:0px;">这个商品未揭晓成功,请联系客服手动揭晓！</span>  
+    </div><?php endif; ?>
+
+ <!-- 限时揭晓 -->
+<?php if(isset($data["end_time"])): ?><div id="divAutoRTime" class="Immediate">
+	    <span><a class="orange" target="_blank" href="#">限时揭晓的规则？</a></span>
+	     <i id="timeall" endtime="<?php echo ($data["end_time"]); ?>" lxfday="no"></i>		                           
+	</div>
+<script type="text/javascript">			
+	function lxfEndtime(xsjx_time_shop,this_time){	
+		if(!this.xsjx_time_shop){
+			this.xsjx_time_shop = xsjx_time_shop;	
+			this.this_time		= this_time
+		}
+		this.this_time = this.this_time + 1000;
+		lxfEndtime_setTimeout  = window.setTimeout("lxfEndtime()",1000);				
+		var endtime = <?php echo (strtotime($data["end_time"])); ?>000;
+	    var youtime = endtime - this.this_time;	   	   //还有多久(毫秒值)
+		
+		var seconds = youtime/1000;
+		var minutes = Math.floor(seconds/60);
+		var hours = Math.floor(minutes/60);
+		var days = Math.floor(hours/24);
+		var CDay= days;
+		var CHour= hours % 24;
+		var CMinute= minutes % 60;
+		var CSecond= Math.floor(seconds%60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数							
+		this.xsjx_time_shop.html("<b>限时揭晓</b><p>剩余时间：<em>"+days+"</em>天<em>"+CHour+"</em>时<em>"+CMinute+"</em>分<em>"+CSecond+"</em>秒</p>");
+		delete youtime,seconds,minutes,hours,days,CDay,CHour, CMinute, CSecond;
+		if(endtime <= this.this_time){			
+			lxfEndtime_setTimeout && window.clearTimeout(lxfEndtime_setTimeout);					
+			this.xsjx_time_shop.html("<b>限时揭晓</b><p>正在计算中....</p>");//如果结束日期小于当前日期就提示过期啦	
+			xsjx_time_shop = this.xsjx_time_shop;
+			// 刷新页面
+			window.location.href = "<?php echo U('view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["qishu"]); ?>";
+		}							
+  	}			  
+ 	$(function(){
+ 		lxfEndtime($("#timeall"),<?php echo ($serverTime); ?>000);
+ 	});
+</script><?php endif; ?>		
+<!-- 限时揭晓end -->
+
+<p class="Pro_Detsingle" style="font-size:14px;">云购价格：¥<b style="color:#999;"><?php echo ($data["danjia"]); ?></b></p>
+<?php if($data["xiangou"] > 0): ?><p class="Pro_Detsingle" style="font-size:14px;">限购次数：<b style="color:#999;"><?php echo ($data["xiangou"]); ?></b>人次</p><?php endif; ?>
+<div id="divNumber" class="Pro_number">
+	我要云购 
+	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
+	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
+	<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>人次 
+	<span id="chance" class="gray03">购买人次越多获得几率越大哦！</span>
+</div>
+<div style="display:none;" id="hqid"><?php echo ($data["gid"]); ?></div>
+<div id="divBuy" class="Det_button">
+	<a href="javascript:void(0);" class="Det_Shopbut">立即云购</a>
+	<a href="javascript:void(0);" class="Det_Cart add-cart" src="<?php echo ($data["thumb"]); ?>" gid="<?php echo ($data["gid"]); ?>"><i></i>加入购物车</a>							
+</div>
+<script type="text/javascript">
+	$(function() {
+		// 加减号
+		var shopsub = $("#shopsub").click(onamountchange);
+		var shopadd = $("#shopadd").click(onamountchange);
+		var input = $("#num_dig").change(onamountchange);
+		var chance = $("#chance");
+		var id = <?php echo ($data["gid"]); ?>;
+		var shengyu = <?php echo ($data["shengyurenshu"]); ?>;
+		var zongshu = <?php echo ($data["zongrenshu"]); ?>;
+		var xiangou = <?php echo ($data["xiangou"]); ?>;
+		function onamountchange() {
+			var $this = $(this);
+			var count = Number(input.val());
+			var flag = $this.is(shopadd) ? 1 : ($this.is(shopsub) ? -1 : 0);
+			
+			if(xiangou > 0 && (count + flag > xiangou)) {
+				return;
+			}
+			
+			if(count > shengyu) {
+				count = shengyu;
+			}
+			
+			if(flag == -1 && count <= 1) {
+				return;
+			}
+			
+			if(count < -1) {
+				input.val(1);
+				return;
+			}
+			count += flag;
+			input.val(count);
+			var jilv = (count * 100.0 / zongshu);
+			jilv = Math.round(jilv * 100.0) / 100.0;
+			chance.html("<span style='color:red'>获得机率"+jilv+"%</span>");
+		}
+		
+		// 立即云购
+		$(".Det_Shopbut").click(function() {
+			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>/" + Number(input.val()), null, function(result) {
+				window.location.href = "<?php echo U('Cart/index', '','');?>";
+			})
+		});
+	});
+</script><?php endif; ?>
 			<!--显示揭晓动画 end-->		
 			<div class="Security">
 				<ul>
@@ -420,7 +642,6 @@ $.fn.CloudZoom.defaults = {
 
 
 <script type="text/javascript">
-<!--补丁3.1.6_b.0.2-->
 function set_iframe_height(fid,did,height){	
 	$("#"+fid).css("height",height);	
 }
@@ -445,7 +666,6 @@ $(function(){
 			}
 			divContent.hide().eq(index).show();
 	});
-	<!--补丁3.1.6_b.0.2-->
 	
 	
 	$("#btnUserBuyMore").click(function(){
@@ -462,135 +682,7 @@ $(function(){
 			$("#divProductNav").removeClass("nav-fixed");
 		}
 	});
-})
-var shopinfo={'shopid':{wc:$item['id']},'money':{wc:$item['yunjiage']},'shenyu':{wc:$syrs}};
-
-	
-$(function(){
-	function baifenshua(aa,n){
-	n = n || 2;
-	return ( Math.round( aa * Math.pow( 10, n + 2 ) ) / Math.pow( 10, n ) ).toFixed( n ) + '%';
-}
-	var shopnum = $("#num_dig");
-		var ten_per = Math.floor(parseInt({wc:$item['zongrenshu']})) || 1;
-	var max_num = (ten_per > parseInt(shopinfo['shenyu'])) ? parseInt(shopinfo['shenyu']) : ten_per;
-	shopnum.keyup(function(){
-		if(shopnum.val()>=max_num){
-			shopnum.val(max_num);
-		}
-		var numshop=shopnum.val();
-		if(numshop=={wc:$item['zongrenshu']}){
-			var baifenbi='100%';
-		}else{
-			var showbaifen=numshop/{wc:$item['zongrenshu']};
-			var baifenbi=baifenshua(showbaifen,2);
-		}
-		$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
-	});
-	
-	$("#shopadd").click(function(){
-		var shopnum = $("#num_dig");
-			var resshopnump='';
-			var ten_per = Math.floor(parseInt({wc:$item['zongrenshu']})) || 1;
-			var max_num = (ten_per > parseInt(shopinfo['shenyu'])) ? parseInt(shopinfo['shenyu']) : ten_per;
-			var num = parseInt(shopnum.val());
-			if(num >= max_num){
-				shopnum.val(max_num);
-				resshopnump = max_num;
-			}else{
-				resshopnump=parseInt(shopnum.val())+1;
-				shopnum.val(resshopnump);
-			}
-			if(resshopnump=={wc:$item['zongrenshu']}){
-				var baifenbi='100%';
-			}else{
-				var showbaifen=resshopnump/{wc:$item['zongrenshu']};
-				var baifenbi=baifenshua(showbaifen,2);
-			}
-			$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
-	});
-	
-	
-	$("#shopsub").click(function(){
-		var shopnum = $("#num_dig");
-		var num = parseInt(shopnum.val());
-		if(num<2){
-			shopnum.val(1);			
-		}else{
-			shopnum.val(parseInt(shopnum.val())-1);
-		}
-		var shopnums=parseInt(shopnum.val());
-		if(shopnums=={wc:$item['zongrenshu']}){
-				var baifenbi='100%';
-			}else{
-				var showbaifen=shopnums/{wc:$item['zongrenshu']};
-				var baifenbi=baifenshua(showbaifen,2);
-			}
-			$("#chance").html("<span style='color:red'>获得机率"+baifenbi+"</span>");
-	});
 });
-
-$(function(){
-$(".Det_Cart").click(function(){ 
-	//添加到购物车动画
-	var src=$("#zoom1 img").attr('src');  
-	var $shadow = $('<img id="cart_dh" style="display: none; border:1px solid #aaa; z-index: 99999;" width="400" height="400" src="'+src+'" />').prependTo("body"); 
-	var $img = $(".mousetrap").first("img");
-	$shadow.css({ 
-	   'width' : $img.css('width'), 
-	   'height': $img.css('height'),
-	   'position' : 'absolute',      
-	   'top' : $img.offset().top,
-	   'left' : $img.offset().left, 
-	   'opacity' :1    
-	}).show();
-	var $cart =$("#btnMyCart");
-	var numdig=$(".num_dig").val();
-	$shadow.animate({   
-		width: 1, 
-		height: 1, 
-		top: $cart.offset().top, 
-		left: $cart.offset().left,
-		opacity: 0
-	},500,function(){
-		Cartcookie(false);
-	});		
-});
-	$(".Det_Shopbut").click(function(){	
-		Cartcookie(true);
-	});	
-});
-
-
-
-function Cartcookie(cook){
-	var shopid=shopinfo['shopid'];
-	var number=parseInt($("#num_dig").val());
-	if(number<=1){number=1;}
-	var Cartlist = $.cookie('Cartlist');
-	if(!Cartlist){
-		var info = {};
-	}else{
-		var info = $.evalJSON(Cartlist);
-		if((typeof info) !== 'object'){
-			var info = {};
-		}
-	}		
-	if(!info[shopid]){
-		var CartTotal=$("#sCartTotal").text();
-			$("#sCartTotal").text(parseInt(CartTotal)+1);
-			$("#btnMyCart em").text(parseInt(CartTotal)+1);
-	}	
-	info[shopid]={};
-	info[shopid]['num']=number;
-	info[shopid]['shenyu']=shopinfo['shenyu'];
-	info[shopid]['money']=shopinfo['money'];
-	info['MoenyCount']='0.00';	
-	$.cookie('Cartlist',$.toJSON(info),{expires:7,path:'/'});
-	if(cook){
-		window.location.href="{WEB_PATH}/member/cart/cartlist/"+new Date().getTime();//+new Date().getTime()
-	}
-}  
 </script> 
 </div>
 
