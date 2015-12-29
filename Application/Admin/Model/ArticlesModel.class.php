@@ -44,7 +44,8 @@ class ArticlesModel extends BaseModel {
 		$data["isShow"] = (int)I("isShow",0);
 		$data["articleContent"] = I("articleContent");
 		$data["articleKey"] = I("articleKey");
-		$data["staffId"] = (int)session('RTC_STAFF.staffId');
+		$uid=session('_uid');
+		$data["staffId"] = $uid;
 	    if($this->checkEmpty($data,true)){	
 			$m = M('articles');
 		    $rs = $m->where("articleId=".(int)I('id',0))->save($data);
@@ -58,21 +59,23 @@ class ArticlesModel extends BaseModel {
 	 /**
 	  * 获取指定对象
 	  */
-     public function get(){
+     public function get($id){
 	 	$m = M('articles');
-		return $m->where("articleId=".(int)I('id'))->find();
+		return $m->where("articleId=".$id)->find();
 	 }
 	 /**
 	  * 分页列表
 	  */
-     public function queryByPage(){
+     public function queryByPage($pageSize = 10, $pageNum = 1){
         $m = M('articles');
-	 	$sql = "select a.articleTitle,a.articleId,a.isShow,a.createTime,c.catName,s.staffName
-	 	    from __PREFIX__articles a,__PREFIX__article_cats c,__PREFIX__staffs s 
-	 	    where a.catId=c.catId and a.staffId = s.staffId ";
+	 	$sql = "select a.articleTitle,a.articleId,a.isShow,a.createTime,c.catName
+	 	    from __PREFIX__articles a,__PREFIX__article_cats c,__PREFIX__admin s 
+	 	    where a.catId=c.catId  ";
 	 	if(I('articleTitle')!='')$sql.=" and articleTitle like '%".I('articleTitle')."%'";
 	 	$sql.=' order by articleId desc';
-		return $m->pageQuery($sql);
+	 	
+	 	$Model = M();
+		return $newitem=$Model->pageQuery($sql,$pageNum,$pageSize);		 
 	 }
 	 /**
 	  * 获取列表
@@ -81,7 +84,6 @@ class ArticlesModel extends BaseModel {
 	     $m = M('articles');
 	     $sql = "select * from __PREFIX__articles where isShow =1 order by articleId desc";
 		 $rs = $m->query($sql);
-
 		 return $rs;
 	  }
 	  

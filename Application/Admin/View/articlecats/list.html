@@ -5,14 +5,6 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <title>后台管理中心</title>
-      <!--<link href="__PUBLIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <link href="__ROOT__/Apps/Admin/View/css/AdminLTE.css" rel="stylesheet" type="text/css" />-->
-      <!--[if lt IE 9]>
-      <script src="__PUBLIC__/js/html5shiv.min.js"></script>
-      <script src="__PUBLIC__/js/respond.min.js"></script>
-      <![endif]-->
-      
-      
       <script src="__PUBLIC__/js/common.js"></script>
       <script src="__PUBLIC__/plugins/plugins/plugins.js"></script>
    </head>
@@ -36,7 +28,7 @@
    }
    function toggleIsShow(t,v){
 	   Plugins.waitTips({title:'信息提示',content:'正在操作，请稍后...'});
-	   $.post("{:U('Admin/ArticleCats/editiIsShow')}",{id:v,isShow:t},function(data,textStatus){
+	   $.post("{:U('Admin/ArticleCats/editiIsShow','','')}",{id:v,isShow:t},function(data,textStatus){
 			var json = RTC.toJson(data);
 			if(json.status=='1'){
 				Plugins.setWaitTipsMsg({content:'操作成功',timeout:1000,callback:function(){
@@ -65,7 +57,7 @@
 	   }});
    }
    function loadChildTree(obj,pid,objId){
-	   
+	   alert(objId);
 		var str = objId.split("_");
 		level = (str.length-2);
 		if($(obj).hasClass('glyphicon-minus')){
@@ -151,10 +143,10 @@
 	               <span class='glyphicon glyphicon-plus' onclick='javascript:loadChildTree(this,{$vo.catId},"tr_0_{$i}")' style='margin-right:3px;cursor:pointer'></span>
 	               <input type='text' value='{$vo['catname']}' onchange='javascript:editName(this)' dataId="{$vo.catid}" class='form-control rtc-ipt'/>
 	               </td>
-	               <td>{$vo['catSort']}</td>
+	               <td>{$vo['catsort']}</td>
 	               <td>
 	               <div class="dropdown">
-	               <if condition="$vo['isShow']==0 ">
+	               <if condition="$vo['isshow']==0 ">
 	                   <button class="btn btn-danger dropdown-toggle rtc-btn-dropdown" id='btn_{$vo['catid']}' type="button" data-toggle="dropdown">
 						     隐藏
 						  <span class="caret"></span>
@@ -175,9 +167,9 @@
 	               </td>
 	               <td>
 	              
-	               <a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit',array('parentId'=>$vo['catid']))}">新增子分类</a>&nbsp;	              
+	               <a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit/0/','','')}/{$vo['catid']}">新增子分类</a>&nbsp;	              
 	               
-	               <a class="btn btn-default glyphicon glyphicon-pencil" href="{:U('Admin/ArticleCats/toEdit/','','')}/id/{$vo['catid']}">修改</a>&nbsp;
+	               <a class="btn btn-default glyphicon glyphicon-pencil" href="{:U('Admin/ArticleCats/toEdit/','','')}/{$vo['catid']}">修改</a>&nbsp;
 	               
 	               <if condition="$vo['cattype']==0 ">
 	               <button type="button" class="btn btn-default glyphicon glyphicon-trash" onclick="javascript:del({$vo['catid']},0)"">刪除</button>

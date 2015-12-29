@@ -1,31 +1,35 @@
 <?php
 namespace Admin\Controller;
 /**
- * ============================================================================
- * 粗卡云:
-  
+ * ============================================================================  
  * 联系方式:
  * ============================================================================
  * 文章控制器
  */
-class ArticlesController extends CommonController{
-	/**
+class ArticlesController extends CommonController{	
+	 
+	 protected function _initialize() {
+	 	$this->assign('pid', 'marticles');
+		$this->assign('mid', 'articles'); 
+	 }
+	 
+	 /**
 	 * 跳到新增/编辑页面
 	 */
-	public function toEdit(){
-		 
+	public function toEdit($id){
+		
 	    $m = D('Admin/Articles');
     	$object = array();
-    	if(I('id',0)>0){
-    		$this->checkPrivelege('wzlb_02');
-    		$object = $m->get();
+    	if($id>0){
+    		$object = $m->get($id);
     	}else{
-    		$this->checkPrivelege('wzlb_01');
     		$object = $m->getModel();
     	}
     	$m = D('Admin/ArticleCats');
-    	$this->assign('catList',$m->getCatLists());
+    	$this->assign('catList',$m->getCatTopLists());
+		$object["articlecontent"] = htmlspecialchars_decode(html_entity_decode($object["articlecontent"]));
     	$this->assign('object',$object);
+		//echo dump($object);
 		$this->view->display('/articles/edit');
 	}
 	/**
@@ -36,10 +40,8 @@ class ArticlesController extends CommonController{
 		$m = D('Admin/Articles');
     	$rs = array();
     	if(I('id',0)>0){
-    		$this->checkAjaxPrivelege('wzlb_02');
     		$rs = $m->edit();
     	}else{
-    		$this->checkAjaxPrivelege('wzlb_01');
     		$rs = $m->insert();
     	}
     	$this->ajaxReturn($rs);
@@ -70,16 +72,20 @@ class ArticlesController extends CommonController{
 	/**
 	 * 分页查询
 	 */
-	public function index(){
+	public function index($pageNum = 1,$pageSize = 10){
 		$m = D('Admin/Articles');
-    	$page = $m->queryByPage();
-    	$pager = new \Think\Page($page['total'],$page['pageSize']);// 实例化分页类 传入总记录数和每页显示的记录数
-    	$page['pager'] = $pager->show();
+    	$page = $m->queryByPage($pageSize,$pageNum);
+	  	$pager = new \Think\Page($page['total'],$page['pageSize']);// 实例化分页类 传入总记录数和每页显示的记录数
+	  	$page['pager'] = $pager->show();
     	
 		$this->assign('pid', 'marticles');
-		$this->assign('mid', 'articles');
-    	
-    	$this->assign('Page',$page);
+		$this->assign('mid', 'articles'); 
+    	 
+		//echo dump($page);
+		$this->assign('page', $page);
+		 
+		$this->SetPage($pageSize,$pageNum,$page["total"]);
+		
     	$this->assign('articleTitle',I('articleTitle'));
         $this->display("/articles/list");
 	}

@@ -71,9 +71,9 @@ class ArticleCatsModel extends BaseModel {
 	 /**
 	  * 获取指定对象
 	  */
-     public function get(){
+     public function get($id){
 	 	$m = M('article_cats');
-		return $m->where("catId=".(int)I('id'))->find();
+		return $m->where("catId=".$id)->find();
 	 }
 	 /**
 	  * 分页列表
@@ -104,7 +104,6 @@ class ArticleCatsModel extends BaseModel {
 		 	}
 		 	$ids = array_merge($ids,$cids);
 		 	return $this->getChild($ids,$cids);
-		 	
 	 	}else{
 	 		return $ids;
 	 	}
@@ -145,6 +144,17 @@ class ArticleCatsModel extends BaseModel {
 		}
 	 	return $rd;
 	 }
+
+	public function getCatTopLists(){	
+	 	$sql = "select * from __PREFIX__article_cats where catFlag = 1 order by catSort asc";
+	 	$catList = $this->query($sql);
+
+//	 	if ($catList !== false) {	 		
+//	 		$catList = self::unlimitedForLevel($catList);	 		
+//	 	}
+	 	return $catList;
+	 }
+
 
 	 /**
 	  * 获取所有的类别，并且添加层级

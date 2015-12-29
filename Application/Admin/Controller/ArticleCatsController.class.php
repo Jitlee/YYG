@@ -9,26 +9,29 @@ namespace Admin\Controller;
  * 文章分类控制器
  */
 class ArticleCatsController extends CommonController{
+	 	
+	 protected function _initialize() {
+	 	$this->assign('pid', 'marticles');
+		$this->assign('mid', 'cat'); 
+	 }
+	 
+	 
 	/**
 	 * 跳到新增/编辑页面
 	 */
-	public function toEdit($id=0){
+	public function toEdit($id=0,$parentId=0){
 		 
 	    $m = D('Admin/ArticleCats');
     	$object = array();
     	if($id>0){
     		//$this->checkPrivelege('wzfl_02');
-    		$object = $m->get();
+    		$object = $m->get($id);
     	}else{
     		//$this->checkPrivelege('wzfl_01');
     		$object = $m->getModel();
-    		$object['parentId'] = I('parentId',0);
+    		$object['parentId'] = $parentId;
     	}
     	$this->assign('object',$object);
-		
-		echo "dddddddd:".$id;
-		echo dump($object);
-		
 		$this->view->display('/articlecats/edit');
 	}
 	/**
@@ -39,10 +42,8 @@ class ArticleCatsController extends CommonController{
 		$m = D('Admin/ArticleCats');
     	$rs = array();
     	if(I('id',0)>0){
-    		//$this->checkAjaxPrivelege('wzfl_02');
     		$rs = $m->edit();
-    	}else{
-    		//$this->checkAjaxPrivelege('wzfl_01');
+    	}else{    		
     		$rs = $m->insert();
     	}
     	$this->ajaxReturn($rs);
@@ -81,9 +82,7 @@ class ArticleCatsController extends CommonController{
     	$this->assign('catItems',$list);
 		//echo dump($list);
 		
-		$this->assign('pid', 'marticles');
-		$this->assign('mid', 'cat');
-		
+		 
         $this->display("/articlecats/list");
 	}
 	/**
