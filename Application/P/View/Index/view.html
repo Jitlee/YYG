@@ -1,6 +1,5 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/GoodsDetail.css"/>
-<link rel="stylesheet" type="text/css" href="__css__/js/cloud-zoom.css"/>
-<script type="text/javascript" src="__JS__/gdjs.js"></script>
+<link rel="stylesheet" type="text/css" href="__CSS__/cloud-zoom.css"/>
 <script type="text/javascript" src="__JS__/cloud-zoom.min.js"></script>
 <script type="text/javascript">
 $.fn.CloudZoom.defaults = {
@@ -41,9 +40,9 @@ $.fn.CloudZoom.defaults = {
 			
 		</div>
 		<ul class="Period_list">
-			<li><a href=""><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第{$data.qishu}期<i></i></b></a></li>
-			<for start="$data['qishu'] - 1" end="0" comparison="gt" step="-1">
-				<li><a href="{:U('Index/view', '', '')}/{$data.gid}/${i}" class="gray02">第{$i}期</a></li>
+			<li><a <if condition="$data.current neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}"</if>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第{$data.current}期<i></i></b></a></li>
+			<for start="$data['current'] - 1" end="0" comparison="gt" step="-1">
+				<li><a <if condition="$i neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}/{$i}"</if> class="gray02">第{$i}期</a></li>
 			</for>
 		</ul>
 	</div>
@@ -67,8 +66,9 @@ $.fn.CloudZoom.defaults = {
 		<h1><span>(第{$data.qishu}期)</span><span >{$data.title}</span><em>{$data.subtitle}</em></h1>
 		<div class="Pro_Detleft">
 			<div class="zoom-small-image">
-				<span href="{$firstImage.image_url}" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
-                <img width="80px" height="80px" src="{$firstImage.image_url}" /></span>
+				<a class="cloud-zoom" id="zoom1" href="{$firstImage.image_url}" rel="adjustX: 10, adjustY:-4, softFocus:true">
+					<img src="{$firstImage.image_url}">
+				</a>
 			</div>
 
 			<div class="zoom-desc"> 
@@ -109,17 +109,21 @@ $.fn.CloudZoom.defaults = {
 				})
 			</script>			
 			
-			<present name="prizer">
-			<div class="Pro_GetPrize">				
+			<present name="data.prizer">
+			<div class="Pro_GetPrize">		
+				<if condition="$data.current eq $qishu">
+				<h2>本期获得者</h2>
+				<else/>
 				<h2>上期获得者</h2>
+				</if>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="{:U(Person/index)}/{$prizer.uid}" target="_blank"><img width="80" height="80" alt="" src="{$prizer.img}"></a></dt>
+						<dt><a rel="nofollow" href="{:U(Person/index)}/{$data.prizer.uid}" target="_blank"><img width="80" height="80" alt="" src="{$data.prizer.img|default='__IMG__/member.jpg'}"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="{:U(Person/index)}/{$prizer.uid}" target="_blank" class="blue">{$prizer.username}</a>获得了本商品</p>
-							<p>揭晓时间：{$prizer.end_time}</p>
-							<p>云购时间：{$prizer.record_time}</p>
-							<p>幸运云购码：<em class="orange Fb">{$przer['prizecode']+10000001}</em></p>
+							<p>恭喜 <a href="{:U(Person/index)}/{$data.prizer.uid}" target="_blank" class="blue">{$data.prizer.username}</a>获得了本商品</p>
+							<p>揭晓时间：{$data.prizer.end_time}</p>
+							<p>云购时间：{$data.prizer.record_time}</p>
+							<p>幸运云购码：<em class="orange Fb">{$data.prizer['prizecode']+10000001}</em></p>
 						</dd>
 					</dl>				
 				</div>
@@ -147,30 +151,28 @@ $.fn.CloudZoom.defaults = {
 					<li class="MytRec">我的云购记录</li>
 					<li class="Explain orange">什么是1元云购？</li>
 				</ul>
-				<div class="Newest_Con hide">
+				<div class="Newest_Con _hiden" style="">
+					<present name="records">
 					<ul>
-						{wc:loop $us $user}
+						<foreach name="records" item="item">
 						<li>
-						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank">
-						{wc:if !empty($user['uphoto'])}
-							<img src="{G_UPLOAD_PATH}/{wc:$user['uphoto']}" border="0" alt="" width="20" height="20">
-						{wc:else}
-							<img src="{G_UPLOAD_PATH}/photo/member.jpg" border="0" alt="" width="20" height="20">
-						{wc:if:end}
+						<a href="{:U('Person', '', '')}/{$item.uid}" target="_blank">
+							<img src="{$item.img|default='__IMG__/member.png'}" border="0" alt="" width="20" height="20">
 						</a>					
-						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank" class="blue">{wc:$user['username']}</a>
-						{wc:if $user['ip']}
-						({wc:fun:get_ip($user['id'],'ipcity')}) 
-						{wc:if:end}				
-						{wc:fun:_put_time($user['time'])} 云购了
-						<em class="Fb gray01">{wc:$user['gonumber']}</em>人次</li>
-						{wc:loop:end}
+						<a href="{:U('Person', '', '')}/{$item.uid}" target="_blank" class="blue">{$item.username}</a>
+						<!-- todo: IP -->			
+						{$item.time} 云购了
+						<em class="Fb gray01">{$item.count}</em>人次</li>
+						</foreach>
 					</ul>
-					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>					
+					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>
+					<else/>
+					<p style="">暂时没有人购买</p>
+					</present>
 				</div>
 				
 				<!--我的云购记录-->
-				<div class="My_Record hide" style="display:none;">
+				<div class="My_Record _hiden" style="display: none;">
 					{wc:if get_user_uid()}				
 					<ul>				
 						{wc:m=member.member mod=get_record(get_user_uid(),$item['id'],9)}
@@ -186,9 +188,9 @@ $.fn.CloudZoom.defaults = {
 					{wc:if:end}
 				</div>
 				<!--/我的云购记录-->
-				<div class="Newest_Con hide" style="display:none;">
-					<p class="MsgIntro">{wc:fun:_cfg("web_name_two")}购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">{wc:fun:_cfg("web_name_two")}以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{WEB_PATH}/help/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
+				<div class="Newest_Con _hiden" style="display: none;">
+					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
+					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{:U('Help/index')}/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
 				</div>
 			</div>			
 		</div>
@@ -238,7 +240,7 @@ $(function(){
 	$("#ulRecordTab li").click(function(){
 		var add=$("#ulRecordTab li").index(this);
 		$("#ulRecordTab li").removeClass("Record_titCur").eq(add).addClass("Record_titCur");
-		$(".Pro_Record .hide").hide().eq(add).show();
+		$(".Pro_Record ._hiden").hide().eq(add).show();
 	});
 	
 	var DetailsT_TitP = $(".DetailsT_TitP ul li");

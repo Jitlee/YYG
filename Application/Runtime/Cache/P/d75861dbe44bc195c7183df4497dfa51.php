@@ -308,27 +308,27 @@ window.onerror=function(){return true;}
     </div>
     <div class="g-hot clrfix">
     		<div class="g-hotL fl">
-    			<?php if(is_array($remens)): foreach($remens as $key=>$r): ?><div class="g-hotL-list">
+    			<?php if(is_array($remens)): foreach($remens as $key=>$item): ?><div class="g-hotL-list">
 				<div class="g-hotL-con">
 					<ul>
 						<li class="g-hot-pic">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">
-						<img src="<?php echo ($r["thumb"]); ?>" alt="<?php echo ($r["title"]); ?>">
+						<a title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">
+						<img src="<?php echo ($item["thumb"]); ?>" alt="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">
 						</a>
 						</li>
 						<li class="g-hot-name">
-						<a title="<?php echo ($r["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>"><?php echo ($r["title"]); ?></a>
+						<a title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a>
 						</li>
-						<li class="gray">价值：￥<?php echo ($r["money"]); ?></li>
+						<li class="gray">价值：￥<?php echo ($item["money"]); ?></li>
 						<li class="g-progress">
 							<dl class="m-progress">
 								<dt title="已完成">
-									<b style="width:<?php echo ($r['canyurenshu']*100/$r['zongrenshu']); ?>%"></b>
+									<b style="width:<?php echo ($item['canyurenshu']*100/$item['zongrenshu']); ?>%"></b>
 								</dt>
 								<dd>
-									<span class="orange fl"><em><?php echo ($r["canyurenshu"]); ?></em>已参与</span>
-									<span class="gray6 fl"><em><?php echo ($r["zongrenshu"]); ?></em>总需人次</span>
-									<span class="blue fr"><em><?php echo ($r["shengyurenshu"]); ?></em>剩余</span>
+									<span class="orange fl"><em><?php echo ($item["canyurenshu"]); ?></em>已参与</span>
+									<span class="gray6 fl"><em><?php echo ($item["zongrenshu"]); ?></em>总需人次</span>
+									<span class="blue fr"><em><?php echo ($item["shengyurenshu"]); ?></em>剩余</span>
 								</dd>
 							</dl>
 						</li>
@@ -370,18 +370,18 @@ window.onerror=function(){return true;}
 			<div class="soon-list">
 				<ul>
 					<li class="g-soon-pic">
-						<a title="<?php echo ($item["title"]); ?>" target="_blank" href="http://192.168.0.103:8080/YYYGCMS/?/goods/47">
-							<img id="img_274277" src="<?php echo ($item["thumb"]); ?>" alt="<?php echo ($item["title"]); ?>">
+						<a title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">
+							<img id="img_274277" src="<?php echo ($item["thumb"]); ?>" alt="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>">
 						</a>
 					</li>
 					<li class="soon-list-name">
-						<a title="<?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>"><?php echo ($item["title"]); ?></a>
+						<a title="第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?>" target="_blank" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>">第<?php echo ($item["qishu"]); ?>期 <?php echo ($item["title"]); ?></a>
 					</li>
 					<li class="gray">价值：￥<?php echo ($item["money"]); ?></li>
 					<li class="g-progress">
 						<dl class="m-progress">
 							<dt title="">
-								<b style="width:<?php echo ($j['canyurenshu']*100/$j['zongrenshu']); ?>%;"></b>
+								<b style="width:<?php echo ($item['canyurenshu']*100/$item['zongrenshu']); ?>%;"></b>
 							</dt>
 							<dd>
 								<span class="orange fl"><em><?php echo ($item["canyurenshu"]); ?></em>已参与</span>

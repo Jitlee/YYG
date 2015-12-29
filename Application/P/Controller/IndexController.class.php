@@ -53,35 +53,74 @@ class IndexController extends CommonController {
 		run_task();
 		
 		$this->assign('title', '商品详情');
-		
 		$data = $this->getGood($gid, $qishu);
 		$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
-		
-		
 		$this->assign('data', $data);
+		
+		$this->assign('gid', $gid);
+		$this->assign('qishu', $data['qishu']);
+		
+		// 购买记录
+		$mmdb = M('MemberMiaosha');
+		$mmmap['gid'] = $gid;
+		$mmmap['qishu'] = $qishu;
+		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->where($mmmap)->order('id desc')->page(1, 7)->select();
+		if(!empty($records)) {
+			$this->assign('records', $records);
+		}
 		
 		// 图片
 		$imgdb = M('GoodsImages');
 		$imgmap['gid'] = $gid;
 		$images = $imgdb->where($imgmap)->select();
 		$this->assign('images', $images);
-			
 		if(count($images) > 0) {
 			$this->assign('firstImage', $images[0]);
-		}
-		
-		// 上期获得者
-		$qishu = intval($data['qishu']);
-		
-		if($qishu > 1) {
-			$prizer = $this->getPrizer($gid, $qishu - 1);
-			$this->assign('prizer', $prizer);
-		}		
+		}	
 		
 		if($data['status'] == 2) {
 			$this->display('end');
 		} else {
 			$this->display('view');
+		}
+	}
+	
+	private function getGood($gid, $qishu = null) {
+		if($qishu == null) {
+			$db = M('miaosha');
+			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
+			$data['qishu'] = intval($data['qishu']);
+			$data['current'] = $data['qishu'];
+			// 上期获得者
+			if($data['qishu'] > 1) {
+				$data['prizer'] = $this->getPrizer($gid, $qishu - 1);
+			}	
+			return $data;
+		} else {
+			// 历史
+			$db = M('MiaoshaHistory');
+			$map['gid'] = $gid;
+			$map['qishu'] = $qishu;
+			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
+			if(empty($data)) {
+				return $this->getGood($gid);
+			}
+			
+			// 获取当情期
+			$mdb = M('miaosha');
+			$mmap['gid'] = $gid;
+			$mmap['status'] = array('lt', 2);
+			$current = $mdb->field('qishu')->where($mmap)->find();
+			$data['current'] = intval($current['qishu']);
+			
+			// 获取当前中奖用户
+			if($data['prizeuid']) {
+				$data['prizer'] = $this->getPrizer($gid, $qishu);
+			}
+			
+			return $data;
 		}
 	}
 
@@ -100,53 +139,6 @@ class IndexController extends CommonController {
 			->join('yyg_miaosha_code on yyg_miaosha_code.uid = yyg_member.uid and yyg_miaosha_history.gid = yyg_miaosha_code.gid and yyg_miaosha_code.qishu = yyg_miaosha_history.qishu')
 			->where($umap)
 			->find();
-	}
-	
-	private function getGood($gid, $qishu = null) {
-		if(!$qishu) {
-			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
-		} else {
-			// 历史
-			$db = M('MiaoshaHistory');
-			$map['gid'] = $gid;
-			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
-			if(empty($data)) {
-				return $this->getGood($gid);
-			}
-			
-			// 获取当情期
-			$mdb = M('miaosha');
-			$mmap['gid'] = $gid;
-			$mmap['status'] = array('lt', 2);
-			$current = $mdb->field('qishu')->where($mmap)->find();
-			$data['current'] = $current['qishu'];
-			
-			// 获取当前中奖用户
-			if($data['prizeuid']) {
-				$udb = M('member');
-				$user = $udb->field(array('uid','IFNULL(NULLIF(username, \'\'), INSERT(mobile,4,4,\'****\'))'  => 'username', 'img'))->find($data['prizeuid']);
-				$data['prizer'] = $user;
-				
-				// 获取用户当期购买数量
-				$mhdb = M('MiaoshaCode');
-				$mhmap['uid'] = $data['prizeuid'];
-				$mhmap['gid'] = $data['gid'];
-				$mhmap['qishu'] = $data['qishu'];
-				$count = $mhdb->where($mhmap)->count();
-				$data['prizer']['count'] = $count;
-			}
-			
-			return $data;
-		}
-	}
-		
-		
-		
-		
-		
-		
-		
+	}	
 }
 	

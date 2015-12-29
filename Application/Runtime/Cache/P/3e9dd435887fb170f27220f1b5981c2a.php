@@ -200,8 +200,7 @@ window.onerror=function(){return true;}
 
 <div style="position: relative;" class="w1190">
 	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsDetail.css"/>
-<link rel="stylesheet" type="text/css" href="__css__/js/cloud-zoom.css"/>
-<script type="text/javascript" src="/Public/P/js/gdjs.js"></script>
+<link rel="stylesheet" type="text/css" href="/Public/P/css/cloud-zoom.css"/>
 <script type="text/javascript" src="/Public/P/js/cloud-zoom.min.js"></script>
 <script type="text/javascript">
 $.fn.CloudZoom.defaults = {
@@ -242,9 +241,8 @@ $.fn.CloudZoom.defaults = {
 			
 		</div>
 		<ul class="Period_list">
-			<li><a href=""><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["qishu"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_1877205294__=$data['qishu'] - 1;$__FOR_END_1877205294__=0;for($i=$__FOR_START_1877205294__;$i > $__FOR_END_1877205294__;$i+=-1){ ?><li><a href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/${i}" class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
-			<p style="clear:both;display: block;height: 100px;"></p>
+			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
+			<?php $__FOR_START_692236263__=$data['current'] - 1;$__FOR_END_692236263__=0;for($i=$__FOR_START_692236263__;$i > $__FOR_END_692236263__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
@@ -267,8 +265,9 @@ $.fn.CloudZoom.defaults = {
 		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><em><?php echo ($data["subtitle"]); ?></em></h1>
 		<div class="Pro_Detleft">
 			<div class="zoom-small-image">
-				<span href="<?php echo ($firstImage["image_url"]); ?>" class = 'cloud-zoom' id='zoom1' rel="adjustX:10, adjustY:-2">
-                <img width="80px" height="80px" src="<?php echo ($firstImage["image_url"]); ?>" /></span>
+				<a class="cloud-zoom" id="zoom1" href="<?php echo ($firstImage["image_url"]); ?>" rel="adjustX: 10, adjustY:-4, softFocus:true">
+					<img src="<?php echo ($firstImage["image_url"]); ?>">
+				</a>
 			</div>
 
 			<div class="zoom-desc"> 
@@ -307,16 +306,18 @@ $.fn.CloudZoom.defaults = {
 				})
 			</script>			
 			
-			<?php if(isset($prizer)): ?><div class="Pro_GetPrize">				
-				<h2>上期获得者</h2>
+			<?php if(isset($data["prizer"])): ?><div class="Pro_GetPrize">		
+				<?php if($data["current"] == $qishu): ?><h2>本期获得者</h2>
+				<?php else: ?>
+				<h2>上期获得者</h2><?php endif; ?>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($prizer["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ($prizer["img"]); ?>"></a></dt>
+						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["prizer"]["img"]) && ($data["prizer"]["img"] !== ""))?($data["prizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($prizer["uid"]); ?>" target="_blank" class="blue"><?php echo ($prizer["username"]); ?></a>获得了本商品</p>
-							<p>揭晓时间：<?php echo ($prizer["end_time"]); ?></p>
-							<p>云购时间：<?php echo ($prizer["record_time"]); ?></p>
-							<p>幸运云购码：<em class="orange Fb"><?php echo ($przer['prizecode']+10000001); ?></em></p>
+							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
+							<p>揭晓时间：<?php echo ($data["prizer"]["end_time"]); ?></p>
+							<p>云购时间：<?php echo ($data["prizer"]["record_time"]); ?></p>
+							<p>幸运云购码：<em class="orange Fb"><?php echo ($data["prizer['prizecode']+10000001"]); ?></em></p>
 						</dd>
 					</dl>				
 				</div>
@@ -559,30 +560,24 @@ $.fn.CloudZoom.defaults = {
 					<li class="MytRec">我的云购记录</li>
 					<li class="Explain orange">什么是1元云购？</li>
 				</ul>
-				<div class="Newest_Con hide">
-					<ul>
-						{wc:loop $us $user}
-						<li>
-						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank">
-						{wc:if !empty($user['uphoto'])}
-							<img src="{G_UPLOAD_PATH}/{wc:$user['uphoto']}" border="0" alt="" width="20" height="20">
-						{wc:else}
-							<img src="{G_UPLOAD_PATH}/photo/member.jpg" border="0" alt="" width="20" height="20">
-						{wc:if:end}
+				<div class="Newest_Con _hiden" style="">
+					<?php if(isset($records)): ?><ul>
+						<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
+						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank">
+							<img src="<?php echo ((isset($item["img"]) && ($item["img"] !== ""))?($item["img"]):'/Public/P/images/member.png'); ?>" border="0" alt="" width="20" height="20">
 						</a>					
-						<a href="{WEB_PATH}/uname/{wc:fun:idjia($user['uid'])}" target="_blank" class="blue">{wc:$user['username']}</a>
-						{wc:if $user['ip']}
-						({wc:fun:get_ip($user['id'],'ipcity')}) 
-						{wc:if:end}				
-						{wc:fun:_put_time($user['time'])} 云购了
-						<em class="Fb gray01">{wc:$user['gonumber']}</em>人次</li>
-						{wc:loop:end}
+						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
+						<!-- todo: IP -->			
+						<?php echo ($item["time"]); ?> 云购了
+						<em class="Fb gray01"><?php echo ($item["count"]); ?></em>人次</li><?php endforeach; endif; ?>
 					</ul>
-					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>					
+					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>
+					<?php else: ?>
+					<p style="">暂时没有人购买</p><?php endif; ?>
 				</div>
 				
 				<!--我的云购记录-->
-				<div class="My_Record hide" style="display:none;">
+				<div class="My_Record _hiden" style="display: none;">
 					{wc:if get_user_uid()}				
 					<ul>				
 						{wc:m=member.member mod=get_record(get_user_uid(),$item['id'],9)}
@@ -598,9 +593,9 @@ $.fn.CloudZoom.defaults = {
 					{wc:if:end}
 				</div>
 				<!--/我的云购记录-->
-				<div class="Newest_Con hide" style="display:none;">
-					<p class="MsgIntro">{wc:fun:_cfg("web_name_two")}购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">{wc:fun:_cfg("web_name_two")}以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{WEB_PATH}/help/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
+				<div class="Newest_Con _hiden" style="display: none;">
+					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
+					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="<?php echo U('Help/index');?>/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
 				</div>
 			</div>			
 		</div>
@@ -650,7 +645,7 @@ $(function(){
 	$("#ulRecordTab li").click(function(){
 		var add=$("#ulRecordTab li").index(this);
 		$("#ulRecordTab li").removeClass("Record_titCur").eq(add).addClass("Record_titCur");
-		$(".Pro_Record .hide").hide().eq(add).show();
+		$(".Pro_Record ._hiden").hide().eq(add).show();
 	});
 	
 	var DetailsT_TitP = $(".DetailsT_TitP ul li");
