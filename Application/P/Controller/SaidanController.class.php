@@ -3,7 +3,7 @@ namespace P\Controller;
 use Think\Controller;
 use P\Model;
 
-class SaidanController extends BaseController {
+class SaidanController extends CommonController {
 	
 		public function detail($gid=null,$qishu=null)
 		{
