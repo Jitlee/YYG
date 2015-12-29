@@ -1906,5 +1906,62 @@ class Model {
             $this->$name = $value;
         return $this;
     }
+	
+	/*********************************************************************************************
+     *                                      以下为wasonteam扩展函数                                                                                                          *
+     *********************************************************************************************/
+    /**
+     * 分页函数
+     * @access public
+     * @param string $sql sql语句
+     * @param int $page 页码
+     * @param int $pageSize 每页条数
+     * @return array('total','pageSize','start','root','totalPage','currPage');
+     */
+    public function pageQuery($sql,$page = 0,$pageSize = 0){
+		$pageSize = (intval($pageSize)==0)?C('PAGE_SIZE'):$pageSize;
+		if($pageSize==0)return array();
+		$page = (intval($page)<=0)?I(C('VAR_PAGE'),1):intval($page);
+		$page = ($page<=0)?1:$page;
+		$start = ($page-1)*$pageSize;
+		$pager = array();
+		$result = array();
+		//查询总数
+		$totalSql = '';
+		//if(stripos(strtolower($sql),'distinct')!==false || stripos(strtolower($sql),'group')!==false || stripos(strtolower($sql),'union')!==false){
+		    $totalSql = "select count(*) counts from (".$sql.") as a";
+		//}else{
+			//$findNum = stripos($sql,' from ');
+			//$totalSql = "select count(*) counts from (".substr($sql,$findNum,strlen($sql)).") as a";
+		//}
+		$total = $this->query($totalSql);
+		//查询数据		
+		$result = $this->query($sql." limit ".$start.",".$pageSize);
+		//计算页码信息
+		$pager['total'] = $total[0]['counts'];
+		$pager['pageSize'] = $pageSize;
+		$pager['start'] = $start;
+		$pager['root'] = $result;
+		$pager['totalPage'] = ($pager['total']%$pageSize==0)?($pager['total']/$pageSize):(intval($pager['total']/$pageSize)+1);
+		$pager['currPage'] = $page;
+		return $pager;
+    }
+    
+    /**
+     * 分页函数
+     * @access public
+     * @return array();
+     */
+    public function getModel($tables = ''){
+    	$tables = ($tables!='')?$tables:$this->getTableName();
+    	$rs =  $this->query('show columns FROM `'.$tables."`");
+        $obj =  array();
+        if($rs){
+            foreach($rs as $key => $v) {
+                $obj[$v['Field']] = $v['Default'];
+            }
+        }
+        return $obj;
+    }
 
 }

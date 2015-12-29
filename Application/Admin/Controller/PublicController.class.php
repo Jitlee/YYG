@@ -44,6 +44,7 @@ class PublicController extends Controller {
 				'email'			=> $admin['email'],
 			);
 			session('admin', $auth);
+			session('_uid', $data['uid']);
 //			echo dump(session('admin'));
 			$this->success('登陆成功', U('Index/index', '', ''));
 		} else if(a_is_login()) {
