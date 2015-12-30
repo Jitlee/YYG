@@ -133,9 +133,9 @@ $.fn.CloudZoom.defaults = {
 		<div class="Pro_Detright">
 			<p class="Det_money">价值：<span class="rmbgray">{$data.money}</span></p>
 			<present name="end_time">
-				<include file="item_animation"/>
+				<include file="view_animation"/>
 			<else/>
-				<include file="item_contents"/>
+				<include file="view_contents"/>
 			</present>
 			<!--显示揭晓动画 end-->		
 			<div class="Security">
@@ -173,19 +173,18 @@ $.fn.CloudZoom.defaults = {
 				
 				<!--我的云购记录-->
 				<div class="My_Record _hiden" style="display: none;">
-					{wc:if get_user_uid()}				
+					<present name="myrecords">	
 					<ul>				
-						{wc:m=member.member mod=get_record(get_user_uid(),$item['id'],9)}
-						{wc:loop $datas $row}									
-						<li>{wc:fun:_put_time($user['time'])}  云购了  {wc:$user['gonumber']}  个云购码</li>						
-						{wc:loop:end} 
+						<foreach name="myrecords" item="item">
+						<li>{$item.time}  云购了  {$item.count}  个云购码</li>						
+						</foreach>
 					</ul>
-					{wc:else}					
+					<else/>				
 					<div class="My_RecordReg">
 						<b class="gray01">看不到？是不是没登录或是没注册？ 登录后看看</b>
-						<a href="{WEB_PATH}/member/user/login" class="My_Signbut">登录</a><a href="{WEB_PATH}/member/user/register" class="My_Regbut">注册</a>
+						<a href="{:U('Main/login')}" class="My_Signbut">登录</a><a href="{:U('Main/register')}" class="My_Regbut">注册</a>
 					</div>
-					{wc:if:end}
+					</present>	
 				</div>
 				<!--/我的云购记录-->
 				<div class="Newest_Con _hiden" style="display: none;">

@@ -57,8 +57,9 @@ class IndexController extends CommonController {
 		$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
 		$this->assign('data', $data);
 		
+		$qishu = $data['qishu'];
 		$this->assign('gid', $gid);
-		$this->assign('qishu', $data['qishu']);
+		$this->assign('qishu', $qishu);
 		
 		// 购买记录
 		$mmdb = M('MemberMiaosha');
@@ -71,6 +72,21 @@ class IndexController extends CommonController {
 			$this->assign('records', $records);
 		}
 		
+		// 本人购买记录
+		if(is_login()) {
+			$mmmap = array(
+				'gid'		=> $gid,
+				'qishu'		=> $qishu,
+				'yyg_member_miaosha.uid'		=> get_temp_uid()
+			);
+			$myrecords = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+				->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+				->where($mmmap)->order('id desc')->page(1, 9)->select();
+			if($myrecords) {
+				$this->assign('myrecords', $myrecords);
+			}
+		}
+		
 		// 图片
 		$imgdb = M('GoodsImages');
 		$imgmap['gid'] = $gid;
@@ -78,7 +94,7 @@ class IndexController extends CommonController {
 		$this->assign('images', $images);
 		if(count($images) > 0) {
 			$this->assign('firstImage', $images[0]);
-		}	
+		}
 		
 		if($data['status'] == 2) {
 			$this->display('end');

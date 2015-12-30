@@ -242,7 +242,7 @@ $.fn.CloudZoom.defaults = {
 		</div>
 		<ul class="Period_list">
 			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_692236263__=$data['current'] - 1;$__FOR_END_692236263__=0;for($i=$__FOR_START_692236263__;$i > $__FOR_END_692236263__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<?php $__FOR_START_8897__=$data['current'] - 1;$__FOR_END_8897__=0;for($i=$__FOR_START_8897__;$i > $__FOR_END_8897__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
@@ -578,19 +578,14 @@ $.fn.CloudZoom.defaults = {
 				
 				<!--我的云购记录-->
 				<div class="My_Record _hiden" style="display: none;">
-					{wc:if get_user_uid()}				
-					<ul>				
-						{wc:m=member.member mod=get_record(get_user_uid(),$item['id'],9)}
-						{wc:loop $datas $row}									
-						<li>{wc:fun:_put_time($user['time'])}  云购了  {wc:$user['gonumber']}  个云购码</li>						
-						{wc:loop:end} 
+					<?php if(isset($myrecords)): ?><ul>				
+						<?php if(is_array($myrecords)): foreach($myrecords as $key=>$item): ?><li><?php echo ($item["time"]); ?>  云购了  <?php echo ($item["count"]); ?>  个云购码</li><?php endforeach; endif; ?>
 					</ul>
-					{wc:else}					
+					<?php else: ?>				
 					<div class="My_RecordReg">
 						<b class="gray01">看不到？是不是没登录或是没注册？ 登录后看看</b>
-						<a href="{WEB_PATH}/member/user/login" class="My_Signbut">登录</a><a href="{WEB_PATH}/member/user/register" class="My_Regbut">注册</a>
-					</div>
-					{wc:if:end}
+						<a href="<?php echo U('Main/login');?>" class="My_Signbut">登录</a><a href="<?php echo U('Main/register');?>" class="My_Regbut">注册</a>
+					</div><?php endif; ?>	
 				</div>
 				<!--/我的云购记录-->
 				<div class="Newest_Con _hiden" style="display: none;">
