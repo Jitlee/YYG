@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>登录-{wc:fun:_cfg("web_name")}</title>
+<title>登录-{:config("web_name")}</title>
 <link rel="stylesheet" type="text/css" href="__CSS__/Comm.css"/>
 <link rel="stylesheet" type="text/css" href="__CSS__/login.css"/>
 <link href="__CSS__/style.css" rel="stylesheet" type="text/css" />
@@ -84,8 +84,8 @@ $(function(){
 </script>
 <div class="login">
 	<div class="login_top">
-		<h1><a rel="nofollow" href="{:U('Index/index', '', '')}"><img src="__IMG__/logo/logo.jpg"/></a></h1>
-		<p><a rel="nofollow" href="{:U('Index/index', '', '')}" class="back_home">返回首页</a><a href="{WEB_PATH}/help/1" target="_blank" class="help">帮助中心</a></p>
+		<h1><a rel="nofollow" href="{:U('Index/index', '', '')}"><img  width="154" height="96" src="__IMG__/logo/logo.jpg"/></a></h1>
+		<p><a rel="nofollow" href="{:U('Index/index', '', '')}" class="back_home">返回首页</a><a href="{:U('Help/index', '', '')}/1" target="_blank" class="help">帮助中心</a></p>
 	</div>
 	<div class="login_bg">
 		<div id="loadingPicBlock" class="login_banner"><img src="__IMG__/20120628180933540.jpg" width="542" height="360"></div>
@@ -101,7 +101,7 @@ $(function(){
 				<li>
 					<span>密码：</span>					
 					<input class="text_password" name="password" type="password"  datatype="*6-20" nullmsg="请设置密码！" errormsg="密码范围在6~20位之间！"/>
-					<span class="fog"><a href="{WEB_PATH}/member/finduser/findpassword">忘记密码？</a></span> 
+					<!--<span class="fog"><a href="{WEB_PATH}/member/finduser/findpassword">忘记密码？</a></span>--> 
 				</li>								
 				<li class="ts" id="pwd_ts"><div class="Validform_checktip">请输入登录密码</div></li>
 				<li class="end"><input name="submit" type="submit" value="登录" class="login_init" ></li>

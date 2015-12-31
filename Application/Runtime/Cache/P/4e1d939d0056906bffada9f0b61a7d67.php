@@ -53,7 +53,7 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
              <li>
                  <div class="u-menu-hd">
-                     <a href="{WEB_PATH}/group_qq" target="_blank" title="官方QQ群">官方QQ群</a>
+                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -180,7 +180,7 @@ window.onerror=function(){return true;}
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
                  <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
-                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
+                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>/1">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">
@@ -293,9 +293,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_893477860__=$minPageNo;$__FOR_END_893477860__=$pageNo;for($i=$__FOR_START_893477860__;$i < $__FOR_END_893477860__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_7106__=$minPageNo;$__FOR_END_7106__=$pageNo;for($i=$__FOR_START_7106__;$i < $__FOR_END_7106__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_396857876__=$pageNo+1;$__FOR_END_396857876__=$maxPageNo;for($i=$__FOR_START_396857876__;$i < $__FOR_END_396857876__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_7635__=$pageNo+1;$__FOR_END_7635__=$maxPageNo;for($i=$__FOR_START_7635__;$i < $__FOR_END_7635__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -332,6 +332,7 @@ window.onerror=function(){return true;}
 <div class="g-frame-footer">
 	<div class="g-width footer">
 		<div class="M-guide">
+			<?php echo fhelp();?>
 			<dl class="ft-newbie">
 				<dt><span>新手指南</span></dt>
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/1' target='_blank'>了解云购</a></dd>
@@ -379,7 +380,7 @@ window.onerror=function(){return true;}
 			</dl>
 		</div>
 
-		<div class="service-promise">
+		<!--<div class="service-promise">
 			<ul>
 				<li class="M-android "><s class="F-bg"></s>
 					<p class="F-txt">
@@ -415,7 +416,7 @@ window.onerror=function(){return true;}
 					</p>
 				</li>
 			</ul>
-		</div>
+		</div>-->
 		<div class="M-security">
 			<a href="<?php echo U('Help/index', '', '');?>/4" class="U-fair" target="_blank"> <s class="F-security-img"></s>
 				<p class="F-security-T">100%公平公正</p>

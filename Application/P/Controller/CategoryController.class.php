@@ -80,7 +80,7 @@ class CategoryController extends CommonController {
 		$this->assign('num', $num);
 		$this->assign('total', $total);
 		
-    		$this->assign('title', '全部商品');
+    	$this->assign('title', '全部商品');
 		$this->display();
     }	
 }

@@ -78,14 +78,14 @@ class SaidanController extends CommonController {
 					if($n==0){
 						array_push($sa_one,$list[$i]);
 					}else if($n==1){
-						$sa_two[]=$list[$i];
-						//array_push($sa_two,$list[$i]);
+						//$sa_two[]=$list[$i];
+						array_push($sa_two,$list[$i]);
 					}else if($n==2){
-						$sa_tree[]=$list[$i];
-						//array_push($sa_tree,$list[$i]);
+						//$sa_tree[]=$list[$i];
+						array_push($sa_tree,$list[$i]);
 					}else if($n==3){
-						$sa_for[]=$list[$i];
-						//array_push($sa_for,$list[$i]);
+						//$sa_for[]=$list[$i];
+						array_push($sa_for,$list[$i]);
 					}
 					$n+=$lie;				 
 					$n++;

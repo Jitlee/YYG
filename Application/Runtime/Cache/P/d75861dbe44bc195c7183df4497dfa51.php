@@ -53,7 +53,7 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
              <li>
                  <div class="u-menu-hd">
-                     <a href="{WEB_PATH}/group_qq" target="_blank" title="官方QQ群">官方QQ群</a>
+                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -180,7 +180,7 @@ window.onerror=function(){return true;}
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
                  <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
-                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>">新手指南</a></li>
+                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>/1">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">
@@ -467,7 +467,7 @@ window.onerror=function(){return true;}
 			</dl>
 		</div>
 
-		<div class="service-promise">
+		<!--<div class="service-promise">
 			<ul>
 				<li class="M-android "><s class="F-bg"></s>
 					<p class="F-txt">
@@ -503,7 +503,7 @@ window.onerror=function(){return true;}
 					</p>
 				</li>
 			</ul>
-		</div>
+		</div>-->
 		<div class="M-security">
 			<a href="<?php echo U('Help/index', '', '');?>/4" class="U-fair" target="_blank"> <s class="F-security-img"></s>
 				<p class="F-security-T">100%公平公正</p>

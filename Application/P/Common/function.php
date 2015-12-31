@@ -23,3 +23,28 @@ function config($key)
 }
 
 
+
+function footerHelp()
+{
+	
+ 
+		$m = D('P/ArticleCats');
+		$mc = D('P/Articles');
+		$cats=$m->queryByList(1);
+ 		$html="";
+		foreach ($cats as $key =>$v){
+			$html=$html.'<dl class="ft-newbie">';
+			$html=$html.'<dt><span>'.$v['catname'].'</span></dt>';
+			
+			$carti=$mc->queryByList($v['catid']);
+	    	foreach ($carti as $var) {
+	 			$html=$html."<dd><b></b><a href='".$var["articleid"]."' target='_blank'>".$var["articletitle"]."</a></dd>";
+			}
+			$html=$html.'</dl>';
+		}
+		return $html; 
+    }
+	
+	 
+
+	
