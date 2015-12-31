@@ -127,14 +127,14 @@ $(function(){
 <!--login 结束-->
 <div class="footer">
 	<div class="footer_links">
-		<a href="http://localhost:9999/?">首页</a>
-		<b></b>
-		<a  href="http://localhost:9999/?/group">云购圈子</a><b></b>
-		<a  href="http://localhost:9999/?/help/1">关于云购</a><b></b>
-		<a  href="http://localhost:9999/?/single/business">合作专区</a><b></b>
-		<a  href="http://localhost:9999/?/link">友情链接</a><b></b>
-		<a  href="http://localhost:9999/?/help/13">联系我们</a><b></b>  	</div>
-	<div class="copyright">Copyright © 2011 - 2015</div>
+		<a href="<?php echo U('Index/index', '', '');?>">首页</a>
+		<b></b>		
+		<a  href="<?php echo U('Help/index', '', '');?>/13">关于云购</a><b></b>
+		<a  href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
+		<a  href="<?php echo U('Index/index', '', '');?>">友情链接</a><b></b>
+		<a  href="<?php echo U('Help/index', '', '');?>/13">联系我们</a>
+	</div>
+	<div class="copyright">Copyright © 2014 - 2015</div>
 </div>
 
 </body>

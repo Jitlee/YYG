@@ -16,7 +16,7 @@ class CommonController extends Controller {
 		}
 		
 		$this->assign('serverTime', time());
-		
+		$this->assign('title', '一元购');		
 		count_cart(0);
 	}
 	

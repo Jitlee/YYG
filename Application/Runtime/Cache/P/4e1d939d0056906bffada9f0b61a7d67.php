@@ -171,16 +171,15 @@ window.onerror=function(){return true;}
          <div id="divGoodsSort" class="m-menu fl">
              <div class="m-menu-all">
                  <h3><a href="<?php echo U('Category/index', '', '');?>">全部商品分类</a><em></em></h3>
-             </div>
- 
+             </div> 
          </div>
          <div class="nav-main fl">
              <ul>
-                 <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
+                 <li class="f-nav-home f-active"><a href="<?php echo U('Index/index', '', '');?>">首页</a></li>
                  <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
                  <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
-                 <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>/1">新手指南</a></li>
+                 <li class="f-nav-guide"><a href="<?php echo U('Help/nb', '', '');?>">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">
@@ -293,9 +292,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_7106__=$minPageNo;$__FOR_END_7106__=$pageNo;for($i=$__FOR_START_7106__;$i < $__FOR_END_7106__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_10683__=$minPageNo;$__FOR_END_10683__=$pageNo;for($i=$__FOR_START_10683__;$i < $__FOR_END_10683__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_7635__=$pageNo+1;$__FOR_END_7635__=$maxPageNo;for($i=$__FOR_START_7635__;$i < $__FOR_END_7635__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_28376__=$pageNo+1;$__FOR_END_28376__=$maxPageNo;for($i=$__FOR_START_28376__;$i < $__FOR_END_28376__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -332,44 +331,17 @@ window.onerror=function(){return true;}
 <div class="g-frame-footer">
 	<div class="g-width footer">
 		<div class="M-guide">
-			<?php echo fhelp();?>
-			<dl class="ft-newbie">
-				<dt><span>新手指南</span></dt>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/1' target='_blank'>了解云购</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/2' target='_blank'>常见问题</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/3' target='_blank'>服务协议</a></dd>
-			</dl>
-			<dl class="ft-newbie">
-				<dt><span>云购保障</span></dt>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/4' target='_blank'>保障体系</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/5' target='_blank'>正品保障</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/6' target='_blank'>安全支付</a></dd>
-			</dl>
-			<dl class="ft-newbie">
-				<dt><span>商品配送</span></dt>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/7' target='_blank'>商品配送</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/8' target='_blank'>配送费用</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/9' target='_blank'>验货签收</a></dd>
-			</dl>
-			<dl class="ft-newbie">
-				<dt><span>云购基金</span></dt>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/10' target='_blank'>基金去向</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/11' target='_blank'>建立基金</a></dd>
-				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/12' target='_blank'>基金筹款</a></dd>
-			</dl>
-
+			<?php echo footerHelp();?>
 			<dl class="ft-fwrx">
 				<dt><span>官方群</span></dt>
-
 				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">88888</em></a></dd>
 				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">99999</em></a></dd>
 				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">188526887</em></a></dd>
-
 			</dl>
 			<dl>
 				<dt>携手云购</dt>
 				<dd>
-					<a href="http://localhost:9999/?/single/business" target="_blank">商务合作</a>
+					<a href="<?php echo U('Help/business', '', '');?>" target="_blank">商务合作</a>
 				</dd>
 				<dd>
 					<a href="http://localhost:9999/?/link" target="_blank">友情链接</a>
@@ -379,44 +351,6 @@ window.onerror=function(){return true;}
 				</dd>
 			</dl>
 		</div>
-
-		<!--<div class="service-promise">
-			<ul>
-				<li class="M-android "><s class="F-bg"></s>
-					<p class="F-txt">
-						<b class="gray9">手机客户端下载</b>
-						<a class="orange_btn" href="/app/index.html" target="_blank"><img src="/statics/uploads/banner/ljxz_03.png" /></a>
-					</p>
-				</li>
-				<li class="M-wx">
-					<a target="_blank">
-						<s class="F-wxm"> <img
-									src="/Public/P/images/index/wzg-wx.jpg" border="0" alt="" width="75" height="75"></s>
-					</a>
-					<p class="F-txt">
-						<a target="_blank"> </a>
-						<a target="_blank"> <b class="gray9"><i></i>关注官方微信</b> <s class="F-wx-img"></s>
-						</a>
-					</p>
-				</li>
-				<li class="M-time"><s class="F-bg"></s>
-					<p class="F-txt" id="pServerTime">
-						<b class="gray9">服务器时间</b><span id="sp_ServerTime" class="F-txt-dig"></span>
-					</p>
-				</li>
-				<li class="M-fund"><s class="F-bg"></s>
-					<p class="F-txt">
-						<b class="gray9">云购公益基金</b> <a href="http://localhost:9999/?/single/fund" target="_blank"><span class="F-fund-buy fam-y"
-									id="spanFundTotal"><i class="rmbf">￥</i>0000000.00</span></a>
-					</p>
-				</li>
-				<li class="M-tel"><s class="F-bg"></s>
-					<p class="F-txt">
-						<b class="gray9">服务热线</b> <i class="F-tel-img">4006-000-000</i> <a href="http://wpa.qq.com/msgrd?v=3&uin=123456&site=qq&menu=yes" id="btnBtmQQ" class="F-icon-guest" target="_blank"><s></s>在线客服</a>
-					</p>
-				</li>
-			</ul>
-		</div>-->
 		<div class="M-security">
 			<a href="<?php echo U('Help/index', '', '');?>/4" class="U-fair" target="_blank"> <s class="F-security-img"></s>
 				<p class="F-security-T">100%公平公正</p>
@@ -438,11 +372,10 @@ window.onerror=function(){return true;}
 <!-- 底部版权 -->
 <div class="g-frame copyright">
 	<div class="footer_links">
-		<a href="http://localhost:9999/?/group">云购圈子</a>
 		<b></b>
 		<a href="<?php echo U('Help/index', '', '');?>/1">关于云购</a>
 		<b></b>
-		<a href="http://localhost:9999/?/single/business">合作专区</a>
+		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a>
 		<b></b>
 		<a href="http://localhost:9999/?/link">友情链接</a>
 		<b></b>

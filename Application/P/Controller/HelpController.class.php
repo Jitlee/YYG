@@ -7,9 +7,17 @@ class HelpController extends Controller {
 		$this->index($id);
 	}
 	
+	public function nb()
+	{
+		$this->display();
+	}
+	public function business()
+	{
+		$this->display();
+	}
 	public function index($id=1){
     				
-    	$this->assign('title', '一元购');		
+    	$this->assign('title', '一元购');
 		$m = D('P/ArticleCats');
 		$cats=$m->queryByList(1);
  		
@@ -39,11 +47,14 @@ class HelpController extends Controller {
     	$cate=$m->queryByList($catid);
     	$html='';
     	foreach ($cate as $v) {
- 			$html=$html."<li><a href='".$v["articleid"]."'>".$v["articletitle"]."</li>";
-			 
+ 			$html=$html."<li><a href='".U('Help/index', '', '')."/".$v["articleid"]."'>".$v["articletitle"]."</li>";
 		}
 		return $html;
 	}
+	
+	
+	
+	
 }
 	
 	
