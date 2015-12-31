@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script type="text/javascript" src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<style type="text/css">
+			.clould-zoom {
+				position: relative;
+			}
+			
+			.clould-zoom-big, .clould-zoom-view {
+				height:384px;
+				width:384px;
+				line-height:384px;
+			}
+			.clould-zoom-big {
+				text-align: center;
+				border:solid 1px #E8E8E8;
+				position: relative;
+			}
+			
+			.clould-zoom-view, .clould-zoom-bird, .clould-zoom-bird-outter {
+				position: absolute;
+				z-index: 999;
+			}
+			
+			.clould-zoom-view {
+				z-index: 999;
+				border: solid 1px #D5D5D5;
+				background-repeat: no-repeat;
+				background-position: 0 0;
+				top: 0px;
+				left: 404px;
+			}
+			
+			.clould-zoom-bird-outter {
+				width: 100%;
+				height:100%;
+			    top: 0px;
+			    left: 0px;
+				overflow: hidden;
+			}
+			
+			.clould-zoom-bird {
+				background-color: transparent;
+			    background-attachment: scroll;
+			    background-repeat: repeat;
+			    background-image: url("images/cloud-zoom-bird.png");
+			    cursor: move;
+			    z-index: 1;
+			    position: absolute;
+			    overflow: hidden;
+		        width: 174.724px;
+    			height: 174.724px;
+		        background-position: 0 0;
+			    top: 0px;
+			    left: 0px;
+			    display: none;
+			}
+			
+			.clould-zoom-big img{
+				max-width:100%;
+				max-height:100%;
+				vertical-align: middle;
+			}
+			
+			.clould-zoom-list{
+				list-style: none;
+				margin:0;
+				padding:0;
+				min-height: 55px;
+				overflow: hidden;
+			}
+			
+			.clould-zoom-list li{
+				margin:3px;
+				padding: 0;
+				border:solid 1px #E8E8E8;
+				height: 55px;
+				width: 55px;
+				display: inline-block;
+				text-align: center;
+				zoom:*;
+			}
+			
+			.clould-zoom-list li.colud-zoom-selected {
+				border-color: red;
+			}
+			
+			.clould-zoom-list li img{
+				max-width:100%;
+				max-height:100%;
+				vertical-align: middle;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="clould-zoom">
+			<div class="clould-zoom-big">
+				<img src="images/123.jpg" />
+				<div class="clould-zoom-view" style="background-image: url(images/123.jpg);"></div>
+				<div class="clould-zoom-bird-outter">
+					<div class="clould-zoom-bird"></div>
+				</div>
+			</div>
+			<ul class="clould-zoom-list">
+				<li ref="images/123.jpg">
+					<img src="images/123.jpg" />
+				</li>
+				<li ref="images/234.jpg">
+					<img src="images/234.jpg" />
+				</li>
+				<li ref="images/345.jpg">
+					<img src="images/345.jpg" />
+				</li>
+			</ul>
+		</div>
+		<h5 id="output"></h5>
+		
+		<script type="text/javascript">
+			$(function() {
+				var clouldZoomBig = $("#clould-zoom .clould-zoom-big")
+				var clouldZoomImg = $("img", clouldZoomBig);
+				var cloudZoom = $("#clould-zoom").on("mouseenter", "li", function() {
+					var $this = $(this);
+					$(".colud-zoom-selected").removeClass("colud-zoom-selected");
+					$this.addClass("colud-zoom-selected")
+					var ref = $this.attr("ref");
+					clouldZoomImg.attr("src", this.getAttribute("ref"));
+					clouldZoomView.css("background-image", "url("+ ref +")");
+				});
+				var clouldZoomView = $(".clould-zoom-view", cloudZoom);
+				var clouldZoomBird = $(".clould-zoom-bird", cloudZoom);
+				var clouldZoomBirdOutter = $(".clould-zoom-bird-outter", cloudZoom).bind("mouseenter", onmouseenter);
+				
+				var bigOffset = null;
+				var zoom =  1;
+				var imgOffsetX = 0;
+				var imgOffsetY = 0;
+				function onmouseenter(evt) {
+					clouldZoomBirdOutter.bind("mousemove", onmousemove);
+					clouldZoomBirdOutter.bind("mouseleave", onmouseleave);
+					bigOffset = clouldZoomBig.offset();
+					var offset = getOffset(evt);
+					clouldZoomBird.css("left", offset.x + "px");
+					clouldZoomBird.css("top", offset.y + "px");
+					
+					var viewWidth = clouldZoomView.width();
+					var birdWidth = clouldZoomBird.width();
+					var imgWidth = clouldZoomImg.width();
+					var imgHeight = clouldZoomImg.height();
+					var zoomWidth = null;
+					var zoomHeight = null;
+					zoom = viewWidth / birdWidth;
+					if(imgWidth > imgHeight) {
+						zoomWidth = imgWidth * zoom;
+						zoomHeight = zoomWidth * imgHeight / imgWidth;
+						imgOffsetX = 0;
+						imgOffsetY = (imgWidth - imgHeight) * 0.5;
+					} else {
+						zoomHeight = imgHeight * zoom;
+						zoomWidth = zoomHeight * imgWidth / imgHeight;
+						imgOffsetY = 0;
+						imgOffsetX = (imgHeight - imgWidth) * 0.5;
+					}
+					clouldZoomView.css("background-size", zoomWidth + "px " + zoomHeight + "px");
+					clouldZoomView.css("background-position", ((-offset.x - imgOffsetX) * zoom) + "px " + ((-offset.y + imgOffsetY) * zoom) + "px");
+					
+					clouldZoomBird.show();
+				}
+				
+				function onmousemove(evt) {
+					var offset = getOffset(evt);
+					clouldZoomBird.css("left", offset.x + "px");
+					clouldZoomBird.css("top", offset.y + "px");
+					clouldZoomView.css("background-position", ((-offset.x - imgOffsetX) * zoom) + "px " + ((-offset.y + imgOffsetY) * zoom) + "px");
+					
+				}
+				
+				function onmouseleave(evt) {
+					clouldZoomBirdOutter.unbind("mousemove", onmousemove);
+					clouldZoomBirdOutter.unbind("mouseleave", onmouseleave);
+					clouldZoomBird.hide();
+				}
+				
+				function getOffset(evt) {
+					var birdWidth = clouldZoomBird.width();
+					var birdHeight = clouldZoomBird.height();
+					var bigWidth = clouldZoomBig.width();
+					var bigHeight = clouldZoomBig.height();
+				
+					var x = evt.pageX - bigOffset.left - birdWidth * 0.5;
+					var y = evt.pageY - bigOffset.top - birdHeight * 0.5;
+					if(x < 0) {
+						x = 0;
+					} else if(x > bigWidth - birdWidth) {
+						x = bigWidth - birdWidth;
+					}
+					if(y < 0) {
+						y = 0;
+					} else if(y > bigHeight - birdHeight) {
+						y = bigHeight - birdHeight;
+					}
+					return { x: x, y: y };
+				}
+			});
+		</script>
+	</body>
+</html>
