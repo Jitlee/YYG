@@ -71,6 +71,7 @@
 		<li id="sysmgr" class="normal"><a>系统管理</a></li>
 		<li id="gdmgr" class="normal"><a>商品管理</a></li>
 		<li id="mbmgr" class="normal"><a>会员管理</a></li>
+		<li id="marticles" class="normal"><a>文章管理</a></li>
 		<li id="uimgr" class="normal"><a>界面管理</a></li>
 </ul>
 		</nav>
@@ -141,6 +142,15 @@
 				<li id="addmb"><a href="/index.php/Admin/Member/add">添加会员</a></li>
 				<li id="vcrcd"><a>充值记录</a></li>
 				<li id="cpi"><a>消费记录</a></li>
+			</ul>
+		</li>
+	</ul>
+	<ul id="s_marticles" class="nav-sidebar hidden">
+		<li id="marticles_">
+			<a>文章管理</a>
+			<ul>
+				<li id="cat"><a href="/index.php/Admin/ArticleCats">分类列表</a></li>
+				<li id="articles"><a href="/index.php/Admin/Articles">文章列表</a></li>
 			</ul>
 		</li>
 	</ul>
@@ -230,9 +240,9 @@ $(function() {
         <span aria-hidden="true">&laquo;</span>
       </span>
     </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_1519300766__=$minPageNum;$__FOR_END_1519300766__=$pageNum;for($i=$__FOR_START_1519300766__;$i < $__FOR_END_1519300766__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
+  	<?php if($pageNum > 1): $__FOR_START_32591__=$minPageNum;$__FOR_END_32591__=$pageNum;for($i=$__FOR_START_32591__;$i < $__FOR_END_32591__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
 	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1382564844__=$pageNum+1;$__FOR_END_1382564844__=$maxPageNum;for($i=$__FOR_START_1382564844__;$i < $__FOR_END_1382564844__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
+  <?php $__FOR_START_30428__=$pageNum+1;$__FOR_END_30428__=$maxPageNum;for($i=$__FOR_START_30428__;$i < $__FOR_END_30428__;$i+=1){ ?><li><a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
 	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
       <a href="/index.php/Admin/Miaosha/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>

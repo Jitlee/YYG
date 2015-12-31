@@ -71,6 +71,7 @@
 		<li id="sysmgr" class="normal"><a>系统管理</a></li>
 		<li id="gdmgr" class="normal"><a>商品管理</a></li>
 		<li id="mbmgr" class="normal"><a>会员管理</a></li>
+		<li id="marticles" class="normal"><a>文章管理</a></li>
 		<li id="uimgr" class="normal"><a>界面管理</a></li>
 </ul>
 		</nav>
@@ -144,6 +145,15 @@
 			</ul>
 		</li>
 	</ul>
+	<ul id="s_marticles" class="nav-sidebar hidden">
+		<li id="marticles_">
+			<a>文章管理</a>
+			<ul>
+				<li id="cat"><a href="/index.php/Admin/ArticleCats">分类列表</a></li>
+				<li id="articles"><a href="/index.php/Admin/Articles">文章列表</a></li>
+			</ul>
+		</li>
+	</ul>
 	<ul id="s_uimgr" class="nav-sidebar hidden">
 		<li id="mbmgr_">
 			<a>界面管理</a>
@@ -184,7 +194,8 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
+		 
+<form class="form-horizontal" action="<?php echo ($action); ?>" role="form" method="post"  data-toggle="validator">
 	<?php if(isset($data["gid"])): ?><input type="hidden" name="gid" value="<?php echo ($data["gid"]); ?>" /><?php endif; ?>
 	<input type="hidden" name="type" value="<?php echo ($type); ?>" />
 	<table class="table">

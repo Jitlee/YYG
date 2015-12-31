@@ -242,7 +242,7 @@ $.fn.CloudZoom.defaults = {
 		</div>
 		<ul class="Period_list">
 			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_8897__=$data['current'] - 1;$__FOR_END_8897__=0;for($i=$__FOR_START_8897__;$i > $__FOR_END_8897__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<?php $__FOR_START_21477__=$data['current'] - 1;$__FOR_END_21477__=0;for($i=$__FOR_START_21477__;$i > $__FOR_END_21477__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
