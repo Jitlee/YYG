@@ -7,7 +7,7 @@ class HelpController extends Controller {
 		$this->index($id);
 	}
 	
-	public function index($id){		
+	public function index($id=0){		
     		$this->assign('title', '一元购');
 		
 		$db = M('article');

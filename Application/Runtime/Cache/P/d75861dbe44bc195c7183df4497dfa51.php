@@ -236,10 +236,10 @@ window.onerror=function(){return true;}
 	            </li>
 	            <li class="comm-pic fr">
 	            		<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" title="<?php echo ($item["title"]); ?>" rel="nofollow">
-	                		<cite>
-	                   		<img alt="<?php echo ($item["title"]); ?>" src="<?php echo ($item["thumb"]); ?>" border="0"  width="100" height="100"/>
-	                		</cite>
-                			<span class="F_goods_xp"><i>新品</i></span>
+                		<cite>
+                   		<img alt="<?php echo ($item["title"]); ?>" src="<?php echo ($item["thumb"]); ?>" border="0"  width="100" height="100"/>
+                		</cite>
+            			<span class="F_goods_xp"><i>新品</i></span>
 	           	 </a>
 	            </li>
 	        </ul>
@@ -265,7 +265,6 @@ window.onerror=function(){return true;}
     <div class="index_news">
         <dl>
             <dt>新闻公告</dt>
-                         				
         </dl>
     </div>
 </div>
