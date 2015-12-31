@@ -1,0 +1,105 @@
+<link rel="stylesheet" type="text/css" href="__CSS__/Lottery.css"/>
+<div class="Current_nav"><a href="__MODULE__">首页</a> &gt; 最新揭晓</div>
+<!--开奖列表开始-->
+<div class="Newpublish">
+	<div class="NewpublishL">
+		<div id="current" class="publish_Curtit">
+			<h1 class="fl">最新揭晓</h1>
+			<span id="spTotalCount">(到目前为止共揭晓商品<em class="orange">{$total}</em>件)</span>
+		</div>
+		<div class="publishBor">
+			<div class="publishCen" id="listDivTitle">
+				<ul id="ProductList">
+					<foreach name="list" item="item">
+					<li class="Cursor">
+						<a class="fl goodsimg" href="{:U('Index/view','','')}/{$item.gid}" target="_blank" >
+							<img alt="" src="{$item.thumb}">
+						</a>
+						<div class="publishC-Member gray02">
+							<a class="fl headimg" href="{:U('Person/index', '', '')}/{$item.uid}" target="_blank" >
+								<img id="imgUserPhoto" src="{$item.img}" width="50" height="50" border="0"/>
+							</a>
+							<p>获得者：<a class="blue Fb" href="{:U('Person/index', '', '')}/{$item.uid}" target="_blank">{$item.username}</a></p>
+							<p>云购：<em class="orange Fb">{$item.count}</em>人次</p>							
+						</div>
+						<div class="publishC-tit">
+							<h3><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" class="gray01">(第{$item.qishu}期){$item.title}</a></h3>
+							<p class="money">商品价值：<span class="rmb">{$item.money}</span></p>
+							<p class="Announced-time gray02">揭晓时间：{$item.end_time}</p>
+						</div>
+						<div class="details">
+							<p class="fl details-Code">幸运云购码：<em class="orange Fb">{$data['prizecode'] + 10000001}</em></p>
+							<a class="fl details-A" href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" rel="nofollow" target="_blank">查看详情</a>
+							
+						</div>
+					</li>	
+					</foreach>
+				</ul>
+			</div>
+			<if condition="$num lt $total">
+			<div class="pagesx">
+				<ul id="Page_Ul">
+					<li id="Page_Total">{$total}条</li>
+					<li id="Page_One"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/1">首页</a></li>
+					<if condition="$pageNo gt 1">
+				        <li id="Page_Prev"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$pageNo - 1}">上一页</a></li>
+				  	</if>
+					<if condition="$pageNo gt 1">
+					  <for start="$minPageNo" end="$pageNo">
+					    		<li class="Page_Num"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$i}">{$i}</a></li>
+						</for>
+					</if>
+					<li class="Page_This">{$pageNo}</li>
+					<for start="$pageNo+1" end="$maxPageNo">
+				    		<li class="Page_Num"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$i}">{$i}</a></li>
+					</for>
+					<if condition="$pageNo lt $pageCount">
+				        <li id="Page_Next"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$pageNo + 1}">下一页</a></li>
+				  	</if>
+					<li id="Page_End"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$pageCount}">尾页</a></li>
+				</ul>
+			</div>
+			</if>
+		</div>
+	</div>
+	<div class="NewpublishR">
+		<div class="Newpublishbor">
+			<div class="Rtitle gray01">TA们正在云购 </div>
+			<div class="Rcenter buylistH">
+				<ul id="buyList" style="margin-top: 0px;">
+					<foreach name="records" item="item">
+					<li>
+						<a href="{:U('Index/view')}/{$item.gid}" target="_blank" class="pic">
+							<img id="imgUserPhoto" src="{$item.thumb|default='__IMG__/prmimg.png'}" width="50" height="50" border="0"/>
+						</a>
+						<p class="Rtagou"><a class="blue" href="{:U('Person/index')}/{$item.uid}" target="_blank">{$item.username}</a>刚刚云购了</p>
+						<p class="Rintro"><a class="gray01" href="{:U('Index/view')}/{$item.gid}" target="_blank">{$item.title}</a></p>
+					</li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+		<div class="blank10"></div>
+		<div class="Newpublishbor">
+			<div class="Rtitle gray01">人气排行 </div>
+			<div class="Rcenter RcenterPH">
+				<ul class="RcenterH" id="RcenterH">						
+					<foreach name="renqi" item="item">
+					<li>
+						<div name="simpleinfo">
+							<span class="pic">
+								<a href="{:U('Index/view')}/{$item.gid}" target="_blank">
+									<img src="{$item.thumb}">
+								</a>
+							</span>
+							<p class="Rintro gray01"><a href="{:U('Index/view')}/{$item.gid}" target="_blank">{$item.title}</a></p>
+							<p><i>剩余人次</i><em>{$item.shengyurenshu}</em></p>
+						</div>
+					</li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

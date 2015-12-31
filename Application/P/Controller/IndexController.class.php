@@ -28,7 +28,7 @@ class IndexController extends CommonController {
 				'yyg_miaosha_history.status','yyg_miaosha_history.qishu','yyg_miaosha_history.canyurenshu',
 				'yyg_miaosha_history.zongrenshu','yyg_miaosha_history.type','yyg_miaosha_history.prizeuid',
 				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->page(1,2)->select();
+			->page(1,10)->select();
 		$this->assign('zuixins', $zuixins);
 		
 		// 推荐商品
@@ -67,7 +67,7 @@ class IndexController extends CommonController {
 		$mmmap['qishu'] = $qishu;
 		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
 			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->where($mmmap)->order('id desc')->page(1, 7)->select();
+			->where($mmmap)->order('id desc')->page(1, 6)->select();
 		if(!empty($records)) {
 			$this->assign('records', $records);
 		}
@@ -96,11 +96,7 @@ class IndexController extends CommonController {
 			$this->assign('firstImage', $images[0]);
 		}
 		
-		if($data['status'] == 2) {
-			$this->display('end');
-		} else {
-			$this->display('view');
-		}
+		$this->display();
 	}
 	
 	private function getGood($gid, $qishu = null) {
@@ -111,7 +107,7 @@ class IndexController extends CommonController {
 			$data['current'] = $data['qishu'];
 			// 上期获得者
 			if($data['qishu'] > 1) {
-				$data['prizer'] = $this->getPrizer($gid, $qishu - 1);
+				$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
 			}	
 			return $data;
 		} else {
