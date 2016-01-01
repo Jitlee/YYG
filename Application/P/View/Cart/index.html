@@ -172,6 +172,10 @@
 						}
 					});
 				});
+				window.removeCart = function(id) {
+					$("#" + id).remove();
+					sum();
+				}
 			});
 		</script>
 <include file="Public:footer"/>

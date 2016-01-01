@@ -171,13 +171,12 @@ window.onerror=function(){return true;}
          <div id="divGoodsSort" class="m-menu fl">
              <div class="m-menu-all">
                  <h3><a href="<?php echo U('Category/index', '', '');?>">全部商品分类</a><em></em></h3>
-             </div>
- 
+             </div> 
          </div>
          <div class="nav-main fl">
              <ul>
                  <li class="f-nav-home f-active"><a href="/index.php/P">首页</a></li>
-                 <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
+                 <li class="f-nav-lottery"><a href="<?php echo U('Lottery/index', '', '');?>">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="<?php echo U('Saidan/index', '', '');?>">晒单分享</a></li>
                  <li class="f-nav-group"><a href="<?php echo U('Paimai/index', '', '');?>">拍卖专区</a></li>
                  <li class="f-nav-guide"><a href="<?php echo U('Help/index', '', '');?>/1">新手指南</a></li>
@@ -293,9 +292,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_7106__=$minPageNo;$__FOR_END_7106__=$pageNo;for($i=$__FOR_START_7106__;$i < $__FOR_END_7106__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_1191204121__=$minPageNo;$__FOR_END_1191204121__=$pageNo;for($i=$__FOR_START_1191204121__;$i < $__FOR_END_1191204121__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_7635__=$pageNo+1;$__FOR_END_7635__=$maxPageNo;for($i=$__FOR_START_7635__;$i < $__FOR_END_7635__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_18106869__=$pageNo+1;$__FOR_END_18106869__=$maxPageNo;for($i=$__FOR_START_18106869__;$i < $__FOR_END_18106869__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -332,8 +331,8 @@ window.onerror=function(){return true;}
 <div class="g-frame-footer">
 	<div class="g-width footer">
 		<div class="M-guide">
-			<?php echo fhelp();?>
-			<dl class="ft-newbie">
+			<?php echo footerHelp();?>
+			<!--<dl class="ft-newbie">
 				<dt><span>新手指南</span></dt>
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/1' target='_blank'>了解云购</a></dd>
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/2' target='_blank'>常见问题</a></dd>
@@ -356,7 +355,7 @@ window.onerror=function(){return true;}
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/10' target='_blank'>基金去向</a></dd>
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/11' target='_blank'>建立基金</a></dd>
 				<dd><b></b><a href='<?php echo U('Help/index', '', '');?>/12' target='_blank'>基金筹款</a></dd>
-			</dl>
+			</dl>-->
 
 			<dl class="ft-fwrx">
 				<dt><span>官方群</span></dt>
@@ -465,15 +464,26 @@ window.onerror=function(){return true;}
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count"><?php echo session('cartCount');?></span></em></a>
+			<a id="btnMyCart" href="<?php echo U('Cart/index');?>" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count"><?php echo session('cartCount');?></span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
-				<ul style="display: none;"></ul>
+				<ul style="display: none;">
+				</ul>
+				<li id="roolCartTemplate" style="display: none;">
+					<a href="javascript:void(0);" title="删除" class="Close"></a>
+					<a class="link"><img class="img"></a>
+					<span class="orange renci"></span>人次
+				</li>
+				<li id="roolCartMore" class="Roll_CartMore" style="display: none;">
+					<a target="_blank" title="查看更多" href="'.WEB_PATH.'/member/cart/cartlist">
+						更多<i>&gt;</i>
+					</a>
+				</li>
 				<div class="quick_goods_loding" id="rCartLoading">
-					<img border="0" alt="" src="{G_TEMPLATES_STYLE}/images/goods_loading.gif">正在加载......
+					<img border="0" alt="" src="/Public/P/images/goods_loading.gif">正在加载......
 				</div>
 				<p id="p1" style="display: none;">共计<span id="rCartTotal2">0</span> 件商品 金额总计：<span class="rmbgray" id="rCartTotalM">0</span></p>
 				<h3 style="display: none;">
-							<a target="_blank" href="{WEB_PATH}/member/cart/cartlist"
+							<a target="_blank" href="<?php echo U('Cart/index', '', '');?>"
 								class="orange_btn">去购物车结算</a>
 						</h3>
 			</div>
@@ -550,6 +560,61 @@ window.onerror=function(){return true;}
 				}
 			})
 		});
+		
+		
+		// 购物车
+		$(".quick_cart").hover(oncarthover,
+			function(){
+				$("#rCartlist,#rCartlist ul,#rCartlist p,#rCartlist h3").hide();
+			}
+		);
+		$("#rGotoCart").click(function(){
+			window.location.href="<?php echo U('Cart/index');?>";
+		});
+		
+		function oncarthover(){			
+			$("#rCartlist,#rCartLoading").show();
+			$("#rCartlist p,#rCartlist h3").hide();
+			$("#rCartTotal2").html("");
+			$("#rCartTotalM").html("");
+			var listUL = $("#rCartlist ul");
+			var roolCartTemplate = $("#roolCartTemplate");
+			var roolCartMore = $("#roolCartMore").hide();
+			listUL.html("");
+			$.getJSON("<?php echo U('Cart/box', '','');?>",function(data){
+				if(data.count > 0) {
+					for(var i = 0, len = data.list.length; i < len; i++) {
+						var item = data.list[i];
+						var li = roolCartTemplate.clone().removeAttr("id").show();
+						li.appendTo(listUL);
+						$(".Close", li).attr("cid", item.id).click(removeCart);
+						$(".img", li).attr("src", item.good.thumb);
+						$(".renci", li).text(item.count);
+						$(".link", li).attr("href", "<?php echo U('Index/view', '', '');?>/" + item.gid)
+							.attr("title", item.good.title);
+					}
+					if(data.count > 7) {
+						roolCartMore.clone().show().appendTo(listUL);
+					}
+				}
+				$("#rCartTotal2").html(data.count);
+				$("#rCartTotalM").html(data.total);
+				$("#rCartLoading").hide();
+				$("#rCartlist ul,#rCartlist p,#rCartlist h3").show();				
+			});
+		}
+		function removeCart(evt) {
+			var $this = $(this);
+			var cid = $this.attr("cid");
+			$.post("<?php echo U('Cart/remove', '', '');?>/" + cid, null, function(result) {
+				if(result.status == 0) {
+					$this.parent().remove();
+					oncarthover();
+				} else { // 失败
+					message.text("删除失败");
+				}
+			});
+		}
 	});
 </script>
 <!--end右侧导航-->

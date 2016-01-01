@@ -198,456 +198,93 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsDetail.css"/>
-<link rel="stylesheet" type="text/css" href="/Public/P/css/cloud-zoom.css"/>
-<script type="text/javascript" src="/Public/P/js/cloud-zoom.min.js"></script>
-<div class="Current_nav">
-	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
-	<span>&gt;</span>商品详情
-</div>
-<div class="show_content">
-	<!-- 商品期数 -->
-	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
-		<div class="period_Open">
-			<a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a>
-			
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/Lottery.css"/>
+<div class="Current_nav"><a href="/index.php/P">首页</a> &gt; 最新揭晓</div>
+<!--开奖列表开始-->
+<div class="Newpublish">
+	<div class="NewpublishL">
+		<div id="current" class="publish_Curtit">
+			<h1 class="fl">最新揭晓</h1>
+			<span id="spTotalCount">(到目前为止共揭晓商品<em class="orange"><?php echo ($total); ?></em>件)</span>
 		</div>
-		<ul class="Period_list">
-			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_1713527048__=$data['current'] - 1;$__FOR_END_1713527048__=0;for($i=$__FOR_START_1713527048__;$i > $__FOR_END_1713527048__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
-		</ul>
-	</div>
-	<script>
-		$("#btnOpenPeriod").click(function(){
-			var ui_obj = $("#divPeriodList li");
-			if($(this).attr("click")=='off'){
-				$("#divPeriodList").css("max-height",(Math.ceil(ui_obj.length / 9) * 33)+"px");	
-				$(this).attr("click","on");
-				$(this).html("收起<s></s>");
-				
-			}else{
-				$("#divPeriodList").css("max-height","99px");	
-				$(this).attr("click","off");
-				$(this).html("展开<i></i>");
-			}			
-		});
-	</script>	
-	<!-- 商品信息 -->
-	<div class="Pro_Details">
-		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><em><?php echo ($data["subtitle"]); ?></em></h1>
-		<div class="Pro_Detleft">
-			<div class="clould-zoom">
-				<div class="clould-zoom-big">
-					<img src="<?php echo ($firstImage["image_url"]); ?>" />
-					<div class="clould-zoom-bird-outter">
-						<div class="clould-zoom-bird"></div>
-					</div>
-				</div>
-				<div class="clould-zoom-view" style="background-image: url(<?php echo ($firstImage["image_url"]); ?>);"></div>
-				<div class="cloud-zoom-scroll">
-					<a class="colud-zoom-prev cloud-zoom-disabled"><i>&nbsp;</i></a>
-					<ul class="clould-zoom-list">
-						<?php if(is_array($images)): foreach($images as $key=>$item): ?><li class="cloud-zoom-item" ref="<?php echo ($item["image_url"]); ?>">
-							<img src="<?php echo ($item["image_url"]); ?>" />
-						</li><?php endforeach; endif; ?>
-						<li class="cloud-zoom-clear"></li>
-					</ul>
-					<a class="colud-zoom-next"><i>&nbsp;</i></a>
-				</div>
+		<div class="publishBor">
+			<div class="publishCen" id="listDivTitle">
+				<ul id="ProductList">
+					<?php if(is_array($list)): foreach($list as $key=>$item): ?><li class="Cursor">
+						<a class="fl goodsimg" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>" target="_blank" >
+							<img alt="" src="<?php echo ($item["thumb"]); ?>">
+						</a>
+						<div class="publishC-Member gray02">
+							<a class="fl headimg" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" >
+								<img id="imgUserPhoto" src="<?php echo ($item["img"]); ?>" width="50" height="50" border="0"/>
+							</a>
+							<p>获得者：<a class="blue Fb" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank"><?php echo ($item["username"]); ?></a></p>
+							<p>云购：<em class="orange Fb"><?php echo ($item["count"]); ?></em>人次</p>							
+						</div>
+						<div class="publishC-tit">
+							<h3><a href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>/<?php echo ($item["qishu"]); ?>" target="_blank" class="gray01">(第<?php echo ($item["qishu"]); ?>期)<?php echo ($item["title"]); ?></a></h3>
+							<p class="money">商品价值：<span class="rmb"><?php echo ($item["money"]); ?></span></p>
+							<p class="Announced-time gray02">揭晓时间：<?php echo ($item["end_time"]); ?></p>
+						</div>
+						<div class="details">
+							<p class="fl details-Code">幸运云购码：<em class="orange Fb"><?php echo ($data['prizecode'] + 10000001); ?></em></p>
+							<a class="fl details-A" href="<?php echo U('Index/view','','');?>/<?php echo ($item["gid"]); ?>/<?php echo ($item["qishu"]); ?>" rel="nofollow" target="_blank">查看详情</a>
+							
+						</div>
+					</li><?php endforeach; endif; ?>
+				</ul>
 			</div>
-			<script type="text/javascript">
-				$(function() {
-					$(".clould-zoom").cloudZoom();
-				});
-			</script>		
-			<?php if(data.lastprizer): ?><div class="Pro_GetPrize">	
-				<h2>上期获得者</h2>
-				<div class="GetPrize">				    
-					<dl>
-						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["lastprizer"]["img"]) && ($data["lastprizer"]["img"] !== ""))?($data["lastprizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
-						<dd class="gray02">
-							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["lastprizer"]["username"]); ?></a>获得了本商品</p>
-							<p>揭晓时间：<?php echo ($data["lastprizer"]["end_time"]); ?></p>
-							<p>云购时间：<?php echo ($data["lastprizer"]["record_time"]); ?></p>
-							<p>幸运云购码：<em class="orange Fb"><?php echo ($data['lastprizer']['prizecode']+10000001); ?></em></p>
-						</dd>
-					</dl>				
-				</div>
-			</div><?php endif; ?>
-		</div>
-		<div class="Pro_Detright">
-			<p class="Det_money">价值：<span class="rmbgray"><?php echo ($data["money"]); ?></span></p>
-			<?php if($data["status"] == 2): if(isset($data["prizer"])): ?><div class="Pro_GetPrize">		
-		<div class="GetPrize">				    
-			<dl>
-				<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["prizer"]["img"]) && ($data["prizer"]["img"] !== ""))?($data["prizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
-				<dd class="gray02">
-					<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
-					<p>揭晓时间：<?php echo ($data["prizer"]["end_time"]); ?></p>
-					<p>云购时间：<?php echo ($data["prizer"]["record_time"]); ?></p>
-					<p>幸运云购码：<em class="orange Fb"><?php echo ($data['prizer']['prizecode']+10000001); ?></em></p>
-				</dd>
-			</dl>				
-		</div>
-	</div>
-	<div id="divBuy" class="Det_button">
-		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
-	</div>
-<?php else: ?>
-<div class="Immediate">
-	<span style="left:10px;right:0px;">很遗憾，本期没有人参与</span>
-</div><?php endif; ?>
-			<?php else: ?>
-				<?php if(isset($end_time)): ?><div id="divLotteryTimer" class="Announced_Frame">
-		<div class="Announced_FrameTin">揭晓倒计时</div>
-		<div class="Announced_FrameCode">
-			<div class="Announced_FrameClock"><img src="/Public/P/images/Announced_Clock.gif" border="0" alt=""></div>
-				 <ul class="Announced_FrameClockMar">
-					<li id="liMinute1" class="Code_9">9<b></b></li>
-					<li id="liMinute2" class="Code_9">9<b></b></li>
-					<li class="Code_Point">:<b></b></li>
-					<li id="liSecond1" class="Code_9">9<b></b></li>
-					<li id="liSecond2" class="Code_9">9<b></b></li>
-					<li class="Code_Point">:<b></b></li>
-					<li id="liMilliSecond1" class="Code_9">9<b></b></li>
-					<li id="last" class="Code_9">9<b></b></li>
+			<?php if($num < $total): ?><div class="pagesx">
+				<ul id="Page_Ul">
+					<li id="Page_Total"><?php echo ($total); ?>条</li>
+					<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
+					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_1050623115__=$minPageNo;$__FOR_END_1050623115__=$pageNo;for($i=$__FOR_START_1050623115__;$i < $__FOR_END_1050623115__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<li class="Page_This"><?php echo ($pageNo); ?></li>
+					<?php $__FOR_START_915856368__=$pageNo+1;$__FOR_END_915856368__=$maxPageNo;for($i=$__FOR_START_915856368__;$i < $__FOR_END_915856368__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
+					<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>
-		</div>
-			<div class="Announced_FrameGet">
-				<p class="Announced_FrameLanguage"><img id="imgFunny" src="/Public/P/images/10.gif" border="0" alt=""></p>
-			</div>
-			<div class="Announced_FrameBm"></div>
-</div>
-		
-<div id="divLotteryTiming" class="Announced_Frame" style="display:none;">
-		<div class="Announced_FrameTin">正在计算</div>
-		<div class="Announced_FrameCal">
-			<p><img src="/Public/P/images/Announced_6.png" border="0" alt=""></p>
-			<span><img src="/Public/P/images/Announced_4.gif" border="0" alt=""></span>
-		</div>
-		<div class="Announced_FrameBm"></div>
-</div>
-<div id="span_a"></div>
-<div id="span_b"></div>
-		
-		
-<script type="text/javascript">	 
-	function show_date_time_location(){
-		window.setTimeout(function(){
-			$("#divLotteryTimer").hide();
-			$("#divLotteryTiming").show();	
-			//$.post("{WEB_PATH}/api/getshop/lottery_shop_set/",{"lottery_sub":"true","gid":{wc:$item['id']}},null);
-			//window.setTimeout(function(){window.location.href="{WEB_PATH}/dataserver/{wc:$item['id']}";},5000);
-		},1000);
-	}
-	function show_date_time(endTime,obj){	
-		if(!this.endTime){
-			this.endTime=endTime;this.obj=obj;
-		}
-		rTimeout = window.setTimeout("show_date_time()",30);	
-		timeold = this.endTime-(new Date().getTime());
-		if(timeold <= 0){		
-			$("#liMinute1").attr("class","Code_0");
-			$("#liMinute2").attr("class","Code_0");
-			$("#liSecond1").attr("class","Code_0");
-			$("#liSecond2").attr("class","Code_0");
-			$("#liMilliSecond1").attr("class","Code_0");
-			$("#last").attr("class","Code_0");	
-			rTimeout && clearTimeout(rTimeout);	
-			show_date_time_location();	
-			return;
-		}
-		sectimeold=timeold/1000
-		secondsold=Math.floor(sectimeold); 
-		msPerDay=24*60*60*1000
-		e_daysold=timeold/msPerDay 	
-		daysold=Math.floor(e_daysold); 				//天	
-		e_hrsold=(e_daysold-daysold)*24; 
-		hrsold=Math.floor(e_hrsold); 				//时
-		e_minsold=(e_hrsold-hrsold)*60;	
-		//分
-		minsold=Math.floor((e_hrsold-hrsold)*60);
-		minsold = (minsold<10?'0'+minsold:minsold)
-		minsold = new String(minsold);
-		minsold_1 = minsold.substr(0,1);
-		minsold_2 = minsold.substr(1,1);	
-
-		//秒
-		e_seconds = (e_minsold-minsold)*60;	
-		seconds=Math.floor((e_minsold-minsold)*60);
-		seconds = (seconds<10?'0'+seconds:seconds)
-		seconds = new String(seconds);
-		seconds_1 = seconds.substr(0,1);
-		seconds_2 = seconds.substr(1,1);	
-		//毫秒	
-		ms = e_seconds-seconds;
-		ms = new String(ms)
-		ms_1 = ms.substr(2,1);
-		ms_2 = ms.substr(3,1);
-		
-		$("#liMinute1").attr("class","Code_"+minsold_1);
-		$("#liMinute2").attr("class","Code_"+minsold_2);
-		$("#liSecond1").attr("class","Code_"+seconds_1);
-		$("#liSecond2").attr("class","Code_"+seconds_2);
-		$("#liMilliSecond1").attr("class","Code_"+ms_1);
-		$("#last").attr("class","Code_"+ms_2);
-		//this.obj.innerHTML=daysold+"天"+(hrsold<10?'0'+hrsold:hrsold)+"小时"+(minsold<10?'0'+minsold:minsold)+"分"+(seconds<10?'0'+seconds:seconds)+"秒."+ms;
-	}
-
-	$(function(){
-//		$.ajaxSetup({async:false});
-//		$.post("{WEB_PATH}/api/getshop/lottery_shop_get",{"lottery_shop_get":true,"gid":{wc:$item['id']},"times":Math.random()},function(sdata){	
-//			if(sdata!='no'){
-//				show_date_time((new Date().getTime())+(parseInt(sdata))*1000,null);
-//			}
-//		});
-		show_date_time(<?php echo (strtotime($data["end_time"])); ?> * 1000, null);
-	});
-</script>
-				<?php else: ?>
-					<div class="Progress-bar">
-	<p title="已完成<?php echo round($data['canyurenshu']*100 / $data['shengyurenshu'], 2);?>%"><span style="width:<?php echo ($data['canyurenshu']*100 / $data['shengyurenshu']); ?>%;"></span></p>
-	<ul class="Pro-bar-li">
-		<li class="P-bar01"><em><?php echo ($data["canyurenshu"]); ?></em>已参与人次</li>
-		<li class="P-bar02"><em id="CodeQuantity"><?php echo ($data["zongrenshu"]); ?></em>总需人次</li>
-		<li class="P-bar03"><em id="CodeLift"><?php echo ($data["shengyurenshu"]); ?></em>剩余人次</li>
-	</ul>
-</div>
-
-<?php if(empty($data['prizeuid']) AND empty($data['end_time']) AND $data['shengyurenshu'] == 0): ?><div class="Immediate">
-      <span style="left:10px;right:0px;">这个商品未揭晓成功,请联系客服手动揭晓！</span>  
-    </div><?php endif; ?>
-
- <!-- 限时揭晓 -->
-<?php if(isset($data["end_time"])): ?><div id="divAutoRTime" class="Immediate">
-	    <span><a class="orange" target="_blank" href="#">限时揭晓的规则？</a></span>
-	     <i id="timeall" endtime="<?php echo ($data["end_time"]); ?>" lxfday="no"></i>		                           
-	</div>
-<script type="text/javascript">			
-	function lxfEndtime(xsjx_time_shop,this_time){	
-		if(!this.xsjx_time_shop){
-			this.xsjx_time_shop = xsjx_time_shop;	
-			this.this_time		= this_time
-		}
-		this.this_time = this.this_time + 1000;
-		lxfEndtime_setTimeout  = window.setTimeout("lxfEndtime()",1000);				
-		var endtime = <?php echo (strtotime($data["end_time"])); ?>000;
-	    var youtime = endtime - this.this_time;	   	   //还有多久(毫秒值)
-		
-		var seconds = youtime/1000;
-		var minutes = Math.floor(seconds/60);
-		var hours = Math.floor(minutes/60);
-		var days = Math.floor(hours/24);
-		var CDay= days;
-		var CHour= hours % 24;
-		var CMinute= minutes % 60;
-		var CSecond= Math.floor(seconds%60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数							
-		this.xsjx_time_shop.html("<b>限时揭晓</b><p>剩余时间：<em>"+days+"</em>天<em>"+CHour+"</em>时<em>"+CMinute+"</em>分<em>"+CSecond+"</em>秒</p>");
-		delete youtime,seconds,minutes,hours,days,CDay,CHour, CMinute, CSecond;
-		if(endtime <= this.this_time){			
-			lxfEndtime_setTimeout && window.clearTimeout(lxfEndtime_setTimeout);					
-			this.xsjx_time_shop.html("<b>限时揭晓</b><p>正在计算中....</p>");//如果结束日期小于当前日期就提示过期啦	
-			xsjx_time_shop = this.xsjx_time_shop;
-			// 刷新页面
-			window.location.href = "<?php echo U('view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["qishu"]); ?>";
-		}							
-  	}			  
- 	$(function(){
- 		lxfEndtime($("#timeall"),<?php echo ($serverTime); ?>000);
- 	});
-</script><?php endif; ?>		
-<!-- 限时揭晓end -->
-
-<p class="Pro_Detsingle" style="font-size:14px;">云购价格：¥<b style="color:#999;"><?php echo ($data["danjia"]); ?></b></p>
-<?php if($data["xiangou"] > 0): ?><p class="Pro_Detsingle" style="font-size:14px;">限购次数：<b style="color:#999;"><?php echo ($data["xiangou"]); ?></b>人次</p><?php endif; ?>
-<div id="divNumber" class="Pro_number">
-	我要云购 
-	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
-	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
-	<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>人次 
-	<span id="chance" class="gray03">购买人次越多获得几率越大哦！</span>
-</div>
-<div style="display:none;" id="hqid"><?php echo ($data["gid"]); ?></div>
-<div id="divBuy" class="Det_button">
-	<a href="javascript:void(0);" class="Det_Shopbut">立即云购</a>
-	<a href="javascript:void(0);" class="Det_Cart add-cart" src="<?php echo ($data["thumb"]); ?>" gid="<?php echo ($data["gid"]); ?>"><i></i>加入购物车</a>							
-</div>
-<script type="text/javascript">
-	$(function() {
-		// 加减号
-		var shopsub = $("#shopsub").click(onamountchange);
-		var shopadd = $("#shopadd").click(onamountchange);
-		var input = $("#num_dig").change(onamountchange);
-		var chance = $("#chance");
-		var id = <?php echo ($data["gid"]); ?>;
-		var shengyu = <?php echo ($data["shengyurenshu"]); ?>;
-		var zongshu = <?php echo ($data["zongrenshu"]); ?>;
-		var xiangou = <?php echo ($data["xiangou"]); ?>;
-		function onamountchange() {
-			var $this = $(this);
-			var count = Number(input.val());
-			var flag = $this.is(shopadd) ? 1 : ($this.is(shopsub) ? -1 : 0);
-			
-			if(xiangou > 0 && (count + flag > xiangou)) {
-				return;
-			}
-			
-			if(count > shengyu) {
-				count = shengyu;
-			}
-			
-			if(flag == -1 && count <= 1) {
-				return;
-			}
-			
-			if(count < -1) {
-				input.val(1);
-				return;
-			}
-			count += flag;
-			input.val(count);
-			var jilv = (count * 100.0 / zongshu);
-			jilv = Math.round(jilv * 100.0) / 100.0;
-			chance.html("<span style='color:red'>获得机率"+jilv+"%</span>");
-		}
-		
-		// 立即云购
-		$(".Det_Shopbut").click(function() {
-			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>/" + Number(input.val()), null, function(result) {
-				window.location.href = "<?php echo U('Cart/index', '','');?>";
-			})
-		});
-	});
-</script><?php endif; endif; ?>
-			
-			<!--显示揭晓动画 end-->		
-			<div class="Security">
-				<ul>
-					<li><a href="{WEB_PATH}/help/4" target="_blank"><i></i>100%公平公正</a></li>
-					<li><a href="{WEB_PATH}/help/5" target="_blank"><s></s>100%正品保证</a></li>
-					<li><a href="{WEB_PATH}/help/7" target="_blank"><b></b>全国免费配送</a></li>
-				</ul>
-			</div>			
-			<?php if($data["status"] != 2): ?><div class="Pro_Record">
-				<ul id="ulRecordTab" class="Record_tit">
-					<li class="NewestRec Record_titCur">最新云购记录</li>
-					<li class="MytRec">我的云购记录</li>
-					<li class="Explain orange">什么是1元云购？</li>
-				</ul>
-				<div class="Newest_Con _hiden" style="">
-					<?php if(isset($records)): ?><ul>
-						<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank">
-							<img src="<?php echo ((isset($item["img"]) && ($item["img"] !== ""))?($item["img"]):'/Public/P/images/member.png'); ?>" border="0" alt="" width="20" height="20">
-						</a>					
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
-						<!-- todo: IP -->			
-						<?php echo ($item["time"]); ?> 云购了
-						<em class="Fb gray01"><?php echo ($item["count"]); ?></em>人次</li><?php endforeach; endif; ?>
-					</ul>
-					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>
-					<?php else: ?>
-					<p style="">暂时没有人购买</p><?php endif; ?>
-				</div>
-				
-				<!--我的云购记录-->
-				<div class="My_Record _hiden" style="display: none;">
-					<?php if(isset($myrecords)): ?><ul>				
-						<?php if(is_array($myrecords)): foreach($myrecords as $key=>$item): ?><li><?php echo ($item["time"]); ?>  云购了  <?php echo ($item["count"]); ?>  个云购码</li><?php endforeach; endif; ?>
-					</ul>
-					<?php else: ?>				
-					<div class="My_RecordReg">
-						<b class="gray01">看不到？是不是没登录或是没注册？ 登录后看看</b>
-						<a href="<?php echo U('Main/login');?>" class="My_Signbut">登录</a><a href="<?php echo U('Main/register');?>" class="My_Regbut">注册</a>
-					</div><?php endif; ?>	
-				</div>
-				<!--/我的云购记录-->
-				<div class="Newest_Con _hiden" style="display: none;">
-					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="<?php echo U('Help/index');?>/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
-				</div>
 			</div><?php endif; ?>
 		</div>
 	</div>
-</div>
-<!-- 商品信息导航 -->
-<div class="ProductTabNav">
-	<div id="divProductNav" class="DetailsT_Tit">
-		<div class="DetailsT_TitP">
-			<ul>
-				<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">商品详情</span></li>
-				<li id="liUserBuyAll" class="All_RecordT"><span class="">所有参与记录</span></li>
-				<li class="Single_ConT"><span class="">晒单</span></li>
-			</ul>
-			<!-- <p><a id="btnAdd2Cart" href="javascript:;" class="white DetailsT_Cart"><s></s>加入购物车</a></p> -->
+	<div class="NewpublishR">
+		<div class="Newpublishbor">
+			<div class="Rtitle gray01">TA们正在云购 </div>
+			<div class="Rcenter buylistH">
+				<ul id="buyList" style="margin-top: 0px;">
+					<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
+						<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank" class="pic">
+							<img id="imgUserPhoto" src="<?php echo ((isset($item["thumb"]) && ($item["thumb"] !== ""))?($item["thumb"]):'/Public/P/images/prmimg.png'); ?>" width="50" height="50" border="0"/>
+						</a>
+						<p class="Rtagou"><a class="blue" href="<?php echo U('Person/index');?>/<?php echo ($item["uid"]); ?>" target="_blank"><?php echo ($item["username"]); ?></a>刚刚云购了</p>
+						<p class="Rintro"><a class="gray01" href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank"><?php echo ($item["title"]); ?></a></p>
+					</li><?php endforeach; endif; ?>
+				</ul>
+			</div>
+		</div>
+		<div class="blank10"></div>
+		<div class="Newpublishbor">
+			<div class="Rtitle gray01">人气排行 </div>
+			<div class="Rcenter RcenterPH">
+				<ul class="RcenterH" id="RcenterH">						
+					<?php if(is_array($renqi)): foreach($renqi as $key=>$item): ?><li>
+						<div name="simpleinfo">
+							<span class="pic">
+								<a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank">
+									<img src="<?php echo ($item["thumb"]); ?>">
+								</a>
+							</span>
+							<p class="Rintro gray01"><a href="<?php echo U('Index/view');?>/<?php echo ($item["gid"]); ?>" target="_blank"><?php echo ($item["title"]); ?></a></p>
+							<p><i>剩余人次</i><em><?php echo ($item["shengyurenshu"]); ?></em></p>
+						</div>
+					</li><?php endforeach; endif; ?>
+				</ul>
+			</div>
 		</div>
 	</div>
+	<div class="clear"></div>
 </div>
-
-<!--补丁3.1.6_b.0.1-->
-<div id="divContent" class="Product_Content">
-	<!-- 商品内容 -->
-	<div class="Product_Con"><?php echo ($data["content"]); ?></div>
-    <!-- 商品内容 -->
-    
-    <!-- 购买记录20条 -->
-	<div id="bitem" class="AllRecordCon">
-		<iframe id="iframea_bitem" g_src="{WEB_PATH}/go/goods/go_record_ifram/{wc:$itemid}/20" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>		
-	</div>	
-   <!-- /购买记录20条 -->
-    
-	<!-- 晒单 -->
-	<div id="divPost" class="Single_Content">
-		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>
-	</div>
-    <!-- 晒单 -->	
-</div>
-<!--补丁3.1.6_b.0.1-->
-
-
-<script type="text/javascript">
-function set_iframe_height(fid,did,height){	
-	$("#"+fid).css("height",height);	
-}
-
-$(function(){
-	$("#ulRecordTab li").click(function(){
-		var add=$("#ulRecordTab li").index(this);
-		$("#ulRecordTab li").removeClass("Record_titCur").eq(add).addClass("Record_titCur");
-		$(".Pro_Record ._hiden").hide().eq(add).show();
-	});
-	
-	var DetailsT_TitP = $(".DetailsT_TitP ul li");
-	var divContent    = $("#divContent div");	
-	DetailsT_TitP.click(function(){
-		var index = $(this).index();
-			DetailsT_TitP.removeClass("DetailsTCur").eq(index).addClass("DetailsTCur");
-	
-			var iframe = divContent.hide().eq(index).find("iframe");
-			if (typeof(iframe.attr("g_src")) != "undefined") {
-			  	 iframe.attr("src",iframe.attr("g_src"));
-				 iframe.removeAttr("g_src");
-			}
-			divContent.hide().eq(index).show();
-	});
-	
-	
-	$("#btnUserBuyMore").click(function(){
-		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
-		
-		$("#divContent .hide").hide().eq(1).show();
-		$("html,body").animate({scrollTop:941},1500);
-		$("#divProductNav").addClass("nav-fixed");
-	});
-	$(window).scroll(function(){
-		if($(window).scrollTop()>=941){
-			$("#divProductNav").addClass("nav-fixed");
-		}else if($(window).scrollTop()<941){
-			$("#divProductNav").removeClass("nav-fixed");
-		}
-	});
-});
-</script> 
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

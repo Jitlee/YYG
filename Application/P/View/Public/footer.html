@@ -136,15 +136,26 @@
 <div id="divRighTool" class="quickBack" style="display: block;bottom: 60px;right: 0px;">
 	<dl class="quick_But">
 		<dd id="divRigCart" class="quick_cart" style="">
-			<a id="btnMyCart" href="{WEB_PATH}/member/cart/cartlist" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count">{:session('cartCount')}</span></em></a>
+			<a id="btnMyCart" href="{:U('Cart/index')}" target="_blank" class="quick_cartA"><b>购物车</b><s></s><em><span class="cart-count">{:session('cartCount')}</span></em></a>
 			<div style="display: none;" id="rCartlist" class="Roll_mycart">
-				<ul style="display: none;"></ul>
+				<ul style="display: none;">
+				</ul>
+				<li id="roolCartTemplate" style="display: none;">
+					<a href="javascript:void(0);" title="删除" class="Close"></a>
+					<a class="link"><img class="img"></a>
+					<span class="orange renci"></span>人次
+				</li>
+				<li id="roolCartMore" class="Roll_CartMore" style="display: none;">
+					<a target="_blank" title="查看更多" href="'.WEB_PATH.'/member/cart/cartlist">
+						更多<i>&gt;</i>
+					</a>
+				</li>
 				<div class="quick_goods_loding" id="rCartLoading">
-					<img border="0" alt="" src="{G_TEMPLATES_STYLE}/images/goods_loading.gif">正在加载......
+					<img border="0" alt="" src="__IMG__/goods_loading.gif">正在加载......
 				</div>
 				<p id="p1" style="display: none;">共计<span id="rCartTotal2">0</span> 件商品 金额总计：<span class="rmbgray" id="rCartTotalM">0</span></p>
 				<h3 style="display: none;">
-							<a target="_blank" href="{WEB_PATH}/member/cart/cartlist"
+							<a target="_blank" href="{:U('Cart/index', '', '')}"
 								class="orange_btn">去购物车结算</a>
 						</h3>
 			</div>
@@ -221,6 +232,65 @@
 				}
 			})
 		});
+		
+		
+		// 购物车
+		$(".quick_cart").hover(oncarthover,
+			function(){
+				$("#rCartlist,#rCartlist ul,#rCartlist p,#rCartlist h3").hide();
+			}
+		);
+		$("#rGotoCart").click(function(){
+			window.location.href="{:U('Cart/index')}";
+		});
+		
+		function oncarthover(){			
+			$("#rCartlist,#rCartLoading").show();
+			$("#rCartlist p,#rCartlist h3").hide();
+			$("#rCartTotal2").html("");
+			$("#rCartTotalM").html("");
+			var listUL = $("#rCartlist ul");
+			var roolCartTemplate = $("#roolCartTemplate");
+			var roolCartMore = $("#roolCartMore").hide();
+			listUL.html("");
+			$.getJSON("{:U('Cart/box', '','')}",function(data){
+				if(data.count > 0) {
+					for(var i = 0, len = data.list.length; i < len; i++) {
+						var item = data.list[i];
+						var li = roolCartTemplate.clone().removeAttr("id").show();
+						li.appendTo(listUL);
+						$(".Close", li).attr("cid", item.id).click(removeCart);
+						$(".img", li).attr("src", item.good.thumb);
+						$(".renci", li).text(item.count);
+						$(".link", li).attr("href", "{:U('Index/view', '', '')}/" + item.gid)
+							.attr("title", item.good.title);
+					}
+					if(data.count > 7) {
+						roolCartMore.clone().show().appendTo(listUL);
+					}
+				}
+				$("#rCartTotal2").html(data.count);
+				$("#rCartTotalM").html(data.total);
+				$("#rCartLoading").hide();
+				$("#rCartlist ul,#rCartlist p,#rCartlist h3").show();				
+			});
+		}
+		function removeCart(evt) {
+			var $this = $(this);
+			var cid = $this.attr("cid");
+			$.post("{:U('Cart/remove', '', '')}/" + cid, null, function(result) {
+				if(result.status == 0) {
+					$this.parent().remove();
+					countCart(-1);
+					oncarthover();
+					if(window.removeCart) {
+						window.removeCart(cid);
+					}
+				} else { // 失败
+					message.text("删除失败");
+				}
+			});
+		}
 	});
 </script>
 <!--end右侧导航-->
