@@ -3,11 +3,51 @@ namespace P\Controller;
 use Think\Controller;
 class MainController extends Controller {
 		
-	public function register(){    	
-    	$this->assign('title', '一元购');
-		$this->display();
+	public function register(){
+		if(IS_POST) {
+			$_POST['password'] = md5($_POST['password']);
+			$db = M('member');
+			$data['mobile'] = $_POST['mobile'];
+			$records = $db->where($data)->find();
+			
+			$result["status"]=0;
+			$result["msg"]="操作成功。";
+			if(!$records)
+			{
+				$_POST['img']='tx/211274314672928.jpg';
+				$db->create();
+				if($db->add() != false) {
+					session('registerMobile', $_POST['mobile']);
+					$result["status"]=1;
+				} 
+				else 
+				{
+					$result["msg"]='数据错误';
+				}
+			}
+			else
+			{
+				$result["msg"]='手机号已经注册。';
+			}
+			$this->ajaxReturn($result);	
+    	} else  {
+	    	$this->assign('title', '一元购');
+			$this->display();
+		}
     }
-	
+	public function mobilecheck()
+	{
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="登录成功。";
+    	} else  {
+			$this->assign('enname', session('registerMobile'));
+			$this->assign('namestr',session('registerMobile'));
+			
+			$this->assign('time', 60);
+			$this->display();
+		}
+	}
 	public function login(){
 		if(IS_POST) {
 			$result["status"]=0;
@@ -56,6 +96,7 @@ class MainController extends Controller {
 		}
     }
 
+	
 	public function cook_end(){
 		session('loginstatus', 0);
 		$this->redirect('Index/index');

@@ -222,15 +222,11 @@
 <!-- 底部版权 -->
 <div class="g-frame copyright">
 	<div class="footer_links">
-		<b></b>
-		<a href="<?php echo U('Help/index', '', '');?>/1">关于云购</a>
-		<b></b>
-		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a>
-		<b></b>
-		<a href="http://localhost:9999/?/link">友情链接</a>
-		<b></b>
-		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a>
-		<b></b>		</div>
+		<a href="<?php echo U('Index/index', '', '');?>">首页</a><b></b>
+		<a href="<?php echo U('Help/index', '', '');?>/1">关于云购</a><b></b>
+		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
+		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
+	</div>
 	<div class="copyright">
 		Copyright © 2011 - 2015 </div>
 	<div class="footer_icon">

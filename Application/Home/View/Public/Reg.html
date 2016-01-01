@@ -39,7 +39,6 @@
 			return false;
 			function success(data) {
 				if (data.status) {
-					//layer.alert(data.msg);
 					window.location.href = "{:U('Person/me','','')}";
 				} else {
 					layer.alert(data.msg);
