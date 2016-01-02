@@ -185,166 +185,121 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
-<div class="left">
-	<div class="head">
-		<a href="#" target="_blank">			
-			<img id="imgUserPhoto" src="<?php echo get_user_img();?>" width="160" height="160" border="0"/>			
-		</a>
-	</div>
-	<div class="head-but">
-		<a href="<?php echo U('Home/userphoto', '', '');?>" class="blue">修改头像</a>
-		<a href="<?php echo U('Home/modify', '', '');?>" class="blue fr">编辑资料</a>
-	</div>
-	<div class="sidebar-nav">
-		<p class="sid-line"></p>
-		<h2 id="wdwzg" class="sid-icon01"><a href="<?php echo U('Home/index', '', '');?>"><b></b>我的</a></h2>
-		<p class="sid-line"></p>
-		<h3 id="grsz" class="sid-icon09" ><a href="<?php echo U('Home/modify', '', '');?>"><b></b>个人设置</a></h3>		
-		<p class="sid-line"></p>
-		<h3 class="sid-icon02">
-			<a href="javascript:void();"><b></b>我的云购 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="zgjl" class=""><a href="<?php echo U('Home/userbuylist', '', '');?>">云购记录</a></li>
-			<li id="hddsp" class=""><a href="<?php echo U('Home/orderlist', '', '');?>">获得的商品</a></li>
-			<li id="sd" class=""><a href="<?php echo U('Home/singlelist', '', '');?>">晒单</a></li>
-		</ul>
-		
-		
-		<p class="sid-line"></p>
-		<h3 class="sid-icon04 " >
-			<a href="javascript:void();"><b></b>邀请管理 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="yqhy" class=""><a href="<?php echo U('Home/invitefriends', '', '');?>">邀请好友</a></li>
-			<!--<li id="yjmx" class=""><a href="<?php echo U('Home/commissions', '', '');?>">佣金明细</a></li>-->
+	
+<link rel="stylesheet" type="text/css" href="/Public/P/css/Detail.css"/>
+<!--晒单详情-->
+<div class="Current_nav">
+	<a href="{WEB_PATH}">首页</a> &gt; <a href="#">晒单分享</a> &gt; 晒单详请</div>
+<div class="share_box" id="loadingPicBlock">
+	<div id="DCMainLeft" class="share_box_left">
+		<div class="share_main">
+			<!--用户晒单部分-->
+			<div class="share_title">
+				<h3><?php echo ($sditem["title"]); ?></h3>
+				<div class="share_time">
+					晒单时间：<span><?php echo ($sditem["time"]); ?></span></div>
+			</div>
+			<div class="share_goods">
+				<div class="share-get">
+					
+				<b class="sh_num" style="width: 67px;  height: 36px;  display: inline-block;background-position: 0 0;  position: absolute;  right: 2px;  top: 0;  color: #fff;  padding-top: 13px;  text-align: center;  font-size: 16px;  font-family: Arial;background: url({G_UPLOAD_PATH}/sdLevel/share_single.png) no-repeat;
+">{wc:$shaidan['sd_jlfufen']}</b>
+					
+					<a class="fl-img" href="#" target="_blank"><img src="/Public/Home/images/<?php echo ($oldgoods["prizer"]["img"]); ?>"></a>
+					<div class="share-getinfo">
+						<p class="getinfo-name">幸运获得者：<a class="blue Fb" href="#" target="_blank"><?php echo ($oldgoods["prizer"]["username"]); ?></a></p>
+						<p>总共云购：<b class="orange"><?php echo ($oldgoods["prizer"]["count"]); ?></b>人次</p>	
+						<p>幸运云购码：<?php echo ($oldgoods["prizecode"]); ?></p>
+						<p>揭晓时间：<?php echo ($oldgoods["end_time"]); ?></p> 
+					</div>
+				</div>
+				<div class="share-Conduct">
+					<div class="arrow arrow_Rleft"><em>◆</em><span>◆</span></div>
+					<a class="fl-img" href="#" target="_blank">
+					<img src="<?php echo ($cgoods["thumb"]); ?>" border="0"></a>
+					<div class="share-getinfo">
+						<p class="getinfo-title"><a class="gray01" href="#" target="_blank">(第<?php echo ($cgoods["qishu"]); ?>期)<?php echo ($cgoods["title"]); ?></a></p>
+						<p>价值：￥<?php echo ($cgoods["money"]); ?></p>
+						<p id="GoToBuy"><a class="getbut-a" href="#" target="_blank">
+							第<?php echo ($cgoods["qishu"]); ?>期正在进行中...
+						</span></a></p>
+					</div>
+				</div> 
+			</div>
 			
-		</ul>
-		<p class="sid-line"></p>		
-		<h3 class="sid-icon05 " >
-			<a href="javascript:void();"><b></b>账户管理 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="zhmx" class=""><a href="<?php echo U('Home/userbalance', '', '');?>">账户明细</a></li>
-			<li id="zhcz" class=""><a href="<?php echo U('Home/userrecharge', '', '');?>">账户充值</a></li>
-			<li id="sqtx" class=""><a href="<?php echo U('Home/cashout', '', '');?>">申请提现</a></li>
-			<li id="txjl" class=""><a href="<?php echo U('Home/record', '', '');?>">提现记录</a></li>
-		</ul>
-		<p class="sid-line"></p>
-		<h3 id="wdff" class="sid-icon07" hasChild="0" url=""><a href="<?php echo U('Home/userscore', '', '');?>"><b></b>我的积分</a></h3>
-
+			<div class="share_content">
+				<div><?php echo ($content); ?></div>				 
+				<p><img src="<?php echo ($sditem["thumbs"]); ?>" border="0"></p>
+			</div>
+			<!--用户晒单部分结束-->
+			<!-- 分享按钮 -->
+			<div class="mood">
+				<div class="moodwm">
+					<div class="moodm hidden" style="display: block;">
+						 <span class="smile" id="emHits"><i></i><b>羡慕嫉妒恨(<em><?php echo ($sditem["zan"]); ?></em>)</b></span>
+						 <span class="much"> <i></i>评论(<em id="emReplyCount"><?php echo ($sditem["ping"]); ?></em>)</span>
+					</div>
+					<div class="share">
+						<span class="fen">分享到：</span>						
+						<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+						<a class="bds_qzone"></a>
+						<a class="bds_tsina"></a>
+						<a class="bds_tqq"></a>
+						<a class="bds_renren"></a>
+						<a class="bds_t163"></a>
+						<span class="bds_more"></span>
+						</div>
+						<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=671207" ></script>
+						<script type="text/javascript" id="bdshell_js"></script>
+						<script type="text/javascript">
+						document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+						</script>
+					</div>
+				</div>
+			</div>
+		</div>		
+		<!--用户评论部分结束-->
 	</div>
-	<div class="sid-service">
-		<p>
-			<a href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo config('qq');?>&site=qq&menu=yes" target="_blank" class="service-btn">
-				<s></s><img border="0" src="images/pa" style="display:none;">在线客服
-			</a>
-		</p>
-		<span>客服热线</span>
-		<b class="tel"><?php echo config('cell');?></b>
-	</div>
-</div>
-<script type="text/javascript">
-var _NavState = [true, true, true, true, true];  
-$("div.sidebar-nav").find("h3").each(function(i,v){
-	var _This = $(this);
-	var _HasClild = _This.attr("hasChild")=="1"; 
-	var _SObj = _This.find("s");
-	_This.click(function(e){
-		if(_HasClild){
-			var _State = _NavState[i];                
-			/* 一级栏目更改样式 */
-			if(_State){
-				_This.addClass("sid-iconcur");
-				_SObj.attr("title","展开");
-			}
-			else {
-				_This.removeClass("sid-iconcur");
-				_SObj.attr("title","收起");
-			}                
-			/* 二级栏目显示或隐藏 */
-			_This.next("ul").children().each(function(){
-				if(_State){
-					$(this).hide(50);
-				}
-				else {
-					$(this).show(50);
-				}
-			});
-			_NavState[i] = !_State;
-		}
-	});
-});   
-</script>
-
-<!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
-			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
+	<!--晒单左侧结束-->
+	<!--晒单右侧-->
+	<div class="Comment_right" id="PostDetailRight">
+		<div class="Comment_victory">
+ 
+		<div class="Comment_share">
+			<h4>最新晒单</h4>			
+			<?php if(is_array($newitem)): foreach($newitem as $key=>$c): ?><div class="New-single">
+					<p class="New-single-time"><a class="blue" href="#" target="_blank"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></p>
+					<p class="New-single-C"><a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a></p>
+					<div class="New-singleImg"><div class="arrow arrow_Rleft"><em>◆</em></div>
+						<a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank">
+							<img border="0" src="<?php echo ($c["thumbs"]); ?>">
+						</a>
+					</div>
+				</div><?php endforeach; endif; ?>
 		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
+		</div>
 	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
-	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
 </div>
-<!--center_rjght_end-->
+<script>
+$(function(){
+	if($.cookie('xianmu')==<?php echo ($sditem["sid"]); ?>){
+		$("#emHits").addClass("smile-have");
+		return false;
+	}
+	$("#emHits").click(function(){		
+		$.post(
+			"<?php echo U('Saidan/xianmu', '', '');?>",
+			{id:"<?php echo ($sditem["sid"]); ?>"},
+			function(data){
+				$("#emHits em").text(data);
+				$("#emHits").addClass("smile-have");
+				$.cookie("xianmu","<?php echo ($sditem["sid"]); ?>", { expires:7,path: '/'});
+			}
+		);
+	})
+})
+</script>
 
-</div>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

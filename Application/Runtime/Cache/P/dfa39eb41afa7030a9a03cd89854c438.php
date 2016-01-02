@@ -185,166 +185,45 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
-<div class="left">
-	<div class="head">
-		<a href="#" target="_blank">			
-			<img id="imgUserPhoto" src="<?php echo get_user_img();?>" width="160" height="160" border="0"/>			
-		</a>
-	</div>
-	<div class="head-but">
-		<a href="<?php echo U('Home/userphoto', '', '');?>" class="blue">修改头像</a>
-		<a href="<?php echo U('Home/modify', '', '');?>" class="blue fr">编辑资料</a>
-	</div>
-	<div class="sidebar-nav">
-		<p class="sid-line"></p>
-		<h2 id="wdwzg" class="sid-icon01"><a href="<?php echo U('Home/index', '', '');?>"><b></b>我的</a></h2>
-		<p class="sid-line"></p>
-		<h3 id="grsz" class="sid-icon09" ><a href="<?php echo U('Home/modify', '', '');?>"><b></b>个人设置</a></h3>		
-		<p class="sid-line"></p>
-		<h3 class="sid-icon02">
-			<a href="javascript:void();"><b></b>我的云购 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="zgjl" class=""><a href="<?php echo U('Home/userbuylist', '', '');?>">云购记录</a></li>
-			<li id="hddsp" class=""><a href="<?php echo U('Home/orderlist', '', '');?>">获得的商品</a></li>
-			<li id="sd" class=""><a href="<?php echo U('Home/singlelist', '', '');?>">晒单</a></li>
-		</ul>
-		
-		
-		<p class="sid-line"></p>
-		<h3 class="sid-icon04 " >
-			<a href="javascript:void();"><b></b>邀请管理 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="yqhy" class=""><a href="<?php echo U('Home/invitefriends', '', '');?>">邀请好友</a></li>
-			<!--<li id="yjmx" class=""><a href="<?php echo U('Home/commissions', '', '');?>">佣金明细</a></li>-->
-			
-		</ul>
-		<p class="sid-line"></p>		
-		<h3 class="sid-icon05 " >
-			<a href="javascript:void();"><b></b>账户管理 <s title="收起"></s></a>
-		</h3>
-		<ul>
-			<li id="zhmx" class=""><a href="<?php echo U('Home/userbalance', '', '');?>">账户明细</a></li>
-			<li id="zhcz" class=""><a href="<?php echo U('Home/userrecharge', '', '');?>">账户充值</a></li>
-			<li id="sqtx" class=""><a href="<?php echo U('Home/cashout', '', '');?>">申请提现</a></li>
-			<li id="txjl" class=""><a href="<?php echo U('Home/record', '', '');?>">提现记录</a></li>
-		</ul>
-		<p class="sid-line"></p>
-		<h3 id="wdff" class="sid-icon07" hasChild="0" url=""><a href="<?php echo U('Home/userscore', '', '');?>"><b></b>我的积分</a></h3>
-
-	</div>
-	<div class="sid-service">
-		<p>
-			<a href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo config('qq');?>&site=qq&menu=yes" target="_blank" class="service-btn">
-				<s></s><img border="0" src="images/pa" style="display:none;">在线客服
-			</a>
-		</p>
-		<span>客服热线</span>
-		<b class="tel"><?php echo config('cell');?></b>
-	</div>
-</div>
-<script type="text/javascript">
-var _NavState = [true, true, true, true, true];  
-$("div.sidebar-nav").find("h3").each(function(i,v){
-	var _This = $(this);
-	var _HasClild = _This.attr("hasChild")=="1"; 
-	var _SObj = _This.find("s");
-	_This.click(function(e){
-		if(_HasClild){
-			var _State = _NavState[i];                
-			/* 一级栏目更改样式 */
-			if(_State){
-				_This.addClass("sid-iconcur");
-				_SObj.attr("title","展开");
-			}
-			else {
-				_This.removeClass("sid-iconcur");
-				_SObj.attr("title","收起");
-			}                
-			/* 二级栏目显示或隐藏 */
-			_This.next("ul").children().each(function(){
-				if(_State){
-					$(this).hide(50);
-				}
-				else {
-					$(this).show(50);
-				}
-			});
-			_NavState[i] = !_State;
-		}
-	});
-});   
-</script>
-
-<!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
-			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/Help.css"/>
+<div class="help-main">
+	<div id="ltlContents" class="help-right-part">
+		<div class="help-right-part">
+			<div class="help-in-rihgt-part">
+				<h2><?php echo ($data["articletitle"]); ?></h2>
+				<style>
+				.help-nav ul li a.cur{wc:$article['id']}{color:#f60;  position:relative; font-weight:bold;}
+				.help-nav ul li a.cur{wc:$article['id']} b{width:4px; height:4px; overflow:hidden; background:#f60; display:inline-block; position:absolute; left:-10px; top:5px;}
+				</style>
+				<div class="help-content">
+					<?php echo ($data["content"]); ?>
+				</div>
+			</div>
 		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
 	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
+	<div class="help-left-part">
+		<div class="help-nav">
+			<h3>帮助中心</h3>	
+			 
+			<?php if(is_array($catList)): foreach($catList as $key=>$c): ?><h4><?php echo ($c["catname"]); ?></h4>
+				<ul>
+					<?php echo ($c["html"]); ?>
+				</ul>
+				<div class="hackbox"></div><?php endforeach; endif; ?>
+		</div>
+		<div class="help-contact">
+			<p>如果不能在帮助内容中找到答案，或者您有其他建议、投诉，您还可以：</p>
+			<ul>
+				<li class="CustomerCon"><a href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo config('qq');?>&site=qq&menu=yes" target="_blank" class="Customer"><span></span>在线客服</a></li>
+				<li>电话客服热线(免长途费)</li>
+				<li class="tel"><span><?php echo config('cell');?></span></li>
+			</ul>
+		</div>
 	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
 </div>
-<!--center_rjght_end-->
 
-</div>
+
+
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

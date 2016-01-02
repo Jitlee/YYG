@@ -8,17 +8,11 @@ class CategoryController extends CommonController {
 		$this->assign('type', $type);
 		
 		$this->assign('now', time());
+		$title = '全部商品';
 		
 		// 所有分类
 		$cdb = D('category');
-		$map = array();
-		if($type == 1) {
-			$map['jishijiexiao'] = array('eq', 0);
-		} else if($type == 2) {
-			$map['jishijiexiao'] = array('lt', 0);
-		}
-		$categories = $cdb->where($map)->relation(true)->select();
-		
+		$categories = $cdb->relation(true)->select();
 		$brands = null;
 		if($cid > 0) {
 			foreach($categories as $c) {
@@ -46,6 +40,13 @@ class CategoryController extends CommonController {
 		}
 		if($bid > 0) {
 			$mmap['bid'] = $bid;
+		}
+		if($type == 1) {
+			$mmap['jishijiexiao'] = array('eq', 0);
+			$title = "热门商品";
+		} else if($type == 2) {
+			$mmap['jishijiexiao'] = array('lt', 0);
+			$title = "即将揭晓";
 		}
 		
 		$order = 'time desc';
@@ -93,7 +94,7 @@ class CategoryController extends CommonController {
 		$this->assign('num', $num);
 		$this->assign('total', $total);
 		
-    	$this->assign('title', '全部商品');
+    		$this->assign('title', $title);
 		$this->display();
     }	
 }

@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
 	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	 
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
@@ -227,31 +226,17 @@ window.onerror=function(){return true;}
 	    <dl>
 		    <dt>排序</dt>
 		    <dd>
-<<<<<<< Updated upstream
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/0" <?php if($sort == 0): ?>class="SortCur"<?php endif; ?>>最新</a>
-			    	<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/1" <?php if($sort == 1): ?>class="SortCur"<?php endif; ?>>即将揭晓</a>
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/2" <?php if($sort == 2): ?>class="SortCur"<?php endif; ?>>人气</a>
-		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/3" <?php if($sort == 3): ?>class="SortCur"<?php endif; ?>>剩余人次</a>
-		        <?php if($sort == 4): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/5" class="Price_Sort SortCur">价格 <i></i></a>
-=======
 		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/0" <?php if($sort == 0): ?>class="SortCur"<?php endif; ?>>最新</a>
 			    	<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/1" <?php if($sort == 1): ?>class="SortCur"<?php endif; ?>>即将揭晓</a>
 		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/2" <?php if($sort == 2): ?>class="SortCur"<?php endif; ?>>人气</a>
 		        <a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/3" <?php if($sort == 3): ?>class="SortCur"<?php endif; ?>>剩余人次</a>
 		        <?php if($sort == 4): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/5" class="Price_Sort SortCur">价格 <i></i></a>
->>>>>>> Stashed changes
 		        	<?php elseif($sort == 5): ?>
 		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort SortCur">价格 <s></s></a>
 		        	<?php else: ?>
-<<<<<<< Updated upstream
-		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort">价格 <s></s></a><?php endif; ?>
-	        </dd>
-	    </dl>
-=======
 		        		<a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/4" class="Price_Sort">价格 <s></s></a><?php endif; ?>
 	        </dd>
 	    </dl>
->>>>>>> Stashed changes
 	</div>
 	
 	<?php if(isset($list)): ?><!--商品列表-->
@@ -294,9 +279,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_568135950__=$minPageNo;$__FOR_END_568135950__=$pageNo;for($i=$__FOR_START_568135950__;$i < $__FOR_END_568135950__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_125720849__=$minPageNo;$__FOR_END_125720849__=$pageNo;for($i=$__FOR_START_125720849__;$i < $__FOR_END_125720849__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_1309764075__=$pageNo+1;$__FOR_END_1309764075__=$maxPageNo+1;for($i=$__FOR_START_1309764075__;$i < $__FOR_END_1309764075__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_1779997741__=$pageNo+1;$__FOR_END_1779997741__=$maxPageNo+1;for($i=$__FOR_START_1779997741__;$i < $__FOR_END_1779997741__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($type); ?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -372,8 +357,7 @@ window.onerror=function(){return true;}
 		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
 		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
 	</div>
-	<div class="copyright">
-		Copyright © 2011 - 2015 </div>
+	<div class="copyright"><?php echo config("web_copyright");?> </div>
 	<div class="footer_icon">
 		<a href="" target="_blank" class="fi_ectrustchina"></a>
 		<a href="" target="_blank" class="fi_315online"></a>

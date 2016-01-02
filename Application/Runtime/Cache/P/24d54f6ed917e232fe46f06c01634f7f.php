@@ -185,9 +185,29 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
+	<link rel="stylesheet" href="/Public/P/css/uploadify.css" type="text/css"> 
+<script type="text/javascript" charset="utf-8" src="/Public//UEditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/Public//UEditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="/Public/Static/js/jquery.uploadify.min.js"></script>
+<style type="text/css">
+	.R-content .sd_lilie{display:block; width:780px; margin:10px 0 10px 0; float:left;}
+	.R-content .sd_lilie .sd_span{font-size:14px; float:left; display:block;width:70px;}
+	#sd_text{border:1px solid #ccc; width:450px; height:30px; padding:0 0 0 5px;}
+	.button{ margin:5px 0 0 0; float:left;padding:3px 7px; float:left; border-right:1px solid #666; border-bottom:1px solid #666;}
+	.fileWarp{ width:710px;  float:left;}
+	.fileWarp ul li{ float:left;  margin-right:10px;}
+	.fileWarp ul li a{ display:block; height:25px; width:100px; text-align:center; background-color:#eee; color:#f60;line-height:25px;}
+	
+	.content_attr {
+		border: 1px solid #CCC;
+		padding: 5px 8px;
+		background: #FFC;
+		margin-top: 6px;
+		width:915px;
+	}
+</style>
+<div class="main-content clearfix">
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
 <div class="left">
 	<div class="head">
 		<a href="#" target="_blank">			
@@ -281,70 +301,108 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 </script>
 
 <!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
-			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
+	<div class="R-content">
+		<div class="member-t"><h2>添加晒单</h2>
+			<a style="float:right;" href="<?php echo U('Home/singlelist', '', '');?>" class="blue">返回晒单</a>
 		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
+		<form  action="#" method="post">	
+				<input type="hidden" id="gid" name="gid" value="<?php echo ($gid); ?>" />
+				<input type="hidden" id="qishu" name="qishu"  value="<?php echo ($qishu); ?>" />
+			<div class="sd_lilie">
+				<span class="sd_span">标题：</span>
+				<input id="sd_text" type="text" name="title" />
+			</div>
+			<div class="sd_lilie">
+				<span class="sd_span">内容：</span>
+				<!--textarea id="sd_textarea" name="content" ></textarea-->
+				<div style="float: left;">
+					<script name="content" id="myeditor" type="text/plain"></script>
+				</div>
+			</div>
+			<div class="sd_lilie">
+				<span class="sd_span">晒图：</span>
+				<div style="float:left;">
+					<div id="fileInput"></div>
+					<input type="hidden" style="width:300px;min-height: 20px;" id="inputThumb" name="thumbs" readonly value="<?php echo ($data["thumbs"]); ?>" />
+					<img id="thumbImages"  style="max-width: 100px;max-height: 100px;border: 1px slid #E0DFE3;" />
+				</div>
+			</div>
+			<div class="sd_lilie" style="width:580px; padding-left: 200px;">
+				<input id="btnsave" name="submit"  class="orangebut"  type="button" value="晒单" />
+			</div>
+		</form>
 	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
-	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
 </div>
-<!--center_rjght_end-->
 
-</div>
+<script type="text/javascript">
+	var editurl=Array();
+	editurl['editurl']="/Public//UEditor/";
+	//实例化编辑器
+	UEDITOR_CONFIG.toolbars = [["source","fontfamily","fontsize","bold","italic","underline","backcolor","link","unlink","justifyleft","justifycenter","justifyright","justifyjustify","insertunorderedlist","insertorderedlist",]];
+	UEDITOR_CONFIG.initialFrameWidth = 600;
+	UEDITOR_CONFIG.initialFrameHeight = 400;
+	var ue = UE.getEditor('myeditor');
+	ue.addListener('ready',function(){
+		this.focus()
+	});
+	
+	//上传文件
+	$(function(){
+		var thumbs = "<?php echo ((isset($data["thumbs"]) && ($data["thumbs"] !== ""))?($data["thumbs"]):''); ?>";
+		var files = [];
+		
+		if(thumbs.length > 0) {
+			files = thumbs.split(',');
+		}
+		
+		var inputThumb = $("#inputThumb");
+		function initUpload() {
+			files.length = 0; // 单张上传
+			$("#fileInput").uploadify({swf: "/Public/Static/swf/uploadify.swf",
+				buttonText: '选择文件上传',
+				multi: true, // 多选
+				uploadLimit: 1, // 单张上传
+				removeCompleted: true,
+				fileTypeDesc : "图片文件",
+				fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
+				uploader: "<?php echo U('upload','','');?>",
+				onUploadSuccess: function(file, data) {
+					var data = JSON.parse(data);
+					if (data && data.status == 0) {
+						var url = data.url;
+						files.push(url);
+						$("#thumbImages").attr("src", url);
+						inputThumb.val(files.join(","));
+					}
+					// 单张循环上传
+					$("#fileInput").uploadify("destroy");
+					initUpload();
+				}
+			});
+		}
+		
+		initUpload();
+			
+		$("#btnsave").click(function(){
+			if($("#sd_text").val().length< 5)
+			{
+				alert("大侠请输入不少于五个字的标题哦。。");
+				$("#sd_text").focus();
+				return false;
+			}
+			var self = $("form");
+			$.post("<?php echo U('Home/singleinsert','','');?>", self.serialize(), savesuccess, "json");
+			return;
+			function savesuccess(data) {
+				if (data.status) {
+					 window.location.href="<?php echo U('Home/singlelist', '', '');?>";
+				} else {
+					alert(data.msg);
+				}
+			}					
+		});
+	});
+</script>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

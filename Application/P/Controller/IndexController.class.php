@@ -44,6 +44,19 @@ class IndexController extends CommonController {
 		$remens = $gdb->where('status <> 2 and jishijiexiao=0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
 		$this->assign('remens', $remens);
 		
+		// 他们购买记录
+		$mmdb = M('MemberMiaosha');
+		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->join('yyg_miaosha on yyg_miaosha.gid = yyg_member_miaosha.gid and yyg_miaosha.qishu = yyg_member_miaosha.qishu')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 
+				'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time',
+				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username',
+				'yyg_miaosha.gid', 'yyg_miaosha.thumb','yyg_miaosha.title','yyg_miaosha.qishu'))
+			->where($mmmap)->order('yyg_member_miaosha.time desc')->page(1, 7)->select();
+		if(!empty($records)) {
+			$this->assign('records', $records);
+		}
+		
 		$jijiagns = $gdb->where('status <> 2 and jishijiexiao>0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
 		$this->assign('jijiagns', $jijiagns);
 		$this->display();

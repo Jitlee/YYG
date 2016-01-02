@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
 	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	 
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
@@ -187,6 +186,7 @@ window.onerror=function(){return true;}
 
 <div style="position: relative;" class="w1190">
 	<link rel="stylesheet" type="text/css" href="/Public/P/css/Lottery.css"/>
+<script>$("body").attr('class','lottery');</script>
 <div class="Current_nav"><a href="/index.php/P">首页</a> &gt; 最新揭晓</div>
 <!--开奖列表开始-->
 <div class="Newpublish">
@@ -227,9 +227,9 @@ window.onerror=function(){return true;}
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_1384515556__=$minPageNo;$__FOR_END_1384515556__=$pageNo;for($i=$__FOR_START_1384515556__;$i < $__FOR_END_1384515556__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_628879002__=$minPageNo;$__FOR_END_628879002__=$pageNo;for($i=$__FOR_START_628879002__;$i < $__FOR_END_628879002__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_74850475__=$pageNo+1;$__FOR_END_74850475__=$maxPageNo + 1;for($i=$__FOR_START_74850475__;$i < $__FOR_END_74850475__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_1935677310__=$pageNo+1;$__FOR_END_1935677310__=$maxPageNo + 1;for($i=$__FOR_START_1935677310__;$i < $__FOR_END_1935677310__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>
@@ -319,8 +319,7 @@ window.onerror=function(){return true;}
 		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
 		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
 	</div>
-	<div class="copyright">
-		Copyright © 2011 - 2015 </div>
+	<div class="copyright"><?php echo config("web_copyright");?> </div>
 	<div class="footer_icon">
 		<a href="" target="_blank" class="fi_ectrustchina"></a>
 		<a href="" target="_blank" class="fi_315online"></a>

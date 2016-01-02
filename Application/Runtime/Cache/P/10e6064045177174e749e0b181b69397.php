@@ -185,8 +185,7 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
+	<div class="main-content clearfix">
 <link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
 <div class="left">
 	<div class="head">
@@ -281,70 +280,114 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 </script>
 
 <!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
+	<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-records.css"/>
+	<div class="R-content">
+		<div class="member-t"><h2>云购记录</h2></div>
+		<div id="GoodsList" class="goods_show">
+			<ul class="gtitle">
+				<li>商品图片</li>
+				<li class="gname">商品名称</li>
+				<li class="yg_status">云购状态</li>
+				<li class="joinInfo">参与人次</li>
+				<li class="do">操作</li>
+			</ul>	
 			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
+	        
+	        <style>
+				#divPageNav{ padding-top:10px;text-align:right}
+				#divPageNav li a{ padding:5px;}
+				.mui-hidden{display: none;}
+			</style>
+			<!--<div id="divPageNav" class="page_nav">
+	        	{wc:page:one} <li>共 {wc:$total} 条</li>
+	        </div>-->
 		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
 	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
-	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
 </div>
-<!--center_rjght_end-->
+		 <ul class="goods_list mui-hidden" id="goodTemplate">	
+				<li><a title="" target="_blank" class="pic" href=""><img src=""></a></li>
+				<li class="gname"style="margin:10px 0 0 0;">
+					<a target="_blank" href="" class="blue">
+						<span class="zcontent"></span>
+					</a>
+					<p class="gray02">获得者：<a href="{WEB_PATH}/uname/{wc:fun:idjia($jiexiao['q_uid'])}" target="_blank" class="blue">
+	                {wc:fun:get_user_name($jiexiao['q_user'])}
+	                </a></p>
+					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
+				</li>
+				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">已揭晓</span></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em>{wc:$rt['gonumber']}</em>人次</p></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="详情">详情</a></li>
+			</ul>
+			
+			<ul class="goods_list mui-hidden" id="goodTemplateing">	
+				<li><a title="" target="_blank" class="pic goodurl" href="{WEB_PATH}/goods/{wc:$rt['shopid']}"><img src=""></a></li>
+				<li class="gname" style="margin:15px 0 0 0;">
+					<a target="_blank" href="" class="blue goodurl">
+						<span class="zcontent"></span>
+					</a>				
+					<p class="gray02 ">购买时间：<span class="ztime"></span></p>
+				</li>
+				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">正在进行...</span></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="查看云购码">查看云购码</a></li>
+			</ul>
+			
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#GoodsList");
+		var goodTemplate = $("#goodTemplate");
+		var goodTemplateing=$("#goodTemplateing");
+		var useTemplate;
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("<?php echo U('pageAllMR', '', '');?>/8/" + (++pageNum), {
+				type: orderType
+				 
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+	       		$.each(list, function() {
+	       			useTemplate=goodTemplateing;
+	       			if(this.jishijiexiao==1)
+	       			{
+	       				useTemplate=goodTemplate;
+	       			}	       			 
+	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "<?php echo U('Index/view', '', '');?>/" + this.gid+"/"+this.qishu);
 
-</div>
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+//	       			$(".money", item).text(this.zongrenshu);
+	       			$("r", item).text(this.canyurenshu);
+	       			
+	       			$(".pl", item).text(this.canyurenshu);
+					$(".pc", item).text(this.zongrenshu);
+					$(".pr", item).text(this.shengyurenshu);
+	       			
+	       			$(".ztime", item).text(this.time);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 		
+	});
+</script>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

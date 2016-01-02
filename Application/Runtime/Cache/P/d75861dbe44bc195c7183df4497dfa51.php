@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
 	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	 
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
@@ -190,9 +189,9 @@ window.onerror=function(){return true;}
 <!-- 商品分类 -->
 <div id="divSortList" class="m-all-sort" style="display: block;">
 	<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><dl>
-		     <dt><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></a></dt>
+		     <dt><a href="<?php echo U('Category/index', '', '');?>/0/<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></a></dt>
 		     <dd>
-			     <?php if(is_array($c['brands'])): foreach($c['brands'] as $key=>$b): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>/<?php echo ($c["bid"]); ?>"><?php echo ($b["name"]); ?></a><?php endforeach; endif; ?>
+			     <?php if(is_array($c['brands'])): foreach($c['brands'] as $key=>$b): ?><a href="<?php echo U('Category/index', '', '');?>/0/<?php echo ($c["cid"]); ?>/<?php echo ($c["bid"]); ?>"><?php echo ($b["name"]); ?></a><?php endforeach; endif; ?>
 		     </dd>
 		 </dl><?php endforeach; endif; ?>
  </div>
@@ -236,8 +235,8 @@ window.onerror=function(){return true;}
 
 <div class="home-event fr">
     <div class="what-1yyg">
-        <a id="what_1yyg" href="http://192.168.0.102:8080/YYYGCMS/?/single/newbie" title="什么是1元云购？30秒了解">
-            <img src="http://skin.1yyg.com/images/index-come.gif" alt=""></a>
+        <a id="what_1yyg" href="#" title="什么是1元云购？30秒了解">
+            <img src="/Public/P/images/index-come.gif" alt=""></a>
     </div>
     <div class="honesty">
         <ul>
@@ -289,7 +288,7 @@ window.onerror=function(){return true;}
     <div class="g-title">
         <h3 class="fl">热门推荐</h3>
         <div class="m-other fr">
-            <a href="#" target="_blank" title="更多" class="u-more">更多</a>
+            <a href="<?php echo U('Category/index', '', '');?>/1" target="_blank" title="更多" class="u-more">更多</a>
         </div>
     </div>
     <div class="g-hot clrfix">
@@ -328,27 +327,26 @@ window.onerror=function(){return true;}
     		<div class="g-hotR fr">
             <div class="u-are">正在云购</div>
             <div class="g-zzyging">
-                <input name="hidBuyID" type="hidden" id="hidBuyID" value="29773149" />
                 <ul id="UserBuyNewList">
-                    <li>
-                        <span class="fl"><a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
-                            <img alt="" src="{G_UPLOAD_PATH}/{wc:fun:shopimg($gorecord['shopid'])}" /><i></i></a></span>
+                		<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
+                        <span class="fl"><a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
+                            <img alt="" src="<?php echo ($item["thumb"]); ?>" /><i></i></a></span>
                         <p>
-                            <a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank"  title="{wc:fun:get_user_name($gorecord)}" class="blue">{wc:fun:get_user_name($gorecord)}</a><br />
-                            <a href="http://www.1yyg.com/product/268224.html"  target="_blank" title="{wc:$gorecord['shopname']}" class="u-ongoing">{wc:$gorecord['shopname']}</a>
+                            <a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank"  title="<?php echo ($item["title"]); ?>" class="blue"><?php echo ($item["username"]); ?></a><br />
+                            <a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>"  target="_blank" title="<?php echo ($item["title"]); ?>" class="u-ongoing"><?php echo ($item["title"]); ?></a>
                         </p>
-                    </li>
+                    </li><?php endforeach; endif; ?>
                 </ul>
             </div>
-            <div class="u-see100"><a href="{WEB_PATH}/buyrecordbai" target="_blank">查看最新100条记录</a></div>
+            <div class="u-see100 hidden"><a href="<?php echo U('Index/history', '', '');?>" target="_blank">查看最新100条记录</a></div>
         </div>
     </div>
     
     <div class="g-title m-sort">
         <h3 class="fl">即将揭晓</h3>
         <div class="fr">
-            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
-            <a href="" target="_blank" title="全部">全部</a>
+            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/2/<?php echo ($c["cid"]); ?>" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
+            <a href="<?php echo U('Category/index', '', '');?>/2" target="_blank" title="全部">全部</a>
         </div>
     </div>
     <div class="announced-soon clrfix" id="divSoonGoodsList">
@@ -446,8 +444,7 @@ window.onerror=function(){return true;}
 		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
 		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
 	</div>
-	<div class="copyright">
-		Copyright © 2011 - 2015 </div>
+	<div class="copyright"><?php echo config("web_copyright");?> </div>
 	<div class="footer_icon">
 		<a href="" target="_blank" class="fi_ectrustchina"></a>
 		<a href="" target="_blank" class="fi_315online"></a>

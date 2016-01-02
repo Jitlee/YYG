@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header222.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="/Public/P/css/index2.css?date=20140731">
 	<link href="/Public/P/css/register.css" rel="stylesheet" type="text/css" />	
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">
-	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm1.css?date=20140731">
+	 <link rel="stylesheet" type="text/css" href="/Public/P/css/comm.css?date=20140731">	 
     <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css?date=20140731">
 	 	
 	<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>	
@@ -187,7 +186,7 @@ window.onerror=function(){return true;}
 
 <div style="position: relative;" class="w1190">
 	<link rel="stylesheet" type="text/css" href="/Public/P/css/List.css"/>
-<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<!--<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">-->
 <script>
  $("body").attr('class','share');
 </script>
@@ -196,8 +195,7 @@ window.onerror=function(){return true;}
 	<div class="Current_nav">
 		<a href="<?php echo U('Home/index', '', '');?>">首页</a> &gt; 晒单分享</div>
 	<div id="current" class="share_Curtit">
-		<h1 class="fl">
-			晒单分享</h1>
+		<h1 class="fl">晒单分享</h1>
 		<span id="spTotalCount">(共<em class="orange"><?php echo ($total); ?></em>个幸运获得者晒单)</span>
 	</div>
 	<div id="loadingPicBlock" class="share_list">
@@ -205,24 +203,24 @@ window.onerror=function(){return true;}
 			<ul>				
 				<li>					
 					<?php if(is_array($sa_one)): foreach($sa_one as $key=>$c): ?><div class="share_list_content">
-						<dl>
-							<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
-							<dd class="share-name gray02"> 
-								<a href="#" class="name-img">								
-									<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
-								</a>
-								<div class="share-name-r"> 
-									<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
-									<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
-								</div> 
-							</dd>
-							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
-								<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
-							</dd>
-						</dl>
-						<p class="text-h10"></p>
-					</div><?php endforeach; endif; ?>
+							<dl>
+								<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
+								<dd class="share-name gray02"> 
+									<a href="#" class="name-img">								
+										<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
+									</a>
+									<div class="share-name-r"> 
+										<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
+										<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
+									</div> 
+								</dd>
+								<dd class="message hidden" style="display: block;"> 
+									<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
+									<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
+								</dd>
+							</dl>
+							<p class="text-h10"></p>
+						</div><?php endforeach; endif; ?>
 				</li>
 				<li>
 					
@@ -312,9 +310,9 @@ window.onerror=function(){return true;}
 	        <span class="disabled"> < </span>
 	      </span><?php endif; ?>
 	  	<!--$minPageNum=<?php echo ($minPageNum); ?>,$pageNum=<?php echo ($maxPageNum); ?>-->
-	  	<?php if($pageNum > 1): $__FOR_START_36486017__=$minPageNum;$__FOR_END_36486017__=$pageNum;for($i=$__FOR_START_36486017__;$i < $__FOR_END_36486017__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a><?php } endif; ?>
+	  	<?php if($pageNum > 1): $__FOR_START_1948326355__=$minPageNum;$__FOR_END_1948326355__=$pageNum;for($i=$__FOR_START_1948326355__;$i < $__FOR_END_1948326355__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a><?php } endif; ?>
 			<span class="current"><?php echo ($pageNum); ?></span>
-	  	<?php $__FOR_START_255737181__=$pageNum+1;$__FOR_END_255737181__=$maxPageNum;for($i=$__FOR_START_255737181__;$i < $__FOR_END_255737181__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a><?php } ?>
+	  	<?php $__FOR_START_286484765__=$pageNum+1;$__FOR_END_286484765__=$maxPageNum;for($i=$__FOR_START_286484765__;$i < $__FOR_END_286484765__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a><?php } ?>
 		<?php if($pageNum < $maxPageNum): ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($pageNum+1); ?>" aria-label="Next"> > </a>    
 		<?php else: ?>
 			<span  class="disabled">></span><?php endif; endif; ?>
@@ -370,8 +368,7 @@ window.onerror=function(){return true;}
 		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
 		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
 	</div>
-	<div class="copyright">
-		Copyright © 2011 - 2015 </div>
+	<div class="copyright"><?php echo config("web_copyright");?> </div>
 	<div class="footer_icon">
 		<a href="" target="_blank" class="fi_ectrustchina"></a>
 		<a href="" target="_blank" class="fi_315online"></a>

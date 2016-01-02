@@ -185,8 +185,39 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
+	<!--期数修改弹出框-->
+<style>
+#paywindow{position:absolute;z-index:999; display:none}
+#paywindow_b{width:542px;height:360px;background:#2a8aba; filter:alpha(opacity=60);opacity: 0.6;position:absolute;left:0px;top:0px; display:block}
+#paywindow_c{width:530px;height:348px;background:#fff;display:block;position:absolute;left:6px;top:6px;}
+.p_win_title{ line-height:40px;height:40px;background:#f8f8f8;}
+.p_win_title b{float:left}
+.p_win_title a{float:right;padding:0px 10px;color:#f60}
+.p_win_content h1{font-size:25px;font-weight:bold;}
+.p_win_but,.p_win_mes,.p_win_ctitle,.p_win_text{ margin:10px 20px;}
+.p_win_mes{border-bottom:1px solid #eee;line-height:35px;}
+.p_win_mes span{margin-left:10px;}
+.p_win_ctitle{overflow:hidden;}
+.p_win_x_b{float:left; width:73px;height:68px;background-repeat:no-repeat;}
+.p_win_x_t{ font-size:18px; font-weight:bold;font-family: "Helvetica Neue",\5FAE\8F6F\96C5\9ED1,Tohoma;color:#f00; text-align:center}
+.p_win_but{ height:40px; line-height:40px;}
+.p_win_but a{ padding:8px 15px; background:#f60; color:#fff;border:1px solid #f50; margin:0px 15px;font-family: "Helvetica Neue",\5FAE\8F6F\96C5\9ED1,Tohoma; font-size:15px; }
+.p_win_but a:hover{ background:#f50}
+.p_win_text a{ font-size:13px; color:#f60}
+.pay_window_quit:hover{ color:#f00}
+</style>
+<style>
+		#wuliu_select{ padding:5px 8px; width:80px; background-color:#F60;border-radius:2px;font-family: 微软雅黑; color:#fff; font-size:12px; margin-left:30px; }		
+		.wuliubtn{ padding:3px 5px;background-color:#2af;border-radius:2px; color:#fff; font-size:12px; }
+		.wuliubtn:hover{ color:#fff; cursor:pointer}
+		.single-img .pic{ text-indent:0px;}
+		#divPageNav{ padding-top:10px;text-align:right}		
+		.listTitle .sdzt b{color: #fe6c00; font-weight:bold}
+		.message{ background:#fffce2; border:1px solid #fd9; color:#f60; padding:5px 8px; text-indent:10px;}
+		.single-xx-has span{ display:inline-block;  width:180px}
+</style>
+
+<div class="main-content clearfix">
 <link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
 <div class="left">
 	<div class="head">
@@ -281,70 +312,142 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 </script>
 
 <!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
-			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
-		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
-	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
-	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
-</div>
-<!--center_rjght_end-->
 
+<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-commodity.css"/>
+<div class="R-content">
+	<div class="member-t"><h2>获得的商品</h2></div>
+	<div class="get-pro gray02">您总共成功云购获得商品 <b id="goodsCount" class="orange"></b> 个
+    	  <a href="#" id="wuliu_select">查询物流</a>
+    </div>	
+    
+    <div class="message">你还没有填写收货信息,请填写收货信息！ <a href="<?php echo U('Home/address', '', '');?>" style="font-weight:bold; color:#2af">去填写!</a></div>
+        
+    
+    <div style="clear:both; width:100%; height:20px; display:block;"></div>
+	<div id="tbList" class="single-C list-tab">
+		<ul class="listTitle">
+			<li class="single-img">商品图片</li>
+			<li class="single-xx-has">商品信息</li>
+			<!--<li class="sdzt">状态</li>-->
+			<li class="single-Control">价值</li>
+		</ul>
+	</div>
+		<div id="divPageNav" class="page_nav">
+        	<!--{wc:page:two} <li>共 {wc:$total} 条</li>-->
+        </div>
 </div>
+</div>
+
+<ul class="listTitle mui-hidden" style="background:#fff; height:80px; padding:10px 0 0 0;" id="goodTemplate">
+	<li class="single-img"><a target="_blank" class="pic" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}"><img src="{G_UPLOAD_PATH}/{wc:fun:yunjl($recd['shopid'])}"></a></li>
+	<li class="single-xx-has"><a target="_blank" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}" class="blue zcontent"></a>
+    <br/>物流公司::: <i class="company"></i>快递单号:::<i class="company_code"></i>
+    </li>
+	<li class="sdzt"><b></b></li>
+    <li class="single-Control">￥<span class="money"></span></li>
+</ul>
+
+<div id="paywindow">
+	<div id="paywindow_b"></div>
+	<div id="paywindow_c">
+		<div class="p_win_title"><a href="javascript:void();" class="pay_window_quit">[关闭]</a><b>　 物流查询</b></div>
+		<div class="p_win_content">			
+            	<iframe name="kuaidi100" src="http://www.kuaidi100.com/frame/app/index2.html" width="527" height="300" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>        
+		</div>
+	</div>
+</div>
+
+<script>
+$(function(){
+	var width = ($(window).width()-542)/2;
+	var height = ($(window).height()-360)/2;
+	$("#paywindow").css("left",width);
+	$("#paywindow").css("top",height);
+		
+	$(".pay_window_quit").click(function(){
+		$("#paywindow").hide();								 
+	});	
+	$("#wuliu_select").click(function(){
+		$("#paywindow").show();								 
+	});	
+	
+	$(".wuliubtn").click(function(){
+		var uid = $(this).attr("uid");	
+		var oid = $(this).attr("oid");	
+		$.post("{WEB_PATH}/api/dingdan/set",{"uid":uid,"oid":oid},function(sdata){
+			if(sdata=='1'){
+				alert("更新成功");
+			}
+			else{
+				alert("更新失败");
+			}											   
+		});					  
+	});
+});
+
+</script>
+<script type="text/javascript">
+	$(function(){
+		
+		$(document).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#tbList");
+		var goodTemplate = $("#goodTemplate");
+		 
+		var useTemplate;
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("<?php echo U('pageAllzj', '', '');?>/10/" + (++pageNum), {
+				type: orderType
+				 
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+				
+				if(pageNum ==1 && list && list.length==0)
+				{
+					$("#goodsCount").text("0");
+					goodList.append('<div class="tips-con"><i></i>无相应的获得商品记录</div>');
+					return;
+				}
+				$("#goodsCount").text(list.length);
+				
+				$('.orange').text((pageNum-1)*10 + list.length);
+	       		$.each(list, function() {
+	       			useTemplate=goodTemplate;
+	       			
+	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "<?php echo U('/Home/Index', '', '');?>/" + this.gid);
+
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+	       			$(".money", item).text(this.zongrenshu);
+
+					if(this.company){
+	       				$(".company", item).text(this.company);
+	       				$(".company_code", item).text(this.company_code);
+	       			}
+	       			$(".ztime", item).text(this.time);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />

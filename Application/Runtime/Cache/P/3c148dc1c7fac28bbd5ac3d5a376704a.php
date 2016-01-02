@@ -185,8 +185,7 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<div class="layout980 clearfix">
-<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-home.css"/>
+	<div class="main-content clearfix">
 <link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
 <div class="left">
 	<div class="head">
@@ -281,69 +280,179 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 </script>
 
 <!--content left end-->
-<script>
- $("#wdwzg").attr('class','sid-cur');    
-</script>
-<div class="center">
-	<div class="per-info">
-		<ul>
-			<li class="info-mane gray02">
-				<b class="gray01">
-				 <?php echo ($data["username"]); ?>
-				<br>
-				<span><a href="<?php echo U('Home/mypage', '', '');?>?uid=<?php echo ($data["uid"]); ?>" target="_blank" class="blue"><s></s>
-					我的主页
-				</a></span>
-			</li>
-			 
-			<li class="account-money">
-				<em class="gray02">帐户余额：</em>
-				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
-			</li>
-			<li class="account-money">
-			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
-			&nbsp;&nbsp;(1元=100积分)</b>&nbsp;&nbsp;<a href="<?php echo U('Home/userscore', '', '');?>" title="点击查看" class="blue">点击查看</a>
-			</li>
-		</ul>
-	    <div class="tips orange" style="height: 40px;">
-				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
-				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
-		</div>
-		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
-				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
-			</div><?php endif; ?>
-	 
-            <script type="text/javascript">
-                      $(".close").click(function () {
-                               $(this).parent(".tips").hide(1000);
-                        });    
-            </script>
+<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-topic.css"/>
+<div class="R-content">
+	<div class="subMenu">
+		<a class="current">已晒单</a>
+		<a >未晒单</a>
 	</div>
-	<div class="New-content">
-	    <br>
-	    <div class="R-tit">&nbsp;</div><div class="msgNoMore" id="divNoMore">&nbsp;</div></div>
+	
+	<div class="list-tab topic" style="display: block;" id="listsdfinish">
+		<ul class="listTitle">
+			<li style="text-align:center;" class="w100">晒单图片</li>
+			<li class="w400">晒单信息</li>
+			<li class="w130">晒单状态</li>
+			<li class="w85 fr">操作</li>
+		</ul> 
 	</div>
-<!--center_center_end-->
-<div class="right">				
-	<div class="groups-shadow clearfix">
-                 <div class="R-grtit"><h3>公告栏</h3></div>
-		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运云购码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
-		</ul>
-	</div> 
-	<p class="r-line"></p>
-         <br/>
+	<div class="list-tab topic" style="display: none;" id="listsdno">
+		<ul class="listTitle">
+			<li style="text-align:center;" class="w100">商品图片</li>
+			<li class="w630">商品信息</li>
+			<li class="w85 fr">操作</li>
+		</ul> 
+		 
+	</div>
 </div>
-<!--center_rjght_end-->
+<ul class="listCon mui-hidden" id="sdfinish">
+	<li class="w100" style="text-align:center;">
+		<a href="#" target="_blank" class="blue gray01 goodurl">
+		<img width="50" class="iteminfo" src="#"/>
+		</a>
+	</li>
+	<li class="w400"><a href="#" target="_blank" class="gray01 goodurl"><span class="zcontent">(第一期)</span></a></li>
+	<li class="w100" style="text-align:right;"><font color="#666"><a href="#" class="sdview"><span>查看晒单</span></a></font></li>
+	<li class="w85 fr"><font color="#666">不可修改</font></li>
+</ul>
 
+<ul class="listCon mui-hidden" id="sdno">
+	<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="#"/></div></li>
+	<li style="text-indent:1em;" class="w400"><a class="iteminfo goodurl" href="#" target="_blank"><span class="zcontent"></span></a></li>
+	<li class="w50 fr"><a name="delete" class="iteminfosd" href="<?php echo U('pageAllsdfinish', '', '');?>/singleinsert/{wc:$sd['id']}" class="blue">添加晒单</a></li>
+</ul>
+<script type="text/javascript">
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumfinish = 0;
+		var goodListfinish = $("#listsdfinish");
+		var goodTemplatefinish = $("#sdfinish");
+		 
+		var useTemplatefinish;
+		var orderTypefinish = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumfinish = 0;
+			}
+			$.get("<?php echo U('pageAllsdfinish', '', '');?>/8/" + (++pageNumfinish), {
+				type: orderTypefinish
+				 
+			}, function(list) {
+				if(clear) {
+					goodListfinish.html("");
+				}
+				if(pageNumfinish ==1 && list && list.length==0)
+				{
+					goodListfinish.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+				
+	       		$.each(list, function() {
+	       			useTemplatefinish=goodTemplatefinish;
+	       			
+	       			//{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}
+	       			
+	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "<?php echo U('/Home/Index', '', '');?>/" + this.gid);
+					$(".sdview", item).attr("href", "<?php echo U('Saidan/detail', '', '');?>/" + this.gid +"/"+this.qishu);
+					
+					$("img", item).attr("src", this.thumb);
+					$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+	       			$(".iteminfo", item).attr("href", "<?php echo U('/Home/Index', '', '');?>/" + this.gid); 
+	       			goodListfinish.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 
+		
+	});
+</script>
+<script type="text/javascript">
+	$(function(){ 
+		// 全部商品翻页
+		var pageNumNo = 0;
+		var goodListNo = $("#listsdno");
+		var goodTemplateNo = $("#sdno");
+		 
+		var useTemplateNo;
+		var orderTypeNo = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNumNo = 0;
+			}
+			$.get("<?php echo U('pageAllsdno', '', '');?>/8/" + (++pageNumNo), {
+				type: orderTypeNo
+				 
+			}, function(list) {
+				if(clear) {goodListNo.html("");}
+				if(pageNumNo ==1 && list && list.length==0){
+					goodListNo.append('<div class="tips-con"><i></i>暂无记录</div>');
+					return;
+				}
+	       		$.each(list, function() {
+	       			useTemplateNo=goodTemplateNo;
+	       			var item = useTemplateNo.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$(".goodurl", item).attr("href", "<?php echo U('/Home/Index', '', '');?>/" + this.gid);
+					
+					$("img", item).attr("src", this.thumb);
+	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);	       			
+	       			$(".iteminfo", item).attr("href", "<?php echo U('/Home/Index', '', '');?>/" + this.gid);
+	       			$(".iteminfosd", item).attr("href", "<?php echo U('Home/singleinsert', '', '');?>/" + this.gid +"/"+this.qishu);
+	       			goodListNo.append(item);
+	       		});
+	       });
+		}
+		pageAll(); 		
+	});
+</script>
+<style>
+#foucs_big{background:#999; filter:alpha(opacity=30); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;}
+#foucs_min{background:#999; filter:alpha(opacity=50); position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:100; display:none;} 
+.PopMsgbtn {
+    height: 30px;
+    text-align: center;
+}
+.orangebut {
+    background: none repeat scroll 0 0 #FF6600;
+    border: 1px solid #F65802;
+    color: #FFFFFF;
+	height: 23px;
+    line-height: 23px;
+}
+.cancelBtn {
+    background: none repeat scroll 0 0 #F4F4F4;
+    border: 1px solid #DDDDDD;
+    color: #747474;
+	height: 23px;
+    line-height: 23px;
+}
+.orangebut, .bluebut, .graybut, .cancelBtn, .greenbut {
+    border-radius: 2px 2px 2px 2px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    padding: 0 19px;
+    text-align: center;
+}
+#foucs_big,#foucs_min,#w3foucs,#foucs_close,#page_close,#foucs_main{display:block;}
+</style>
+<script>
+$(function(){
+	$(".subMenu a").click(function(){
+		var id=$(".subMenu a").index(this);
+		$(".subMenu a").removeClass().eq(id).addClass("current");
+		$(".R-content .topic").hide().eq(id).show();
+	});
+})
+function shaidan(id){
+	if(confirm("您确认要删除该条信息吗？")){
+		window.location.href="{WEB_PATH}/member/home/shaidandel/"+id;
+	}
+}
+ 
+ 
+
+
+</script>
 </div>
 </div>
 
