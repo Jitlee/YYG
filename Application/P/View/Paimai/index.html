@@ -1,0 +1,220 @@
+<link rel="stylesheet" type="text/css" href="__CSS__/Lottery.css"/>
+<style type="text/css">
+	time {
+		font-size: 20px;
+		color:#f60;
+	}
+	time span{
+		font-size:14px;
+	}
+	
+	.details {
+		line-height: 34px;
+		vertical-align: middle;
+		padding: 4px 0;
+	}
+	
+	.Cursor .paimai-end {
+		background: #999;
+	}
+	
+	.Cursor.paimai-end {
+		border-color: ##E0DFE3;
+	}
+	
+	.yyg-btn-block {
+		position: absolute;
+		right: 10px;
+		top: 5px;
+	}
+	
+	.yyg-btn-block .yyg-btn {
+		height:32px;
+		line-height:32px;
+		font-size: 16px;
+		width: 120px;
+		font-family: "微软雅黑";
+		color: #fff;
+		background-color: #F60;
+		text-align: center;
+		border-radius:3px;
+	}
+	
+	.yyg-btn-block .yyg-btn img {
+		height: 28px;
+		width: 28px;
+		vertical-align: middle;
+	}
+	
+	.paimai-end .yyg-btn {
+		background-color: #F0F0F0;
+		color: #666;
+	}
+	em {
+		color: #f60;
+	}
+	
+	.Rcenter li {
+		height: auto;
+	}
+	
+	.yyg-meta {
+		line-height: 40px;
+		height: 40px;
+	}
+	
+	.yyg-meta-btn {
+		float: right;
+	    background-color: #f60;
+	    color: #fff;
+	    height: 30px;
+	    line-height: 30px;
+	    padding: 0px 10px;
+	    margin-top:5px;
+	    position: relative;
+	}
+	
+	.yyg-meta-btn i {
+	    position: absolute;
+	    display: block;
+	    left: -10px;
+	    border: 5px solid transparent;
+	    font-size: 0;
+	    height: 0px;
+	    width: 0px;
+	    border-right-color: #f60;
+	    top: 10px;
+	}
+	
+	.Rcenter li .pic {
+	    border: 1px solid #fff;
+	    width: 56px;
+	    height: 56px;
+	    float: left;
+	    margin-right: 6px;
+	    margin-top: 2px;
+	    overflow: hidden;
+	}
+	
+	.Rcenter ul li p.Rintro {
+	    width: 135px;
+	    height: auto;
+	    font-size: 12px;
+	    overflow: hidden;
+	    word-break: keep-all;
+	    white-space: nowrap;
+	    word-wrap: normal;
+	    text-overflow: ellipsis;
+	}
+	
+	.buylistH {
+	    height: 906px;
+	}
+</style>
+<script type="text/javascript" src="__JS__/count-down.js"></script>
+<div class="Current_nav"><a href="__MODULE__">首页</a> &gt; 拍卖专区</div>
+<!--开奖列表开始-->
+<div class="Newpublish">
+	<div class="NewpublishL">
+		<div id="current" class="publish_Curtit">
+			<h1 class="fl">拍卖专区</h1>
+			<span id="spTotalCount">(共<em class="orange">{$total}</em>件商品在拍卖)</span>
+		</div>
+		<div class="publishBor">
+			<div class="publishCen" id="listDivTitle">
+				<ul id="ProductList">
+					<foreach name="list" item="item">
+					<li class="Cursor<if condition="$item.status egt 2">paimai-end</if>">
+						<a  href="{:U('Paimai/view','','')}/{$item.gid}" target="_blank" >
+							<span class="fl goodsimg">
+								<img alt="" src="{$item.thumb}">
+							</span>
+							<div class="publishC-Member">
+								{$item.title} <em>{$item.subtitle}</em>
+							</div>
+							<div class="publishC-tit gray02">
+								出价次数：{$item.chujiacishu}	
+							</div>
+							<div class="publishC-tit gray02">
+								报名人数：{$item.baomingrenshu}	
+							</div>
+							<if condition="$item.status lt 2">
+							<div class="publishC-tit gray02">
+								当前价格：<em>{$item.zuigaojia}</em>
+							</div>
+							<div class="details">
+								&nbsp;&nbsp;&nbsp;&nbsp;时间剩余：<time countdown="{$item.end_time|strtotime}000"></time>
+								<div class="yyg-btn-block">
+									<div class="yyg-btn"><img src="__IMG__/baozhengjin.png"/>我要出价</div>
+								</div>
+							</div>
+							<else/>
+							<div class="publishC-tit gray02">
+								最高价格：{$item.zuigaojia}
+							</div>
+							<div class="details paimai-end">
+								&nbsp;&nbsp;&nbsp;&nbsp;结束时间：{$item.end_time}</time>
+								<div class="yyg-btn-block">
+									<div class="yyg-btn">拍卖已结束</div>
+								</div>
+							</div>
+							</if>
+						</a>
+					</li>	
+					</foreach>
+				</ul>
+			</div>
+			<if condition="$num lt $total">
+			<div class="pagesx">
+				<ul id="Page_Ul">
+					<li id="Page_Total">{$total}条</li>
+					<li id="Page_One"><a href="{:U('Paimai/index', '', '')}/{$cid}/1">首页</a></li>
+					<if condition="$pageNo gt 1">
+				        <li id="Page_Prev"><a href="{:U('Paimai/index', '', '')}/{$cid}/{$pageNo - 1}">上一页</a></li>
+				  	</if>
+					<if condition="$pageNo gt 1">
+					  <for start="$minPageNo" end="$pageNo">
+					    		<li class="Page_Num"><a href="{:U('Paimai/index', '', '')}/{$cid}/{$i}">{$i}</a></li>
+						</for>
+					</if>
+					<li class="Page_This">{$pageNo}</li>
+					<for start="$pageNo+1" end="$maxPageNo+1">
+				    		<li class="Page_Num"><a href="{:U('Paimai/index', '', '')}/{$cid}/{$i}">{$i}</a></li>
+					</for>
+					<if condition="$pageNo lt $pageCount">
+				        <li id="Page_Next"><a href="{:U('Paimai/index', '', '')}/{$cid}/{$pageNo + 1}">下一页</a></li>
+				  	</if>
+					<li id="Page_End"><a href="{:U('Paimai/index', '', '')}/{$cid}/{$pageCount}">尾页</a></li>
+				</ul>
+			</div>
+			</if>
+		</div>
+	</div>
+	<div class="NewpublishR">
+		<div class="Newpublishbor">
+			<div class="Rtitle gray01">人气拍品 </div>
+			<div class="Rcenter buylistH">
+				<ul id="buyList" style="margin-top: 0px;">
+					<foreach name="renqi" item="item">
+					<li>
+						<a href="{:U('Paimai/view', '', '')}/{$item.gid}" target="_blank">
+							<span class="pic">
+								<img id="imgUserPhoto" src="{$item.thumb|default='__IMG__/prmimg.png'}" width="50" height="50" border="0"/>
+							</span>
+							<p class="Rintro">{$item.title}</p>
+							<div class="yyg-meta">
+								<em>¥{$item.zuigaojia}</em>
+								<div class="yyg-meta-btn">
+									<i></i>
+									{$item.chujiacishu}次出价
+								</div>
+							</div>
+						</a>
+					</li>
+					</foreach>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

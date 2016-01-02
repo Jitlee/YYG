@@ -122,7 +122,6 @@
 						<em class="Fb gray01">{$item.count}</em>人次</li>
 						</foreach>
 					</ul>
-					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>
 					<else/>
 					<p style="">暂时没有人购买</p>
 					</present>
@@ -175,13 +174,13 @@
     
     <!-- 购买记录20条 -->
 	<div id="bitem" class="AllRecordCon">
-		<iframe id="iframea_bitem" g_src="{WEB_PATH}/go/goods/go_record_ifram/{wc:$itemid}/20" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>		
+		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" style="width:930px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_bitem'].document.documentElement.scrollHeight + 'px'"></iframe>		
 	</div>	
    <!-- /购买记录20条 -->
     
 	<!-- 晒单 -->
 	<div id="divPost" class="Single_Content">
-		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>
+		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_divPost'].document.documentElement.scrollHeight + 'px'"></iframe>
 	</div>
     <!-- 晒单 -->	
 </div>
@@ -215,13 +214,13 @@ $(function(){
 	});
 	
 	
-	$("#btnUserBuyMore").click(function(){
-		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
-		
-		$("#divContent .hide").hide().eq(1).show();
-		$("html,body").animate({scrollTop:941},1500);
-		$("#divProductNav").addClass("nav-fixed");
-	});
+//	$("#btnUserBuyMore").click(function(){
+//		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+//		
+//		$("#divContent .hide").hide().eq(1).show();
+//		$("html,body").animate({scrollTop:941},1500);
+//		$("#divProductNav").addClass("nav-fixed");
+//	});
 	$(window).scroll(function(){
 		if($(window).scrollTop()>=941){
 			$("#divProductNav").addClass("nav-fixed");
