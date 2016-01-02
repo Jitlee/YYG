@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="__CSS__/Comm.css" />
+		<style type="text/css">
+			body {
+				padding:0 10px;
+			}
+			.yyg-record-table{
+				width: 100%;
+				border: 0;
+				font-size: 12px;
+				table-layout: fixed;
+				text-align: left;
+			}
+			
+			.yyg-record-table th {
+				background-color: #eee;
+				color: #666;
+				border: 0;
+				margin: 0;
+				height: 30px;
+				line-height: 30px;
+			    padding-left: 10px;
+			}
+			.yyg-record-table td{
+				height: 45px;
+				line-height: 45px;
+			    border-bottom:1px dashed #eee;
+			    color: #333;
+			    padding-left: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<table class="yyg-record-table" cellpadding="0" cellspacing="0">
+			<tbody>
+				<tr>
+					<th style="width:40px"></th>
+					<th>会员</th>
+					<th>云购次数</th>
+					<th>时间</th>
+				</tr>
+				<foreach name="list" item="item">
+				<tr>
+					<td><img src="{$item.img|default='__IMG__/member.png'}" height="20" width="20" alt=""/></td>
+					<td>{$item.username}</td>
+					<td>{$item.count}</td>
+					<td>{$item.time}</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<if condition="$num lt $total">
+			<div class="pagesx">
+				<ul id="Page_Ul">
+					<li id="Page_Total">{$total}条</li>
+					<li id="Page_One"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/1">首页</a></li>
+					<if condition="$pageNo gt 1">
+				        <li id="Page_Prev"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageNo - 1}">上一页</a></li>
+				  	</if>
+					<if condition="$pageNo gt 1">
+					  <for start="$minPageNo" end="$pageNo">
+					    		<li class="Page_Num"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
+						</for>
+					</if>
+					<li class="Page_This">{$pageNo}</li>
+					<for start="$pageNo+1" end="$maxPageNo+1">
+				    		<li class="Page_Num"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
+					</for>
+					<if condition="$pageNo lt $pageCount">
+				        <li id="Page_Next"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageNo + 1}">下一页</a></li>
+				  	</if>
+					<li id="Page_End"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageCount}">尾页</a></li>
+				</ul>
+			</div>
+		</if>
+	</body>
+</html>

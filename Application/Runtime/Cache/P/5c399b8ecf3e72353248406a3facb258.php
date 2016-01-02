@@ -187,41 +187,114 @@ window.onerror=function(){return true;}
 <div style="position: relative;" class="w1190">
 	<link rel="stylesheet" type="text/css" href="/Public/P/css/GoodsDetail.css"/>
 <link rel="stylesheet" type="text/css" href="/Public/P/css/cloud-zoom.css"/>
+<style type="text/css">
+	em {
+		color: #f60;
+	}
+	
+	.paimai-time {
+		margin: 0;
+		padding: 0;
+		height: 50px;	
+		position: relative;
+		border:#E0DFE3 1px solid;
+		overflow: hidden;
+		width: 335px;
+		margin-bottom: 15px;
+	}
+	.paimai-time dt{
+		background-color: #F60;
+		width: 45px;
+		height:50px;
+		line-height: 20px;
+		border: 0;
+		padding: 0;
+		padding-top: 5px;
+		float: left;
+		color: #fff;
+		font-size: 13px;
+		text-align: center;
+	}
+	
+	.paimai-time dd {
+		padding-left: 55px;
+		display: block;
+		height: 25px;
+		line-height: 25px;
+	}
+	
+	.paimai-detail {
+		margin-top: 30px;
+		border-top: #E0DFE3 solid 1px;
+		border-bottom: #E0DFE3 solid 1px;
+		padding: 15px 0;
+	}
+	
+	.paimai-detail ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 12px;
+		color:#666;
+	}
+	
+	.paimai-detail li {
+		display: inline-block;
+		zoom: *;
+		text-align: left;
+		height: 30px;
+		line-height: 30px;
+	}
+	
+	.paimai-detail .paimai-detail-label {
+		width: 60px;
+	}
+	
+	.paimai-detail .paimai-detail-value {
+		width: 100px;
+	}
+	
+	.paimai-money {
+		font-size: 12px;
+		line-height: 40px;
+	}
+	.paimai-money .small {
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.paimai-money b {
+		font-size: 30px;
+		font-weight: bold;
+	}
+	
+	.Det_button img {
+		height: 36px;
+		width: 36px;
+		vertical-align: middle;
+	}
+	
+	.paimai-end .paimai-time dt {
+		background-color: #999;
+	}
+	
+	.pm-bid-flow {
+	    position: relative;
+	    overflow: hidden;
+	    border: 1px solid #f5f5f5;
+	    z-index: 12;
+	    margin: 30px 10px;
+	}
+	
+</style>
 <script type="text/javascript" src="/Public/P/js/cloud-zoom.min.js"></script>
 <div class="Current_nav">
 	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
-	<span>&gt;</span>商品详情
+	<span>&gt;</span>拍卖详情
 </div>
 <div class="show_content">
-	<!-- 商品期数 -->
-	<div id="divPeriodList" class="show_Period" style="max-height:99px;">		
-		<div class="period_Open">
-			<a class="gray02" click="off" id="btnOpenPeriod" href="javascript:void(0);">展开<i></i></a>
-			
-		</div>
-		<ul class="Period_list">
-			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_600225260__=$data['current'] - 1;$__FOR_END_600225260__=0;for($i=$__FOR_START_600225260__;$i > $__FOR_END_600225260__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
-		</ul>
-	</div>
-	<script>
-		$("#btnOpenPeriod").click(function(){
-			var ui_obj = $("#divPeriodList li");
-			if($(this).attr("click")=='off'){
-				$("#divPeriodList").css("max-height",(Math.ceil(ui_obj.length / 9) * 33)+"px");	
-				$(this).attr("click","on");
-				$(this).html("收起<s></s>");
-				
-			}else{
-				$("#divPeriodList").css("max-height","99px");	
-				$(this).attr("click","off");
-				$(this).html("展开<i></i>");
-			}			
-		});
-	</script>	
 	<!-- 商品信息 -->
 	<div class="Pro_Details">
-		<h1><span>(第<?php echo ($data["qishu"]); ?>期)</span><span ><?php echo ($data["title"]); ?></span><em><?php echo ($data["subtitle"]); ?></em></h1>
+		<h1><span ><?php echo ($data["title"]); ?></span><em><?php echo ($data["subtitle"]); ?></em></h1>
 		<div class="Pro_Detleft">
 			<div class="clould-zoom">
 				<div class="clould-zoom-big">
@@ -247,265 +320,139 @@ window.onerror=function(){return true;}
 					$(".clould-zoom").cloudZoom();
 				});
 			</script>		
-			<?php if(data.lastprizer): ?><div class="Pro_GetPrize">	
-				<h2>上期获得者</h2>
-				<div class="GetPrize">				    
-					<dl>
-						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["lastprizer"]["img"]) && ($data["lastprizer"]["img"] !== ""))?($data["lastprizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
-						<dd class="gray02">
-							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["lastprizer"]["username"]); ?></a>获得了本商品</p>
-							<p>揭晓时间：<?php echo ($data["lastprizer"]["end_time"]); ?></p>
-							<p>云购时间：<?php echo ($data["lastprizer"]["record_time"]); ?></p>
-							<p>幸运云购码：<em class="orange Fb"><?php echo ($data['lastprizer']['prizecode']+10000001); ?></em></p>
-						</dd>
-					</dl>				
-				</div>
-			</div><?php endif; ?>
 		</div>
 		<div class="Pro_Detright">
-			<p class="Det_money">价值：<span class="rmbgray"><?php echo ($data["money"]); ?></span></p>
-			<?php if($data["status"] == 2): if(isset($data["prizer"])): ?><div class="Pro_GetPrize">		
-		<div class="GetPrize">				    
-			<dl>
-				<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["prizer"]["img"]) && ($data["prizer"]["img"] !== ""))?($data["prizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
-				<dd class="gray02">
-					<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
-					<p>揭晓时间：<?php echo ($data["prizer"]["end_time"]); ?></p>
-					<p>云购时间：<?php echo ($data["prizer"]["record_time"]); ?></p>
-					<p>幸运云购码：<em class="orange Fb"><?php echo ($data['prizer']['prizecode']+10000001); ?></em></p>
-				</dd>
-			</dl>				
-		</div>
-	</div>
-	<div id="divBuy" class="Det_button">
-		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
-	</div>
-<?php else: ?>
-<div class="Immediate">
-	<span style="left:10px;right:0px;">很遗憾，本期没有人参与</span>
-</div><?php endif; ?>
-			<?php else: ?>
-				<?php if(isset($end_time)): ?><div id="divLotteryTimer" class="Announced_Frame">
-		<div class="Announced_FrameTin">揭晓倒计时</div>
-		<div class="Announced_FrameCode">
-			<div class="Announced_FrameClock"><img src="/Public/P/images/Announced_Clock.gif" border="0" alt=""></div>
-				 <ul class="Announced_FrameClockMar">
-					<li id="liMinute1" class="Code_9">9<b></b></li>
-					<li id="liMinute2" class="Code_9">9<b></b></li>
-					<li class="Code_Point">:<b></b></li>
-					<li id="liSecond1" class="Code_9">9<b></b></li>
-					<li id="liSecond2" class="Code_9">9<b></b></li>
-					<li class="Code_Point">:<b></b></li>
-					<li id="liMilliSecond1" class="Code_9">9<b></b></li>
-					<li id="last" class="Code_9">9<b></b></li>
-				</ul>
-		</div>
-			<div class="Announced_FrameGet">
-				<p class="Announced_FrameLanguage"><img id="imgFunny" src="/Public/P/images/10.gif" border="0" alt=""></p>
-			</div>
-			<div class="Announced_FrameBm"></div>
-</div>
-		
-<div id="divLotteryTiming" class="Announced_Frame" style="display:none;">
-		<div class="Announced_FrameTin">正在计算</div>
-		<div class="Announced_FrameCal">
-			<p><img src="/Public/P/images/Announced_6.png" border="0" alt=""></p>
-			<span><img src="/Public/P/images/Announced_4.gif" border="0" alt=""></span>
-		</div>
-		<div class="Announced_FrameBm"></div>
-</div>
-<div id="span_a"></div>
-<div id="span_b"></div>
-		
-		
-<script type="text/javascript">	 
-	function show_date_time_location(){
-		window.setTimeout(function(){
-			$("#divLotteryTimer").hide();
-			$("#divLotteryTiming").show();	
-			//$.post("{WEB_PATH}/api/getshop/lottery_shop_set/",{"lottery_sub":"true","gid":{wc:$item['id']}},null);
-			//window.setTimeout(function(){window.location.href="{WEB_PATH}/dataserver/{wc:$item['id']}";},5000);
-		},1000);
-	}
-	function show_date_time(endTime,obj){	
-		if(!this.endTime){
-			this.endTime=endTime;this.obj=obj;
-		}
-		rTimeout = window.setTimeout("show_date_time()",30);	
-		timeold = this.endTime-(new Date().getTime());
-		if(timeold <= 0){		
-			$("#liMinute1").attr("class","Code_0");
-			$("#liMinute2").attr("class","Code_0");
-			$("#liSecond1").attr("class","Code_0");
-			$("#liSecond2").attr("class","Code_0");
-			$("#liMilliSecond1").attr("class","Code_0");
-			$("#last").attr("class","Code_0");	
-			rTimeout && clearTimeout(rTimeout);	
-			show_date_time_location();	
-			return;
-		}
-		sectimeold=timeold/1000
-		secondsold=Math.floor(sectimeold); 
-		msPerDay=24*60*60*1000
-		e_daysold=timeold/msPerDay 	
-		daysold=Math.floor(e_daysold); 				//天	
-		e_hrsold=(e_daysold-daysold)*24; 
-		hrsold=Math.floor(e_hrsold); 				//时
-		e_minsold=(e_hrsold-hrsold)*60;	
-		//分
-		minsold=Math.floor((e_hrsold-hrsold)*60);
-		minsold = (minsold<10?'0'+minsold:minsold)
-		minsold = new String(minsold);
-		minsold_1 = minsold.substr(0,1);
-		minsold_2 = minsold.substr(1,1);	
-
-		//秒
-		e_seconds = (e_minsold-minsold)*60;	
-		seconds=Math.floor((e_minsold-minsold)*60);
-		seconds = (seconds<10?'0'+seconds:seconds)
-		seconds = new String(seconds);
-		seconds_1 = seconds.substr(0,1);
-		seconds_2 = seconds.substr(1,1);	
-		//毫秒	
-		ms = e_seconds-seconds;
-		ms = new String(ms)
-		ms_1 = ms.substr(2,1);
-		ms_2 = ms.substr(3,1);
-		
-		$("#liMinute1").attr("class","Code_"+minsold_1);
-		$("#liMinute2").attr("class","Code_"+minsold_2);
-		$("#liSecond1").attr("class","Code_"+seconds_1);
-		$("#liSecond2").attr("class","Code_"+seconds_2);
-		$("#liMilliSecond1").attr("class","Code_"+ms_1);
-		$("#last").attr("class","Code_"+ms_2);
-		//this.obj.innerHTML=daysold+"天"+(hrsold<10?'0'+hrsold:hrsold)+"小时"+(minsold<10?'0'+minsold:minsold)+"分"+(seconds<10?'0'+seconds:seconds)+"秒."+ms;
-	}
-
-	$(function(){
-//		$.ajaxSetup({async:false});
-//		$.post("{WEB_PATH}/api/getshop/lottery_shop_get",{"lottery_shop_get":true,"gid":{wc:$item['id']},"times":Math.random()},function(sdata){	
-//			if(sdata!='no'){
-//				show_date_time((new Date().getTime())+(parseInt(sdata))*1000,null);
-//			}
-//		});
-		show_date_time(<?php echo (strtotime($data["end_time"])); ?> * 1000, null);
-	});
-</script>
+			<?php if($data["status"] < 2): ?><dl class="paimai-time">
+					<dt>正在<br/>进行</dt>
+			    		<dd>距离结束仅剩：<time countdown="<?php echo (strtotime($data["end_time"])); ?>000"></time></dd>
+			    		<dd>报名人数<em class="baomingrenshu"><?php echo ($data["baomingrenshu"]); ?></em></dd>
+			    </dl>
+			    <script type="text/javascript" src="/Public/P/js/count-down.js"></script>
+				<?php if(isset($isBaozheng)): ?><!-- 已交保证金 -->
+					<p class="paimai-money">当前价格：<span class="small">¥</span>&nbsp;<b class="zuigaojia"><?php echo ($data["zuigaojia"]); ?></b>&nbsp;&nbsp;&nbsp;&nbsp;出价<em class="chujiacishu"><?php echo ($data["chujiacishu"]); ?></em>次</p>
+					<div id="divNumber" class="Pro_number">
+						我要出价
+						<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
+						<input style="border:1px solid #CFCFCF;width: 100px;" type="text" value="<?php echo ($zuidijia); ?>" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
+						<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>
+					</div>
+					<div id="divBuy" class="Det_button">
+						<a id="chujiaButton" href="javascript:void(0);" class="Det_Shopbut"><img src="/Public/P/images/baozhengjin.png"/>出价</a>
+					</div>
+					<script type="text/javascript">
+						$(function() {
+							var qipaijia = <?php echo ($data["qipaijia"]); ?>;
+							var zuigaojia = <?php echo ($data["zuigaojia"]); ?>;
+							var jiafujia = <?php echo ($data["jiafujia"]); ?>;
+							var zuidijia = <?php echo ($zuidijia); ?>;
+							var chujiacishu = <?php echo ($data["chujiacishu"]); ?>;
+							var baomingrenshu = <?php echo ($data["baomingrenshu"]); ?>;
+							var chujiaInput = $("#num_dig");
+							var cishuLabels = $(".chujiacishu");
+							var baomingLabels = $(".baomingrenshu");
+							var zuigaoLabels = $(".zuigaojia");
+							var refreshHandler = null;
+							startReresh();
+							
+							function startReresh() {
+								// 自动刷新最高价状态
+								refreshHandler = window.setInterval(function() {
+									$.get("<?php echo U('refresh', '', '');?>/<?php echo ($data["gid"]); ?>", null, function(data) {
+										if(data.status < 2) {
+											baomingrenshu = data.baomingrenshu;
+											chujiacishu = data.chujiacishu;
+											zuigaojia = data.zuigaojia;
+											if(data.zuigaojia > zuidijia) {
+												zuidijia = zuigaojia + jiafujia;
+											}
+											cishuLabels.text(chujiacishu);
+											baomingLabels.text(baomingrenshu);
+											zuigaoLabels.text(zuigaojia);
+											
+											if(Number(chujiaInput.val()) < zuidijia) {
+												chujiaInput.val(zuidijia);
+											}
+										} else {
+											window.location.href = "<?php echo U('view', '', '');?>/<?php echo ($data["gid"]); ?>";
+										}
+									})
+								}, 10000);
+							}
+							
+							// 出价
+							var chujiaButton = $("#chujiaButton").click(function() {
+								chujiaButton.prop("disabled", true);
+								var money = Number(chujiaInput.val());
+								$.post("<?php echo U('chujia', '', '');?>/<?php echo ($data["gid"]); ?>/" + money,null,function(result) {
+									chujiaButton.prop("disabled", false);
+									if(result.status != 0) {
+										alert(result.message);
+									} else {
+										zuigaojia = money;
+										chujiacishu++;
+										zuigaoLabels.text(zuigaojia);
+										cishuLabels.text(chujiacishu);
+										zuidijia = zuigaojia + jiafujia;
+										chujiaInput.val(zuidijia);
+										alert("出价成功");
+									}
+								});
+							});
+							
+							$("#shopsub").click(function() {
+								var money = Number(chujiaInput.val());
+								if(zuidijia <= money - jiafujia) {
+									chujiaInput.val(money - jiafujia);
+								}
+							});
+							$("#shopadd").click(function() {
+								var money = Number(chujiaInput.val());
+								chujiaInput.val(money + jiafujia);
+							});
+						});
+					</script>
 				<?php else: ?>
-					<div class="Progress-bar">
-	<p title="已完成<?php echo round($data['canyurenshu']*100 / $data['shengyurenshu'], 2);?>%"><span style="width:<?php echo ($data['canyurenshu']*100 / $data['shengyurenshu']); ?>%;"></span></p>
-	<ul class="Pro-bar-li">
-		<li class="P-bar01"><em><?php echo ($data["canyurenshu"]); ?></em>已参与人次</li>
-		<li class="P-bar02"><em id="CodeQuantity"><?php echo ($data["zongrenshu"]); ?></em>总需人次</li>
-		<li class="P-bar03"><em id="CodeLift"><?php echo ($data["shengyurenshu"]); ?></em>剩余人次</li>
-	</ul>
-</div>
-
-<?php if(empty($data['prizeuid']) AND empty($data['end_time']) AND $data['shengyurenshu'] == 0): ?><div class="Immediate">
-      <span style="left:10px;right:0px;">这个商品未揭晓成功,请联系客服手动揭晓！</span>  
-    </div><?php endif; ?>
-
- <!-- 限时揭晓 -->
-<?php if(isset($data["end_time"])): ?><div id="divAutoRTime" class="Immediate">
-	    <span><a class="orange" target="_blank" href="#">限时揭晓的规则？</a></span>
-	     <i id="timeall" endtime="<?php echo ($data["end_time"]); ?>" lxfday="no"></i>		                           
-	</div>
-<script type="text/javascript">			
-	function lxfEndtime(xsjx_time_shop,this_time){	
-		if(!this.xsjx_time_shop){
-			this.xsjx_time_shop = xsjx_time_shop;	
-			this.this_time		= this_time
-		}
-		this.this_time = this.this_time + 1000;
-		lxfEndtime_setTimeout  = window.setTimeout("lxfEndtime()",1000);				
-		var endtime = <?php echo (strtotime($data["end_time"])); ?>000;
-	    var youtime = endtime - this.this_time;	   	   //还有多久(毫秒值)
-		
-		var seconds = youtime/1000;
-		var minutes = Math.floor(seconds/60);
-		var hours = Math.floor(minutes/60);
-		var days = Math.floor(hours/24);
-		var CDay= days;
-		var CHour= hours % 24;
-		var CMinute= minutes % 60;
-		var CSecond= Math.floor(seconds%60);//"%"是取余运算，可以理解为60进一后取余数，然后只要余数							
-		this.xsjx_time_shop.html("<b>限时揭晓</b><p>剩余时间：<em>"+days+"</em>天<em>"+CHour+"</em>时<em>"+CMinute+"</em>分<em>"+CSecond+"</em>秒</p>");
-		delete youtime,seconds,minutes,hours,days,CDay,CHour, CMinute, CSecond;
-		if(endtime <= this.this_time){			
-			lxfEndtime_setTimeout && window.clearTimeout(lxfEndtime_setTimeout);					
-			this.xsjx_time_shop.html("<b>限时揭晓</b><p>正在计算中....</p>");//如果结束日期小于当前日期就提示过期啦	
-			xsjx_time_shop = this.xsjx_time_shop;
-			// 刷新页面
-			window.location.href = "<?php echo U('view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["qishu"]); ?>";
-		}							
-  	}			  
- 	$(function(){
- 		lxfEndtime($("#timeall"),<?php echo ($serverTime); ?>000);
- 	});
-</script><?php endif; ?>		
-<!-- 限时揭晓end -->
-
-<p class="Pro_Detsingle" style="font-size:14px;">云购价格：¥<b style="color:#999;"><?php echo ($data["danjia"]); ?></b></p>
-<?php if($data["xiangou"] > 0): ?><p class="Pro_Detsingle" style="font-size:14px;">限购次数：<b style="color:#999;"><?php echo ($data["xiangou"]); ?></b>人次</p><?php endif; ?>
-<div id="divNumber" class="Pro_number">
-	我要云购 
-	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
-	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
-	<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>人次 
-	<span id="chance" class="gray03">购买人次越多获得几率越大哦！</span>
-</div>
-<div style="display:none;" id="hqid"><?php echo ($data["gid"]); ?></div>
-<div id="divBuy" class="Det_button">
-	<a href="javascript:void(0);" class="Det_Shopbut">立即云购</a>
-	<a href="javascript:void(0);" class="Det_Cart add-cart" src="<?php echo ($data["thumb"]); ?>" gid="<?php echo ($data["gid"]); ?>"><i></i>加入购物车</a>							
-</div>
-<script type="text/javascript">
-	$(function() {
-		// 加减号
-		var shopsub = $("#shopsub").click(onamountchange);
-		var shopadd = $("#shopadd").click(onamountchange);
-		var input = $("#num_dig").change(onamountchange);
-		var chance = $("#chance");
-		var id = <?php echo ($data["gid"]); ?>;
-		var shengyu = <?php echo ($data["shengyurenshu"]); ?>;
-		var zongshu = <?php echo ($data["zongrenshu"]); ?>;
-		var xiangou = <?php echo ($data["xiangou"]); ?>;
-		function onamountchange() {
-			var $this = $(this);
-			var count = Number(input.val());
-			var flag = $this.is(shopadd) ? 1 : ($this.is(shopsub) ? -1 : 0);
-			
-			if(xiangou > 0 && (count + flag > xiangou)) {
-				return;
-			}
-			
-			if(count > shengyu) {
-				count = shengyu;
-			}
-			
-			if(flag == -1 && count <= 1) {
-				return;
-			}
-			
-			if(count < -1) {
-				input.val(1);
-				return;
-			}
-			count += flag;
-			input.val(count);
-			var jilv = (count * 100.0 / zongshu);
-			jilv = Math.round(jilv * 100.0) / 100.0;
-			chance.html("<span style='color:red'>获得机率"+jilv+"%</span>");
-		}
-		
-		// 立即云购
-		$(".Det_Shopbut").click(function() {
-			$.post("<?php echo U('Cart/add', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($data["type"]); ?>/" + Number(input.val()), null, function(result) {
-				window.location.href = "<?php echo U('Cart/index', '','');?>";
-			})
-		});
-	});
-</script><?php endif; endif; ?>
+					<!-- 未交保证金 -->
+				    <p class="paimai-money">当前价格：<span class="small">¥</span>&nbsp;<b><?php echo ($data["zuigaojia"]); ?></b>&nbsp;&nbsp;&nbsp;&nbsp;出价<em class="chujiacishu"><?php echo ($data["chujiacishu"]); ?></em>次</p>
+				    <p class="paimai-money">保证金：<em><span class="small">¥</span>&nbsp;<b><?php echo ($data["baozhengjin"]); ?></b></em> <span>&nbsp;&nbsp;&nbsp;&nbsp;拍卖不成则结束退还</span></p>
+				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
+				    
+				    <div id="divBuy" class="Det_button">
+						<a href="javascript:void(0);" class="Det_Shopbut"><img src="/Public/P/images/baozhengjin.png"/>交保证金报名</a>
+					</div><?php endif; ?>
+			<?php else: ?>
+				<!-- 已结束 -->
+				<div class="paimai-end">
+					<dl class="paimai-time">
+						<dt>拍卖<br/>结束</dt>
+				    		<dd>结束时间：<?php echo ($data["end_time"]); ?></dd>
+				    		<dd>报名人数<em><?php echo ($data["baomingrenshu"]); ?></em></dd>
+				    </dl>
+				    <p class="paimai-money">最高价格：<em><span class="small">¥</span>&nbsp;<b><?php echo ($data["zuigaojia"]); ?></b></em></p>
+				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
+				    
+				    <div id="divBuy" class="Det_button">
+						<a href="javascript:void(0);" class="Det_Shopbut_exit"><img src="/Public/P/images/baozhengjin.png"/>拍卖已结束</a>
+					</div>
+				</div><?php endif; ?>
+		    
+		    <div class="paimai-detail">
+		    		<ul>
+	    				<li class="paimai-detail-label">起拍价：</li>
+	    				<li class="paimai-detail-value">¥ <?php echo ($data["qipaijia"]); ?></li>
+	    				<li class="paimai-detail-label">加价幅度：</li>
+	    				<li class="paimai-detail-value"><em>¥ <?php echo ($data["jiafujia"]); ?></em></li>
+	    				<li class="paimai-detail-label">保留价：</li>
+	    				<li><?php if($data["baoliujia"] > 0): ?>有<?php else: ?>无<?php endif; ?></li>
+	    				
+	    				<li class="paimai-detail-label">包邮：</li>
+	    				<li class="paimai-detail-value"><?php if($data["baoliujia"] > 0): ?>是<?php else: ?>否<?php endif; ?></li>
+	    				<li class="paimai-detail-label">拍卖方式：</li>
+	    				<li class="paimai-detail-value">升价拍</li>
+	    				<li class="paimai-detail-label">佣金：</li>
+	    				<li>无</li>
+		    		</ul>
+		    </div>
 			
 			<!--显示揭晓动画 end-->		
 			<div class="Security">
@@ -514,56 +461,24 @@ window.onerror=function(){return true;}
 					<li><a href="{WEB_PATH}/help/5" target="_blank"><s></s>100%正品保证</a></li>
 					<li><a href="{WEB_PATH}/help/7" target="_blank"><b></b>全国免费配送</a></li>
 				</ul>
-			</div>			
-			<?php if($data["status"] != 2): ?><div class="Pro_Record">
-				<ul id="ulRecordTab" class="Record_tit">
-					<li class="NewestRec Record_titCur">最新云购记录</li>
-					<li class="MytRec">我的云购记录</li>
-					<li class="Explain orange">什么是1元云购？</li>
-				</ul>
-				<div class="Newest_Con _hiden" style="">
-					<?php if(isset($records)): ?><ul>
-						<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank">
-							<img src="<?php echo ((isset($item["img"]) && ($item["img"] !== ""))?($item["img"]):'/Public/P/images/member.png'); ?>" border="0" alt="" width="20" height="20">
-						</a>					
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
-						<!-- todo: IP -->			
-						<?php echo ($item["time"]); ?> 云购了
-						<em class="Fb gray01"><?php echo ($item["count"]); ?></em>人次</li><?php endforeach; endif; ?>
-					</ul>
-					<?php else: ?>
-					<p style="">暂时没有人购买</p><?php endif; ?>
-				</div>
-				
-				<!--我的云购记录-->
-				<div class="My_Record _hiden" style="display: none;">
-					<?php if(isset($myrecords)): ?><ul>				
-						<?php if(is_array($myrecords)): foreach($myrecords as $key=>$item): ?><li><?php echo ($item["time"]); ?>  云购了  <?php echo ($item["count"]); ?>  个云购码</li><?php endforeach; endif; ?>
-					</ul>
-					<?php else: ?>				
-					<div class="My_RecordReg">
-						<b class="gray01">看不到？是不是没登录或是没注册？ 登录后看看</b>
-						<a href="<?php echo U('Main/login');?>" class="My_Signbut">登录</a><a href="<?php echo U('Main/register');?>" class="My_Regbut">注册</a>
-					</div><?php endif; ?>	
-				</div>
-				<!--/我的云购记录-->
-				<div class="Newest_Con _hiden" style="display: none;">
-					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="<?php echo U('Help/index');?>/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
-				</div>
-			</div><?php endif; ?>
+			</div>	
 		</div>
 	</div>
+
+	<div class="pm-bid-flow">
+		<img width="948" height="46" src="/Public/P/images/pm-bid-flow.png" class="">
+	</div>
 </div>
+    						
 <!-- 商品信息导航 -->
 <div class="ProductTabNav">
 	<div id="divProductNav" class="DetailsT_Tit">
 		<div class="DetailsT_TitP">
 			<ul>
 				<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">商品详情</span></li>
-				<li id="liUserBuyAll" class="All_RecordT"><span class="">所有参与记录</span></li>
-				<li class="Single_ConT"><span class="">晒单</span></li>
+				<li id="liUserBuyAll" class="All_RecordT"><span class="">出价次数(<span class="chujiacishu"><?php echo ($data["chujiacishu"]); ?></span>)</span></li>
+				<li class="Single_ConT"><span class="">卖家承诺</span></li>
+				<li class="Single_ConT"><span class="">保证金须知</span></li>
 			</ul>
 			<!-- <p><a id="btnAdd2Cart" href="javascript:;" class="white DetailsT_Cart"><s></s>加入购物车</a></p> -->
 		</div>
@@ -576,21 +491,24 @@ window.onerror=function(){return true;}
 	<div class="Product_Con"><?php echo ($data["content"]); ?></div>
     <!-- 商品内容 -->
     
-    <!-- 购买记录20条 -->
 	<div id="bitem" class="AllRecordCon">
-		<iframe id="iframea_bitem" g_src="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>" style="width:930px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_bitem'].document.documentElement.scrollHeight + 'px'"></iframe>		
+		<iframe g_src="<?php echo U('Paimai/record', '', '');?>/<?php echo ($data["gid"]); ?>" style="width:930px; border:none;height:550px" frameborder="0" scrolling="no"></iframe>
 	</div>	
-   <!-- /购买记录20条 -->
-    
-	<!-- 晒单 -->
-	<div id="divPost" class="Single_Content">
-		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_divPost'].document.documentElement.scrollHeight + 'px'"></iframe>
+	<!-- 卖家承诺 -->
+	<div class="Single_Content">
+		<iframe name="ifrCN" g_src="<?php echo U('Paimai/article', '', '');?>/chengnuo" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrCN'].document.documentElement.scrollHeight + 'px'"></iframe>
 	</div>
-    <!-- 晒单 -->	
+    <!-- 卖家承诺 -->	
+    
+	<!-- 保证金须知 -->
+	<div class="Single_Content">
+		<iframe name="ifrBZ" g_src="<?php echo U('Paimai/article', '', '');?>/baozhengjin" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrBZ'].document.documentElement.scrollHeight + 'px'"></iframe>
+	</div>
+    <!-- 保证金须知 -->	
 </div>
 <!--补丁3.1.6_b.0.1-->
 
-
+<script src="/Public/P/js/knockout-3.3.0.js" type="text/javascript"></script>
 <script type="text/javascript">
 function set_iframe_height(fid,did,height){	
 	$("#"+fid).css("height",height);	
@@ -617,14 +535,13 @@ $(function(){
 			divContent.hide().eq(index).show();
 	});
 	
-	
-//	$("#btnUserBuyMore").click(function(){
-//		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
-//		
-//		$("#divContent .hide").hide().eq(1).show();
-//		$("html,body").animate({scrollTop:941},1500);
-//		$("#divProductNav").addClass("nav-fixed");
-//	});
+	$("#btnUserBuyMore").click(function(){
+		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+		
+		$("#divContent .hide").hide().eq(1).show();
+		$("html,body").animate({scrollTop:941},1500);
+		$("#divProductNav").addClass("nav-fixed");
+	});
 	$(window).scroll(function(){
 		if($(window).scrollTop()>=941){
 			$("#divProductNav").addClass("nav-fixed");
@@ -632,6 +549,10 @@ $(function(){
 			$("#divProductNav").removeClass("nav-fixed");
 		}
 	});
+	
+	// 出价记录
+	var chujiaVM = ko.observableArray();
+	ko.applyBindings(model, document.getElementById("bitem"));
 });
 </script> 
 </div>

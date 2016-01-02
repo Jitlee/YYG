@@ -151,6 +151,45 @@ class IndexController extends CommonController {
 			->join('yyg_miaosha_code on yyg_miaosha_code.uid = yyg_member.uid and yyg_miaosha_history.gid = yyg_miaosha_code.gid and yyg_miaosha_code.qishu = yyg_miaosha_history.qishu')
 			->where($umap)
 			->find();
-	}	
+	}
+	
+	public function record($gid, $qishu, $pageNo = 1) {
+		// 购买记录
+		$db = M('MemberMiaosha');
+		$map['gid'] = $gid;
+		$map['qishu'] = $qishu;
+		$pageSize = 10;
+		
+		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->where($map)->order('id desc')->page($pageNo, $pageSize)->select();
+		if(!empty($list)) {
+			$this->assign('list', $list);
+		}
+		
+		$num = 0;
+		$total = 0;
+		if($list) {
+			$this->assign('list', $list);
+			$num = count($list);
+			
+			$total = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')->where($map)->count();
+			
+			$pageCount = ceil($total / $pageSize);
+			$this->assign('pageSize', $pageSize);
+			$this->assign('pageNo', $pageNo);
+			$this->assign('pageCount', $pageCount);
+			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
+			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
+		}
+		
+		$this->assign('gid', $gid);
+		$this->assign('qishu', $qishu);
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		layout(false);
+		$this->display();
+	}
+	
 }
 	

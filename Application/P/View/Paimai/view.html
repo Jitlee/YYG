@@ -1,0 +1,376 @@
+<link rel="stylesheet" type="text/css" href="__CSS__/GoodsDetail.css"/>
+<link rel="stylesheet" type="text/css" href="__CSS__/cloud-zoom.css"/>
+<style type="text/css">
+	em {
+		color: #f60;
+	}
+	
+	.paimai-time {
+		margin: 0;
+		padding: 0;
+		height: 50px;	
+		position: relative;
+		border:#E0DFE3 1px solid;
+		overflow: hidden;
+		width: 335px;
+		margin-bottom: 15px;
+	}
+	.paimai-time dt{
+		background-color: #F60;
+		width: 45px;
+		height:50px;
+		line-height: 20px;
+		border: 0;
+		padding: 0;
+		padding-top: 5px;
+		float: left;
+		color: #fff;
+		font-size: 13px;
+		text-align: center;
+	}
+	
+	.paimai-time dd {
+		padding-left: 55px;
+		display: block;
+		height: 25px;
+		line-height: 25px;
+	}
+	
+	.paimai-detail {
+		margin-top: 30px;
+		border-top: #E0DFE3 solid 1px;
+		border-bottom: #E0DFE3 solid 1px;
+		padding: 15px 0;
+	}
+	
+	.paimai-detail ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		font-size: 12px;
+		color:#666;
+	}
+	
+	.paimai-detail li {
+		display: inline-block;
+		zoom: *;
+		text-align: left;
+		height: 30px;
+		line-height: 30px;
+	}
+	
+	.paimai-detail .paimai-detail-label {
+		width: 60px;
+	}
+	
+	.paimai-detail .paimai-detail-value {
+		width: 100px;
+	}
+	
+	.paimai-money {
+		font-size: 12px;
+		line-height: 40px;
+	}
+	.paimai-money .small {
+		font-size: 16px;
+		font-weight: bold;
+	}
+	.paimai-money b {
+		font-size: 30px;
+		font-weight: bold;
+	}
+	
+	.Det_button img {
+		height: 36px;
+		width: 36px;
+		vertical-align: middle;
+	}
+	
+	.paimai-end .paimai-time dt {
+		background-color: #999;
+	}
+	
+	.pm-bid-flow {
+	    position: relative;
+	    overflow: hidden;
+	    border: 1px solid #f5f5f5;
+	    z-index: 12;
+	    margin: 30px 10px;
+	}
+	
+</style>
+<script type="text/javascript" src="__JS__/cloud-zoom.min.js"></script>
+<div class="Current_nav">
+	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
+	<span>&gt;</span>拍卖详情
+</div>
+<div class="show_content">
+	<!-- 商品信息 -->
+	<div class="Pro_Details">
+		<h1><span >{$data.title}</span><em>{$data.subtitle}</em></h1>
+		<div class="Pro_Detleft">
+			<div class="clould-zoom">
+				<div class="clould-zoom-big">
+					<img src="{$firstImage.image_url}" />
+					<div class="clould-zoom-bird-outter">
+						<div class="clould-zoom-bird"></div>
+					</div>
+				</div>
+				<div class="clould-zoom-view" style="background-image: url({$firstImage.image_url});"></div>
+				<div class="cloud-zoom-scroll">
+					<a class="colud-zoom-prev cloud-zoom-disabled"><i>&nbsp;</i></a>
+					<ul class="clould-zoom-list">
+						<foreach name="images" item="item">
+						<li class="cloud-zoom-item" ref="{$item.image_url}">
+							<img src="{$item.image_url}" />
+						</li>
+						</foreach>
+						<li class="cloud-zoom-clear"></li>
+					</ul>
+					<a class="colud-zoom-next"><i>&nbsp;</i></a>
+				</div>
+			</div>
+			<script type="text/javascript">
+				$(function() {
+					$(".clould-zoom").cloudZoom();
+				});
+			</script>		
+		</div>
+		<div class="Pro_Detright">
+			<if condition="$data.status lt 2">
+				<dl class="paimai-time">
+					<dt>正在<br/>进行</dt>
+			    		<dd>距离结束仅剩：<time countdown="{$data.end_time|strtotime}000"></time></dd>
+			    		<dd>报名人数<em class="baomingrenshu">{$data.baomingrenshu}</em></dd>
+			    </dl>
+			    <script type="text/javascript" src="__JS__/count-down.js"></script>
+				<present name="isBaozheng">
+					<!-- 已交保证金 -->
+					<p class="paimai-money">当前价格：<span class="small">¥</span>&nbsp;<b class="zuigaojia">{$data.zuigaojia}</b>&nbsp;&nbsp;&nbsp;&nbsp;出价<em class="chujiacishu">{$data.chujiacishu}</em>次</p>
+					<div id="divNumber" class="Pro_number">
+						我要出价
+						<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
+						<input style="border:1px solid #CFCFCF;width: 100px;" type="text" value="{$zuidijia}" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
+						<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>
+					</div>
+					<div id="divBuy" class="Det_button">
+						<a id="chujiaButton" href="javascript:void(0);" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>出价</a>
+					</div>
+					<script type="text/javascript">
+						$(function() {
+							var qipaijia = {$data.qipaijia};
+							var zuigaojia = {$data.zuigaojia};
+							var jiafujia = {$data.jiafujia};
+							var zuidijia = {$zuidijia};
+							var chujiacishu = {$data.chujiacishu};
+							var baomingrenshu = {$data.baomingrenshu};
+							var chujiaInput = $("#num_dig");
+							var cishuLabels = $(".chujiacishu");
+							var baomingLabels = $(".baomingrenshu");
+							var zuigaoLabels = $(".zuigaojia");
+							var refreshHandler = null;
+							startReresh();
+							
+							function startReresh() {
+								// 自动刷新最高价状态
+								refreshHandler = window.setInterval(function() {
+									$.get("{:U('refresh', '', '')}/{$data.gid}", null, function(data) {
+										if(data.status < 2) {
+											baomingrenshu = data.baomingrenshu;
+											chujiacishu = data.chujiacishu;
+											zuigaojia = data.zuigaojia;
+											if(data.zuigaojia > zuidijia) {
+												zuidijia = zuigaojia + jiafujia;
+											}
+											cishuLabels.text(chujiacishu);
+											baomingLabels.text(baomingrenshu);
+											zuigaoLabels.text(zuigaojia);
+											
+											if(Number(chujiaInput.val()) < zuidijia) {
+												chujiaInput.val(zuidijia);
+											}
+										} else {
+											window.location.href = "{:U('view', '', '')}/{$data.gid}";
+										}
+									})
+								}, 10000);
+							}
+							
+							// 出价
+							var chujiaButton = $("#chujiaButton").click(function() {
+								chujiaButton.prop("disabled", true);
+								var money = Number(chujiaInput.val());
+								$.post("{:U('chujia', '', '')}/{$data.gid}/" + money,null,function(result) {
+									chujiaButton.prop("disabled", false);
+									if(result.status != 0) {
+										alert(result.message);
+									} else {
+										zuigaojia = money;
+										chujiacishu++;
+										zuigaoLabels.text(zuigaojia);
+										cishuLabels.text(chujiacishu);
+										zuidijia = zuigaojia + jiafujia;
+										chujiaInput.val(zuidijia);
+										alert("出价成功");
+									}
+								});
+							});
+							
+							$("#shopsub").click(function() {
+								var money = Number(chujiaInput.val());
+								if(zuidijia <= money - jiafujia) {
+									chujiaInput.val(money - jiafujia);
+								}
+							});
+							$("#shopadd").click(function() {
+								var money = Number(chujiaInput.val());
+								chujiaInput.val(money + jiafujia);
+							});
+						});
+					</script>
+				<else/>
+					<!-- 未交保证金 -->
+				    <p class="paimai-money">当前价格：<span class="small">¥</span>&nbsp;<b>{$data.zuigaojia}</b>&nbsp;&nbsp;&nbsp;&nbsp;出价<em class="chujiacishu">{$data.chujiacishu}</em>次</p>
+				    <p class="paimai-money">保证金：<em><span class="small">¥</span>&nbsp;<b>{$data.baozhengjin}</b></em> <span>&nbsp;&nbsp;&nbsp;&nbsp;拍卖不成则结束退还</span></p>
+				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
+				    
+				    <div id="divBuy" class="Det_button">
+						<a href="javascript:void(0);" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>交保证金报名</a>
+					</div>
+				</present>
+			<else/>
+				<!-- 已结束 -->
+				<div class="paimai-end">
+					<dl class="paimai-time">
+						<dt>拍卖<br/>结束</dt>
+				    		<dd>结束时间：{$data.end_time}</dd>
+				    		<dd>报名人数<em>{$data.baomingrenshu}</em></dd>
+				    </dl>
+				    <p class="paimai-money">最高价格：<em><span class="small">¥</span>&nbsp;<b>{$data.zuigaojia}</b></em></p>
+				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
+				    
+				    <div id="divBuy" class="Det_button">
+						<a href="javascript:void(0);" class="Det_Shopbut_exit"><img src="__IMG__/baozhengjin.png"/>拍卖已结束</a>
+					</div>
+				</div>
+			</if>
+		    
+		    <div class="paimai-detail">
+		    		<ul>
+	    				<li class="paimai-detail-label">起拍价：</li>
+	    				<li class="paimai-detail-value">¥ {$data.qipaijia}</li>
+	    				<li class="paimai-detail-label">加价幅度：</li>
+	    				<li class="paimai-detail-value"><em>¥ {$data.jiafujia}</em></li>
+	    				<li class="paimai-detail-label">保留价：</li>
+	    				<li><if condition="$data.baoliujia gt 0">有<else/>无</if></li>
+	    				
+	    				<li class="paimai-detail-label">包邮：</li>
+	    				<li class="paimai-detail-value"><if condition="$data.baoliujia gt 0">是<else/>否</if></li>
+	    				<li class="paimai-detail-label">拍卖方式：</li>
+	    				<li class="paimai-detail-value">升价拍</li>
+	    				<li class="paimai-detail-label">佣金：</li>
+	    				<li>无</li>
+		    		</ul>
+		    </div>
+			
+			<!--显示揭晓动画 end-->		
+			<div class="Security">
+				<ul>
+					<li><a href="{WEB_PATH}/help/4" target="_blank"><i></i>100%公平公正</a></li>
+					<li><a href="{WEB_PATH}/help/5" target="_blank"><s></s>100%正品保证</a></li>
+					<li><a href="{WEB_PATH}/help/7" target="_blank"><b></b>全国免费配送</a></li>
+				</ul>
+			</div>	
+		</div>
+	</div>
+
+	<div class="pm-bid-flow">
+		<img width="948" height="46" src="__IMG__/pm-bid-flow.png" class="">
+	</div>
+</div>
+    						
+<!-- 商品信息导航 -->
+<div class="ProductTabNav">
+	<div id="divProductNav" class="DetailsT_Tit">
+		<div class="DetailsT_TitP">
+			<ul>
+				<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">商品详情</span></li>
+				<li id="liUserBuyAll" class="All_RecordT"><span class="">出价次数(<span class="chujiacishu">{$data.chujiacishu}</span>)</span></li>
+				<li class="Single_ConT"><span class="">卖家承诺</span></li>
+				<li class="Single_ConT"><span class="">保证金须知</span></li>
+			</ul>
+			<!-- <p><a id="btnAdd2Cart" href="javascript:;" class="white DetailsT_Cart"><s></s>加入购物车</a></p> -->
+		</div>
+	</div>
+</div>
+
+<!--补丁3.1.6_b.0.1-->
+<div id="divContent" class="Product_Content">
+	<!-- 商品内容 -->
+	<div class="Product_Con">{$data.content}</div>
+    <!-- 商品内容 -->
+    
+	<div id="bitem" class="AllRecordCon">
+		<iframe g_src="{:U('Paimai/record', '', '')}/{$data.gid}" style="width:930px; border:none;height:550px" frameborder="0" scrolling="no"></iframe>
+	</div>	
+	<!-- 卖家承诺 -->
+	<div class="Single_Content">
+		<iframe name="ifrCN" g_src="{:U('Paimai/article', '', '')}/chengnuo" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrCN'].document.documentElement.scrollHeight + 'px'"></iframe>
+	</div>
+    <!-- 卖家承诺 -->	
+    
+	<!-- 保证金须知 -->
+	<div class="Single_Content">
+		<iframe name="ifrBZ" g_src="{:U('Paimai/article', '', '')}/baozhengjin" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrBZ'].document.documentElement.scrollHeight + 'px'"></iframe>
+	</div>
+    <!-- 保证金须知 -->	
+</div>
+<!--补丁3.1.6_b.0.1-->
+
+<script src="__JS__/knockout-3.3.0.js" type="text/javascript"></script>
+<script type="text/javascript">
+function set_iframe_height(fid,did,height){	
+	$("#"+fid).css("height",height);	
+}
+
+$(function(){
+	$("#ulRecordTab li").click(function(){
+		var add=$("#ulRecordTab li").index(this);
+		$("#ulRecordTab li").removeClass("Record_titCur").eq(add).addClass("Record_titCur");
+		$(".Pro_Record ._hiden").hide().eq(add).show();
+	});
+	
+	var DetailsT_TitP = $(".DetailsT_TitP ul li");
+	var divContent    = $("#divContent div");	
+	DetailsT_TitP.click(function(){
+		var index = $(this).index();
+			DetailsT_TitP.removeClass("DetailsTCur").eq(index).addClass("DetailsTCur");
+	
+			var iframe = divContent.hide().eq(index).find("iframe");
+			if (typeof(iframe.attr("g_src")) != "undefined") {
+			  	 iframe.attr("src",iframe.attr("g_src"));
+				 iframe.removeAttr("g_src");
+			}
+			divContent.hide().eq(index).show();
+	});
+	
+	$("#btnUserBuyMore").click(function(){
+		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+		
+		$("#divContent .hide").hide().eq(1).show();
+		$("html,body").animate({scrollTop:941},1500);
+		$("#divProductNav").addClass("nav-fixed");
+	});
+	$(window).scroll(function(){
+		if($(window).scrollTop()>=941){
+			$("#divProductNav").addClass("nav-fixed");
+		}else if($(window).scrollTop()<941){
+			$("#divProductNav").removeClass("nav-fixed");
+		}
+	});
+	
+	// 出价记录
+	var chujiaVM = ko.observableArray();
+	ko.applyBindings(model, document.getElementById("bitem"));
+});
+</script> 

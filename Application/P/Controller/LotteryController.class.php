@@ -7,6 +7,7 @@ class LotteryController extends CommonController {
 		$this->assign('title', '一元购');
 		$num = 0;
 		$total = 0;
+		$pageSize = 10;
 		
 		// 最新揭晓
 		$hdb = M('MiaoshaHistory');
@@ -18,16 +19,15 @@ class LotteryController extends CommonController {
 				'yyg_miaosha_history.status','yyg_miaosha_history.qishu','yyg_miaosha_history.canyurenshu',
 				'yyg_miaosha_history.zongrenshu','yyg_miaosha_history.type','yyg_miaosha_history.prizeuid',
 				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->page($pageNo,10)->select();
+			->page($pageNo, $pageSize)->select();
 		$this->assign('list', $list);
 		
-		$pageSize = 10;
 		$num = count($list);
 		$total = $hdb->join('yyg_member on yyg_member.uid = yyg_miaosha_history.prizeuid')
 			->where($filter)->count();
 		
-		$pageCount = ceil($total / 10);
-		$this->assign('pageSize', 10);
+		$pageCount = ceil($total / $pageSize);
+		$this->assign('pageSize', $pageSize);
 		$this->assign('pageNo', $pageNo);
 		$this->assign('pageCount', $pageCount);
 		$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
@@ -35,6 +35,7 @@ class LotteryController extends CommonController {
 		
 		$this->assign('num', $num);
 		$this->assign('total', $total);
+		$this->assign('sort', $sort);
 		
 		// 他们购买记录
 		$mmdb = M('MemberMiaosha');

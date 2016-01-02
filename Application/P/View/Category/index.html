@@ -114,7 +114,7 @@
 					</for>
 				</if>
 				<li class="Page_This">{$pageNo}</li>
-				<for start="$pageNo+1" end="$maxPageNo">
+				<for start="$pageNo+1" end="$maxPageNo+1">
 			    		<li class="Page_Num"><a href="{:U('Category/index', '', '')}/{$cid}/{$bid}/{$sort}/{$i}">{$i}</a></li>
 				</for>
 				<if condition="$pageNo lt $pageCount">
