@@ -1,19 +1,32 @@
 <?php
 namespace P\Controller;
 class CategoryController extends CommonController {
-	public function index($cid = 0, $bid = 0, $sort = 0, $pageNo = 1){
+	public function index($type = 0, $cid = 0, $bid = 0, $sort = 0, $pageNo = 1){
 		$this->assign('cid', $cid);
 		$this->assign('bid', $bid);
 		$this->assign('sort', $sort);
+		$this->assign('type', $type);
 		
 		$this->assign('now', time());
 		
 		// 所有分类
 		$cdb = D('category');
-		$categories = $cdb->relation(true)->select();
+		$map = array();
+		if($type == 1) {
+			$map['jishijiexiao'] = array('eq', 0);
+		} else if($type == 2) {
+			$map['jishijiexiao'] = array('lt', 0);
+		}
+		$categories = $cdb->where($map)->relation(true)->select();
 		
 		$brands = null;
 		if($cid > 0) {
+			foreach($categories as $c) {
+				if(intval($c['cid']) == $cid) {
+					$brands = $c['brands'];
+					break;
+				}
+			}
 		} else if(count($categories) > 0) {
 			$brands = $categories[0]['brands'];
 		}
@@ -32,7 +45,7 @@ class CategoryController extends CommonController {
 			$mmap['cid'] = $cid;
 		}
 		if($bid > 0) {
-			$mmap['bid'] = $cid;
+			$mmap['bid'] = $bid;
 		}
 		
 		$order = 'time desc';

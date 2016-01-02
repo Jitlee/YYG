@@ -312,9 +312,9 @@ window.onerror=function(){return true;}
 	        <span class="disabled"> < </span>
 	      </span><?php endif; ?>
 	  	<!--$minPageNum=<?php echo ($minPageNum); ?>,$pageNum=<?php echo ($maxPageNum); ?>-->
-	  	<?php if($pageNum > 1): $__FOR_START_769896586__=$minPageNum;$__FOR_END_769896586__=$pageNum;for($i=$__FOR_START_769896586__;$i < $__FOR_END_769896586__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a><?php } endif; ?>
+	  	<?php if($pageNum > 1): $__FOR_START_36486017__=$minPageNum;$__FOR_END_36486017__=$pageNum;for($i=$__FOR_START_36486017__;$i < $__FOR_END_36486017__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a><?php } endif; ?>
 			<span class="current"><?php echo ($pageNum); ?></span>
-	  	<?php $__FOR_START_975497892__=$pageNum+1;$__FOR_END_975497892__=$maxPageNum;for($i=$__FOR_START_975497892__;$i < $__FOR_END_975497892__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a><?php } ?>
+	  	<?php $__FOR_START_255737181__=$pageNum+1;$__FOR_END_255737181__=$maxPageNum;for($i=$__FOR_START_255737181__;$i < $__FOR_END_255737181__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a><?php } ?>
 		<?php if($pageNum < $maxPageNum): ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($pageNum+1); ?>" aria-label="Next"> > </a>    
 		<?php else: ?>
 			<span  class="disabled">></span><?php endif; endif; ?>
@@ -425,7 +425,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

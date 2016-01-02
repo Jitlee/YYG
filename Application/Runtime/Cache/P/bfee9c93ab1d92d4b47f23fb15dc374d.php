@@ -203,7 +203,7 @@ window.onerror=function(){return true;}
 							<img alt="" src="<?php echo ($item["thumb"]); ?>">
 						</a>
 						<div class="publishC-Member gray02">
-							<a class="fl headimg" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" >
+							<a class="fl headimg" target="_blank" >
 								<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($item["img"]); ?>" width="50" height="50" border="0"/>
 							</a>
 							<p>获得者：<a class="blue Fb" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank"><?php echo ($item["username"]); ?></a></p>
@@ -227,9 +227,9 @@ window.onerror=function(){return true;}
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_1900849427__=$minPageNo;$__FOR_END_1900849427__=$pageNo;for($i=$__FOR_START_1900849427__;$i < $__FOR_END_1900849427__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_1384515556__=$minPageNo;$__FOR_END_1384515556__=$pageNo;for($i=$__FOR_START_1384515556__;$i < $__FOR_END_1384515556__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_132645840__=$pageNo+1;$__FOR_END_132645840__=$maxPageNo + 1;for($i=$__FOR_START_132645840__;$i < $__FOR_END_132645840__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_74850475__=$pageNo+1;$__FOR_END_74850475__=$maxPageNo + 1;for($i=$__FOR_START_74850475__;$i < $__FOR_END_74850475__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>
@@ -245,7 +245,7 @@ window.onerror=function(){return true;}
 						<a href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank" class="pic">
 							<img id="imgUserPhoto" src="<?php echo ((isset($item["thumb"]) && ($item["thumb"] !== ""))?($item["thumb"]):'/Public/P/images/prmimg.png'); ?>" width="50" height="50" border="0"/>
 						</a>
-						<p class="Rtagou"><a class="blue" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank"><?php echo ($item["username"]); ?></a>刚刚云购了</p>
+						<p class="Rtagou"><a class="blue" target="_blank"><?php echo ($item["username"]); ?></a>刚刚云购了</p>
 						<p class="Rintro"><a class="gray01" href="<?php echo U('Index/view', '', '');?>/<?php echo ($item["gid"]); ?>" target="_blank"><?php echo ($item["title"]); ?></a></p>
 					</li><?php endforeach; endif; ?>
 				</ul>

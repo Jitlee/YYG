@@ -202,7 +202,7 @@ window.onerror=function(){return true;}
 		</div>
 		<ul class="Period_list">
 			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_2046172994__=$data['current'] - 1;$__FOR_END_2046172994__=0;for($i=$__FOR_START_2046172994__;$i > $__FOR_END_2046172994__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<?php $__FOR_START_1140646840__=$data['current'] - 1;$__FOR_END_1140646840__=0;for($i=$__FOR_START_1140646840__;$i > $__FOR_END_1140646840__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
@@ -252,9 +252,9 @@ window.onerror=function(){return true;}
 				<h2>上期获得者</h2>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="<?php echo U('Person/index', '', '');?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["lastprizer"]["img"]); ?>"></a></dt>
+						<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["lastprizer"]["img"]); ?>"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["lastprizer"]["username"]); ?></a>获得了本商品</p>
+							<p>恭喜 <a target="_blank" class="blue"><?php echo ($data["lastprizer"]["username"]); ?></a>获得了本商品</p>
 							<p>揭晓时间：<?php echo ($data["lastprizer"]["end_time"]); ?></p>
 							<p>云购时间：<?php echo ($data["lastprizer"]["record_time"]); ?></p>
 							<p>幸运云购码：<em class="orange Fb"><?php echo ($data['lastprizer']['prizecode']+10000001); ?></em></p>
@@ -268,9 +268,9 @@ window.onerror=function(){return true;}
 			<?php if($data["status"] == 2): if(isset($data["prizer"])): ?><div class="Pro_GetPrize">		
 		<div class="GetPrize">				    
 			<dl>
-				<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["prizer"]["img"]); ?>"></a></dt>
+				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["prizer"]["img"]); ?>"></a></dt>
 				<dd class="gray02">
-					<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
+					<p>恭喜 <a target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
 					<p>揭晓时间：<?php echo ($data["prizer"]["end_time"]); ?></p>
 					<p>云购时间：<?php echo ($data["prizer"]["record_time"]); ?></p>
 					<p>幸运云购码：<em class="orange Fb"><?php echo ($data['prizer']['prizecode']+10000001); ?></em></p>
@@ -524,10 +524,10 @@ window.onerror=function(){return true;}
 				<div class="Newest_Con _hiden" style="">
 					<?php if(isset($records)): ?><ul>
 						<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank">
+						<a target="_blank">
 							<img src="/Public/Home/images/<?php echo ($item["img"]); ?>" border="0" alt="" width="20" height="20">
 						</a>					
-						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
+						<a target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
 						<!-- todo: IP -->			
 						<?php echo ($item["time"]); ?> 云购了
 						<em class="Fb gray01"><?php echo ($item["count"]); ?></em>人次</li><?php endforeach; endif; ?>

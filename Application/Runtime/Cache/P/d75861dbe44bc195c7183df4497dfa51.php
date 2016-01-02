@@ -190,9 +190,9 @@ window.onerror=function(){return true;}
 <!-- 商品分类 -->
 <div id="divSortList" class="m-all-sort" style="display: block;">
 	<?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><dl>
-		     <dt><a href=""><?php echo ($c["name"]); ?></a></dt>
+		     <dt><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>"><?php echo ($c["name"]); ?></a></dt>
 		     <dd>
-			     <?php if(is_array($c['brands'])): foreach($c['brands'] as $key=>$b): ?><a ><?php echo ($b["name"]); ?></a><?php endforeach; endif; ?>
+			     <?php if(is_array($c['brands'])): foreach($c['brands'] as $key=>$b): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>/<?php echo ($c["bid"]); ?>"><?php echo ($b["name"]); ?></a><?php endforeach; endif; ?>
 		     </dd>
 		 </dl><?php endforeach; endif; ?>
  </div>
@@ -347,7 +347,7 @@ window.onerror=function(){return true;}
     <div class="g-title m-sort">
         <h3 class="fl">即将揭晓</h3>
         <div class="fr">
-            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
+            <?php if(is_array($allCategories)): foreach($allCategories as $key=>$c): ?><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($c["cid"]); ?>" target="_blank" title="<?php echo ($c["name"]); ?>"><?php echo ($c["name"]); ?></a><?php endforeach; endif; ?>
             <a href="" target="_blank" title="全部">全部</a>
         </div>
     </div>

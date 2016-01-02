@@ -3,10 +3,10 @@
 <div id="divSortList" class="m-all-sort" style="display: block;">
 	<foreach name="allCategories" item="c">
 		<dl>
-		     <dt><a href="">{$c.name}</a></dt>
+		     <dt><a href="{:U('Category/index', '', '')}/0/{$c.cid}">{$c.name}</a></dt>
 		     <dd>
 			     <foreach name="c['brands']" item="b">
-			     	<a >{$b.name}</a>
+			     	<a href="{:U('Category/index', '', '')}/0/{$c.cid}/{$c.bid}">{$b.name}</a>
 			     </foreach>
 		     </dd>
 		 </dl>
@@ -172,9 +172,9 @@
         <h3 class="fl">即将揭晓</h3>
         <div class="fr">
             <foreach name="allCategories" item="c">
-            <a href="{:U('Category/index', '', '')}/" target="_blank" title="{$c.name}">{$c.name}</a>		
+            <a href="{:U('Category/index', '', '')}/1/{$c.cid}" target="_blank" title="{$c.name}">{$c.name}</a>		
             </foreach>
-            <a href="" target="_blank" title="全部">全部</a>
+            <a href="{:U('Category/index', '', '')}/1" target="_blank" title="全部">全部</a>
         </div>
     </div>
     <div class="announced-soon clrfix" id="divSoonGoodsList">
