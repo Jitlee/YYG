@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -299,7 +300,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 			<li class="account-money">
 				<em class="gray02">帐户余额：</em>
 				<span class="money-red"><s></s><?php echo ($data["money"]); ?></span>&nbsp;&nbsp;
-				<a href="<?php echo U('Main/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
+				<a href="<?php echo U('Home/userrecharge', '', '');?>" title="充值" class="blue">充值</a>
 			</li>
 			<li class="account-money">
 			<em class="gray02">我的积分：</em><b class="orange"><?php echo ($data["score"]); ?>		 
@@ -311,7 +312,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 				<a href="<?php echo U('Home/address', '', '');?>" class="blue">立即确认收货地址</a>
 		</div>
 		<?php if(($data["mobile"] == '') OR ($data["username"] > '') ): ?><div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠1000福分！
+				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
 				<a href="<?php echo U('Home/modify', '', '');?>" class="blue">立即完善</a><a class="close"></a>
 			</div><?php endif; ?>
 	 
@@ -446,7 +447,7 @@ $("div.sidebar-nav").find("h3").each(function(i,v){
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

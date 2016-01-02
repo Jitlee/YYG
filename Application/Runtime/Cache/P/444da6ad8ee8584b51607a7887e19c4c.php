@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -325,7 +326,7 @@ window.onerror=function(){return true;}
 								报名人数：<?php echo ($item["baomingrenshu"]); ?>	
 							</div>
 							<?php if($item["status"] < 2): ?><div class="publishC-tit gray02">
-								当前价格：<em><?php echo ($item["zuigaojia"]); ?></em>
+								当前价格：<em>¥<?php echo ($item["zuigaojia"]); ?></em>
 							</div>
 							<div class="details">
 								&nbsp;&nbsp;&nbsp;&nbsp;时间剩余：<time countdown="<?php echo (strtotime($item["end_time"])); ?>000"></time>
@@ -352,9 +353,9 @@ window.onerror=function(){return true;}
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_1301370803__=$minPageNo;$__FOR_END_1301370803__=$pageNo;for($i=$__FOR_START_1301370803__;$i < $__FOR_END_1301370803__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_846544960__=$minPageNo;$__FOR_END_846544960__=$pageNo;for($i=$__FOR_START_846544960__;$i < $__FOR_END_846544960__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_1799887682__=$pageNo+1;$__FOR_END_1799887682__=$maxPageNo+1;for($i=$__FOR_START_1799887682__;$i < $__FOR_END_1799887682__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_2069055794__=$pageNo+1;$__FOR_END_2069055794__=$maxPageNo+1;for($i=$__FOR_START_2069055794__;$i < $__FOR_END_2069055794__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Paimai/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>
@@ -489,7 +490,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

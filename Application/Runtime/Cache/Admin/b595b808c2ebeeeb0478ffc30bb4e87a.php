@@ -63,7 +63,7 @@
 							<p class="navbar-text">admin</p>
 						</li>
 						<li><a href="#">修改密码</a></li>
-						<li><a href="/index.php/Admin/Paimai/../Public/logout">退出</a></li>
+						<li><a href="/index.php/Admin/Index/../Public/logout">退出</a></li>
 					</ul>
 				</div>
 			</div>
@@ -194,76 +194,7 @@ $(function() {
 
 	<div class="main">
 		<h1><?php echo ($title); ?></h1>
-		 <div class="nav">
-	<a type="button" href="<?php echo U('add','','');?>" class="btn btn-primary navbar-btn">添加拍卖商品</a>
-</div>
-<table id="listTable" class="table table-bordered">
-	<thead>
-		<tr>
-			<th>商品标题</th>
-			<th>所属栏目</th>
-			<th>起拍价(元)</th>
-			<th>保留价(元)</th>
-			<th>立即揭标价(元)</th>
-			<th>加价幅度(元)</th>
-			<th>保证金(元)</th>
-			<th>出价次数(次)</th>
-			<th>最高价(元)</th>
-			<th>结束时间</th>
-			<th style="width:150px">操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
-			<td><?php echo ($item["title"]); ?></td>
-			<td><?php echo ($item["category"]["name"]); ?></td>
-			<td><?php echo ($item["qipaijia"]); ?></td>
-			<td><?php echo ($item["baoliujia"]); ?></td>
-			<td><?php echo ($item["lijijia"]); ?></td>
-			<td><?php echo ($item["jiafujia"]); ?></td>
-			<td><?php echo ($item["baozhengjin"]); ?></td>
-			<td><?php echo ($item["chujiacishu"]); ?></td>
-			<td><?php echo ($item["zuigaojia"]); ?></td>
-			<td><?php echo ($item["end_time"]); ?></td>
-			<td gid="<?php echo ($item["gid"]); ?>">
-				<a type="button" class="edit btn btn-warning btn-sm" href='<?php echo U('edit','','');?>/<?php echo ($item["gid"]); ?>'>编辑</a>
-			</td>
-		</tr><?php endforeach; endif; ?>
-	</tbody>
-</table>
-<nav>
-  <ul class="pagination">
-  	<?php if($minPageNum > 1): ?><li>
-      <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($minPageNum-1); ?>" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-  	<?php else: ?>
-    <li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li><?php endif; ?>
-  	<?php if($pageNum > 1): $__FOR_START_827130051__=$minPageNum;$__FOR_END_827130051__=$pageNum;for($i=$__FOR_START_827130051__;$i < $__FOR_END_827130051__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a></li><?php } endif; ?>
-	<li class="active"><a><?php echo ($pageNum); ?></a></li>
-  <?php $__FOR_START_1594070813__=$pageNum+1;$__FOR_END_1594070813__=$maxPageNum;for($i=$__FOR_START_1594070813__;$i < $__FOR_END_1594070813__;$i+=1){ ?><li><a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a></li><?php } ?>
-	<?php if($maxPageNum < $pageCount AND $maxPageNum > 0): ?><li>
-      <a href="/index.php/Admin/Paimai/index/<?php echo ($pageSize); ?>/<?php echo ($maxPageNum); ?>" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  	<?php else: ?>
-    <li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </span>
-    </li><?php endif; ?>
-  </ul>
-</nav>
-<script type="text/javascript">
-	$(function(){
-	});
-</script>
+		 我是内容
 		 <p id="tips" class="check-tips text-danger"></p>
 	</div>
 	<div class="clear"></div>

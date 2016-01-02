@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -500,7 +501,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

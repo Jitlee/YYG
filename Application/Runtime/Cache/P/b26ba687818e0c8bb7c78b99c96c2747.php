@@ -57,9 +57,9 @@
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_437778817__=$minPageNo;$__FOR_END_437778817__=$pageNo;for($i=$__FOR_START_437778817__;$i < $__FOR_END_437778817__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_1294263610__=$minPageNo;$__FOR_END_1294263610__=$pageNo;for($i=$__FOR_START_1294263610__;$i < $__FOR_END_1294263610__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_265345939__=$pageNo+1;$__FOR_END_265345939__=$maxPageNo+1;for($i=$__FOR_START_265345939__;$i < $__FOR_END_265345939__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_376944528__=$pageNo+1;$__FOR_END_376944528__=$maxPageNo+1;for($i=$__FOR_START_376944528__;$i < $__FOR_END_376944528__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Paimai/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>

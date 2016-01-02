@@ -45,7 +45,7 @@
 					<th>时间</th>
 				</tr>
 				<?php if(is_array($list)): foreach($list as $key=>$item): ?><tr>
-					<td><img src="<?php echo ((isset($item["img"]) && ($item["img"] !== ""))?($item["img"]):'/Public/P/images/member.png'); ?>" height="20" width="20" alt=""/></td>
+					<td><img src="/Public/Home/images/<?php echo ($item["img"]); ?>" height="20" width="20" alt=""/></td>
 					<td><?php echo ($item["username"]); ?></td>
 					<td><?php echo ($item["count"]); ?></td>
 					<td><?php echo ($item["time"]); ?></td>
@@ -57,9 +57,9 @@
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_394795707__=$minPageNo;$__FOR_END_394795707__=$pageNo;for($i=$__FOR_START_394795707__;$i < $__FOR_END_394795707__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_1694485678__=$minPageNo;$__FOR_END_1694485678__=$pageNo;for($i=$__FOR_START_1694485678__;$i < $__FOR_END_1694485678__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_700839518__=$pageNo+1;$__FOR_END_700839518__=$maxPageNo+1;for($i=$__FOR_START_700839518__;$i < $__FOR_END_700839518__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_1290263102__=$pageNo+1;$__FOR_END_1290263102__=$maxPageNo+1;for($i=$__FOR_START_1290263102__;$i < $__FOR_END_1290263102__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Index/record', '', '');?>/<?php echo ($gid); ?>/<?php echo ($qishu); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>

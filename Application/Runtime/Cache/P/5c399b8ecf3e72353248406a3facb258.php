@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -347,7 +348,7 @@ window.onerror=function(){return true;}
 							var zuidijia = <?php echo ($zuidijia); ?>;
 							var chujiacishu = <?php echo ($data["chujiacishu"]); ?>;
 							var baomingrenshu = <?php echo ($data["baomingrenshu"]); ?>;
-							var chujiaInput = $("#num_dig");
+							var chujiaInput = $("#num_dig").change(onChujiaChange);
 							var cishuLabels = $(".chujiacishu");
 							var baomingLabels = $(".baomingrenshu");
 							var zuigaoLabels = $(".zuigaojia");
@@ -409,6 +410,13 @@ window.onerror=function(){return true;}
 								var money = Number(chujiaInput.val());
 								chujiaInput.val(money + jiafujia);
 							});
+							
+							function onChujiaChange() {
+								var money = Number(chujiaInput.val());
+								if(money < zuidijia) {
+									chujiaInput.val(zuidijia);
+								}
+							}
 						});
 					</script>
 				<?php else: ?>
@@ -418,7 +426,7 @@ window.onerror=function(){return true;}
 				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
 				    
 				    <div id="divBuy" class="Det_button">
-						<a href="javascript:void(0);" class="Det_Shopbut"><img src="/Public/P/images/baozhengjin.png"/>交保证金报名</a>
+						<a href="<?php echo U('Pay/baozhengjin','','');?>/<?php echo ($data["gid"]); ?>" class="Det_Shopbut"><img src="/Public/P/images/baozhengjin.png"/>交保证金报名</a>
 					</div><?php endif; ?>
 			<?php else: ?>
 				<!-- 已结束 -->
@@ -656,7 +664,7 @@ $(function(){
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

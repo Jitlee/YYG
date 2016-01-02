@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -279,9 +280,9 @@ window.onerror=function(){return true;}
 				<li id="Page_Total"><?php echo ($total); ?>条</li>
 				<li id="Page_One"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/1">首页</a></li>
 				<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-				<?php if($pageNo > 1): $__FOR_START_1124267353__=$minPageNo;$__FOR_END_1124267353__=$pageNo;for($i=$__FOR_START_1124267353__;$i < $__FOR_END_1124267353__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+				<?php if($pageNo > 1): $__FOR_START_558205777__=$minPageNo;$__FOR_END_558205777__=$pageNo;for($i=$__FOR_START_558205777__;$i < $__FOR_END_558205777__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 				<li class="Page_This"><?php echo ($pageNo); ?></li>
-				<?php $__FOR_START_1977087591__=$pageNo+1;$__FOR_END_1977087591__=$maxPageNo;for($i=$__FOR_START_1977087591__;$i < $__FOR_END_1977087591__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+				<?php $__FOR_START_2088638138__=$pageNo+1;$__FOR_END_2088638138__=$maxPageNo+1;for($i=$__FOR_START_2088638138__;$i < $__FOR_END_2088638138__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 				<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 				<li id="Page_End"><a href="<?php echo U('Category/index', '', '');?>/<?php echo ($cid); ?>/<?php echo ($bid); ?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 			</ul>
@@ -412,7 +413,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -189,7 +190,7 @@ window.onerror=function(){return true;}
 <link rel="stylesheet" type="text/css" href="/Public/P/css/cloud-zoom.css"/>
 <script type="text/javascript" src="/Public/P/js/cloud-zoom.min.js"></script>
 <div class="Current_nav">
-	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
+	<a href="/index.php/P">首页</a> <span>&gt;</span>
 	<span>&gt;</span>商品详情
 </div>
 <div class="show_content">
@@ -201,7 +202,7 @@ window.onerror=function(){return true;}
 		</div>
 		<ul class="Period_list">
 			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_600225260__=$data['current'] - 1;$__FOR_END_600225260__=0;for($i=$__FOR_START_600225260__;$i > $__FOR_END_600225260__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<?php $__FOR_START_2046172994__=$data['current'] - 1;$__FOR_END_2046172994__=0;for($i=$__FOR_START_2046172994__;$i > $__FOR_END_2046172994__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
@@ -247,11 +248,11 @@ window.onerror=function(){return true;}
 					$(".clould-zoom").cloudZoom();
 				});
 			</script>		
-			<?php if(data.lastprizer): ?><div class="Pro_GetPrize">	
+			<?php if(isset($data["lastprizer"])): ?><div class="Pro_GetPrize">	
 				<h2>上期获得者</h2>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["lastprizer"]["img"]) && ($data["lastprizer"]["img"] !== ""))?($data["lastprizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
+						<dt><a rel="nofollow" href="<?php echo U('Person/index', '', '');?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["lastprizer"]["img"]); ?>"></a></dt>
 						<dd class="gray02">
 							<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["lastprizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["lastprizer"]["username"]); ?></a>获得了本商品</p>
 							<p>揭晓时间：<?php echo ($data["lastprizer"]["end_time"]); ?></p>
@@ -267,7 +268,7 @@ window.onerror=function(){return true;}
 			<?php if($data["status"] == 2): if(isset($data["prizer"])): ?><div class="Pro_GetPrize">		
 		<div class="GetPrize">				    
 			<dl>
-				<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="<?php echo ((isset($data["prizer"]["img"]) && ($data["prizer"]["img"] !== ""))?($data["prizer"]["img"]):'/Public/P/images/member.jpg'); ?>"></a></dt>
+				<dt><a rel="nofollow" href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/<?php echo ($data["prizer"]["img"]); ?>"></a></dt>
 				<dd class="gray02">
 					<p>恭喜 <a href="<?php echo U(Person/index);?>/<?php echo ($data["prizer"]["uid"]); ?>" target="_blank" class="blue"><?php echo ($data["prizer"]["username"]); ?></a>获得了本商品</p>
 					<p>揭晓时间：<?php echo ($data["prizer"]["end_time"]); ?></p>
@@ -452,7 +453,6 @@ window.onerror=function(){return true;}
 	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
 	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
 	<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>人次 
-	<span id="chance" class="gray03">购买人次越多获得几率越大哦！</span>
 </div>
 <div style="display:none;" id="hqid"><?php echo ($data["gid"]); ?></div>
 <div id="divBuy" class="Det_button">
@@ -525,7 +525,7 @@ window.onerror=function(){return true;}
 					<?php if(isset($records)): ?><ul>
 						<?php if(is_array($records)): foreach($records as $key=>$item): ?><li>
 						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank">
-							<img src="<?php echo ((isset($item["img"]) && ($item["img"] !== ""))?($item["img"]):'/Public/P/images/member.png'); ?>" border="0" alt="" width="20" height="20">
+							<img src="/Public/Home/images/<?php echo ($item["img"]); ?>" border="0" alt="" width="20" height="20">
 						</a>					
 						<a href="<?php echo U('Person', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" class="blue"><?php echo ($item["username"]); ?></a>
 						<!-- todo: IP -->			
@@ -735,7 +735,7 @@ $(function(){
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

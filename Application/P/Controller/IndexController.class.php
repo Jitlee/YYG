@@ -105,8 +105,9 @@ class IndexController extends CommonController {
 			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
 			$data['qishu'] = intval($data['qishu']);
 			$data['current'] = $data['qishu'];
+			$qishu = intval($data['qishu']);
 			// 上期获得者
-			if($data['qishu'] > 1) {
+			if($qishu > 1) {
 				$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
 			}	
 			return $data;

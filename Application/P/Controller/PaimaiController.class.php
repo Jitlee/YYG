@@ -170,6 +170,7 @@ class PaimaiController extends CommonController {
 							add_renci(1);
 							$result['status'] = 0;
 							$result['message'] = '出价成功';
+							add_renci(1);
 						} else {
 							$result['status'] = 6;
 							$result['message'] = '出价失败';

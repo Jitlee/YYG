@@ -186,144 +186,228 @@ window.onerror=function(){return true;}
  </div>
 
 <div style="position: relative;" class="w1190">
-	<link rel="stylesheet" type="text/css" href="/Public/P/css/List.css"/>
-<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<script>
- $("body").attr('class','share');
+	<div class="main-content clearfix">
+<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-Frame.css"/>
+<div class="left">
+	<div class="head">
+		<a href="#" target="_blank">			
+			<img id="imgUserPhoto" src="<?php echo get_user_img();?>" width="160" height="160" border="0"/>			
+		</a>
+	</div>
+	<div class="head-but">
+		<a href="<?php echo U('Home/userphoto', '', '');?>" class="blue">修改头像</a>
+		<a href="<?php echo U('Home/modify', '', '');?>" class="blue fr">编辑资料</a>
+	</div>
+	<div class="sidebar-nav">
+		<p class="sid-line"></p>
+		<h2 id="wdwzg" class="sid-icon01"><a href="<?php echo U('Home/index', '', '');?>"><b></b>我的</a></h2>
+		<p class="sid-line"></p>
+		<h3 id="grsz" class="sid-icon09" ><a href="<?php echo U('Home/modify', '', '');?>"><b></b>个人设置</a></h3>		
+		<p class="sid-line"></p>
+		<h3 class="sid-icon02">
+			<a href="javascript:void();"><b></b>我的云购 <s title="收起"></s></a>
+		</h3>
+		<ul>
+			<li id="zgjl" class=""><a href="<?php echo U('Home/userbuylist', '', '');?>">云购记录</a></li>
+			<li id="hddsp" class=""><a href="<?php echo U('Home/orderlist', '', '');?>">获得的商品</a></li>
+			<li id="sd" class=""><a href="<?php echo U('Home/singlelist', '', '');?>">晒单</a></li>
+		</ul>
+		
+		
+		<p class="sid-line"></p>
+		<h3 class="sid-icon04 " >
+			<a href="javascript:void();"><b></b>邀请管理 <s title="收起"></s></a>
+		</h3>
+		<ul>
+			<li id="yqhy" class=""><a href="<?php echo U('Home/invitefriends', '', '');?>">邀请好友</a></li>
+			<!--<li id="yjmx" class=""><a href="<?php echo U('Home/commissions', '', '');?>">佣金明细</a></li>-->
+			
+		</ul>
+		<p class="sid-line"></p>		
+		<h3 class="sid-icon05 " >
+			<a href="javascript:void();"><b></b>账户管理 <s title="收起"></s></a>
+		</h3>
+		<ul>
+			<li id="zhmx" class=""><a href="<?php echo U('Home/userbalance', '', '');?>">账户明细</a></li>
+			<li id="zhcz" class=""><a href="<?php echo U('Home/userrecharge', '', '');?>">账户充值</a></li>
+			<li id="sqtx" class=""><a href="<?php echo U('Home/cashout', '', '');?>">申请提现</a></li>
+			<li id="txjl" class=""><a href="<?php echo U('Home/record', '', '');?>">提现记录</a></li>
+		</ul>
+		<p class="sid-line"></p>
+		<h3 id="wdff" class="sid-icon07" hasChild="0" url=""><a href="<?php echo U('Home/userscore', '', '');?>"><b></b>我的积分</a></h3>
+
+	</div>
+	<div class="sid-service">
+		<p>
+			<a href="http://wpa.qq.com/msgrd?v=3&uin=<?php echo config('qq');?>&site=qq&menu=yes" target="_blank" class="service-btn">
+				<s></s><img border="0" src="images/pa" style="display:none;">在线客服
+			</a>
+		</p>
+		<span>客服热线</span>
+		<b class="tel"><?php echo config('cell');?></b>
+	</div>
+</div>
+<script type="text/javascript">
+var _NavState = [true, true, true, true, true];  
+$("div.sidebar-nav").find("h3").each(function(i,v){
+	var _This = $(this);
+	var _HasClild = _This.attr("hasChild")=="1"; 
+	var _SObj = _This.find("s");
+	_This.click(function(e){
+		if(_HasClild){
+			var _State = _NavState[i];                
+			/* 一级栏目更改样式 */
+			if(_State){
+				_This.addClass("sid-iconcur");
+				_SObj.attr("title","展开");
+			}
+			else {
+				_This.removeClass("sid-iconcur");
+				_SObj.attr("title","收起");
+			}                
+			/* 二级栏目显示或隐藏 */
+			_This.next("ul").children().each(function(){
+				if(_State){
+					$(this).hide(50);
+				}
+				else {
+					$(this).show(50);
+				}
+			});
+			_NavState[i] = !_State;
+		}
+	});
+});   
 </script>
-<!--晒单-->
-<div class="share_main">
-	<div class="Current_nav">
-		<a href="<?php echo U('Home/index', '', '');?>">首页</a> &gt; 晒单分享</div>
-	<div id="current" class="share_Curtit">
-		<h1 class="fl">
-			晒单分享</h1>
-		<span id="spTotalCount">(共<em class="orange"><?php echo ($total); ?></em>个幸运获得者晒单)</span>
+
+<!--content left end-->
+<link rel="stylesheet" type="text/css" href="/Public/P/css/layout-recharge.css"/>
+<script>
+$(function(){
+	var je=$("#ulMoneyList li");
+	var dx=/\D/;
+	je.click(function(){
+		je.removeClass("selected");		
+		var radio=je.index(this);
+			//je.eq(radio).find("input").attr('checked','checked');
+			je.eq(radio).addClass("selected");
+		var valx=je.eq(radio).find("b").text();
+		$("#Money").text(valx);
+		$("#hidMoney").val(valx);
+	});
+	var tel=$("#txtOtherMoney").val();
+	$("#txtOtherMoney").keyup(function(){	
+		if(dx.test($("#txtOtherMoney").val())){
+			$("#txtOtherMoney").val(tel);			
+		}else{
+			tel=$("#txtOtherMoney").val();
+		}
+		$("#Money").text(tel);
+		$("#hidMoney").val(tel);
+	}); 
+})
+</script>
+<form id="toPayForm" name="toPayForm" action="" method="post" target="_blank">
+<div class="R-content">
+	<div class="member-t"><h2>账户充值</h2></div>
+	<div class="select">
+		<b class="gray01">请您选择充值金额</b>
+		<ul id="ulMoneyList">
+			<li class="selected" style="margin-left:0;"><label for="rd10">充值 <strong>￥</strong><b>10</b></label></li>
+			<li><label for="rd50">充值 <strong>￥</strong><b>50</b></label></li>
+			<li><label for="rd100">充值 <strong>￥</strong><b>100</b></label></li>
+			<li><label for="rd200">充值 <strong>￥</strong><b>200</b></label></li>
+			<li><label for="rd200">充值 <strong>￥</strong><b>500</b></label></li>
+			
+		</ul>
 	</div>
-	<div id="loadingPicBlock" class="share_list">
-		<div class="goods_share_listC">
-			<ul>				
-				<li>					
-					<?php if(is_array($sa_one)): foreach($sa_one as $key=>$c): ?><div class="share_list_content">
-						<dl>
-							<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
-							<dd class="share-name gray02"> 
-								<a href="#" class="name-img">								
-									<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
-								</a>
-								<div class="share-name-r"> 
-									<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
-									<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
-								</div> 
-							</dd>
-							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
-								<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
-							</dd>
-						</dl>
-						<p class="text-h10"></p>
-					</div><?php endforeach; endif; ?>
-				</li>
-				<li>
-					
-					<?php if(is_array($sa_two)): foreach($sa_two as $key=>$c): ?><div class="share_list_content">
-						<dl>
-							<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
-							<dd class="share-name gray02"> 
-								<a href="#" class="name-img">								
-									<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
-								</a>
-								<div class="share-name-r"> 
-									<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
-									<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
-								</div> 
-							</dd>
-							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
-								<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
-							</dd>
-						</dl>
-						<p class="text-h10"></p>
-					</div><?php endforeach; endif; ?>
-				</li>
-				<li>
-					
-					<?php if(is_array($sa_tree)): foreach($sa_tree as $key=>$c): ?><div class="share_list_content">
-						<dl>
-							<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
-							<dd class="share-name gray02"> 
-								<a href="#" class="name-img">								
-									<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
-								</a>
-								<div class="share-name-r"> 
-									<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
-									<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
-								</div> 
-							</dd>
-							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
-								<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
-							</dd>
-						</dl>
-						<p class="text-h10"></p>
-					</div><?php endforeach; endif; ?>
-				</li>
-				<li class="share-liR">
-					<?php if(is_array($sa_for)): foreach($sa_for as $key=>$c): ?><div class="share_list_content">
-							<dl>
-								<dt><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>"><img src="<?php echo ($c["thumbs"]); ?>"></a></dt>
-								<dd class="share-name gray02"> 
-									<a href="#" class="name-img">								
-										<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($c["userimg"]); ?>" width="50" height="50" border="0"/>									
-									</a>
-									<div class="share-name-r"> 
-										<span class="gray03"> <a href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="blue"><?php echo ($c["username"]); ?></a><?php echo ($c["time"]); ?></span>
-										<a class="Fb gray01" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" target="_blank"><?php echo ($c["title"]); ?></a>
-									</div> 
-								</dd>
-								<dd class="message hidden" style="display: block;"> 
-									<span class="smile gray03"><i></i><b>羡慕(<em num="1282"><?php echo ($c["zan"]); ?></em>)</b></span>
-									<span class="much"><a target="_blank" href="<?php echo U('Saidan/detail', '', '');?>/<?php echo ($c["gid"]); ?>/<?php echo ($c["qishu"]); ?>" class="gray03"><i></i>评论<em>(<?php echo ($c["ping"]); ?>)</em></a></span>
-								</dd>
-							</dl>
-							<p class="text-h10"></p>
-						</div><?php endforeach; endif; ?>
-				</li>				
-			</ul>				
+	<div class="charge_money_list"> 
+		<p class="much">应付金额：<span class="yf"><strong>￥</strong><span id="Money">10</span></span></p>
+		<h6>			
+				<input type="hidden" id="hidPayName" name="payName" value="">
+				<input type="hidden" id="hidPayBank" name="payBank" value="0">
+				<input type="hidden" id="hidMoney" name="money" value="10">
+				<input id="btnrechange" class="bluebut imm" type="button" name="submit" value="立即充值" title="立即充值">
+			</form>
+		</h6>
+		<div id="payAltBox" style="display:none;">
+			<div class="prompt_box">
+				<p class="pic"><em></em>请您在新开的页面上完成支付！</p>
+				<p class="ts">付款完成之前，请不要关闭本窗口！<br>完成付款后跟据您的个人情况完成此操作！</p>
+				<ul>
+					<li><a href="<?php echo U('userbalance', '', '');?>" class="look" title="查看充值记录">查看充值记录 </a></li>
+					<li><a href="javascript:gotoClick();" class="look" id="btnReSelect" title="重选支付方式">重选支付方式</a></li>
+				</ul>
+			</div>
 		</div>
-		
-			<style type="text/css">
-	/*css digg style pagination*/
-	div.digg{padding:3px;margin:3px;text-align:center}
-	div.digg a{border:#aaaadd 1px solid;padding:2px 5px;margin:2px;color:#000099;text-decoration:none}
-	div.digg a:hover{border:#000099 1px solid;color:#000;}
-	div.digg a:active{border:#000099 1px solid;color:#000;}
-	div.digg span.current{border:solid 1px #000099;padding:2px 5px;font-weight:bold;margin:2px;color:#fff;background-color:#000099;}
-	div.digg span.disabled{border:#eee 1px solid;padding:2px 5px;margin:2px;color:#ddd;}	
-</style>
-<div style="text-align: center;" class="digg">
-	<?php if($maxPageNum == 0 OR $maxPageNum == 1): ?><span class="disabled"> < </span>
-		<span class="current">1</span>
-		<span class="disabled"> > </span>
-	<?php else: ?>	
-	  	<?php if($pageNum > 1): ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($pageNum-1); ?>" aria-label="Previous"><</a>    
-	  	<?php else: ?>    
-	      <span aria-label="Previous">
-	        <span class="disabled"> < </span>
-	      </span><?php endif; ?>
-	  	<!--$minPageNum=<?php echo ($minPageNum); ?>,$pageNum=<?php echo ($maxPageNum); ?>-->
-	  	<?php if($pageNum > 1): $__FOR_START_769896586__=$minPageNum;$__FOR_END_769896586__=$pageNum;for($i=$__FOR_START_769896586__;$i < $__FOR_END_769896586__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:#008000"><?php echo ($i); ?></a><?php } endif; ?>
-			<span class="current"><?php echo ($pageNum); ?></span>
-	  	<?php $__FOR_START_975497892__=$pageNum+1;$__FOR_END_975497892__=$maxPageNum;for($i=$__FOR_START_975497892__;$i < $__FOR_END_975497892__;$i+=1){ ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($i); ?>" style="color:red"><?php echo ($i); ?></a><?php } ?>
-		<?php if($pageNum < $maxPageNum): ?><a href="/index.php/P/Saidan/index/<?php echo ($pageSize); ?>/<?php echo ($pageNum+1); ?>" aria-label="Next"> > </a>    
-		<?php else: ?>
-			<span  class="disabled">></span><?php endif; endif; ?>
+	</div>  
 </div>
-		
-	</div>
 </div>
+<script type="text/javascript" src="https://one.pingxx.com/lib/pingpp_one.js"></script>
+<script type="text/javascript">
+	$(function(){
+		 $("#btnrechange").click(function(){
+		 	  var vmoney=$("#Money").text();
+			 	pingpp_one.init({
+	            app_id:'app_5K8yzLfvnT4Gaj1S',                     //该应用在ping++的应用ID
+	            order_no:'{data.rderNo}',                     		//订单在商户系统中的订单号
+	            amount: parseInt(vmoney),                                   //订单价格，单位：人民币 分
+	            // 壹收款页面上需要展示的渠道，数组，数组顺序即页面展示出的渠道的顺序
+	            // upmp_wap 渠道在微信内部无法使用，若用户未安装银联手机支付控件，则无法调起支付
+	            channel:['alipay_wap','wx_pub','upacp_wap','bfb_wap','upmp_wap'],
+	            charge_url:"<?php echo U('OrderPay/Index', '', '');?>",  //商户服务端创建订单的url
+	            charge_param:{
+	            	sourceType:"recharge",
+					a:1,
+					b:2
+	            },                      //(可选，用户自定义参数，若存在自定义参数则壹收款会通过 POST 方法透传给 charge_url)
+	            open_id:'5K8yzLfvnT4Gaj1S'                             //(可选，使用微信公众号支付时必须传入)
+	        },function(res){
+	           // alert(res);
+	            if(!res.status){
+	                //处理错误
+	                alert(res.chargeUrlOutput);
+	                alert(res.msg);
+	            }
+	            else{
+	                //若微信公众号渠道需要使用壹收款的支付成功页面
+	                //则在这里进行成功回调，调用 pingpp_one.success 方法，你也可以自己定义回调函数
+	                //其他渠道的处理方法请见第 2 节
+	                pingpp_one.success(function(res){
+	                    if(!res.status){
+	                        alert(res.msg);
+	                    }
+	                },function(){
+	                    //这里处理支付成功页面点击“继续购物”按钮触发的方法，例如：若你需要点击“继续购物”按钮跳转到你的购买页，
+	                    //则在该方法内写入 window.location.href = "你的购买页面 url"
+	                    window.location.href="<?php echo U('Home/index', '', '');?>";//示例
+	                });
+	            }
+	        });
+        
+		 });
+	});
+</script>
 
+<script>
+$(function(){
+		
+	$("#submit_ok").click(function(){	
+		if(!this.cc){
+			this.cc = 1;		
+			return true;
+		}else{		
+			return false;
+		}		
+		return false;
+	});
+	
+	$(".yeepay_click li>img").click(function(){			
+			$(this).prev().prop("checked",true);
+	});
 
+});
+</script>
 </div>
 
 <link rel="stylesheet" type="text/css" href="/Public/P/css/header1.css" />
@@ -425,7 +509,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);

@@ -163,13 +163,15 @@ function add_renci($count = 1) {
 		$path = $_SERVER['DOCUMENT_ROOT'] . '/Application/Runtime/Data/renci.xml';
 		// check task
 		if(file_exists($path)) {
-			$file = fopen($path, 'rw');
+			$file = fopen($path, 'r');
 			$renci = intval(fgets($file));
+			fclose($file);
+			$file = fopen($path, 'w');
 			fwrite($file, $renci + $count);
 			fclose($file);
 		}
 	} catch(Exception $e) {
-		
+//		echo dump($e);
 	}
 }
 

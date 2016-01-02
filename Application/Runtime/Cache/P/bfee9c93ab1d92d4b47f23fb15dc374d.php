@@ -38,9 +38,10 @@ window.onerror=function(){return true;}
              <li class="f-gap"><s></s></li>
             
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="#" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="<?php echo U('Help/group_qq', '', '');?>" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -203,7 +204,7 @@ window.onerror=function(){return true;}
 						</a>
 						<div class="publishC-Member gray02">
 							<a class="fl headimg" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank" >
-								<img id="imgUserPhoto" src="<?php echo ($item["img"]); ?>" width="50" height="50" border="0"/>
+								<img id="imgUserPhoto" src="/Public/Home/images/<?php echo ($item["img"]); ?>" width="50" height="50" border="0"/>
 							</a>
 							<p>获得者：<a class="blue Fb" href="<?php echo U('Person/index', '', '');?>/<?php echo ($item["uid"]); ?>" target="_blank"><?php echo ($item["username"]); ?></a></p>
 							<p>云购：<em class="orange Fb"><?php echo ($item["count"]); ?></em>人次</p>							
@@ -226,9 +227,9 @@ window.onerror=function(){return true;}
 					<li id="Page_Total"><?php echo ($total); ?>条</li>
 					<li id="Page_One"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/1">首页</a></li>
 					<?php if($pageNo > 1): ?><li id="Page_Prev"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo - 1); ?>">上一页</a></li><?php endif; ?>
-					<?php if($pageNo > 1): $__FOR_START_863927308__=$minPageNo;$__FOR_END_863927308__=$pageNo;for($i=$__FOR_START_863927308__;$i < $__FOR_END_863927308__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
+					<?php if($pageNo > 1): $__FOR_START_1900849427__=$minPageNo;$__FOR_END_1900849427__=$pageNo;for($i=$__FOR_START_1900849427__;$i < $__FOR_END_1900849427__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } endif; ?>
 					<li class="Page_This"><?php echo ($pageNo); ?></li>
-					<?php $__FOR_START_658552871__=$pageNo+1;$__FOR_END_658552871__=$maxPageNo + 1;for($i=$__FOR_START_658552871__;$i < $__FOR_END_658552871__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
+					<?php $__FOR_START_132645840__=$pageNo+1;$__FOR_END_132645840__=$maxPageNo + 1;for($i=$__FOR_START_132645840__;$i < $__FOR_END_132645840__;$i+=1){ ?><li class="Page_Num"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($i); ?>"><?php echo ($i); ?></a></li><?php } ?>
 					<?php if($pageNo < $pageCount): ?><li id="Page_Next"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageNo + 1); ?>">下一页</a></li><?php endif; ?>
 					<li id="Page_End"><a href="<?php echo U('Lottery/index', '', '');?>/<?php echo ($sort); ?>/<?php echo ($pageCount); ?>">尾页</a></li>
 				</ul>
@@ -373,7 +374,7 @@ window.onerror=function(){return true;}
 <script type="text/javascript">
 	$(function(){
 		var sp_ServerTime = $("#sp_ServerTime");
-		var serverTime = <?php echo ($serverTime); ?> * 1000;
+		var serverTime = <?php echo ($serverTime); ?>000;
 		function showTime() {
 			serverTime += 1000;
 			var now = new Date(serverTime);
