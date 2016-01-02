@@ -20,7 +20,13 @@ class MemberModel extends BaseModel {
 		return $db->where($data)->find();
 	 }
  
- 	 
+ 	public function getByYaoqing($yaoqing){
+		$db = M('member');
+		$data['yaoqing'] = $yaoqing;
+		return $db->where($data)->find();
+	 }
+	
+ 
  
 
 };

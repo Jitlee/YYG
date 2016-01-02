@@ -50,7 +50,51 @@ class MemberScoreModel extends Model{
 			return $result;
 	}
 	
-	
+	public function AddScore($uid,$addType,$score)
+	{		
+			$udb = M('member');
+			$menberfilter["uid"]=$uid;
+			$dbmember = $udb->where($menberfilter)->find();
+			if(!$dbmember) {
+				$result["msg"]='用户不存在。';
+			}
+			else
+			{
+				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录	手费费				
+				$score= floatval($score);			
+				$Userscore=floatval($dbmember['score']);
+				$reScore	=	$Userscore + $score;
+				if($reScore<0)
+				{
+					$result["msg"]="积分不足。".$dbmember['score'];				
+				}
+				else
+				{
+					//1. 扣减member数据 					
+					if($dbmember)
+					{
+						$dbmember['score'] = $reScore;
+						$udb->save($dbmember);					
+					}					
+					//3  写入记录
+					$dbcash = M('member_score');
+					$newitem['uid']=  $uid;
+					$newitem['time']= date('y-m-d-h-i-s');
+					$newitem['scoresource']= $addType;
+					$newitem['score']= $score;
+					
+					$dbcash->create($newitem);
+					if($dbcash->add() != false) {
+						$result["status"]=1;
+					} 
+					else 
+					{
+						$result["msg"]='数据错误';
+					} 
+				}
+			} 
+			return $result;
+	}
 	
 	
 	public  function getGood($gid, $qishu = null) {

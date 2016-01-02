@@ -30,8 +30,7 @@ class HomeController extends CommonController {
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
 		$Model = M('miaosha');
-		$filter['yyg_member_miaosha.uid'] = session("_uid");
-		
+		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
 		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid")			
@@ -157,8 +156,21 @@ class HomeController extends CommonController {
     }
 	/*******end我的云购********/
 	/*******邀请管理********/
-	public function invitefriends(){		
+	public function invitefriends($pageSize=10, $pageNum=1){		
     	$this->assign('title', '一元购');
+		
+		$db = M('member');
+		$filter['yaoqing'] = session("_uid");
+		
+		$total =$db->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+		
+		$list =$db					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		
+		$this->assign("list", $list);
 		$this->display();
     }
 	
@@ -279,10 +291,14 @@ class HomeController extends CommonController {
 		$this->display();
     }
 	/*******end账户管理********/
-	public function userscore(){		
+	public function userscore($pageSize=20, $pageNum=1){		
     	$this->assign('title', '一元购');
 		$data=session('wxUserinfo');
 		$this->assign("data", $data);
+		
+		$list=$this->Getscorelist($pageSize,$pageNum);
+		$this->assign("list", $list);
+		
 		$scoremoney=$data.score/100;
 		$this->assign("scoremoney", $scoremoney);
 		$this->display();
@@ -291,18 +307,22 @@ class HomeController extends CommonController {
 	public function Getscorelist($pageSize, $pageNum)
 	{
 		$Model = M('member_score');
-		$filter['uid'] = session("_uid");		
+		$filter['uid'] = session("_uid");	
+		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+			
 		$list =$Model					
 		->where($filter)
 		->page($pageNum, $pageSize)
 		->select();
 		return $list;
 	}
-	public function pagescore()
-	{
-		$list=$this->Getscorelist($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pagescore()
+//	{
+//		$list=$this->Getscorelist($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
 	
 	public function address(){		
     	if(IS_POST) {
@@ -388,6 +408,7 @@ class HomeController extends CommonController {
     	$this->assign('title', '一元购');
 		$this->display();
     }	
+	
 	public function userphoto(){
 		if(IS_POST) {
 			$result["status"]=0;

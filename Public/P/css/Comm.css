@@ -80,23 +80,7 @@ i,em {
 .show {
 	display:block;
 }
-.Current_nav {
-	width:980px;
-	font-size:12px;
-	color:#bbb;
-	font-family:宋体;
-	height:25px;
-	margin:0 auto;
-}
-.Current_nav span {
-	font-family:宋体;
-}
-.Current_nav a {
-	color:#bbb;
-}
-.Current_nav a:hover {
-	color:#f60;
-}
+
 .red {
 	color:#f00;
 }

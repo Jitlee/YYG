@@ -60,6 +60,7 @@ $(function(){
 	<div class="prompt orange" style="position: absolute;margin: 20px 0 0 140px;border: 1px solid #FD9;">“新注册的用户，注册都可以免费赠送一次云购机会，有机会获得iphone5s、笔记本电脑、平板电脑、单反哦!”<s></s></div>
 	<div class="login_ConInput registerform">
 		<form method="post" action="" enctype="application/x-www-form-urlencoded">
+			<input type="hidden"  name="yaoqing" value="{$yaoqing}"/>
 		<dl>
 			<dt>手机号码：</dt>
 			<dd><input id="mobile" datatype="m | e" sucmsg="帐号验证通过！" nullmsg="请填写帐号！" errormsg="手机号或邮箱！" type="text" name="mobile"  class="inputxt" /></dd>

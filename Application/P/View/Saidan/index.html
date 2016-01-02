@@ -1,5 +1,5 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/List.css"/>
-<link href="__B_CSS__" rel="stylesheet">
+<!--<link href="__B_CSS__" rel="stylesheet">-->
 <script>
  $("body").attr('class','share');
 </script>
@@ -8,8 +8,7 @@
 	<div class="Current_nav">
 		<a href="{:U('Home/index', '', '')}">首页</a> &gt; 晒单分享</div>
 	<div id="current" class="share_Curtit">
-		<h1 class="fl">
-			晒单分享</h1>
+		<h1 class="fl">晒单分享</h1>
 		<span id="spTotalCount">(共<em class="orange">{$total}</em>个幸运获得者晒单)</span>
 	</div>
 	<div id="loadingPicBlock" class="share_list">
@@ -17,25 +16,25 @@
 			<ul>				
 				<li>					
 					<foreach name="sa_one" item="c">
-					<div class="share_list_content">
-						<dl>
-							<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
-							<dd class="share-name gray02"> 
-								<a href="#" class="name-img">								
-									<img id="imgUserPhoto" src="/Public/Home/images/{$c.userimg}" width="50" height="50" border="0"/>									
-								</a>
-								<div class="share-name-r"> 
-									<span class="gray03"> <a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="blue">{$c.username}</a>{$c.time}</span>
-									<a class="Fb gray01" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a>
-								</div> 
-							</dd>
-							<dd class="message hidden" style="display: block;"> 
-								<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
-								<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
-							</dd>
-						</dl>
-						<p class="text-h10"></p>
-					</div>	
+						<div class="share_list_content">
+							<dl>
+								<dt><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}"><img src="{$c.thumbs}"></a></dt>
+								<dd class="share-name gray02"> 
+									<a href="#" class="name-img">								
+										<img id="imgUserPhoto" src="/Public/Home/images/{$c.userimg}" width="50" height="50" border="0"/>									
+									</a>
+									<div class="share-name-r"> 
+										<span class="gray03"> <a href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="blue">{$c.username}</a>{$c.time}</span>
+										<a class="Fb gray01" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" target="_blank">{$c.title}</a>
+									</div> 
+								</dd>
+								<dd class="message hidden" style="display: block;"> 
+									<span class="smile gray03"><i></i><b>羡慕(<em num="1282">{$c.zan}</em>)</b></span>
+									<span class="much"><a target="_blank" href="{:U('Saidan/detail', '', '')}/{$c.gid}/{$c.qishu}" class="gray03"><i></i>评论<em>({$c.ping})</em></a></span>
+								</dd>
+							</dl>
+							<p class="text-h10"></p>
+						</div>	
 					</foreach>
 				</li>
 				<li>

@@ -3,7 +3,7 @@ namespace P\Controller;
 use Think\Controller;
 class MainController extends Controller {
 		
-	public function register(){
+	public function register($yaoqing=NULL){
 		if(IS_POST) {
 			$_POST['password'] = md5($_POST['password']);
 			$db = M('member');
@@ -44,6 +44,8 @@ class MainController extends Controller {
 			$this->ajaxReturn($result);	
     	} else  {
 	    	$this->assign('title', '一元购');
+			$this->assign('yaoqing', $yaoqing);
+			
 			$this->display();
 		}
     }
@@ -73,6 +75,19 @@ class MainController extends Controller {
 						$db = M('member');
 						$db->save($user);
 						session('registerMobile','');
+						session('loginstatus', 0);
+						session('wxUserinfo', null);
+						$yaoqing=floatval($user["yaoqing"]);
+						if($yaoqing>0)
+						{
+							$yaoqinguser=$m->getByYaoqing($yaoqing);
+							if($yaoqinguser)
+							{
+								//添加晒单积分				
+								$mscore = D('P/MemberScore');
+								$resultr = $mscore->AddScore($yaoqinguser["uid"],'邀请赠送积分。',100);
+							}
+						}
 						$result["status"]=1;
 					}
 					else
@@ -147,6 +162,7 @@ class MainController extends Controller {
 	
 	public function cook_end(){
 		session('loginstatus', 0);
+		session('wxUserinfo', null);
 		$this->redirect('Index/index');
 	}
 		

@@ -121,7 +121,7 @@
 .help-contact .Customer:hover {
 	color:#fff;
 }
-.help-contact .Customer b {
+.help-contact .Customer span {
 	width:13px;
 	height:14px;
 	display:inline-block;
