@@ -134,7 +134,7 @@ class MainController extends Controller {
 				$db->save($data);
 				// 将临时购物车的记录替换成真的			
 				$cdb = M('cart');
-				$_uid = $user['uid'];		
+				$_uid = get_temp_uid();	
 				
 				// 清空之前的商品
 				$cmap['uid'] = $data['uid'];

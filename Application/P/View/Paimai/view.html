@@ -164,7 +164,7 @@
 							var zuidijia = {$zuidijia};
 							var chujiacishu = {$data.chujiacishu};
 							var baomingrenshu = {$data.baomingrenshu};
-							var chujiaInput = $("#num_dig");
+							var chujiaInput = $("#num_dig").change(onChujiaChange);
 							var cishuLabels = $(".chujiacishu");
 							var baomingLabels = $(".baomingrenshu");
 							var zuigaoLabels = $(".zuigaojia");
@@ -226,6 +226,13 @@
 								var money = Number(chujiaInput.val());
 								chujiaInput.val(money + jiafujia);
 							});
+							
+							function onChujiaChange() {
+								var money = Number(chujiaInput.val());
+								if(money < zuidijia) {
+									chujiaInput.val(zuidijia);
+								}
+							}
 						});
 					</script>
 				<else/>
@@ -235,7 +242,7 @@
 				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
 				    
 				    <div id="divBuy" class="Det_button">
-						<a href="javascript:void(0);" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>交保证金报名</a>
+						<a href="{:U('Pay/baozhengjin','','')}/{$data.gid}" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>交保证金报名</a>
 					</div>
 				</present>
 			<else/>
