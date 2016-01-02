@@ -157,20 +157,15 @@
 						  <span class="caret"></span>
 					   </button>
 	               </if>
-	               
 	                   <ul class="dropdown-menu" role="menu" aria-labelledby="btn_{$vo['catid']}">
 						  <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:toggleIsShow(1,{$vo['catid']})">显示</a></li>
 						  <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:toggleIsShow(0,{$vo['catid']})">隐藏</a></li>
 					   </ul>
-				  
 	               </div>
 	               </td>
 	               <td>
-	              
-	               <!--<a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit/0/','','')}/{$vo['catid']}">新增子分类</a>&nbsp;-->	              
-	               
+	               <!--<a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit/0/','','')}/{$vo['catid']}">新增子分类</a>&nbsp;-->              	               
 	               <a class="btn btn-default glyphicon glyphicon-pencil" href="{:U('Admin/ArticleCats/toEdit/','','')}/{$vo['catid']}">修改</a>&nbsp;
-	               
 	               <if condition="$vo['cattype']==0 ">
 	               		<button type="button" class="btn btn-default glyphicon glyphicon-trash" onclick="javascript:del({$vo['catid']},0)"">刪除</button>
 	               </if>

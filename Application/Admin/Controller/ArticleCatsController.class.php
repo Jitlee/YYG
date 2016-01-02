@@ -82,14 +82,12 @@ class ArticleCatsController extends CommonController{
     	$this->assign('catItems',$list);
 		//echo dump($list);
 		
-		 
         $this->display("/articlecats/list");
 	}
 	/**
 	 * 列表查询
 	 */
     public function queryByList(){
-    	 
 		$m = D('Admin/ArticleCats');
 		$list = $m->queryByList(I('id',0));
 		$rs = array();

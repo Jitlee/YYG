@@ -1,7 +1,7 @@
 <?php
 namespace P\Controller;
 use Think\Controller;
-class HomeController extends Controller {
+class HomeController extends CommonController {
 	protected function _initialize() {
 		if(!is_login()) {
 			$this->redirect('Main/login');
@@ -224,49 +224,53 @@ class HomeController extends Controller {
 		}
     }
 	
-	public function record(){		
+	public function record($pageSize=10, $pageNum=1){		
     	$this->assign('title', '提现记录');
+		$this->assign("list", $this->GetCashoutlist($pageSize,$pageNum));
 		$this->display();
     }
 	public function GetCashoutlist($pageSize, $pageNum)
 	{
 		$Model = M('member_cashout');
-		$filter['uid'] = session("_uid");		
+		$filter['uid'] = session("_uid");
+		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+				
 		$list =$Model					
 			->where($filter)
 			->page($pageNum, $pageSize)
 			->select();
 		return $list;
 	}
-	public function pagecashoutlist()
-	{
-		$list=$this->GetCashoutlist($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pagecashoutlist()
+//	{
+//		$list=$this->GetCashoutlist($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
 	/*******end邀请管理********/
 	
 	/*******账户管理********/
-	public function userbalance(){		
+	public function userbalance($pageSize=20, $pageNum=1){		
     	$this->assign('title', '一元购');
     	$data=session('wxUserinfo');
 		$this->assign("data", $data);
+		$this->assign("list", $this->GetRecord($pageSize,$pageNum));
 		$this->display();
     }
     //充值记录分页
-	public function pageAllRechargerecord($pageSize, $pageNum) {
-		// 分页
-		$list=$this->GetRecord($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pageAllRechargerecord($pageSize, $pageNum) {
+//		// 分页
+//		$list=$this->GetRecord($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
     public function GetRecord($pageSize, $pageNum)
 	{
 		$Model = M('member_addmoney_record');
 		$filter['uid'] = session("_uid");
-		
-		$list =$Model					
-		->where($filter)
-		->page($pageNum, $pageSize)
-		->select();
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+		$list =$Model->where($filter)->page($pageNum, $pageSize)->select();
 		return $list;
 	}
 	

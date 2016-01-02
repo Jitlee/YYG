@@ -23,7 +23,6 @@ class SaidanController extends CommonController {
 			$this->assign("newitem", $newitem);
 			
 			 
-			
 			$m = D('P/MemberScore');
 			$oldgoods = $m->getGood($gid,$qishu);
 			$this->assign("oldgoods", $oldgoods);
@@ -62,6 +61,8 @@ class SaidanController extends CommonController {
 			$list = $db->join(" yyg_member ON yyg_member.uid=yyg_shaidan.uid")
 					->field("sid,yyg_shaidan.uid, gid,qishu,gtype,ip,title,content,photos,thumbs,zan,ping, yyg_shaidan.time,yyg_member.username,yyg_member.img userimg")
 					->order('time desc')->page($pageNum, $pageSize)->select();
+					
+			//echo dump($list);
 			
 			$sa_one=array();$sa_two=array();$sa_tree=array();$sa_for=array();	
 			$dn=count($list);				

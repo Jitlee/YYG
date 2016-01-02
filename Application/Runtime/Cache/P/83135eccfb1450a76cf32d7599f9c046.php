@@ -184,21 +184,14 @@
 			<?php echo footerHelp();?>
 			<dl class="ft-fwrx">
 				<dt><span>官方群</span></dt>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">88888</em></a></dd>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">99999</em></a></dd>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">188526887</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;"  href="javascript:void(0);">官方QQ群：<em class="orange Fb">88888</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;"  href="javascript:void(0);">官方QQ群：<em class="orange Fb">99999</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" href="javascript:void(0);">官方QQ群：<em class="orange Fb">188526887</em></a></dd>
 			</dl>
 			<dl>
 				<dt>携手云购</dt>
-				<dd>
-					<a href="<?php echo U('Help/business', '', '');?>" target="_blank">商务合作</a>
-				</dd>
-				<dd>
-					<a href="http://localhost:9999/?/link" target="_blank">友情链接</a>
-				</dd>
-				<dd>
-					<a href="http://localhost:9999/?/group_qq" target="_blank">官方QQ群交流</a>
-				</dd>
+				<dd><a href="<?php echo U('Help/business', '', '');?>" target="_blank">商务合作</a></dd>
+				<dd><a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a></dd>
 			</dl>
 		</div>
 		<div class="M-security">

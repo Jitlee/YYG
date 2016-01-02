@@ -15,19 +15,31 @@ class MainController extends Controller {
 			if(!$records)
 			{
 				$_POST['img']='tx/211274314672928.jpg';
+				$_POST['mobilecode']='1111';
+				//$_POST['username']=$_POST['mobile'];
 				$db->create();
 				if($db->add() != false) {
 					session('registerMobile', $_POST['mobile']);
 					$result["status"]=1;
-				} 
+				}
 				else 
 				{
-					$result["msg"]='数据错误';
+					$result["msg"]='注册出错啦。';
 				}
 			}
 			else
 			{
-				$result["msg"]='手机号已经注册。';
+				if($records['mobilecode']=='1111')
+				{
+					$records['password']=$_POST['password'] ;
+					$db->save($records);
+					session('registerMobile', $_POST['mobile']);
+					$result["status"]=1;
+				}
+				else
+				{
+					$result["msg"]='手机号已经注册。';		
+				}
 			}
 			$this->ajaxReturn($result);	
     	} else  {
@@ -40,6 +52,40 @@ class MainController extends Controller {
 		if(IS_POST) {
 			$result["status"]=0;
 			$result["msg"]="登录成功。";
+			
+			$checkmobile=$_POST['mobile'];
+			if($checkmobile != session('registerMobile'))
+			{
+				$result["msg"]='非法操作,请刷新重试。';
+			}
+			else
+			{
+				if(session("UserRegMobileCode")==$_POST['Code'])
+				{
+					//设置参数
+					$result["status"]=1;
+					$m = D('P/Member');
+					$user=$m->getByMobile($checkmobile);
+					if($user)
+					{
+						//更新用户验证码状态
+						$user['mobilecode']=$_POST['Code'];
+						$db = M('member');
+						$db->save($user);
+						session('registerMobile','');
+						$result["status"]=1;
+					}
+					else
+					{
+						$result["msg"]="用户错误。";
+					}
+				}
+				else
+				{
+					$result["msg"]="验证码错误。";
+				}
+			}
+			$this->ajaxReturn($result);	
     	} else  {
 			$this->assign('enname', session('registerMobile'));
 			$this->assign('namestr',session('registerMobile'));
@@ -56,8 +102,10 @@ class MainController extends Controller {
 			$password= md5($_POST['password']);
 				  
 			$db = M('member');
-			$data['mobile'] = $_POST['username'];
-			$user = $db->where($data)->find();
+//			$data['mobile'] = $_POST['username'];
+//			$user = $db->where($data)->find();
+			$m = D('P/Member');
+			$user=$m->getByMobile($_POST['username']);
 			if(!$user || $user['password'] != $password) {
 				$result["msg"]='用户名或密码不正确';
 			}

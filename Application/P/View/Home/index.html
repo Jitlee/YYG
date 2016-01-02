@@ -19,7 +19,7 @@
 			<li class="account-money">
 				<em class="gray02">帐户余额：</em>
 				<span class="money-red"><s></s>{$data.money}</span>&nbsp;&nbsp;
-				<a href="{:U('Main/userrecharge', '', '')}" title="充值" class="blue">充值</a>
+				<a href="{:U('Home/userrecharge', '', '')}" title="充值" class="blue">充值</a>
 			</li>
 			<li class="account-money">
 			<em class="gray02">我的积分：</em><b class="orange">{$data.score}		 
@@ -32,7 +32,7 @@
 		</div>
 		<if condition="($data.mobile eq '') OR ($data.username gt '') ">
 			<div class="tips orange">
-				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠1000福分！
+				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
 				<a href="{:U('Home/modify', '', '')}" class="blue">立即完善</a><a class="close"></a>
 			</div>
 		</if>

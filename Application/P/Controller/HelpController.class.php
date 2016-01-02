@@ -6,6 +6,10 @@ class HelpController extends Controller {
 	public function _empty($id) {
 		$this->index($id);
 	}
+	public function group_qq()
+	{
+		$this->display();
+	}
 	
 	public function nb()
 	{

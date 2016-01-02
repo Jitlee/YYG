@@ -87,9 +87,9 @@
 	       			if(this.jishijiexiao==1)
 	       			{
 	       				useTemplate=goodTemplate;
-	       			}	       			
+	       			}	       			 
 	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
 
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);

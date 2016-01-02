@@ -20,7 +20,7 @@
 				<dd><input id="mobileCode" name="checkcode" class="login_CMobile_Code" type="text"></dd>
 				<dd></dd>
 			</dl>
-			<input type="submit" name="submit" id="btnSubmitRegister" href="javascript:void(0);" class="login_Email_but" value="提交验证" />		
+			<input type="button" name="submit" id="btnSubmitRegister"    class="login_Email_but" value="提交验证" />		
 		</div>    		
         </form>
 		<div class="login_Explain">
@@ -34,6 +34,25 @@
 	</div>
 </div>
 <script>
+$(function(){
+	$("#btnSubmitRegister").click(function(){
+		if($("#mobileCode").val().length<4){ 
+			alert("请输入验证码!");
+			return false;
+		}
+		$.post("{:U('Main/mobilecheck', '', '')}", {mobile:"{$namestr}",Code:$("#mobileCode").val()}, CheckSuccess, "json");
+		return false;
+		function CheckSuccess(data) {
+			if (data.status) {
+				alert("恭喜您注册成功，开始全新的购物体验吧!");
+				window.location.href = "{:U('Index/index','','')}";
+			} else {
+				alert(data.msg);
+			}
+		}
+	});	
+	sendmobile();
+});
 	var i = {$time};
 	var senda=document.getElementById('retrySend');
 	setInterval(function(){if(i>0){
@@ -42,6 +61,16 @@
 	},1000);
 	
 	function sendmobile(){
-		window.location.href="{WEB_PATH}/member/user/sendmobile/{$namestr}"
+		$.post("{:U('Msg/UserReg', '', '')}/{$namestr}", {mobile:"{$namestr}"}, success, "json");
+		return false;
+		function success(data) {
+			if (data.status) {					
+				//短信已发送。
+			} else {
+				alert(data.msg);
+			}
+		}		
 	}
+	
+ 
 </script>

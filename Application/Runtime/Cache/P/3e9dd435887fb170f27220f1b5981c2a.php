@@ -201,7 +201,7 @@ window.onerror=function(){return true;}
 		</div>
 		<ul class="Period_list">
 			<li><a <?php if($data["current"] != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>"<?php endif; ?>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第<?php echo ($data["current"]); ?>期<i></i></b></a></li>
-			<?php $__FOR_START_1235755019__=$data['current'] - 1;$__FOR_END_1235755019__=0;for($i=$__FOR_START_1235755019__;$i > $__FOR_END_1235755019__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
+			<?php $__FOR_START_6548__=$data['current'] - 1;$__FOR_END_6548__=0;for($i=$__FOR_START_6548__;$i > $__FOR_END_6548__;$i+=-1){ ?><li><a <?php if($i != $qishu): ?>href="<?php echo U('Index/view', '', '');?>/<?php echo ($data["gid"]); ?>/<?php echo ($i); ?>"<?php endif; ?> class="gray02">第<?php echo ($i); ?>期</a></li><?php } ?>
 		</ul>
 	</div>
 	<script>
@@ -645,21 +645,14 @@ $(function(){
 			<?php echo footerHelp();?>
 			<dl class="ft-fwrx">
 				<dt><span>官方群</span></dt>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">88888</em></a></dd>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">99999</em></a></dd>
-				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" target="_blank" rel="nofollow" href="javascript:;">官方QQ群：<em class="orange Fb">188526887</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;"  href="javascript:void(0);">官方QQ群：<em class="orange Fb">88888</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;"  href="javascript:void(0);">官方QQ群：<em class="orange Fb">99999</em></a></dd>
+				<dd class="ft-fwrx-service"><a style="text-indent:0em; background:none;width:160px;" href="javascript:void(0);">官方QQ群：<em class="orange Fb">188526887</em></a></dd>
 			</dl>
 			<dl>
 				<dt>携手云购</dt>
-				<dd>
-					<a href="<?php echo U('Help/business', '', '');?>" target="_blank">商务合作</a>
-				</dd>
-				<dd>
-					<a href="http://localhost:9999/?/link" target="_blank">友情链接</a>
-				</dd>
-				<dd>
-					<a href="http://localhost:9999/?/group_qq" target="_blank">官方QQ群交流</a>
-				</dd>
+				<dd><a href="<?php echo U('Help/business', '', '');?>" target="_blank">商务合作</a></dd>
+				<dd><a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a></dd>
 			</dl>
 		</div>
 		<div class="M-security">
@@ -683,15 +676,11 @@ $(function(){
 <!-- 底部版权 -->
 <div class="g-frame copyright">
 	<div class="footer_links">
-		<b></b>
-		<a href="<?php echo U('Help/index', '', '');?>/1">关于云购</a>
-		<b></b>
-		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a>
-		<b></b>
-		<a href="http://localhost:9999/?/link">友情链接</a>
-		<b></b>
-		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a>
-		<b></b>		</div>
+		<a href="<?php echo U('Index/index', '', '');?>">首页</a><b></b>
+		<a href="<?php echo U('Help/index', '', '');?>/1">关于云购</a><b></b>
+		<a href="<?php echo U('Help/business', '', '');?>">合作专区</a><b></b>
+		<a href="<?php echo U('Help/index', '', '');?>/13">联系我们</a><b></b>		
+	</div>
 	<div class="copyright">
 		Copyright © 2011 - 2015 </div>
 	<div class="footer_icon">
