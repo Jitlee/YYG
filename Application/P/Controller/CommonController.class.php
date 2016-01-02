@@ -14,7 +14,6 @@ class CommonController extends Controller {
 				$this->assign('goCountRenci'.($len - $i), $renci[$i]);
 			}
 		}
-		
 		$this->assign('serverTime', time());
 		$this->assign('title', '一元购');		
 		count_cart(0);

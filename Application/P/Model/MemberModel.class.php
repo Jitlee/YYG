@@ -25,9 +25,6 @@ class MemberModel extends BaseModel {
 		$data['yaoqing'] = $yaoqing;
 		return $db->where($data)->find();
 	 }
-	
- 
- 
 
 };
 ?>

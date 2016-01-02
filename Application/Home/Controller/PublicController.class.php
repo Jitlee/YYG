@@ -58,7 +58,7 @@ public function forgetPassword(){
 	$this->display();
 }
 	
-public function reg($yaoqing}=null){
+public function reg($yaoqing=null){
 		if(IS_POST) {
 				$_POST['password'] = md5($_POST['password']);
 				$db = M('member');

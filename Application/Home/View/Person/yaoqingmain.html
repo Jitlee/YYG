@@ -1,0 +1,64 @@
+<header class="mui-bar mui-bar-nav">
+	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+			<span class="mui-icon mui-icon-left-nav" ></span>
+	    	返回
+	  </button>
+	  <!--<a id="edititem"  class="mui-action-menu  mui-btn mui-btn-primary mui-btn-outlined mui-pull-right" href="{:U('Person/yaoqingma', '', '')}">填写邀请码</a>-->
+	  <h1 class="mui-title">{$title}</h1>
+</header>
+<div class="mui-content">
+
+</head>
+
+<body>
+<div class="mobile"> 
+	<!--<div class="top f" align="center">
+   	<div class="m_banner">
+            <a href="#" class="item"><img src="__IMG__/person/erweima.png"></a>
+            
+      </div>
+      <p class="p1">扫描以上二维码关注</p>  
+      <p class="p1">我的邀请码：<strong>YYG888</strong></p>  
+  </div>-->
+</div>
+
+  <div class="divbox">
+      <p class="p2"><strong>规则说明：</strong></p>  
+      <p class="p3">这是您的专属邀请链接，请通过 MSN 或 QQ 发送给您的好友</p>
+      <p class="p3"><span><b></b><textarea id="txtInfo"  style="width:95%;height:80px; " disabled="disabled" value="" onpaste="return false" type="text">
+1元就能买IPhone 6S、笔记本电脑、单反哦，全场1元，快去看看吧！ {:config("web_path")}{:U('Public/Reg', '', '')}/{:session("_uid")}
+      	</textarea>
+      </span>
+      </p>
+      <!--<p class="p3">1、成功邀请一个好友，最高可获10元奖励。单个好友累计夺宝达到2次，即可获得1元；好友累计夺宝达到10次，再奖励3元；</p>-->
+  </div>
+<br/>
+	<button id='btnyqlist' type="button" class="mui-btn mui-btn-block mui-btn-primary">
+		邀请记录</button>
+</div>
+<script type="text/javascript">
+	$(function() {
+		//邀请记录
+		$("#btnyqlist").click(function() {
+			window.location.href="{:U('Person/yaoqinglist', '', '')}";
+		});		 
+	});
+</script>
+
+	
+	<style type="text/css">
+	.f .p1{ color:#1a1a1a; text-align:center;}
+	.f .p1 strong{ color:#f74140; text-align:center; font-size:2em;}
+	.divbox{ margin:0 auto; width:95%; padding:20px; background:#ffffff; border-radius:5px; -webkit-border-radius:5px;-moz-border-radius:5px; border:1px solid #d9d9d9; -webkit-border-radius: 8px;-moz-border-radius: 8px;border-radius: 8px;}
+	.divbox .p2 strong{ color:#1a1a1a; font-size:1.5em;}
+	.divbox .p3{ color:#1a1a1a; }
+	.f {
+		min-width: 320px;
+		width: 97%;
+		margin-top: 1%;
+		margin-right: 1.5%;
+		margin-bottom: 1%;
+		margin-left: 1.5%;
+	}
+	.divbt{margin:0 auto; height:2.5em; line-height:2.5em; color:#ffffff; background:#f74140; width:95%; text-align:center;}
+</style>

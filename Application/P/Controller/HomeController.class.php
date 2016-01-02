@@ -157,8 +157,7 @@ class HomeController extends CommonController {
 	/*******end我的云购********/
 	/*******邀请管理********/
 	public function invitefriends($pageSize=10, $pageNum=1){		
-    	$this->assign('title', '一元购');
-		
+    	$this->assign('title', '一元购');		
 		$db = M('member');
 		$filter['yaoqing'] = session("_uid");
 		
@@ -438,7 +437,28 @@ class HomeController extends CommonController {
 		$this->display();
     }	
 	
+	public function goodcodelist($gid,$qishu,$pageSize=100, $pageNum=1){		
+    	$this->assign('title', '云购码');
+		$this->assign("list", $this->GetGoodcodelist($gid,$qishu,$pageSize,$pageNum));
+		$this->display();
+    }
+	public function GetGoodcodelist($gid,$qishu,$pageSize, $pageNum)
+	{
+		$Model = M('miaosha_code');
+		$filter['uid'] = session("_uid");
+		$filter['gid'] = $gid;
+		$filter['qishu'] = $qishu;
 		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+				
+		$list =$Model					
+			->where($filter)
+			->field("pcode+10000001 as pcode,time")
+			->page($pageNum, $pageSize)
+			->select();
+		return $list;
+	}	
 		
 		
 }

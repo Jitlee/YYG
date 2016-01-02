@@ -134,10 +134,40 @@ class PersonController extends CommonController {
 		$this->display();
 	}
 	
+	public function yaoqingmain()
+	{
+		$this->assign('title', '邀请好友');
+		$this->display();
+	}
+	
+	
 	public function yaoqinglist()
 	{
 		$this->assign('title', '邀请记录');
+		$this->assign("list", $this->yaoqinglistRecord(20,1,1));
 		$this->display();
+	}
+	
+	public function yaoqinglistRecord($pageSize,$pageNum,$post=0)
+	{
+		$db = M('member');
+		$filter['yaoqing'] = session("_uid");
+		
+		//$total =$db->where($filter)->count();
+		//$this->SetPage($pageSize,$pageNum,$total);
+		
+		$list =$db					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		if($post==0)
+		{
+			$this->ajaxReturn($list, "JSON");
+		}
+		else
+		{
+			return $list;
+		}
 	}
 	public function cashout()
 	{
@@ -400,15 +430,13 @@ class PersonController extends CommonController {
 			$this->assign("data", $data);
 			$this->display();
 		}
-	}
-	
+	}	
 	
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
 		$Model = M('miaosha');
 		$filter['yyg_member_miaosha.uid'] = session("_uid");
-		
-		
+				
 		$list =$Model
 		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid")			
 		->where($filter)
@@ -452,7 +480,6 @@ class PersonController extends CommonController {
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
 		
-		
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
@@ -472,7 +499,6 @@ class PersonController extends CommonController {
 		// 分页
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
-		
 		
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			

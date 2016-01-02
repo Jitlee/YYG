@@ -1,0 +1,26 @@
+<div class="main-content clearfix">
+<include file="left" />
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-records.css"/>
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-invitation.css"/>
+
+        <div class="R-content">
+            <div class="member-t"><h2>我的云购码</h2></div>
+
+            <div id="divMentionList" class="list-tab cash gray02">
+			  <ul class="listTitle">
+			  		<li class="w300">&nbsp;云购码</li>
+			  		<li>时间</li>			  	 
+			  </ul>
+				  <foreach name="list" item="c">
+					 <ul>
+				 		<li class="w300"> {$c.pcode }</li>
+				 		<li class="ztime">{$c.time}</li>
+					</ul>
+				 </foreach>
+		   </div>
+            	<div id="divPageNav" class="page_nav">
+			    	 <include file="Public:pager"/>
+			    </div>
+        </div>
+	</div>
+</div>
