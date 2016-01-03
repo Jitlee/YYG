@@ -31,7 +31,7 @@
 						<span class="zcontent"></span>
 					</a>
 					<p class="gray02">获得者：<a href="#" target="_self" class="blue">
-	                {wc:fun:get_user_name($jiexiao['q_user'])}
+	                	
 	                </a></p>
 					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
 				</li>
@@ -50,7 +50,7 @@
 				</li>
 				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">正在进行...</span></li>
 				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
-				<li class="do" style="margin:23px 0 0 0;"><a href=" #" class="blue" title="查看云购码">查看云购码</a></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href=" #" class="blue ycode" title="查看云购码">查看云购码</a></li>
 			</ul>
 			
 <script type="text/javascript">
@@ -90,7 +90,7 @@
 	       			}	       			 
 	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
-	       			$(".blue", item).attr("href", "{:U('Home/goodcodelist', '', '')}/" + this.gid+"/"+this.qishu+"/100/1");
+	       			$(".ycode", item).attr("href", "{:U('Home/goodcodelist', '', '')}/" + this.gid+"/"+this.qishu+"/100/1");
 
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);

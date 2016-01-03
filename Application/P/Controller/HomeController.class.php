@@ -33,13 +33,24 @@ class HomeController extends CommonController {
 		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
-		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid")			
+		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid and yyg_member_miaosha.qishu=yyg_miaosha.qishu")			
 		->where($filter)
 		->page($pageNum, $pageSize)
 		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
 		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid")
 		->select();
-			
+		
+//		$ModelH = M('miaosha_history');
+//		$filterH['yyg_member_miaosha.uid'] = session("_uid");  
+//		$list2 =$ModelH
+//		->join(" yyg_member_miaosha ON yyg_miaosha_history.gid=yyg_member_miaosha.gid")			
+//		->where($filterH)
+//		->page($pageNum, $pageSize)
+//		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid')
+//		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid")
+//		->select();
+		
+		//$endlist=array_merge($list,$list2);
 		$this->ajaxReturn($list, "JSON");
 	}
 	/*	中奖记录	*/
@@ -437,7 +448,7 @@ class HomeController extends CommonController {
 		$this->display();
     }	
 	
-<<<<<<< HEAD
+ 
 	public function goodcodelist($gid,$qishu,$pageSize=100, $pageNum=1){		
     	$this->assign('title', '云购码');
 		$this->assign("list", $this->GetGoodcodelist($gid,$qishu,$pageSize,$pageNum));
@@ -459,7 +470,8 @@ class HomeController extends CommonController {
 			->page($pageNum, $pageSize)
 			->select();
 		return $list;
-=======
+ 	}
+ 	
 	public function upload() {
 		$rootPath = '/Uploads/Shaidan/';
 		if (!empty($_FILES)) {
@@ -488,7 +500,7 @@ class HomeController extends CommonController {
 		        $this->ajaxReturn($returnData, "JSON");
 		    }
 		}
->>>>>>> d80eb6cf1759e925e0699f9b73d13dd742b7ac41
+ 
 	}	
 		
 		
