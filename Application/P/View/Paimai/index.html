@@ -1,10 +1,10 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/Lottery.css"/>
 <style type="text/css">
-	time {
+	.time {
 		font-size: 20px;
 		color:#f60;
 	}
-	time span{
+	.time span{
 		font-size:14px;
 	}
 	
@@ -147,7 +147,7 @@
 								当前价格：<em>¥{$item.zuigaojia}</em>
 							</div>
 							<div class="details">
-								&nbsp;&nbsp;&nbsp;&nbsp;时间剩余：<time countdown="{$item.end_time|strtotime}000"></time>
+								&nbsp;&nbsp;&nbsp;&nbsp;时间剩余：<span class="time" countdown="{$item.end_time|strtotime}000"></span>
 								<div class="yyg-btn-block">
 									<div class="yyg-btn"><img src="__IMG__/baozhengjin.png"/>我要出价</div>
 								</div>

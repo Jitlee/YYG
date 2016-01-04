@@ -140,7 +140,7 @@
 			<if condition="$data.status lt 2">
 				<dl class="paimai-time">
 					<dt>正在<br/>进行</dt>
-			    		<dd>距离结束仅剩：<time countdown="{$data.end_time|strtotime}000"></time></dd>
+			    		<dd>距离结束仅剩：<span class="time" countdown="{$data.end_time|strtotime}000"></span></dd>
 			    		<dd>报名人数<em class="baomingrenshu">{$data.baomingrenshu}</em></dd>
 			    </dl>
 			    <script type="text/javascript" src="__JS__/count-down.js"></script>
@@ -334,7 +334,6 @@
 </div>
 <!--补丁3.1.6_b.0.1-->
 
-<script src="__JS__/knockout-3.3.0.js" type="text/javascript"></script>
 <script type="text/javascript">
 function set_iframe_height(fid,did,height){	
 	$("#"+fid).css("height",height);	
@@ -375,9 +374,5 @@ $(function(){
 			$("#divProductNav").removeClass("nav-fixed");
 		}
 	});
-	
-	// 出价记录
-	var chujiaVM = ko.observableArray();
-	ko.applyBindings(model, document.getElementById("bitem"));
 });
 </script> 
