@@ -2,7 +2,7 @@ $(function() {
 	var countdowns = [];
 	var scrollHandler = null;
 	var countHandler = null;
-	window.addEventListener("scroll", onscroll);
+	$(window).bind("scroll", onscroll);
 	
 	window.countdown = onscroll;
 	
