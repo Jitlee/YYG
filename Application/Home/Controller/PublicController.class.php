@@ -1,8 +1,7 @@
-<?php
+﻿<?php
 namespace Home\Controller;
 use Think\Controller;
 
- 
 class PublicController extends Controller {
 	
 public function login() {
@@ -53,7 +52,8 @@ public function login() {
 	}
 
 
-public function forgetPassword(){
+public function forgetPassword()
+{
 	layout(true);
 	$this->display();
 }
@@ -229,11 +229,5 @@ public function setmobile(){
 //				session('wxUserinfo',$userinfo);
 				$this->display();
 			}
-	}
-
- 
-	
-	 
-
-
+	} 
 }

@@ -5,7 +5,8 @@
 
 *.log
 task
-
+Application/Runtime/Temp/*
+Application/Runtime/Cache/*
 Application/Runtime/Data/task.xml
 
 Application/Runtime/Data/renci.xml
