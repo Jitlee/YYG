@@ -2,7 +2,7 @@ $(function() {
 	var countdowns = [];
 	var scrollHandler = null;
 	var countHandler = null;
-	window.addEventListener("scroll", onscroll);
+	$(window).bind("scroll", onscroll);
 	
 	window.countdown = onscroll;
 	
@@ -13,7 +13,7 @@ $(function() {
 			countdowns.length = 0;
 			var wTop = $(window).scrollTop();
 			var wHeight = $(window).height();
-			$("time").each(function() {
+			$(".time").each(function() {
 				var top = $(this).offset().top;
 	            if (top >= wTop && top < (wTop + wHeight)) {
 	            		if(typeof this.countdown != "number") {
