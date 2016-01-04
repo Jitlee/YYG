@@ -14,26 +14,31 @@
 			<li class="regard">资金渠道</li>
 			<li class="price">收入/支出</li>
 		</ul>
-	 
-	</div>
-    
-        <style>
-			#divPageNav{ padding-top:10px;text-align:right}
-			#divPageNav li a{ padding:5px;}
-		</style>
-		<div id="divPageNav" class="page_nav">
-        	 
-        </div>
-        
-	 
+		 <foreach name="list" item="c">
+			 <ul>
+				<li class="leftTitle fontAri ztime">{$c.time}</li>
+				<li class="regard">
+					<switch name="c.pay_type">
+					     <case value="alipay_wap">支付宝</case>
+					    <!-- <case value="2">admin</case>-->
+					     <default />{$c.pay_type}
+					</switch>
+				</li>
+				<li class="price">{$c.money}</li>
+			</ul>
+		 </foreach>
+	</div> 
+	<div id="divPageNav" class="page_nav">
+    	 <include file="Public:pager"/>
+    </div>
 </div>
-	<ul id="divList0" class="mui-hidden">
+	<!--<ul id="divList0" class="mui-hidden">
 		<li class="leftTitle fontAri ztime"></li>
 		<li class="regard"></li>
 		<li class="price"></li>
 	</ul>
-</div>
-<script>
+</div>-->
+<!--<script>
 	$(function(){ 
 		// 全部商品翻页
 		var pageNumfinish = 0;
@@ -69,7 +74,7 @@
 	       		});
 	       });
 		}
-		pageAll(); 
+		//pageAll(); 
 		
 	});
-</script>
+</script>-->

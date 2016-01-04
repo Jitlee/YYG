@@ -13,12 +13,29 @@
 			  		<li class="w120">提现金额(元)</li>
 			  		<li class="w120">手续费(元)</li>
 			  		<li class="w120">审核状态</li>
-			  </ul>			   
+			  </ul>
+				  <foreach name="list" item="c">
+					 <ul>
+						<li class="w150 ztime">{$c.time}</li>
+				 		<li class="w300 bankname">{$c.bankname}&nbsp;&nbsp;{$c.banknumber}</li>
+				 		<li class="w120 money">{$c.money}</li>
+				 		<li class="w120 procefees">{$c.procefees}</li>
+				 		<li class="w120 auditstatus">
+				 			<switch name="c.auditstatus">
+							     <case value="0">申请</case>
+							     <case value="1">审核通过</case>
+							     <default />审核未通过
+							</switch>
+						</li>
+					</ul>
+				 </foreach>
 		   </div>
-            <div id="divPageNav" class="page_nav"></div>
+            	<div id="divPageNav" class="page_nav">
+			    	 <include file="Public:pager"/>
+			    </div>
         </div>
 	</div>
- 	<ul id="divList0" class="mui-hidden">
+ 	<!--<ul id="divList0" class="mui-hidden">
  		<li class="w150 ztime"></li>
  		<li class="w300 bankname">{wc:$val['bankname']}&nbsp;&nbsp;{wc:$val['banknumber']}</li>
  		<li class="w120 money">{wc:$val['money']}</li>
@@ -77,5 +94,5 @@ $(function(){
 		$(".R-content .topic").hide().eq(id).show();
 	});
 }) 
-</script>
+</script>-->
 </div>

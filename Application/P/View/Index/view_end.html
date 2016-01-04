@@ -1,0 +1,22 @@
+<present name="data.prizer">
+	<div class="Pro_GetPrize">		
+		<div class="GetPrize">				    
+			<dl>
+				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.prizer.img}"></a></dt>
+				<dd class="gray02">
+					<p>恭喜 <a target="_blank" class="blue">{$data.prizer.username}</a>获得了本商品</p>
+					<p>揭晓时间：{$data.prizer.end_time}</p>
+					<p>云购时间：{$data.prizer.record_time}</p>
+					<p>幸运云购码：<em class="orange Fb">{$data['prizer']['prizecode']+10000001}</em></p>
+				</dd>
+			</dl>				
+		</div>
+	</div>
+	<div id="divBuy" class="Det_button">
+		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
+	</div>
+<else/>
+<div class="Immediate">
+	<span style="left:10px;right:0px;">很遗憾，本期没有人参与</span>
+</div>
+</present>

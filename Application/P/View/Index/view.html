@@ -1,35 +1,8 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/GoodsDetail.css"/>
 <link rel="stylesheet" type="text/css" href="__CSS__/cloud-zoom.css"/>
 <script type="text/javascript" src="__JS__/cloud-zoom.min.js"></script>
-<script type="text/javascript">
-$.fn.CloudZoom.defaults = {
-	zoomWidth: '400',
-	zoomHeight: '310',
-	position: 'right',
-	tint: false,
-	tintOpacity: 0.5,
-	lensOpacity: 0.5,
-	softFocus: false,
-	smoothMove: 7,
-	showTitle: false,
-	titleOpacity: 0.5,
-	adjustX: 0,
-	adjustY: 0
-};
-</script>
-<style type="text/css">
-.zoom-section{clear:both;margin-top:20px;}
-.zoom-small-image{border:2px solid #dedede;float:left;margin-bottom:20px; width:400px; height:400px;}
-.zoom-small-image img{ width:400px; height:400px;}
-.zoom-desc{float:left;width:404px; height:52px;margin-bottom:20px; overflow:hidden;}
-.zoom-desc p{ width:10000px; height:52px; float:left; display:block; position:absolute; top:0; z-index:3; overflow:hidden;}
-.zoom-desc label{ width:50px; height:52px; margin:0 5px 0 0; _margin-right:4px; display:block; float:left; overflow:hidden;}
-.zoom-tiny-image{border:1px solid #CCC;margin:0px; width:48px; height:50px;}
-.zoom-tiny-image:hover{border:1px solid #C00;}
-</style>
-
 <div class="Current_nav">
-	<a href="{WEB_PATH}">首页</a> <span>&gt;</span>
+	<a href="__MODULE__">首页</a> <span>&gt;</span>
 	<span>&gt;</span>商品详情
 </div>
 <div class="show_content">
@@ -65,65 +38,43 @@ $.fn.CloudZoom.defaults = {
 	<div class="Pro_Details">
 		<h1><span>(第{$data.qishu}期)</span><span >{$data.title}</span><em>{$data.subtitle}</em></h1>
 		<div class="Pro_Detleft">
-			<div class="zoom-small-image">
-				<a class="cloud-zoom" id="zoom1" href="{$firstImage.image_url}" rel="adjustX: 10, adjustY:-4, softFocus:true">
-					<img src="{$firstImage.image_url}">
-				</a>
-			</div>
-
-			<div class="zoom-desc"> 
-				<div class="jcarousel-prev jcarousel-prev-disabled"></div>
-				<div class="jcarousel-clip" style="height:55px;width:384px;">
-				<p>
-					<foreach name="images" item="item">           
-					<label href="{$item.image_url}" class='cloud-zoom-gallery'  rel="useZoom: 'zoom1', smallImage: '{$item.image_url}'">
-					<img class="zoom-tiny-image" src="{$item.image_url}" /></label>			
-					</foreach>
-				</p>
+			<div class="clould-zoom">
+				<div class="clould-zoom-big">
+					<img src="{$firstImage.image_url}" />
+					<div class="clould-zoom-bird-outter">
+						<div class="clould-zoom-bird"></div>
+					</div>
 				</div>
-				<div class="jcarousel-next jcarousel-next-disabled"></div>
+				<div class="clould-zoom-view" style="background-image: url({$firstImage.image_url});"></div>
+				<div class="cloud-zoom-scroll">
+					<a class="colud-zoom-prev cloud-zoom-disabled"><i>&nbsp;</i></a>
+					<ul class="clould-zoom-list">
+						<foreach name="images" item="item">
+						<li class="cloud-zoom-item" ref="{$item.image_url}">
+							<img src="{$item.image_url}" />
+						</li>
+						</foreach>
+						<li class="cloud-zoom-clear"></li>
+					</ul>
+					<a class="colud-zoom-next"><i>&nbsp;</i></a>
+				</div>
 			</div>
-			<script>
-				var si=$(".jcarousel-clip label").size();
-				var label=si*55;
-				$(".jcarousel-clip p").css({width:label,left:"0"});
-				if(label>395){
-					$(".jcarousel-prev,.jcarousel-next").show();
-				}else{
-					$(".jcarousel-prev,.jcarousel-next").hide();
-				}
-				$(".jcarousel-prev").click(function(){
-					var le=$(".jcarousel-clip p").css("left");
-					var le2=le.replace(/px/,"");
-					if(le!='0px'){
-						$(".jcarousel-clip p").css({left:le2*1+55});
-					}						
-				})
-				$(".jcarousel-next").click(function(){
-					var le=$(".jcarousel-clip p").css("left");
-					var le2=le.replace(/px/,"");
-					var max_next=-(si-7)*55+"px";
-					if(le!=max_next){						
-						$(".jcarousel-clip p").css({left:le2*1-55});
-					}
-				})
-			</script>			
-			
-			<present name="data.prizer">
-			<div class="Pro_GetPrize">		
-				<if condition="$data.current eq $qishu">
-				<h2>本期获得者</h2>
-				<else/>
+			<script type="text/javascript">
+				$(function() {
+					$(".clould-zoom").cloudZoom();
+				});
+			</script>		
+			<present name="data.lastprizer">
+			<div class="Pro_GetPrize">	
 				<h2>上期获得者</h2>
-				</if>
 				<div class="GetPrize">				    
 					<dl>
-						<dt><a rel="nofollow" href="{:U(Person/index)}/{$data.prizer.uid}" target="_blank"><img width="80" height="80" alt="" src="{$data.prizer.img|default='__IMG__/member.jpg'}"></a></dt>
+						<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.lastprizer.img}"></a></dt>
 						<dd class="gray02">
-							<p>恭喜 <a href="{:U(Person/index)}/{$data.prizer.uid}" target="_blank" class="blue">{$data.prizer.username}</a>获得了本商品</p>
-							<p>揭晓时间：{$data.prizer.end_time}</p>
-							<p>云购时间：{$data.prizer.record_time}</p>
-							<p>幸运云购码：<em class="orange Fb">{$data.prizer['prizecode']+10000001}</em></p>
+							<p>恭喜 <a target="_blank" class="blue">{$data.lastprizer.username}</a>获得了本商品</p>
+							<p>揭晓时间：{$data.lastprizer.end_time}</p>
+							<p>云购时间：{$data.lastprizer.record_time}</p>
+							<p>幸运云购码：<em class="orange Fb">{$data['lastprizer']['prizecode']+10000001}</em></p>
 						</dd>
 					</dl>				
 				</div>
@@ -132,11 +83,16 @@ $.fn.CloudZoom.defaults = {
 		</div>
 		<div class="Pro_Detright">
 			<p class="Det_money">价值：<span class="rmbgray">{$data.money}</span></p>
-			<present name="end_time">
-				<include file="view_animation"/>
+			<if condition="$data.status eq 2">
+				<include file="view_end"/>
 			<else/>
-				<include file="view_contents"/>
-			</present>
+				<present name="end_time">
+					<include file="view_animation"/>
+				<else/>
+					<include file="view_contents"/>
+				</present>
+			</if>
+			
 			<!--显示揭晓动画 end-->		
 			<div class="Security">
 				<ul>
@@ -145,6 +101,7 @@ $.fn.CloudZoom.defaults = {
 					<li><a href="{WEB_PATH}/help/7" target="_blank"><b></b>全国免费配送</a></li>
 				</ul>
 			</div>			
+			<if condition="$data.status neq 2">
 			<div class="Pro_Record">
 				<ul id="ulRecordTab" class="Record_tit">
 					<li class="NewestRec Record_titCur">最新云购记录</li>
@@ -156,16 +113,15 @@ $.fn.CloudZoom.defaults = {
 					<ul>
 						<foreach name="records" item="item">
 						<li>
-						<a href="{:U('Person', '', '')}/{$item.uid}" target="_blank">
-							<img src="{$item.img|default='__IMG__/member.png'}" border="0" alt="" width="20" height="20">
+						<a target="_blank">
+							<img src="/Public/Home/images/{$item.img}" border="0" alt="" width="20" height="20">
 						</a>					
-						<a href="{:U('Person', '', '')}/{$item.uid}" target="_blank" class="blue">{$item.username}</a>
+						<a target="_blank" class="blue">{$item.username}</a>
 						<!-- todo: IP -->			
 						{$item.time} 云购了
 						<em class="Fb gray01">{$item.count}</em>人次</li>
 						</foreach>
 					</ul>
-					<p style=""><a id="btnUserBuyMore" href="javascript:;" class="gray01">查看更多</a></p>
 					<else/>
 					<p style="">暂时没有人购买</p>
 					</present>
@@ -191,7 +147,8 @@ $.fn.CloudZoom.defaults = {
 					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
 					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{:U('Help/index')}/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
 				</div>
-			</div>			
+			</div>	
+			</if>
 		</div>
 	</div>
 </div>
@@ -217,13 +174,13 @@ $.fn.CloudZoom.defaults = {
     
     <!-- 购买记录20条 -->
 	<div id="bitem" class="AllRecordCon">
-		<iframe id="iframea_bitem" g_src="{WEB_PATH}/go/goods/go_record_ifram/{wc:$itemid}/20" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>		
+		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" style="width:930px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_bitem'].document.documentElement.scrollHeight + 'px'"></iframe>		
 	</div>	
    <!-- /购买记录20条 -->
     
 	<!-- 晒单 -->
 	<div id="divPost" class="Single_Content">
-		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:100%" frameborder="0" scrolling="no"></iframe>
+		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_divPost'].document.documentElement.scrollHeight + 'px'"></iframe>
 	</div>
     <!-- 晒单 -->	
 </div>
@@ -257,13 +214,13 @@ $(function(){
 	});
 	
 	
-	$("#btnUserBuyMore").click(function(){
-		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
-		
-		$("#divContent .hide").hide().eq(1).show();
-		$("html,body").animate({scrollTop:941},1500);
-		$("#divProductNav").addClass("nav-fixed");
-	});
+//	$("#btnUserBuyMore").click(function(){
+//		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+//		
+//		$("#divContent .hide").hide().eq(1).show();
+//		$("html,body").animate({scrollTop:941},1500);
+//		$("#divProductNav").addClass("nav-fixed");
+//	});
 	$(window).scroll(function(){
 		if($(window).scrollTop()>=941){
 			$("#divProductNav").addClass("nav-fixed");

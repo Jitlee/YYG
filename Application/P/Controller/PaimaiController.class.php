@@ -2,21 +2,17 @@
 namespace P\Controller;
 use Think\Controller;
 class PaimaiController extends CommonController {
-    public function index($pageNo){
+    public function index($cid = 0, $pageNo = 1){
 		run_task();
 		$this->assign('title', '拍卖专区');
 		$this->assign('pid', 'paimai');
 		
-		$pdb = M('Paimai');
 		$pmap = array(
-			'status'		=> array('neq', 2)
+//			'status'		=> array('neq', 2)
 		);
-//		if($cid > 0) {
-//			$pmap['cid'] = $cid;
-//		}
-//		if($bid > 0) {
-//			$pmap['bid'] = $cid;
-//		}
+		if($cid > 0) {
+			$pmap['cid'] = $cid;
+		}
 		
 		$order = 'time desc';
 //		switch($sort) {
@@ -41,108 +37,96 @@ class PaimaiController extends CommonController {
 		
 		$num = 0;
 		$total = 0;
+		$pageSize = 12;
 		
-		$list = $pdb->where($pmap)->field(array('gid','title','thumb','money',
-				'danjia','xiangou','status','qishu','canyurenshu','zongrenshu','shengyurenshu',
-				'type','renqi','tuijian','time', 'now() - time' => '_time'))
-			->order($order)->page($pageNo, 20)->select();
+		$pdb = M('Paimai');
+		$list = $pdb->where($pmap)->field(array('gid','title','thumb','qipaijia',
+				'jiafujia','chujiacishu','zuigaojia','status','baomingrenshu',
+				'type','renqi','tuijian', 'baoyou', 'end_time', 'now() - end_time' => '_time'))
+			->order($order)->page($pageNo, $pageSize)->select();
 		if($list) {
 			$this->assign('list', $list);
 			$num = count($list);
 			
 			$total = $pdb->where($pmap)->count();
 			
-			$pageCount = ceil($total / 20);
-			$this->assign('pageSize', 20);
+			$pageCount = ceil($total / $pageSize);
+			$this->assign('pageSize', $pageSize);
 			$this->assign('pageNo', $pageNo);
 			$this->assign('pageCount', $pageCount);
 			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
 			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
 		}
+
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		$this->assign('cid', $cid);
 		
+		$renqi = $pdb->where('status < 2')
+			->field('gid,title,thumb,zuigaojia,chujiacishu')
+			->order('chujiacishu desc')->page(1, 12)->select();
+			
+		$this->assign('renqi', $renqi);
 		
         $this->display();
     }
 	
-	public function page($pageSize = 8, $pageNum = 1) {
-		$filter = null;
-		if(session('?tuijian_first_id')) {
-			$filter['gid'] = array("neq", session('tuijian_first_id'));
+	public function view($gid) {
+		$this->assign('title', '拍卖详情');
+		$db = M('paimai');
+		$data = $db->field('gid, title, subtitle,thumb, baoliujia,qipaijia,lijijia,jiafujia,zuigaojia,baomingrenshu,chujiacishu,baozhengjin,prizeuid, liji,status, content,end_time')->find($gid);
+		$data['content'] = htmlspecialchars_decode(html_entity_decode($data['content']));
+		$this->assign('data', $data);
+		
+		$data['baoliujia'] = intval($data['baoliujia']);
+		$baoliu = $data['baoliujia'] > 0;
+		$this->assign('baoliu', $baoliu);
+		
+		$imgdb = M('GoodsImages');
+		$imgmap['gid'] = $gid;
+		$imgmap['type'] = 3;
+		$images = $imgdb->where($imgmap)->select();
+		if(count($images) > 0) {
+			$this->assign('firstImage', $images[0]);
 		}
+		$this->assign('images', $images);
 		
+		$data['status'] = intval($data['status']);
+		$data['qipaijia'] = intval($data['qipaijia']);
+		$data['zuigaojia'] = intval($data['zuigaojia']);
+		$data['jiafujia'] = intval($data['jiafujia']);
+		$zuidijia = $data['qipaijia'];
+		if($data['zuigaojia'] >= $data['qipaijia']) {
+			$zuidijia = $data['zuigaojia'] + $data['jiafujia'];
+		}
+		$this->assign('zuidijia', $zuidijia);
 		
-	}
-	
-	public function _empty($gid) {
-		$this->view($gid);
-	}
-	
-	protected function view($gid) {
-		if(is_login()) {
-			$this->assign('title', '拍卖详情');
-			$db = M('paimai');
-			$data = $db->field('gid, title, subtitle,thumb, baoliujia,qipaijia,lijijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,prizeuid, liji,status,end_time')->find($gid);
-			
-			$this->assign('data', $data);
-			
-			$data['baoliujia'] = intval($data['baoliujia']);
-			$baoliu = $data['baoliujia'] > 0;
-			$this->assign('baoliu', $baoliu);
-			
-			$data['status'] = intval($data['status']);
-			
-			if($data['status'] < 2) {
-				$data['qipaijia'] = intval($data['qipaijia']);
-				$data['zuigaojia'] = intval($data['zuigaojia']);
-				$data['jiafujia'] = intval($data['jiafujia']);
-				$zuidijia = $data['qipaijia'];
-				if($data['zuigaojia'] >= $data['qipaijia']) {
-					$zuidijia = $data['zuigaojia'] + $data['jiafujia'];
+		if($data['status'] < 2) {
+			// 判断是否已出价
+			$hdb = M('MemberPaimai');
+			$hmap['uid'] = get_temp_uid();
+			$hmap['gid'] = $gid;
+			$record = $hdb->where($hmap)->order('id desc')->find();
+			if($record) {
+				$this->assign('isBaozheng', true);
+				if(intval($record['flag']) > 0) {	
+					$this->assign('lastChujia', $record['money']);	
 				}
-				$this->assign('zuidijia', $zuidijia);
-			
-				$imgdb = M('GoodsImages');
-				$imgmap['gid'] = $gid;
-				$imgmap['type'] = 3;
-				$images = $imgdb->where($imgmap)->select();
-				if(empty($images)) {
-					$image['image_url'] = $data['thumb'];
-					array_push($images, $image);
-				}
-				$this->assign('images', $images);
-				
-				// 判断是否已出价
-				$hdb = M('MemberPaimai');
-				$hmap['uid'] = get_temp_uid();
-				$hmap['gid'] = $gid;
-				$record = $hdb->where($hmap)->order('id desc')->find();
-				if($record) {
-					$this->assign('isBaozheng', true);
-					if(intval($record['flag']) > 0) {	
-						$this->assign('lastChujia', $record['money']);	
-					}
-				}
-				layout('sublayout');
-				$this->display('view');
-			} else {
-				// 获取当前中奖用户
-				if($data['prizeuid']) {
-					$udb = M('member');
-					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
-					$data['prizer'] = $user;
-						
-					if(empty($user['username'])) {
-						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
-					}
-					$this->assign('prizer', $user);
-				}
-				
-				layout('sublayout');
-				$this->display('end'); // 已结束
 			}
 		} else {
-			$this->redirect('Home/Person/login/'.encode('Paimai/index'));
+			// 获取当前中奖用户
+			if($data['prizeuid']) {
+				$udb = M('member');
+				$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+				$data['prizer'] = $user;
+					
+				if(empty($user['username'])) {
+					$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
+				}
+				$this->assign('prizer', $user);
+			}
 		}
+		$this->display(); // 已结束
 	}
 
 	public function chujia($gid, $money) {
@@ -186,6 +170,7 @@ class PaimaiController extends CommonController {
 							add_renci(1);
 							$result['status'] = 0;
 							$result['message'] = '出价成功';
+							add_renci(1);
 						} else {
 							$result['status'] = 6;
 							$result['message'] = '出价失败';
@@ -209,7 +194,7 @@ class PaimaiController extends CommonController {
 	 */
 	public function refresh($gid) {
 		$pdb = M('paimai');
-		$good = $pdb->field('gid,zuigaojia, chujiacishu,status')->find($gid);
+		$good = $pdb->field('gid,zuigaojia, baomingrenshu, chujiacishu,status')->find($gid);
 		$this->ajaxReturn($good, 'JSON');
 	}
 	
@@ -234,29 +219,6 @@ class PaimaiController extends CommonController {
 		}
 	}
 	
-	public function record($gid, $pageNum = 1) {
-		$pageNum = intval($pageNum);
-		$db = M('MemberPaimai');
-		$map['flag'] = array('neq', 0);
-		$map['gid'] = $gid;
-		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')
-			->field(array('yyg_member_paimai.money','yyg_member_paimai.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->where($map)->order('id desc')->page($pageNum, 20)->select();
-		if($pageNum > 1) {
-			if(empty($list)) {
-				$this->ajaxReturn(0, 'JSON');
-			} else {
-				$this->ajaxReturn($list, 'JSON');
-			}
-		} else {
-			$this->assign('gid', $gid);
-			$this->assign('list', $list);
-			$this->assign('title', '出价记录');
-			layout('sublayout');
-			$this->display();
-		}
-	}
-	
 	public function article($id) {
 		layout(false);
 		
@@ -267,6 +229,41 @@ class PaimaiController extends CommonController {
 		
 		$this->assign('title', $data['name']);
 		
+		$this->display();
+	}
+	
+	public function record($gid, $pageNo = 1){
+		$db = M('MemberPaimai');
+		$pageSize = 10;
+		$map = array(
+			'gid'	=> $gid,
+			'flag'	=> array('gt',  0),
+		);
+		$list = $db->where($map)->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')
+			->field(array('yyg_member_paimai.money','yyg_member_paimai.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->order('yyg_member_paimai.time desc')->page($pageNo, $pageSize)->select();
+		
+		
+		$num = 0;
+		$total = 0;
+		if($list) {
+			$this->assign('list', $list);
+			$num = count($list);
+			
+			$total = $db->join('yyg_member on yyg_member.uid = yyg_member_paimai.uid')->where($map)->count();
+			
+			$pageCount = ceil($total / $pageSize);
+			$this->assign('pageSize', $pageSize);
+			$this->assign('pageNo', $pageNo);
+			$this->assign('pageCount', $pageCount);
+			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
+			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
+		}
+		
+		$this->assign('gid', $gid);
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		layout(false);
 		$this->display();
 	}
 }

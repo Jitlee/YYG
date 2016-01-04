@@ -7,5 +7,58 @@
 </header>
 <div class="mui-content">
 	
-
+	<h5 style="position: relative;" class="yyg-cell-left">邀请人<span class="yyg-cell-right yyg-right-margin">时间&nbsp;&nbsp;</span></h5>
+	<ul id="recrodList" class="mui-table-view">
+		<foreach name="list" item="item">
+			<li class="mui-table-view-cell">			
+					<span class="username">
+								  <if condition="item.username"> {$item.mobile}
+									<else /> {$item.username}
+									</if>
+					</span>
+					<span class="yyg-cell-right yyg-right-margin  time">{$item.time}</span>
+			</li>
+		</foreach>
+	</ul>
+	
 </div>
+
+<script src="__JS__/jquery.touchSwipe.min.js"></script>
+<script>
+	$(function() {
+		var pageNum = 1;
+		var goodList = $("#recrodList").swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		});
+		
+		$(window).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+       			page();
+			}
+		}
+		
+		var recrodList = $("#recrodList");
+		var template = $("li:first-child", recrodList);		
+		function page() 
+		{
+				$.get("{:U('Main/yaoqinglistRecord', '', '')}/20/" + (++pageNum), null, function(list) {
+						if(list && list.length > 0) 
+						{
+				       		$.each(list, function() {
+				       			var item = template.clone();
+				       			$(".username", item).text(this.username);
+				       			$(".time", item).text(this.time);
+				       			recrodList.append(item);
+				       		});
+		       	} else {
+		       		pageNum--;	
+		    		}
+		    });
+		}
+	});
+</script>

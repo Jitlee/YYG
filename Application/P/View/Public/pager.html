@@ -1,39 +1,39 @@
-<div style="text-align: center;">
-  <ul class="pagination">
-  	<if condition="$minPageNum gt 1">
-    <li>
-      <a href="__ACTION__/{$pageSize}/{$minPageNum-1}" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-  	<else/>
-    <li class="disabled">
-      <span aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </span>
-    </li>
-  	</if>
-  	<if condition="$pageNum gt 1">
-	  <for start="$minPageNum" end="$pageNum">
-	    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:#008000">{$i}</a></li>
+<style type="text/css">
+	/*css digg style pagination*/
+	div.digg{padding:3px;margin:3px;text-align:center}
+	div.digg a{border:#aaaadd 1px solid;padding:2px 5px;margin:2px;color:#000099;text-decoration:none}
+	div.digg a:hover{border:#000099 1px solid;color:#000;}
+	div.digg a:active{border:#000099 1px solid;color:#000;}
+	div.digg span.current{border:solid 1px #000099;padding:2px 5px;font-weight:bold;margin:2px;color:#fff;background-color:#000099;}
+	div.digg span.disabled{border:#eee 1px solid;padding:2px 5px;margin:2px;color:#ddd;}	
+</style>
+<div style="text-align: center;" class="digg">
+	<if condition="$maxPageNum eq 0 OR $maxPageNum eq 1">
+		<span class="disabled"> < </span>
+		<span class="current">1</span>
+		<span class="disabled"> > </span>
+	<else/>	
+	  	<if condition="$pageNum gt 1">    
+	      <a href="__ACTION__/{$pageSize}/{$pageNum-1}" aria-label="Previous"><</a>    
+	  	<else/>    
+	      <span aria-label="Previous">
+	        <span class="disabled"> < </span>
+	      </span>    
+	  	</if>
+	  	<!--$minPageNum={$minPageNum},$pageNum={$maxPageNum}-->
+	  	<if condition="$pageNum gt 1">
+		  <for start="$minPageNum" end="$pageNum">
+		    		<a href="__ACTION__/{$pageSize}/{$i}" style="color:#008000">{$i}</a>
+			</for>
+		</if>
+			<span class="current">{$pageNum}</span>
+	  	<for start="$pageNum+1" end="$maxPageNum">
+	    		<a href="__ACTION__/{$pageSize}/{$i}" style="color:red">{$i}</a>
 		</for>
-	</if>
-	<li class="active"><a>{$pageNum}</a></li>
-  <for start="$pageNum+1" end="$maxPageNum">
-    		<li><a href="__ACTION__/{$pageSize}/{$i}" style="color:red">{$i}</a></li>
-	</for>
-	<if condition="$maxPageNum lt $pageCount AND $maxPageNum gt 0">
-    <li>
-      <a href="__ACTION__/{$pageSize}/{$maxPageNum}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  	<else/>
-    <li class="disabled">
-      <span aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </span>
-    </li>
+		<if condition="$pageNum lt $maxPageNum">    
+		  <a href="__ACTION__/{$pageSize}/{$pageNum+1}" aria-label="Next"> > </a>    
+		<else/>
+			<span  class="disabled">></span>
+		</if>
   	</if>
-  </ul>
 </div>

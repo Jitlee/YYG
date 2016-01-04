@@ -16,19 +16,27 @@
 			</ul>
 		</div>
 		<div id="divList0" class="list-tab recordList">
-		<ul class="listTitle">
-			<li class="leftTitle">时间</li>
-			<li class="price">渠道</li>
-			<li class="regard">获得/支出</li>
-		</ul>
-		 
+			<ul class="listTitle">
+				<li class="leftTitle w150 " >时间</li>
+				<li class="price">渠道</li>
+				<li class="regard w250 ">获得/支出</li>
+			</ul>
+	 		<if condition="$count eq 0">
+				 <div class="tips-con"><i></i>您还未有积分哦。</div>
+			</if>
+				<foreach name="list" item="c">
+					 <ul>						
+				 		<li class="leftTitle ztime w150 ">{$c.time}</li>				 		
+						<li class="scoresource">{$c.scoresource}</li>
+						<li class="regard w250 "> 
+							<font color="#0c0" class="score">{$c.score}</font> 
+						</li>
+					</ul>
+				</foreach>
 		</div>
-	          <style>
-				#divPageNav{ padding-top:10px;text-align:right}
-				#divPageNav li a{ padding:5px;}
-			</style>
+	         
 			<div id="divPageNav" class="page_nav">
-	        	 
+	        	 <include file="Public:pager"/>
 	        </div>
 	 
 	</div>

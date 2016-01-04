@@ -3,10 +3,10 @@
 <div id="divSortList" class="m-all-sort" style="display: block;">
 	<foreach name="allCategories" item="c">
 		<dl>
-		     <dt><a href="">{$c.name}</a></dt>
+		     <dt><a href="{:U('Category/index', '', '')}/0/{$c.cid}">{$c.name}</a></dt>
 		     <dd>
 			     <foreach name="c['brands']" item="b">
-			     	<a >{$b.name}</a>
+			     	<a href="{:U('Category/index', '', '')}/0/{$c.cid}/{$c.bid}">{$b.name}</a>
 			     </foreach>
 		     </dd>
 		 </dl>
@@ -56,8 +56,8 @@
 
 <div class="home-event fr">
     <div class="what-1yyg">
-        <a id="what_1yyg" href="http://192.168.0.102:8080/YYYGCMS/?/single/newbie" title="什么是1元云购？30秒了解">
-            <img src="http://skin.1yyg.com/images/index-come.gif" alt=""></a>
+        <a id="what_1yyg" href="#" title="什么是1元云购？30秒了解">
+            <img src="__IMG__/index-come.gif" alt=""></a>
     </div>
     <div class="honesty">
         <ul>
@@ -82,7 +82,7 @@
         <h3 class="fl">最新揭晓</h3>
         <div class="m-other fr">
             <cite>
-                <a href="" target="_blank" title="查看全部商品">查看全部商品</a>
+                <a href="{:U('Lottery/index', '', '')}" target="_blank" title="查看全部商品">查看全部商品</a>
             </cite>
         </div>
     </div>
@@ -111,7 +111,7 @@
     <div class="g-title">
         <h3 class="fl">热门推荐</h3>
         <div class="m-other fr">
-            <a href="#" target="_blank" title="更多" class="u-more">更多</a>
+            <a href="{:U('Category/index', '', '')}/1" target="_blank" title="更多" class="u-more">更多</a>
         </div>
     </div>
     <div class="g-hot clrfix">
@@ -152,19 +152,20 @@
     		<div class="g-hotR fr">
             <div class="u-are">正在云购</div>
             <div class="g-zzyging">
-                <input name="hidBuyID" type="hidden" id="hidBuyID" value="29773149" />
                 <ul id="UserBuyNewList">
+                		<foreach name="records" item="item">
                     <li>
-                        <span class="fl"><a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
-                            <img alt="" src="{G_UPLOAD_PATH}/{wc:fun:shopimg($gorecord['shopid'])}" /><i></i></a></span>
+                        <span class="fl"><a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" rel="nofollow" title="{wc:fun:get_user_name($gorecord)}">
+                            <img alt="" src="{$item.thumb}" /><i></i></a></span>
                         <p>
-                            <a href="{WEB_PATH}/uname/{wc:fun:idjia($gorecord['uid'])}" target="_blank"  title="{wc:fun:get_user_name($gorecord)}" class="blue">{wc:fun:get_user_name($gorecord)}</a><br />
-                            <a href="http://www.1yyg.com/product/268224.html"  target="_blank" title="{wc:$gorecord['shopname']}" class="u-ongoing">{wc:$gorecord['shopname']}</a>
+                            <a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank"  title="{$item.title}" class="blue">{$item.username}</a><br />
+                            <a href="{:U('Index/view', '', '')}/{$item.gid}"  target="_blank" title="{$item.title}" class="u-ongoing">{$item.title}</a>
                         </p>
                     </li>
+                    </foreach>
                 </ul>
             </div>
-            <div class="u-see100"><a href="{WEB_PATH}/buyrecordbai" target="_blank">查看最新100条记录</a></div>
+            <div class="u-see100 hidden"><a href="{:U('Index/history', '', '')}" target="_blank">查看最新100条记录</a></div>
         </div>
     </div>
     
@@ -172,9 +173,9 @@
         <h3 class="fl">即将揭晓</h3>
         <div class="fr">
             <foreach name="allCategories" item="c">
-            <a href="{:U('Category/index', '', '')}/" target="_blank" title="{$c.name}">{$c.name}</a>		
+            <a href="{:U('Category/index', '', '')}/2/{$c.cid}" target="_blank" title="{$c.name}">{$c.name}</a>		
             </foreach>
-            <a href="" target="_blank" title="全部">全部</a>
+            <a href="{:U('Category/index', '', '')}/2" target="_blank" title="全部">全部</a>
         </div>
     </div>
     <div class="announced-soon clrfix" id="divSoonGoodsList">

@@ -28,6 +28,7 @@ class PayController extends Controller {
 //  22;  // 保存最高价失败
 //  23;  // 增加消费积分失败
 //  24;  // 积分不足
+//  25;  // 修改拍卖商品状态、报名人数失败
 	
 	public function index(){
 		if(is_login()) {
@@ -44,6 +45,7 @@ class PayController extends Controller {
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
 			$score = intval($user['score']);
+			$user['_score'] = $score;
 			$score = floor($score / 100) * 100;
 			$user['score'] = $score;
 			$this->assign('account', $user);
@@ -244,9 +246,19 @@ class PayController extends Controller {
 		$udb = M('member');
 		$pmap['gid'] = $_pay['bgid'];
 		$pmap['status'] = array('lt', 2);
-		$good = $pdb->where($pmap)->field('gid,baozhengjin')->find();
+		$good = $pdb->where($pmap)->field('gid,baozhengjin, baomingrenshu')->find();
 		if($good) {
 			// 商品还存在，还没结束
+			
+			// 保存商品状态
+			$data['gid'] = $_pay['bgid'];
+			$data['status'] = 1;
+			// 增加报名人数
+			$data['baomingrenshu'] = intval($good['baomingrenshu']) + 1;
+			if($pdb->save($data)) {
+				echo $pdb->getLastSql();
+				return 25;
+			}
 			
 			// 验证
 			$total = intval($good['baozhengjin']);
@@ -319,6 +331,7 @@ class PayController extends Controller {
 				return 11; // 增加消费记录失败
 			}
 		}
+		add_renci(1);
 		return 0;
 	}
 	

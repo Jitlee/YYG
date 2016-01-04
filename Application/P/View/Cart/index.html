@@ -12,7 +12,6 @@
 	 <link rel="stylesheet" type="text/css" href="__CSS__/CartList.css?date=20140731">
 	 	
 	<script src="__JQ__"></script>	
-	<script type="text/javascript" src="__JS__/jquery.cookie.js"></script>
     <script type="text/javascript" id="pageJS" data="__JS__/Index.js"></script>
 </head>
 	<body>
@@ -171,6 +170,18 @@
 							message.text("删除失败");
 						}
 					});
+				});
+				window.removeCart = function(id) {
+					$("#" + id).remove();
+					sum();
+				}
+				
+				// 支付
+				$("#but_ok").click(function() {
+					var money = Number(moenyCount.text());
+					if(money > 0) {
+						window.location.href = "{:U('Pay/index', '', '')}";
+					}
 				});
 			});
 		</script>

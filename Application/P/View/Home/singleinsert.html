@@ -1,63 +1,8 @@
-<div class="main-content clearfix">
-
-
-<include file="left" />
-
-
-
-<link rel="stylesheet" href="__Uploadify__/uploadify.css" type="text/css"> 
+<link rel="stylesheet" href="__CSS__/uploadify.css" type="text/css"> 
 <script type="text/javascript" charset="utf-8" src="__G_PLUGIN_PATH__/UEditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__G_PLUGIN_PATH__/UEditor/ueditor.all.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="__STATIC__/js/jquery.uploadify.min.js"></script>
-<script type="text/javascript">
-	var editurl=Array();
-	editurl['editurl']="__G_PLUGIN_PATH__/UEditor/";
-	//editurl['imageupurl']="{WEB_PATH}/{G_ADMIN_DIR}/UEditor/upimage/";
-	//editurl['imageManager']="{WEB_PATH}/{G_ADMIN_DIR}/UEditor/imagemanager";
-</script>
-<script> 
-//上传文件
-$(function(){
-   
-    
-    	var thumbButton = $("#thumbButton").click(function() {
-    		//alert('');
-			UI.upload("上传晒图", {
-				ok: function(files) {
-					if (files.length > 0) {
-						var url = files[0].url;
-						$("img", thumbButton.parent()).attr("src", url);
-						$("#inputThumb").val(url);
-					}
-				}
-			});
-		});
-		
-	$("#btnsave").click(function(){
-		if($("#sd_text").val().length< 5)
-		{
-			alert("大侠请输入不少于五个字的标题哦。。");
-			$("#sd_text").focus();
-			return false;
-		}
-		var self = $("form");
-		$.post("{:U('Home/singleinsert','','')}", self.serialize(), savesuccess, "json");
-		return;
-		function savesuccess(data) {
-			if (data.status) {
-				 window.location.href="{:U('Home/singlelist', '', '')}";
-			} else {
-				alert(data.msg);
-			}
-		}					
-	});
-		
-});
- 
-
- 
-</script>
-<style>
+<style type="text/css">
 	.R-content .sd_lilie{display:block; width:780px; margin:10px 0 10px 0; float:left;}
 	.R-content .sd_lilie .sd_span{font-size:14px; float:left; display:block;width:70px;}
 	#sd_text{border:1px solid #ccc; width:450px; height:30px; padding:0 0 0 5px;}
@@ -65,7 +10,17 @@ $(function(){
 	.fileWarp{ width:710px;  float:left;}
 	.fileWarp ul li{ float:left;  margin-right:10px;}
 	.fileWarp ul li a{ display:block; height:25px; width:100px; text-align:center; background-color:#eee; color:#f60;line-height:25px;}
+	
+	.content_attr {
+		border: 1px solid #CCC;
+		padding: 5px 8px;
+		background: #FFC;
+		margin-top: 6px;
+		width:915px;
+	}
 </style>
+<div class="main-content clearfix">
+	<include file="left" />
 	<div class="R-content">
 		<div class="member-t"><h2>添加晒单</h2>
 			<a style="float:right;" href="{:U('Home/singlelist', '', '')}" class="blue">返回晒单</a>
@@ -82,35 +37,14 @@ $(function(){
 				<!--textarea id="sd_textarea" name="content" ></textarea-->
 				<div style="float: left;">
 					<script name="content" id="myeditor" type="text/plain"></script>
-	            	<style>
-					.content_attr {
-						border: 1px solid #CCC;
-						padding: 5px 8px;
-						background: #FFC;
-						margin-top: 6px;
-						width:915px;
-					}
-					</style>
-					<script type="text/javascript">
-					//实例化编辑器
-					UEDITOR_CONFIG.toolbars = [["source","fontfamily","fontsize","bold","italic","underline","backcolor","link","unlink","justifyleft","justifycenter","justifyright","justifyjustify","insertunorderedlist","insertorderedlist",]];
-					UEDITOR_CONFIG.initialFrameWidth = 600;
-					UEDITOR_CONFIG.initialFrameHeight = 400;
-					var ue = UE.getEditor('myeditor');
-					ue.addListener('ready',function(){
-						this.focus()
-					});
-					</script>
 				</div>
 			</div>
 			<div class="sd_lilie">
 				<span class="sd_span">晒图：</span>
-				<div style="float:left; width:400px;">
-					
-					<input  style="width:300px;min-height: 20px;" id="inputThumb" name="thumbs" readonly value="{$data.thumb|default='__IMG__/other/goods.jpg'}" />
-					<button id="thumbButton" type="button" class="btn btn-default orangebut">上传图片</button>
-					<br/>
-					<img src="{$data.thumb|default='__IMG__/other/goods.jpg'}" class="img-thumbnail thumb" alt="缩略图" />
+				<div style="float:left;">
+					<div id="fileInput"></div>
+					<input type="hidden" style="width:300px;min-height: 20px;" id="inputThumb" name="thumbs" readonly value="{$data.thumbs}" />
+					<img id="thumbImages"  style="max-width: 100px;max-height: 100px;border: 1px slid #E0DFE3;" />
 				</div>
 			</div>
 			<div class="sd_lilie" style="width:580px; padding-left: 200px;">
@@ -118,5 +52,74 @@ $(function(){
 			</div>
 		</form>
 	</div>
-
 </div>
+
+<script type="text/javascript">
+	var editurl=Array();
+	editurl['editurl']="__G_PLUGIN_PATH__/UEditor/";
+	//实例化编辑器
+	UEDITOR_CONFIG.toolbars = [["source","fontfamily","fontsize","bold","italic","underline","backcolor","link","unlink","justifyleft","justifycenter","justifyright","justifyjustify","insertunorderedlist","insertorderedlist",]];
+	UEDITOR_CONFIG.initialFrameWidth = 600;
+	UEDITOR_CONFIG.initialFrameHeight = 400;
+	var ue = UE.getEditor('myeditor');
+	ue.addListener('ready',function(){
+		this.focus()
+	});
+	
+	//上传文件
+	$(function(){
+		var thumbs = "{$data.thumbs|default=''}";
+		var files = [];
+		
+		if(thumbs.length > 0) {
+			files = thumbs.split(',');
+		}
+		
+		var inputThumb = $("#inputThumb");
+		function initUpload() {
+			files.length = 0; // 单张上传
+			$("#fileInput").uploadify({swf: "__STATIC__/swf/uploadify.swf",
+				buttonText: '选择文件上传',
+				multi: true, // 多选
+				uploadLimit: 1, // 单张上传
+				removeCompleted: true,
+				fileTypeDesc : "图片文件",
+				fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
+				uploader: "{:U('upload','','')}",
+				onUploadSuccess: function(file, data) {
+					var data = JSON.parse(data);
+					if (data && data.status == 0) {
+						var url = data.url;
+						files.push(url);
+						$("#thumbImages").attr("src", url);
+						inputThumb.val(files.join(","));
+					}
+					// 单张循环上传
+					$("#fileInput").uploadify("destroy");
+					initUpload();
+				}
+			});
+		}
+		
+		initUpload();
+			
+		$("#btnsave").click(function(){
+			if($("#sd_text").val().length< 5)
+			{
+				alert("大侠请输入不少于五个字的标题哦。。");
+				$("#sd_text").focus();
+				return false;
+			}
+			var self = $("form");
+			$.post("{:U('Home/singleinsert','','')}", self.serialize(), savesuccess, "json");
+			return;
+			function savesuccess(data) {
+				if (data.status) {
+					 window.location.href="{:U('Home/singlelist', '', '')}";
+				} else {
+					alert(data.msg);
+				}
+			}					
+		});
+	});
+</script>

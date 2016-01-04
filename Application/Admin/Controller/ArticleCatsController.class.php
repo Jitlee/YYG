@@ -78,18 +78,16 @@ class ArticleCatsController extends CommonController{
 		 
 		//$this->checkPrivelege('wzfl_00');
 		$m = D('Admin/ArticleCats');
-      	$list = $m->queryByList(I('parentId',0));
+      	$list = $m->queryByList(I('parentId',1));
     	$this->assign('catItems',$list);
 		//echo dump($list);
 		
-		 
         $this->display("/articlecats/list");
 	}
 	/**
 	 * 列表查询
 	 */
     public function queryByList(){
-    	 
 		$m = D('Admin/ArticleCats');
 		$list = $m->queryByList(I('id',0));
 		$rs = array();

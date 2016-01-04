@@ -1,7 +1,7 @@
 <?php
 namespace P\Controller;
 use Think\Controller;
-class HomeController extends Controller {
+class HomeController extends CommonController {
 	protected function _initialize() {
 		if(!is_login()) {
 			$this->redirect('Main/login');
@@ -30,17 +30,27 @@ class HomeController extends Controller {
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
 		$Model = M('miaosha');
-		$filter['yyg_member_miaosha.uid'] = session("_uid");
-		
+		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
-		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid")			
+		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid and yyg_member_miaosha.qishu=yyg_miaosha.qishu")			
 		->where($filter)
 		->page($pageNum, $pageSize)
 		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
 		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid")
 		->select();
-			
+		
+//		$ModelH = M('miaosha_history');
+//		$filterH['yyg_member_miaosha.uid'] = session("_uid");  
+//		$list2 =$ModelH
+//		->join(" yyg_member_miaosha ON yyg_miaosha_history.gid=yyg_member_miaosha.gid")			
+//		->where($filterH)
+//		->page($pageNum, $pageSize)
+//		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid')
+//		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid")
+//		->select();
+		
+		//$endlist=array_merge($list,$list2);
 		$this->ajaxReturn($list, "JSON");
 	}
 	/*	中奖记录	*/
@@ -157,8 +167,20 @@ class HomeController extends Controller {
     }
 	/*******end我的云购********/
 	/*******邀请管理********/
-	public function invitefriends(){		
-    	$this->assign('title', '一元购');
+	public function invitefriends($pageSize=10, $pageNum=1){		
+    	$this->assign('title', '一元购');		
+		$db = M('member');
+		$filter['yaoqing'] = session("_uid");
+		
+		$total =$db->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+		
+		$list =$db					
+		->where($filter)
+		->page($pageNum, $pageSize)
+		->select();
+		
+		$this->assign("list", $list);
 		$this->display();
     }
 	
@@ -224,49 +246,53 @@ class HomeController extends Controller {
 		}
     }
 	
-	public function record(){		
+	public function record($pageSize=10, $pageNum=1){		
     	$this->assign('title', '提现记录');
+		$this->assign("list", $this->GetCashoutlist($pageSize,$pageNum));
 		$this->display();
     }
 	public function GetCashoutlist($pageSize, $pageNum)
 	{
 		$Model = M('member_cashout');
-		$filter['uid'] = session("_uid");		
+		$filter['uid'] = session("_uid");
+		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+				
 		$list =$Model					
 			->where($filter)
 			->page($pageNum, $pageSize)
 			->select();
 		return $list;
 	}
-	public function pagecashoutlist()
-	{
-		$list=$this->GetCashoutlist($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pagecashoutlist()
+//	{
+//		$list=$this->GetCashoutlist($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
 	/*******end邀请管理********/
 	
 	/*******账户管理********/
-	public function userbalance(){		
+	public function userbalance($pageSize=20, $pageNum=1){		
     	$this->assign('title', '一元购');
     	$data=session('wxUserinfo');
 		$this->assign("data", $data);
+		$this->assign("list", $this->GetRecord($pageSize,$pageNum));
 		$this->display();
     }
     //充值记录分页
-	public function pageAllRechargerecord($pageSize, $pageNum) {
-		// 分页
-		$list=$this->GetRecord($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pageAllRechargerecord($pageSize, $pageNum) {
+//		// 分页
+//		$list=$this->GetRecord($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
     public function GetRecord($pageSize, $pageNum)
 	{
 		$Model = M('member_addmoney_record');
 		$filter['uid'] = session("_uid");
-		
-		$list =$Model					
-		->where($filter)
-		->page($pageNum, $pageSize)
-		->select();
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+		$list =$Model->where($filter)->page($pageNum, $pageSize)->select();
 		return $list;
 	}
 	
@@ -275,10 +301,14 @@ class HomeController extends Controller {
 		$this->display();
     }
 	/*******end账户管理********/
-	public function userscore(){		
+	public function userscore($pageSize=20, $pageNum=1){		
     	$this->assign('title', '一元购');
 		$data=session('wxUserinfo');
 		$this->assign("data", $data);
+		
+		$list=$this->Getscorelist($pageSize,$pageNum);
+		$this->assign("list", $list);
+		
 		$scoremoney=$data.score/100;
 		$this->assign("scoremoney", $scoremoney);
 		$this->display();
@@ -287,18 +317,22 @@ class HomeController extends Controller {
 	public function Getscorelist($pageSize, $pageNum)
 	{
 		$Model = M('member_score');
-		$filter['uid'] = session("_uid");		
+		$filter['uid'] = session("_uid");	
+		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+			
 		$list =$Model					
 		->where($filter)
 		->page($pageNum, $pageSize)
 		->select();
 		return $list;
 	}
-	public function pagescore()
-	{
-		$list=$this->Getscorelist($pageSize,$pageNum);
-		$this->ajaxReturn($list, "JSON");
-	}
+//	public function pagescore()
+//	{
+//		$list=$this->Getscorelist($pageSize,$pageNum);
+//		$this->ajaxReturn($list, "JSON");
+//	}
 	
 	public function address(){		
     	if(IS_POST) {
@@ -384,6 +418,7 @@ class HomeController extends Controller {
     	$this->assign('title', '一元购');
 		$this->display();
     }	
+	
 	public function userphoto(){
 		if(IS_POST) {
 			$result["status"]=0;
@@ -413,7 +448,60 @@ class HomeController extends Controller {
 		$this->display();
     }	
 	
+ 
+	public function goodcodelist($gid,$qishu,$pageSize=100, $pageNum=1){		
+    	$this->assign('title', '云购码');
+		$this->assign("list", $this->GetGoodcodelist($gid,$qishu,$pageSize,$pageNum));
+		$this->display();
+    }
+	public function GetGoodcodelist($gid,$qishu,$pageSize, $pageNum)
+	{
+		$Model = M('miaosha_code');
+		$filter['uid'] = session("_uid");
+		$filter['gid'] = $gid;
+		$filter['qishu'] = $qishu;
 		
+		$total =$Model->where($filter)->count();
+		$this->SetPage($pageSize,$pageNum,$total);
+				
+		$list =$Model					
+			->where($filter)
+			->field("pcode+10000001 as pcode,time")
+			->page($pageNum, $pageSize)
+			->select();
+		return $list;
+ 	}
+ 	
+	public function upload() {
+		$rootPath = '/Uploads/Shaidan/';
+		if (!empty($_FILES)) {
+			$config = array(
+			    'maxSize'    =>    3145728,
+			    'rootPath'   =>    '.' . $rootPath,
+			    'savePath'   =>    '',
+			    'saveName'   =>    array('uniqid',''),
+			    'exts'       =>    array('jpg', 'gif', 'png', 'jpeg'),
+			    'autoSub'    =>    true,
+			    'subName'    =>    array('date','Ymd'),
+			);
+	
+			$upload = new \Think\Upload($config);// 实例化上传类
+			
+		    // 上传文件 
+		    $info   =   $upload->upload();
+		    if($info != false) {// 上传成功
+		    		$returnData["status"] = 0;
+				$returnData["url"] = $rootPath . $info['Filedata']['savepath'] . $info['Filedata']['savename'];
+				$returnData["key"] = encode($info['Filedata']['savepath'] . $info['Filedata']['savename']);
+		        $this->ajaxReturn($returnData, "JSON");
+		    }else{// 上传错误提示错误信息
+		    		$returnData["status"] = -1;
+		    		$returnData["info"] = $upload->getError();
+		        $this->ajaxReturn($returnData, "JSON");
+		    }
+		}
+ 
+	}	
 		
 		
 }

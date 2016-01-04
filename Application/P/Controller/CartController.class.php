@@ -147,4 +147,49 @@ class CartController extends CommonController {
 		}
 		$this->ajaxReturn($result);
 	}
+	
+	public function box() {
+		$db = D('cart');
+		$map['uid'] = get_temp_uid();
+		$list = $db->where($map)->relation(true)->select();
+		// 检测商品状态
+		$total = 0;
+		foreach($list as $cart) {
+			$count = intval($cart['count']);
+			if($cart['paimai']) {
+				if(intval($cart['paimai']['status']) == 2) {
+					$db->delete($cart['id']);
+					$cart['status'] = 1; // 竞拍已结束
+				} else {
+					$total += intval($cart['paimai']['lijijia']);
+				}
+			} else if($cart['good']) {
+				if(intval($cart['good']['status']) == 2) {
+					$db->delete($cart['id']);
+					$cart['status'] = 1; // 商品已结束
+				} else {
+					$shengyurenshu = intval($cart['good']['shengyurenshu']);
+					if($shengyurenshu < $count) {
+						$cart['count'] = $shengyurenshu;
+					}
+					
+					if($cart['qishu'] != $cart['good']['qishu']) {
+						$data = array();
+						$data['id'] = $cart['id'];
+						$data['qishu'] = $cart['good']['qishu'];
+						$db->save($data);
+						$cart['qishu'] = $cart['good']['qishu'];
+					}
+					
+					$total += $count * intval($cart['good']['danjia']);
+				}
+			}
+		}
+		$result = array(
+			'count' 		=> count($list),
+			'total' 		=> $total,
+			'list'		=> $list,
+		);
+		$this->ajaxReturn($result, 'JSON');
+	}
 }

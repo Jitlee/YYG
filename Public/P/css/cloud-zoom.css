@@ -1,9 +1,168 @@
-@charset "utf-8";
-/* 这是下方的鼠标指针的移动镜头平方米。 */
-.cloud-zoom-lens { background-color:#fff;cursor:crosshair;}
-/* 这是标题文本 */
-.cloud-zoom-title {font-family:Arial, Helvetica, sans-serif;position:absolute !important;background-color:#000;color:#fff;padding:3px;width:100%;text-align:center;font-weight:bold;font-size:10px;top:0px;}
-/* 这是缩放窗口。 */
-.cloud-zoom-big {border:2px solid #ccc;overflow:hidden;}
-/* 这是加载消息。 */
-.cloud-zoom-loading {color:white;background:#222;padding:3px;border:1px solid #000;}
+.clould-zoom {
+	position: relative;
+	moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-o-user-select:none;
+	-khtml-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+}
+
+.clould-zoom-big, .clould-zoom-view {
+	height: 388px;
+	line-height: 388px;
+}
+
+.clould-zoom-big, .clould-zoom-view, .cloud-zoom-scroll {
+	width: 388px;
+}
+.clould-zoom-big {
+	text-align: center;
+	border:solid 1px #E8E8E8;
+	position: relative;
+	overflow: hidden;
+	margin:0;
+}
+
+.clould-zoom-view, .clould-zoom-bird, .clould-zoom-bird-outter {
+	position: absolute;
+	z-index: 999;
+}
+
+.clould-zoom-view {
+	display: none;
+	z-index: 999;
+	background-color: #fff;
+	border: solid 1px #D5D5D5;
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	top: 0px;
+	left: 404px;
+}
+
+.clould-zoom-bird-outter {
+	width: 100%;
+	height:100%;
+    top: 0px;
+    left: 0px;
+	overflow: hidden;
+}
+
+.clould-zoom-bird {
+	background-color: #000000;
+	opacity: 0.5;
+	filter: 50;
+    cursor: move;
+    z-index: 1;
+    position: absolute;
+    overflow: hidden;
+    width: 175px;
+		height: 175px;
+    background-position: 0 0;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
+.clould-zoom-big img{
+	max-width:100%;
+	max-height:100%;
+	vertical-align: middle;
+}
+
+.cloud-zoom-scroll {
+	margin:0;
+	margin-top:10px;
+	min-height: 53px;
+	position: relative;
+	overflow: hidden;
+}
+
+.clould-zoom-list {
+	position: absolute;
+	margin:0;
+	padding:0;
+	width:1000px;
+	left: 13px;
+}
+
+.cloud-zoom-item {
+	margin-right:10px;
+	padding: 0;
+	border:solid 1px #E8E8E8;
+	height: 50px;
+	width: 50px;
+	line-height: 50px;
+	display: inline;
+	float:left;
+	text-align: center;
+	overflow: hidden;
+}
+
+.cloud-zoom-clear {
+	display: block;
+	height: 1px;
+	clear: both;
+	visibility: hidden;
+}
+
+.cloud-zoom-item.colud-zoom-selected {
+	border-color: red;
+}
+
+.clould-zoom-list li img{
+	max-width:100%;
+	max-height:100%;
+	vertical-align: middle;
+}
+
+.colud-zoom-prev, .colud-zoom-next {
+	position: absolute;
+	top:0px;
+	display: block;
+	padding: 0;
+	border:solid 1px #E8E8E8;
+	height: 50px;
+	width:10px;
+	cursor: pointer;
+	z-index: 1;
+	background-color: #fff;
+	line-height: 50px;
+	text-align: center;
+	display: none;
+}
+
+.colud-zoom-prev {
+	left:0px;
+}
+
+.colud-zoom-next {
+	right:0px;
+}
+
+.colud-zoom-prev i, .colud-zoom-next i {
+	background-image: url(../images/detailIco.png);
+	background-repeat: no-repeat;
+	display: block;
+	height:10px;
+	margin-top:20px;
+	vertical-align: middle;
+	width: 10px;
+} 
+
+.colud-zoom-prev i {
+	background-position: -8px 0;
+}
+
+.colud-zoom-prev.cloud-zoom-disabled i {
+	background-position: 2px 0;
+}
+
+.colud-zoom-next i {
+	background-position: -22px 0;
+}
+
+.colud-zoom-next.cloud-zoom-disabled i {
+	background-position: -32px 0;
+}

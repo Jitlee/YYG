@@ -23,7 +23,6 @@ class SaidanController extends CommonController {
 			$this->assign("newitem", $newitem);
 			
 			 
-			
 			$m = D('P/MemberScore');
 			$oldgoods = $m->getGood($gid,$qishu);
 			$this->assign("oldgoods", $oldgoods);
@@ -62,6 +61,8 @@ class SaidanController extends CommonController {
 			$list = $db->join(" yyg_member ON yyg_member.uid=yyg_shaidan.uid")
 					->field("sid,yyg_shaidan.uid, gid,qishu,gtype,ip,title,content,photos,thumbs,zan,ping, yyg_shaidan.time,yyg_member.username,yyg_member.img userimg")
 					->order('time desc')->page($pageNum, $pageSize)->select();
+					
+			//echo dump($list);
 			
 			$sa_one=array();$sa_two=array();$sa_tree=array();$sa_for=array();	
 			$dn=count($list);				
@@ -78,14 +79,14 @@ class SaidanController extends CommonController {
 					if($n==0){
 						array_push($sa_one,$list[$i]);
 					}else if($n==1){
-						$sa_two[]=$list[$i];
-						//array_push($sa_two,$list[$i]);
+						//$sa_two[]=$list[$i];
+						array_push($sa_two,$list[$i]);
 					}else if($n==2){
-						$sa_tree[]=$list[$i];
-						//array_push($sa_tree,$list[$i]);
+						//$sa_tree[]=$list[$i];
+						array_push($sa_tree,$list[$i]);
 					}else if($n==3){
-						$sa_for[]=$list[$i];
-						//array_push($sa_for,$list[$i]);
+						//$sa_for[]=$list[$i];
+						array_push($sa_for,$list[$i]);
 					}
 					$n+=$lie;				 
 					$n++;

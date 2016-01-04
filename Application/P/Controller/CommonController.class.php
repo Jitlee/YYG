@@ -14,9 +14,8 @@ class CommonController extends Controller {
 				$this->assign('goCountRenci'.($len - $i), $renci[$i]);
 			}
 		}
-		
 		$this->assign('serverTime', time());
-		
+		$this->assign('title', '一元购');		
 		count_cart(0);
 	}
 	
@@ -30,15 +29,23 @@ class CommonController extends Controller {
 			//$total=90;
 			$pageNum = intval($pageNum);
 			$pageCount = ceil($total / $pageSize);
-			if($pageNum > $pageCount) {
-				$pageNum = $pageCount;
+			if($total % $pageSize >0) {
+				$pageCount = $pageCount+1;
+			}
+			
+			if($pageNum > $pageCount)
+			{
+				$pageNum=$pageCount;
 			}
 			$this->assign('pageSize', $pageSize);
 			$this->assign('pageNum', $pageNum);
 			$this->assign('count', $total);
 			$this->assign('pageCount', $pageCount);
-			$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
-			$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+			$this->assign('minPageNum', 1);
+			$this->assign('maxPageNum',   $pageCount);
+			
+//			$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+//			$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 	}
 	
 }

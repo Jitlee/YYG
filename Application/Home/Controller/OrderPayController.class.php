@@ -10,8 +10,7 @@ class OrderPayController extends Controller {
 	 	vendor( "PingppSDK.init");
 	}
 	
-	public function Index(){
-			
+	public function Index(){			
 		$params = json_decode(file_get_contents('php://input'));
 		if(empty($params->amount) || empty($params->channel)) {
 			 echo $params->amount;
@@ -39,6 +38,7 @@ class OrderPayController extends Controller {
 				);
 				session('_payno_no_', $orderNo);
 				if($db->add($datasave) != false) {
+					
 				}
 				else 
 				{

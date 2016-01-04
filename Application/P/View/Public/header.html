@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="__CSS__/header222.css?date=20140731">
     <link rel="stylesheet" type="text/css" href="__CSS__/index2.css?date=20140731">
 	<link href="__CSS__/register.css" rel="stylesheet" type="text/css" />	
-	 <link rel="stylesheet" type="text/css" href="__CSS__/comm.css?date=20140731">
-	 <link rel="stylesheet" type="text/css" href="__CSS__/comm1.css?date=20140731">
+	 <link rel="stylesheet" type="text/css" href="__CSS__/comm.css?date=20140731">	 
     <link rel="stylesheet" type="text/css" href="__CSS__/header1.css?date=20140731">
 	 	
 	<script src="__JQ__"></script>	
@@ -36,24 +35,12 @@ window.onerror=function(){return true;}
                  </div>
              </li>
              <li class="f-gap"><s></s></li>
-             <!--<li id="liMobile" class="u-arr">
-                 <div class="u-menu-hd">
-                     <a href="#" title="手机云购">手机云购</a>
-                     <div class="f-top-arrow"><cite>◆</cite><b>◆</b></div>
-                 </div>
-                 <div class="u-select u-select-weix">
-                     <p>
-                         <a href="#" target="_blank">
-                             <img src="__IMG__/wx-2014.jpg?v=20141105" />
-                             下载客户端
-                         </a>
-                     </p>
-                 </div>
-             </li>-->
+            
              <li class="f-gap"><s></s></li>
+             
              <li>
-                 <div class="u-menu-hd">
-                     <a href="{WEB_PATH}/group_qq" target="_blank" title="官方QQ群">官方QQ群</a>
+                 <div class="u-menu-hd">                  
+                     <a href="{:U('Help/group_qq', '', '')}" target="_blank" title="官方QQ群">官方QQ群</a>
                  </div>
              </li>
          </ul>
@@ -173,16 +160,15 @@ window.onerror=function(){return true;}
          <div id="divGoodsSort" class="m-menu fl">
              <div class="m-menu-all">
                  <h3><a href="{:U('Category/index', '', '')}">全部商品分类</a><em></em></h3>
-             </div>
- 
+             </div> 
          </div>
          <div class="nav-main fl">
              <ul>
                  <li class="f-nav-home f-active"><a href="__MODULE__">首页</a></li>
-                 <li class="f-nav-lottery"><a href="{WEB_PATH}/goods_lottery">最新揭晓</a></li>
+                 <li class="f-nav-lottery"><a href="{:U('Lottery/index', '', '')}">最新揭晓</a></li>
                  <li class="f-nav-share"><a href="{:U('Saidan/index', '', '')}">晒单分享</a></li>
                  <li class="f-nav-group"><a href="{:U('Paimai/index', '', '')}">拍卖专区</a></li>
-                 <li class="f-nav-guide"><a href="{:U('Help/index', '', '')}">新手指南</a></li>
+                 <li class="f-nav-guide"><a href="{:U('Help/nb', '', '')}">新手指南</a></li>
              </ul>
          </div>
          <div id="divHCart" class="nav-cart fr">

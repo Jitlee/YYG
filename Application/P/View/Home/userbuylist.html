@@ -30,18 +30,18 @@
 					<a target="_blank" href="" class="blue">
 						<span class="zcontent"></span>
 					</a>
-					<p class="gray02">获得者：<a href="{WEB_PATH}/uname/{wc:fun:idjia($jiexiao['q_uid'])}" target="_blank" class="blue">
-	                {wc:fun:get_user_name($jiexiao['q_user'])}
+					<p class="gray02">获得者：<a href="#" target="_self" class="blue">
+	                	
 	                </a></p>
 					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
 				</li>
 				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">已揭晓</span></li>
 				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em>{wc:$rt['gonumber']}</em>人次</p></li>
-				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="详情">详情</a></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href="#" class="blue" title="详情">详情</a></li>
 			</ul>
 			
 			<ul class="goods_list mui-hidden" id="goodTemplateing">	
-				<li><a title="" target="_blank" class="pic goodurl" href="{WEB_PATH}/goods/{wc:$rt['shopid']}"><img src=""></a></li>
+				<li><a title="" target="_blank" class="pic goodurl" href="#"><img src=""></a></li>
 				<li class="gname" style="margin:15px 0 0 0;">
 					<a target="_blank" href="" class="blue goodurl">
 						<span class="zcontent"></span>
@@ -50,7 +50,7 @@
 				</li>
 				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">正在进行...</span></li>
 				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
-				<li class="do" style="margin:23px 0 0 0;"><a href="{WEB_PATH}/member/home/userbuydetail/{wc:$rt['id']}" class="blue" title="查看云购码">查看云购码</a></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href=" #" class="blue ycode" title="查看云购码">查看云购码</a></li>
 			</ul>
 			
 <script type="text/javascript">
@@ -87,9 +87,10 @@
 	       			if(this.jishijiexiao==1)
 	       			{
 	       				useTemplate=goodTemplate;
-	       			}	       			
+	       			}	       			 
 	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
+	       			$(".ycode", item).attr("href", "{:U('Home/goodcodelist', '', '')}/" + this.gid+"/"+this.qishu+"/100/1");
 
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);

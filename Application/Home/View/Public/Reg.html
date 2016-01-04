@@ -4,6 +4,7 @@
 		</header>
 		<div class="mui-content">
 			<form>
+				<input type="hidden"  name="yaoqing" value="{$yaoqing}"/>
 				<div class="mui-input-group">
 					<div class="mui-input-row">
 						<label>手机号码</label>
@@ -39,7 +40,6 @@
 			return false;
 			function success(data) {
 				if (data.status) {
-					//layer.alert(data.msg);
 					window.location.href = "{:U('Person/me','','')}";
 				} else {
 					layer.alert(data.msg);

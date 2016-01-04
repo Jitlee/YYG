@@ -1,7 +1,4 @@
-﻿* {
-	padding: 0;
-	margin: 0;
-}
+﻿
 
 body,
 button,
@@ -12,34 +9,7 @@ textarea {
 	font: 12px tahoma, arial, 'Hiragino Sans GB', \5b8b\4f53, sans-serif;
 }
 
-body,
-button,
-dd,
-dl,
-dt,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-hr,
-input,
-ul,
-li,
-ol,
-p,
-textarea,
-th,
-img,
-p,
-span,
-fieldset,
-form,
-{
-	margin: 0;
-	padding: 0;
-}
+
 
 h1,
 h2,
@@ -78,65 +48,17 @@ li {
 	list-style: none;
 }
 
-a {
-	text-decoration: none;
-	color: #666;
-	margin: 0;
-	padding: 0;
-	word-break: break-all;
-}
+a{text-decoration:none;color:#666;margin:0;padding:0;word-break:break-all;}
+a:link,a:visited{text-decoration:none;}
+a:active{star:expression(this.onFocus=this.blur());}
+a:hover{color:#f60;}
+a:focus,a:link{outline:none;}
+input:focus,input:active{outline:none;}
+address,cite,dfn,em,var{font-style:normal;}
 
-a:link,
-a:visited {
-	text-decoration: none;
-}
-
-a:active {
-	star: expression(this.onFocus=this.blur());
-}
-
-a:hover {
-	color: #f60;
-}
-
-a:focus,
-a:link {
-	outline: none;
-}
-
-input:focus,
-input:active {
-	outline: none;
-}
-
-address,
-cite,
-dfn,
-em,
-var {
-	font-style: normal;
-}
-
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-.Fl {
-	float: left;
-}
-
-.Fr {
-	float: right;
-}
-
-.clear {
-	width: 100%;
-	height: 0;
-	line-height: 0;
-	*height: 0;
-	clear: both;
-}
+table{border-collapse:collapse;border-spacing:0;}.Fl{float:left;}
+.Fr{float:right;}.
+clear{width:100%;height:0;line-height:0;*height:0;clear:both;}
 
 .orange,
 a.orange:link,
@@ -442,7 +364,7 @@ u-popup-Tip b,
 .head-nav-bd .menu .menu-hd em,
 .nav .M-All-goods .U-All-T a b {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(../arrow_index.png?v=0722) no-repeat;
 	overflow: hidden;
 }
 
@@ -610,7 +532,7 @@ li.M-my-1yyg .menu-hd a {
 .menu-hd .triangle em,
 .menu-hd .triangle span {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(../arrow_index.png?v=0722) no-repeat;
 	width: 7px;
 	height: 4px;
 	overflow: hidden;
@@ -1100,7 +1022,7 @@ li.M-my-1yyg .menu-hd a {
 .head_number li.F-number-bg .mod_dropmenu_arrow {
 	float: left;
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(../arrow_index.png?v=0722) no-repeat;
 	width: 4px;
 	height: 7px;
 	background-position: 0 -20px;
@@ -1392,14 +1314,7 @@ li.M-my-1yyg .menu-hd a {
 	padding: 0 35px;
 }
 
-body.index .nav-bd .M-nav-column li.F-nav-back,
-body.lottery .nav-bd .M-nav-column li.F-nav-lottery,
-body.share .nav-bd .M-nav-column li.F-nav-share,
-body.group .nav-bd .M-nav-column li.F-nav-circle {
-	background: #FE8721;
-	line-height: 42px;
-}
-
+ 
 .M-All-goods .U-All-T .triangle {
 	float: right;
 	display: inline-block;
@@ -1409,7 +1324,7 @@ body.group .nav-bd .M-nav-column li.F-nav-circle {
 .M-All-goods .U-All-T .triangle em,
 .U-All-T .triangle span {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(../arrow_index.png?v=0722) no-repeat;
 	width: 9px;
 	height: 5px;
 	overflow: hidden;
@@ -2854,7 +2769,7 @@ div.pageDialogMain .g-pay-tip p {
 }
 
 .rmb {
-	background: url(http://skin.1yyg.com/images/arrow_button.png) -178px -57px no-repeat;
+	background: url(../arrow_button.png) -178px -57px no-repeat;
 	padding-left: 8px;
 	*display: inline-block;
 }

@@ -59,9 +59,13 @@
 </div>
 
 <ul class="listTitle mui-hidden" style="background:#fff; height:80px; padding:10px 0 0 0;" id="goodTemplate">
-	<li class="single-img"><a target="_blank" class="pic" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}"><img src="{G_UPLOAD_PATH}/{wc:fun:yunjl($recd['shopid'])}"></a></li>
-	<li class="single-xx-has"><a target="_blank" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}" class="blue zcontent"></a>
-    <br/>物流公司::: <i class="company"></i>快递单号:::<i class="company_code"></i>
+	<li class="single-img"><a target="_blank" class="pic" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}"><img src="#"></a></li>
+	<li class="single-xx-has"><a target="_blank" href="{WEB_PATH}/dataserver/{wc:$recd['shopid']}" class="blue pic zcontent"></a>
+    <br/>
+    <!--物流公司: -->
+    <i class="company"></i>
+    	<!--快递单号:::-->
+    <i class="company_code"></i>
     </li>
 	<li class="sdzt"><b></b></li>
     <li class="single-Control">￥<span class="money"></span></li>
@@ -149,7 +153,7 @@ $(function(){
 	       			useTemplate=goodTemplate;
 	       			
 	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".pic", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid +"/"+this.qishu);
 
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);

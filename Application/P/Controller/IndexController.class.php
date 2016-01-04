@@ -28,7 +28,7 @@ class IndexController extends CommonController {
 				'yyg_miaosha_history.status','yyg_miaosha_history.qishu','yyg_miaosha_history.canyurenshu',
 				'yyg_miaosha_history.zongrenshu','yyg_miaosha_history.type','yyg_miaosha_history.prizeuid',
 				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->page(1,2)->select();
+			->page(1,10)->select();
 		$this->assign('zuixins', $zuixins);
 		
 		// 推荐商品
@@ -43,6 +43,19 @@ class IndexController extends CommonController {
 
 		$remens = $gdb->where('status <> 2 and jishijiexiao=0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
 		$this->assign('remens', $remens);
+		
+		// 他们购买记录
+		$mmdb = M('MemberMiaosha');
+		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->join('yyg_miaosha on yyg_miaosha.gid = yyg_member_miaosha.gid and yyg_miaosha.qishu = yyg_member_miaosha.qishu')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 
+				'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time',
+				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username',
+				'yyg_miaosha.gid', 'yyg_miaosha.thumb','yyg_miaosha.title','yyg_miaosha.qishu'))
+			->where($mmmap)->order('yyg_member_miaosha.time desc')->page(1, 7)->select();
+		if(!empty($records)) {
+			$this->assign('records', $records);
+		}
 		
 		$jijiagns = $gdb->where('status <> 2 and jishijiexiao>0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
 		$this->assign('jijiagns', $jijiagns);
@@ -67,7 +80,7 @@ class IndexController extends CommonController {
 		$mmmap['qishu'] = $qishu;
 		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
 			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
-			->where($mmmap)->order('id desc')->page(1, 7)->select();
+			->where($mmmap)->order('id desc')->page(1, 6)->select();
 		if(!empty($records)) {
 			$this->assign('records', $records);
 		}
@@ -96,11 +109,7 @@ class IndexController extends CommonController {
 			$this->assign('firstImage', $images[0]);
 		}
 		
-		if($data['status'] == 2) {
-			$this->display('end');
-		} else {
-			$this->display('view');
-		}
+		$this->display();
 	}
 	
 	private function getGood($gid, $qishu = null) {
@@ -109,9 +118,10 @@ class IndexController extends CommonController {
 			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
 			$data['qishu'] = intval($data['qishu']);
 			$data['current'] = $data['qishu'];
+			$qishu = intval($data['qishu']);
 			// 上期获得者
-			if($data['qishu'] > 1) {
-				$data['prizer'] = $this->getPrizer($gid, $qishu - 1);
+			if($qishu > 1) {
+				$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
 			}	
 			return $data;
 		} else {
@@ -155,6 +165,45 @@ class IndexController extends CommonController {
 			->join('yyg_miaosha_code on yyg_miaosha_code.uid = yyg_member.uid and yyg_miaosha_history.gid = yyg_miaosha_code.gid and yyg_miaosha_code.qishu = yyg_miaosha_history.qishu')
 			->where($umap)
 			->find();
-	}	
+	}
+	
+	public function record($gid, $qishu, $pageNo = 1) {
+		// 购买记录
+		$db = M('MemberMiaosha');
+		$map['gid'] = $gid;
+		$map['qishu'] = $qishu;
+		$pageSize = 10;
+		
+		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->where($map)->order('id desc')->page($pageNo, $pageSize)->select();
+		if(!empty($list)) {
+			$this->assign('list', $list);
+		}
+		
+		$num = 0;
+		$total = 0;
+		if($list) {
+			$this->assign('list', $list);
+			$num = count($list);
+			
+			$total = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')->where($map)->count();
+			
+			$pageCount = ceil($total / $pageSize);
+			$this->assign('pageSize', $pageSize);
+			$this->assign('pageNo', $pageNo);
+			$this->assign('pageCount', $pageCount);
+			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
+			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
+		}
+		
+		$this->assign('gid', $gid);
+		$this->assign('qishu', $qishu);
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		layout(false);
+		$this->display();
+	}
+	
 }
 	

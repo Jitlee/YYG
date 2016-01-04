@@ -58,7 +58,7 @@ public function forgetPassword(){
 	$this->display();
 }
 	
-public function reg(){
+public function reg($yaoqing=null){
 		if(IS_POST) {
 				$_POST['password'] = md5($_POST['password']);
 				$db = M('member');
@@ -76,6 +76,8 @@ public function reg(){
 						$result["status"]=1;
 						session("_uid", $records['uid']);
 						session('wxUserinfo', $records);
+						//如果有邀请添加积分
+						
 					} 
 					else 
 					{
@@ -89,6 +91,7 @@ public function reg(){
 				$this->ajaxReturn($result);
 		} else {
 			$this->assign('title', '新用户注册');
+			$this->assign('yaoqing', $yaoqing);
 			$this->display();
 		}
 	}

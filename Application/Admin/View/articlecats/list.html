@@ -97,8 +97,8 @@
 							html.push("<td>"+((json[i].isShow==1)?showhtml:hidehtml)+dropdownhtml+"</td>");
 							html.push("<td>");
 							
-							html.push((level>1)?"":"<button type='button' class='btn btn-default glyphicon glyphicon-plus' onclick='javascript:toEdit(0,"+json[i].catId+")'>新增子分类</button>&nbsp;&nbsp;");
-							
+//							html.push((level>1)?"":"<button type='button' class='btn btn-default glyphicon glyphicon-plus' onclick='javascript:toEdit(0,"+json[i].catId+")'>新增子分类</button>&nbsp;&nbsp;");
+ 						
 							
 							html.push("<button type='button' class='btn btn-default glyphicon glyphicon-pencil' onclick='javascript:toEdit("+json[i].catId+",0)'>修改</button>&nbsp;&nbsp;");
 							
@@ -157,22 +157,17 @@
 						  <span class="caret"></span>
 					   </button>
 	               </if>
-	               
 	                   <ul class="dropdown-menu" role="menu" aria-labelledby="btn_{$vo['catid']}">
 						  <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:toggleIsShow(1,{$vo['catid']})">显示</a></li>
 						  <li role="presentation"><a role="menuitem" tabindex="-1" href="javascript:toggleIsShow(0,{$vo['catid']})">隐藏</a></li>
 					   </ul>
-				  
 	               </div>
 	               </td>
 	               <td>
-	              
-	               <a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit/0/','','')}/{$vo['catid']}">新增子分类</a>&nbsp;	              
-	               
+	               <!--<a class="btn btn-default glyphicon glyphicon-plus" href="{:U('Admin/ArticleCats/toEdit/0/','','')}/{$vo['catid']}">新增子分类</a>&nbsp;-->              	               
 	               <a class="btn btn-default glyphicon glyphicon-pencil" href="{:U('Admin/ArticleCats/toEdit/','','')}/{$vo['catid']}">修改</a>&nbsp;
-	               
 	               <if condition="$vo['cattype']==0 ">
-	               <button type="button" class="btn btn-default glyphicon glyphicon-trash" onclick="javascript:del({$vo['catid']},0)"">刪除</button>
+	               		<button type="button" class="btn btn-default glyphicon glyphicon-trash" onclick="javascript:del({$vo['catid']},0)"">刪除</button>
 	               </if>
 	               
 	               </td>
