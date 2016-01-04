@@ -1,7 +1,8 @@
-﻿<?php
+<?php
 namespace Home\Controller;
 use Think\Controller;
 
+ 
 class PublicController extends Controller {
 	
 public function login() {
@@ -52,13 +53,12 @@ public function login() {
 	}
 
 
-public function forgetPassword()
-{
+public function forgetPassword(){
 	layout(true);
 	$this->display();
 }
 	
-public function reg($yaoqing=null){
+public function Reg($yaoqing=null){
 		if(IS_POST) {
 				$_POST['password'] = md5($_POST['password']);
 				$db = M('member');
@@ -229,5 +229,11 @@ public function setmobile(){
 //				session('wxUserinfo',$userinfo);
 				$this->display();
 			}
-	} 
+	}
+
+ 
+	
+	 
+
+
 }

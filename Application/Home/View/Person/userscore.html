@@ -13,7 +13,7 @@
 		<foreach name="data" item="item">
 			<li class="mui-table-view-cell">			
 				<span class="yyg-cell-right yyg-right-margin time">{$item.time}</span>
-				<span class="money">{$item.money}</span>
+				<span class="money">{$item.score}</span>
 			</li>
 		</foreach>
 	</ul>
@@ -48,7 +48,7 @@
 						{
 				       		$.each(list, function() {
 				       			var item = template.clone();
-				       			$(".money", item).text(this.money);
+				       			$(".money", item).text(this.score);
 				       			$(".time", item).text(this.time);
 				       			recrodList.append(item);
 				       		});
