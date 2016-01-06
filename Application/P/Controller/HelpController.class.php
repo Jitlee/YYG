@@ -21,7 +21,7 @@ class HelpController extends Controller {
 	}
 	public function index($id=1){
     				
-    	$this->assign('title', '一元购');
+    	$this->assign('title', '壹元夺宝');
 		$m = D('P/ArticleCats');
 		$cats=$m->queryByList(1);
  		

@@ -19,7 +19,7 @@ class PayController extends \Home\Controller\PayController {
 		}
 		
 		$this->assign('serverTime', time());
-		$this->assign('title', '一元购');		
+		$this->assign('title', '壹元夺宝');		
 		count_cart(0);
 	}
 	

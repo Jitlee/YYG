@@ -11,13 +11,13 @@ class PersonController extends CommonController {
 	}
 	
     public function index(){
-    	$this->assign('title', '一元购');
+    	$this->assign('title', '壹元夺宝');
 		$this->assign('pid', 'index');
         $this->display();
     }
 	
 	public function loginexit(){
-    	$this->assign('title', '一元购');
+    	$this->assign('title', '壹元夺宝');
 		$this->assign('pid', 'me');
 		
 		session("_uid", null); // 替换session			
@@ -26,7 +26,7 @@ class PersonController extends CommonController {
     }
 	
 	public function me(){
-    	$this->assign('title', '一元购'); 
+    	$this->assign('title', '壹元夺宝'); 
 		 
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		

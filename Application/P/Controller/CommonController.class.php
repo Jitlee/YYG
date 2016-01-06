@@ -15,10 +15,10 @@ class CommonController extends Controller {
 			}
 		}
 		$this->assign('serverTime', time());
-		$this->assign('title', '一元购');		
+		$this->assign('title', '壹元夺宝');		
 		count_cart(0);
 	}
-	
+
 	
 	public function SetPage($pageSize = 40, $pageNum = 1,$total)
 	{

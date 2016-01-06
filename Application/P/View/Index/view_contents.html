@@ -55,19 +55,19 @@
 </present>		
 <!-- 限时揭晓end -->
 
-<p class="Pro_Detsingle" style="font-size:14px;">云购价格：¥<b style="color:#999;">{$data.danjia}</b></p>
+<p class="Pro_Detsingle" style="font-size:14px;">夺宝价格：¥<b style="color:#999;">{$data.danjia}</b></p>
 <if condition="$data.xiangou gt 0">
 <p class="Pro_Detsingle" style="font-size:14px;">限购次数：<b style="color:#999;">{$data.xiangou}</b>人次</p>
 </if>
 <div id="divNumber" class="Pro_number">
-	我要云购 
+	我要夺宝 
 	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
 	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>
 	<a href="javascript:void(0);" class="num_add" id="shopadd">+</a>人次 
 </div>
 <div style="display:none;" id="hqid">{$data.gid}</div>
 <div id="divBuy" class="Det_button">
-	<a href="javascript:void(0);" class="Det_Shopbut">立即云购</a>
+	<a href="javascript:void(0);" class="Det_Shopbut">立即夺宝</a>
 	<a href="javascript:void(0);" class="Det_Cart add-cart" src="{$data.thumb}" gid="{$data.gid}"><i></i>加入购物车</a>							
 </div>
 <script type="text/javascript">
@@ -109,7 +109,7 @@
 			chance.html("<span style='color:red'>获得机率"+jilv+"%</span>");
 		}
 		
-		// 立即云购
+		// 立即夺宝
 		$(".Det_Shopbut").click(function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}/" + Number(input.val()), null, function(result) {
 				window.location.href = "{:U('Cart/index', '','')}";

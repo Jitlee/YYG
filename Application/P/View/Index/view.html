@@ -73,8 +73,8 @@
 						<dd class="gray02">
 							<p>恭喜 <a target="_blank" class="blue">{$data.lastprizer.username}</a>获得了本商品</p>
 							<p>揭晓时间：{$data.lastprizer.end_time}</p>
-							<p>云购时间：{$data.lastprizer.record_time}</p>
-							<p>幸运云购码：<em class="orange Fb">{$data['lastprizer']['prizecode']+10000001}</em></p>
+							<p>夺宝时间：{$data.lastprizer.record_time}</p>
+							<p>幸运夺宝码：<em class="orange Fb">{$data['lastprizer']['prizecode']+10000001}</em></p>
 						</dd>
 					</dl>				
 				</div>
@@ -104,9 +104,9 @@
 			<if condition="$data.status neq 2">
 			<div class="Pro_Record">
 				<ul id="ulRecordTab" class="Record_tit">
-					<li class="NewestRec Record_titCur">最新云购记录</li>
-					<li class="MytRec">我的云购记录</li>
-					<li class="Explain orange">什么是1元云购？</li>
+					<li class="NewestRec Record_titCur">最新夺宝记录</li>
+					<li class="MytRec">我的夺宝记录</li>
+					<li class="Explain orange">什么是壹元夺宝？</li>
 				</ul>
 				<div class="Newest_Con _hiden" style="">
 					<present name="records">
@@ -118,7 +118,7 @@
 						</a>					
 						<a target="_blank" class="blue">{$item.username}</a>
 						<!-- todo: IP -->			
-						{$item.time} 云购了
+						{$item.time} 夺宝了
 						<em class="Fb gray01">{$item.count}</em>人次</li>
 						</foreach>
 					</ul>
@@ -127,12 +127,12 @@
 					</present>
 				</div>
 				
-				<!--我的云购记录-->
+				<!--我的夺宝记录-->
 				<div class="My_Record _hiden" style="display: none;">
 					<present name="myrecords">	
 					<ul>				
 						<foreach name="myrecords" item="item">
-						<li>{$item.time}  云购了  {$item.count}  个云购码</li>						
+						<li>{$item.time}  夺宝了  {$item.count}  个夺宝码</li>						
 						</foreach>
 					</ul>
 					<else/>				
@@ -142,10 +142,10 @@
 					</div>
 					</present>	
 				</div>
-				<!--/我的云购记录-->
+				<!--/我的夺宝记录-->
 				<div class="Newest_Con _hiden" style="display: none;">
-					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据云购规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">以“快乐云购，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{:U('Help/index')}/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
+					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据夺宝规则产生一名幸运者，该幸运者即可获得此商品。</p>
+					<p class="MsgIntro1">以“快乐夺宝，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{:U('Help/index')}/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
 				</div>
 			</div>	
 			</if>
