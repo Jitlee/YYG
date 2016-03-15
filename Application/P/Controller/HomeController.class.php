@@ -3,6 +3,7 @@ namespace P\Controller;
 use Think\Controller;
 class HomeController extends CommonController {
 	protected function _initialize() {
+		parent::_initialize();
 		if(!is_login()) {
 			$this->redirect('Main/login');
 			return;

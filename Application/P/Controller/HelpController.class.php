@@ -1,7 +1,7 @@
 <?php
 namespace P\Controller;
 use Think\Controller;
-class HelpController extends Controller {
+class HelpController extends CommonController {
 	
 	public function _empty($id) {
 		$this->index($id);

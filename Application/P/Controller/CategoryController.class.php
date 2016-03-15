@@ -1,12 +1,11 @@
 <?php
 namespace P\Controller;
 class CategoryController extends CommonController {
-	public function index($type = 0, $cid = 0, $bid = 0, $sort = 0, $pageNo = 1){
+	public function index($keywords = '', $type = 0, $cid = 0, $bid = 0, $sort = 0, $pageNo = 1){
 		$this->assign('cid', $cid);
 		$this->assign('bid', $bid);
 		$this->assign('sort', $sort);
 		$this->assign('type', $type);
-		
 		$this->assign('now', time());
 		$title = '全部商品';
 		
@@ -47,6 +46,10 @@ class CategoryController extends CommonController {
 		} else if($type == 2) {
 			$mmap['jishijiexiao'] = array('lt', 0);
 			$title = "即将揭晓";
+		}
+		
+		if(!empty($keywords)) {
+			$mmap['title'] = array('LIKE', '%'.$keywords.'%');
 		}
 		
 		$order = 'time desc';
@@ -93,9 +96,9 @@ class CategoryController extends CommonController {
 			
 		$this->assign('num', $num);
 		$this->assign('total', $total);
-		
     		$this->assign('title', $title);
+    		$this->assign('keywords', $keywords);
 		$this->display();
-    }	
+    }
 }
 	

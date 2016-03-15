@@ -185,3 +185,27 @@ window.onerror=function(){return true;}
  
      </div>
  </div>
+ <script>
+ 	$(function() {
+ 		var txtSearch = $("#txtSearch").focus(function() {
+ 			if(txtSearch.isEmpty != false) {
+ 				txtSearch.val("");
+ 			}
+ 		}).blur(function() {
+ 			if(txtSearch.isEmpty != false) {
+ 				txtSearch.val("输入“手机”试试");
+ 			}
+ 		}).bind("input", function() {
+ 			txtSearch.isEmpty = txtSearch.val().length == 0;
+ 		}).bind("change", function() {
+ 			txtSearch.isEmpty = txtSearch.val().length == 0;	
+ 		}).keydown(function(evt) {
+ 			if(evt.keyCode == 13 && txtSearch.val().length > 0) {
+ 				window.location.href = "{:U('Category/index', '', '')}/" + txtSearch.val();
+ 			}
+ 		});
+ 		$("#butSearch").click(function() {
+ 			window.location.href = "{:U('Category/index', '', '')}/" + txtSearch.val();
+ 		});
+ 	});
+ </script>
