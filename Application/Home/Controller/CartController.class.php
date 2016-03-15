@@ -7,7 +7,7 @@ use Think\Controller;
 class CartController extends Controller {
 	
 	public function index(){
-    		$this->assign('title', '购物车');
+    	$this->assign('title', '购物车');
 		$this->assign('pid', 'cart');
 		
 		$db = D('cart');
