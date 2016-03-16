@@ -3,8 +3,28 @@ namespace Home\Model;
 
 
 class VerifycodeModel extends BaseModel{
-   
-   public function SendVerycode($mobile,$content)
+	
+	public function Send($mobile)
+	{  
+		$code=rand(1010,9797);		
+		$content="尊敬的用户：$code 是本次操作的验证码，5分钟内有效。";		
+		
+		$rs=$this->SendMsg($mobile,$content);
+		$status= (int)$rs["status"];
+		if($status == 0)
+		{	 
+			$rs=$this->Insert($mobile,$code);
+			$status= (int)$rs["status"];
+			if($status == 1)
+			{
+				$rs['status']= 1;
+			}
+		}
+		return $rs;
+	}
+	
+	 
+	public function SendMsg($mobile,$content)
 	{
 		$data = array(
 			"userAccount"=>"10000"
@@ -15,7 +35,6 @@ class VerifycodeModel extends BaseModel{
 		$url='OpenApi/SendSms';		
 		return $this->GetData($url, $data);
 	}
-	
 	
 	function GetData($url,$data)
 	{
