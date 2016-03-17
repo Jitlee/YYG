@@ -44,18 +44,31 @@ class VerifycodeModel extends BaseModel{
 		 		 
         $data = json_encode($data);
         $Signature = strtoupper(md5($OpenId.$Secret.$TimeStamp.$data)); //MD5加密后的字符串，大写
-        $urlroot="https://openapi.1card1.cn/";
+        $urlroot="https://api.ucpaas.com/";
 		//https://openapi.1card1.cn/OpenApi/Get_MemberInfo?openId=[OpenId]&signature=[Signature]&timestamp=[TimeStamp]
         $_url = $urlroot.$url."?openId=".$OpenId."&signature=".$Signature."&timestamp=".$TimeStamp;
 		//echo $_url; 
         //postData：该参数post到指定Url，注意postData与data 的区别
-        $postData = "data=".$data;
+        $postData = '/2014-06-30/Accounts/e03bc9106c6ed0eaebfce8c368fdcd48/Messages/templateSMS?sig=769190B9A223549407D2164CAE92152E';
         $json_data =$this->postData($_url, $postData);
 		$array = json_decode($json_data,true);
 		
 		return $array;
 	}
 	
+ 
+ 
+ 
+Authorization:ZTAzYmM5MTA2YzZlZDBlYWViZmNlOGMzNjhmZGNkNDg6MjAxNDA2MjMxODUwMjE=
+{
+ "templateSMS" : {
+    "appId"       : "e462aba25bc6498fa5ada7eefe1401b7",
+    "param"       : "0000",
+    "templateId"  : "1",
+    "to"          : "18612345678"
+    }
+}
+
 	//lib/api.php 里面的方法是：
 	function postData($url, $data){
 	    $ch = curl_init();
