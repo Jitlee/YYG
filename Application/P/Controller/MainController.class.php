@@ -62,43 +62,56 @@ class MainController extends Controller {
 			}
 			else
 			{
-				if(session("UserRegMobileCode")==$_POST['Code'])
+				$verycode=$_POST['Code'];
+				$mcode = D('P/Verifycode');	
+				$rs=$mcode->Check($checkmobile,$verycode);
+				$status= (int)$rs["status"];
+				if($status != 1)
 				{
-					//设置参数
-					$result["status"]=1;
-					$m = D('P/Member');
-					$user=$m->getByMobile($checkmobile);
-					if($user)
+					 $result["msg"]="验证码无效。";
+					 $this->ajaxReturn($result, "JSON");
+					 return;
+				}
+ 
+				//设置参数
+				$result["status"]=1;
+				$m = D('P/Member');
+				$user=$m->getByMobile($checkmobile);
+				if($user)
+				{
+					//更新用户验证码状态
+					$user['mobilecode']=$_POST['Code'];
+					$db = M('member');
+					$db->save($user);
+					session('registerMobile','');
+					session('loginstatus', 0);
+					session('wxUserinfo', null);
+					$yaoqing=floatval($user["yaoqing"]);
+					if($yaoqing>0)
 					{
-						//更新用户验证码状态
-						$user['mobilecode']=$_POST['Code'];
-						$db = M('member');
-						$db->save($user);
-						session('registerMobile','');
-						session('loginstatus', 0);
-						session('wxUserinfo', null);
-						$yaoqing=floatval($user["yaoqing"]);
-						if($yaoqing>0)
+						$yaoqinguser=$m->getByYaoqing($yaoqing);
+						if($yaoqinguser)
 						{
-							$yaoqinguser=$m->getByYaoqing($yaoqing);
-							if($yaoqinguser)
-							{
-								//添加晒单积分				
-								$mscore = D('P/MemberScore');
-								$resultr = $mscore->AddScore($yaoqinguser["uid"],'邀请赠送积分。',100);
-							}
+							//添加晒单积分				
+							$mscore = D('P/MemberScore');
+							$resultr = $mscore->AddScore($yaoqinguser["uid"],'邀请赠送积分。',100);
 						}
-						$result["status"]=1;
 					}
-					else
-					{
-						$result["msg"]="用户错误。";
-					}
+					$result["status"]=1;
+					
+					//默认已登录
+					session("_uid", $user['uid']); 					
+					session('wxUserinfo', $user);
+								
+					$url = decode(I('post.redirect'));
+					$result["status"]=1;
+					session('loginstatus', 1);
 				}
 				else
 				{
-					$result["msg"]="验证码错误。";
+					$result["msg"]="用户错误。";
 				}
+ 
 			}
 			$this->ajaxReturn($result);	
     	} else  {

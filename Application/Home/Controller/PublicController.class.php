@@ -60,9 +60,23 @@ public function forgetPassword(){
 	
 public function Reg($yaoqing=null){
 		if(IS_POST) {
-				$_POST['password'] = md5($_POST['password']);
+				$_POST['password'] = md5($_POST['password']);				
+				$Mobile=$_POST['mobile'];	
+				$verycode=I("verycode");				
+				//验证验证码.
+				
+				$mcode = D('Home/Verifycode');	
+				$rs=$mcode->Check($Mobile,$verycode);
+				$status= (int)$rs["status"];
+				if($status != 1)
+				{
+					 $result["msg"]="验证码无效。";
+					 $this->ajaxReturn($result, "JSON");
+					 return;
+				}
+				
 				$db = M('member');
-				$data['mobile'] = $_POST['mobile'];
+				$data['mobile'] = $Mobile;
 				$records = $db->where($data)->find();
 				
 				$result["status"]=0;

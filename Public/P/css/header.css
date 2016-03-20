@@ -1285,7 +1285,7 @@ a.u-service-off i {
 	border-top: 1px solid #e6e6e6;
 	margin-top: -1px;
 	padding: 13px 0 18px;
-	height: 42px;
+	
 	line-height: 25px;
 	overflow: hidden;
 }
@@ -1293,7 +1293,7 @@ a.u-service-off i {
 .m-all-sort dl.hover {
 	background: #fffdf0;
 	width: 238px;
-	height: 42px;
+	
 	padding: 13px 0 18px;
 	position: relative;
 	z-index: 10;
@@ -1307,7 +1307,7 @@ a.u-service-off i {
 	background: url(../images/shadow-2014.gif) repeat-x;
 	width: 238px;
 	padding: 12px 0 18px;
-	height: 42px;
+	
 	height: 3px;
 	position: absolute;
 	bottom: -30px;

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="http://www.jubaopay.com/resources/new/css/api_base.css" rel="stylesheet" type="text/css" />
+		<link href="http://www.jubaopay.com/resources/new/css/api_main.css" rel="stylesheet" type="text/css" />
+		<link href="http://www.jubaopay.com/resources/new/css/api_trading.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" src="http://www.jubaopay.com/libs/jquery.min.js"></script>
+		<script type="text/javascript" src="http://www.jubaopay.com/resources/new/js/j_validate.js"></script>
+		<link href="http://dev.jubaobar.com/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+		
+		<script language="javascript" src="http://www.jubaopay.com/resources/new/js/api_pay.js"></script>
+		<script language="javascript" src="http://www.jubaopay.com/resources/new/js/api_dialog.js"></script>
+	</head>
+	<body>
+		
+		<form method="post" action="{:U('Pay/test', '', '')}">
+			<table>
+				<tr>
+					<td>金额:(单位元，精确到分)</td>
+					<td><input type="text" name="amount" value="0.02"></td>
+				</tr>
+				<tr>
+					<td>付款人ID:</td>
+					<td><input type="text" name="payerName" value="zs001"> (上线后需要改为真正的客户ID)</td>
+				</tr>
+				<tr>
+					<td>商品名称:</td>
+					<td><input type="text" name="goodsName" value="商品名称"> (上线后需要改为真正的商品名称)</td>
+				</tr>
+				<tr>
+					<td>备注:</td>
+					<td><input type="text" name="remark" value="商品备注"> (上线后需要改为真正的商品备注)</td>
+				</tr>
+				<tr>
+					<td>支付方式</td>
+					<td>
+						<select name="payMethod">
+							<option value="WANGYIN">网银支付</option>							 
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td colspand="2">
+						<input type="submit" value="提交订单" name="submit"></br>
+					</td>
+				</tr>
+			</table>
+		</form>
+		
+	</body>
+</html>

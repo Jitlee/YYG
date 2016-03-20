@@ -5,86 +5,60 @@ namespace Home\Model;
 class VerifycodeModel extends BaseModel{
 	
 	public function Send($mobile)
-	{  
-		$code=rand(1010,9797);		
-		$content="尊敬的用户：$code 是本次操作的验证码，5分钟内有效。";		
-		
-		$rs=$this->SendMsg($mobile,$content);
+	{
+//		echo 'ttt';
+//		echo $mobile;  
+		$code=rand(1010,9797);
+		$rs=$this->Insert($mobile,$code);
 		$status= (int)$rs["status"];
-		if($status == 0)
-		{	 
-			$rs=$this->Insert($mobile,$code);
+		//echo dump($rs);
+		if($status == 1)
+		{
+			$rs=$this->SendMsg($mobile,$code);
 			$status= (int)$rs["status"];
-			if($status == 1)
+			if($status == 0)
 			{
-				$rs['status']= 1;
+				$rs['status']= 1;				
 			}
 		}
 		return $rs;
 	}
 	
 	 
-	public function SendMsg($mobile,$content)
+	public function SendMsg($mobile,$code)
 	{
-		$data = array(
-			"userAccount"=>"10000"
-			,"mobile"=>$mobile
-			,"content"=>$content
-		);
+		$rs= array("status" => -1);
 		
-		$url='OpenApi/SendSms';		
-		return $this->GetData($url, $data);
-	}
-	
-	function GetData($url,$data)
-	{
-		$OpenId  ="5BC3C691C69C43D1BA1C6420C51F60C5";//32位OpenId，大写
-        $Secret  ="7G0CL7";                          //6位Secret，大写	 
-	    $TimeStamp=time();
-		 		 
-        $data = json_encode($data);
-        $Signature = strtoupper(md5($OpenId.$Secret.$TimeStamp.$data)); //MD5加密后的字符串，大写
-        $urlroot="https://api.ucpaas.com/";
-		//https://openapi.1card1.cn/OpenApi/Get_MemberInfo?openId=[OpenId]&signature=[Signature]&timestamp=[TimeStamp]
-        $_url = $urlroot.$url."?openId=".$OpenId."&signature=".$Signature."&timestamp=".$TimeStamp;
-		//echo $_url; 
-        //postData：该参数post到指定Url，注意postData与data 的区别
-        $postData = '/2014-06-30/Accounts/e03bc9106c6ed0eaebfce8c368fdcd48/Messages/templateSMS?sig=769190B9A223549407D2164CAE92152E';
-        $json_data =$this->postData($_url, $postData);
-		$array = json_decode($json_data,true);
-		
-		return $array;
-	}
-	
- 
- 
- 
-Authorization:ZTAzYmM5MTA2YzZlZDBlYWViZmNlOGMzNjhmZGNkNDg6MjAxNDA2MjMxODUwMjE=
-{
- "templateSMS" : {
-    "appId"       : "e462aba25bc6498fa5ada7eefe1401b7",
-    "param"       : "0000",
-    "templateId"  : "1",
-    "to"          : "18612345678"
-    }
-}
+		$options['accountsid']=C('MSG.accountsid');		
+		$options['token']=C('MSG.token');		
+		//初始化 $options必填
+		$ucpass = new Ucpaas($options);
+		$appId = C('MSG.appId');		
+		$to = $mobile;
+		$templateId = C('MSG.templateId');
+		$param=$code;
 
-	//lib/api.php 里面的方法是：
-	function postData($url, $data){
-	    $ch = curl_init();
-	    $timeout = 300;
-	    curl_setopt($ch, CURLOPT_URL, $url);
-	    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-	    //下面这句是绕过SSL验证
-	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-	    $handles = curl_exec($ch);
-	    curl_close($ch);
-	    return $handles;
+	 	$result=$ucpass->templateSMS($appId,$to,$templateId,$param);
+		//echo dump($result);
+		$r=json_decode($result,TRUE);
+		if($r)
+		{
+			$code=$r["resp"]["respCode"];
+			if($code=='000000')
+			{
+				$rs["status"]=0;
+			}
+			else
+			{
+				//echo dump($r);
+				$rs["msg"]="发送失败.".$code;
+			}
+		}
+		return $rs;
 	}
-	
-   public function Insert($mobile,$code)
+
+	 
+	public function Insert($mobile,$code)
 	{ 
 		$rd = array('status'=>-1);	 			
 		$data = array();		 
@@ -92,15 +66,20 @@ Authorization:ZTAzYmM5MTA2YzZlZDBlYWViZmNlOGMzNjhmZGNkNDg6MjAxNDA2MjMxODUwMjE=
 		$data["code"] = $code;
 		$data["codestatus"] = 0;
 		$data["createTime"] = date('Y-m-d H:i:s');	    
-	    if($this->checkEmpty($data,true)){
+	    //if($this->checkEmpty($data,true)){
 			$m = M('verifycode');
 			$rs = $m->add($data);
 		    if(false !== $rs){
 				$rd['status']= 1;
 			}
-		}
+			else
+			{
+				$rd['msg']= "发送失败Er:001";
+			}
+		//}
 		return $rd;
 	}
+	
 	//http://localhost:505/index.php/M/Verifycode/Check/mobile/18617097726/code/7843
 	public function Check($mobile,$code)
 	{
@@ -123,10 +102,6 @@ order by createTime desc limit 1 ";
 		return $rd;
 	}
 	
-	public function test()
-	{
-		echo "test";
-		
-	}
+	
    
 }

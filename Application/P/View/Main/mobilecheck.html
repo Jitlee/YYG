@@ -53,25 +53,42 @@ $(function(){
 	});	
 	sendmobile();
 });
-
-	var i = {$time};
-	var senda=document.getElementById('retrySend');
-	setInterval(function(){if(i>0){
-		senda.innerHTML = '重新发送'+i;i--;}
-		else{senda.innerHTML = '重新发送';senda.disabled=0;}
-	},1000);
-	
-	function sendmobile(){
-		$.post("{:U('Msg/UserReg', '', '')}/{$namestr}", {mobile:"{$namestr}"}, success, "json");
-		return false;
-		function success(data) {
-			if (data.status) {					
-				//短信已发送。
-			} else {
-				alert(data.msg);
-			}
-		}		
+		
+//		$.post("{:U('Msg/UserReg', '', '')}/{$namestr}", {mobile:"{$namestr}"}, success, "json");
+//		return false;
+//		function success(data) {
+//			if (data.status) {					
+//				//短信已发送。
+//			} else {
+//				alert(data.msg);
+//			}
+//		}		
+		
+	function initBtn()
+	{
+		var i = {$time};
+		var senda=document.getElementById('retrySend');
+		setInterval(function(){if(i>0){
+			senda.innerHTML = '重新发送'+i;i--;}
+			else{senda.innerHTML = '重新发送';senda.disabled=0;}
+		},1000);
 	}
 	
- 
+	
+	function sendverifycode(data) {
+		if (data && data.status==1) {
+			//util.msg("验证码已发送.");
+			initBtn();
+		}
+		else
+		{
+			alert(data.msg);
+		}
+	}//end success
+	
+	function sendmobile(){
+		var murl="{:U('/Home/Verifycode/Send','','')}?mobile={$namestr}&v"+ Math.round() * 100;
+		$.post(murl, null, sendverifycode, "json");
+		return false;
+	}
 </script>

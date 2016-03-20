@@ -15,15 +15,26 @@ function genPayId($length = 6 ) {
 
 header("Content-Type: text/html; charset=UTF-8");
 
+//$payid=genPayId(20);
+//$partnerid="14061642390911131749";
+//$amount=$_POST["amount"];
+//$payerName=$_POST["payerName"];
+//$remark=$_POST["remark"];
+//$returnURL="http://pay.xxx.com/result.php";    // 可在商户后台设置
+//$callBackURL="http://pay.xxx.com/notify.php";  // 可在商户后台设置
+//$payMethod=$_POST["payMethod"];
+
+$pamount=0.05; 
 $payid=genPayId(20);
-$partnerid="16030746521135666706";
-$amount=$_POST["amount"];
-$payerName=$_POST["payerName"];
-$remark=$_POST["remark"];
+$partnerid="14061642390911131749";
+
+$amount=$pamount;//$_POST["amount"];
+$payerName="zs001";//$_POST["payerName"];
+$remark="remark";//$_POST["remark"];
 $returnURL="http://pay.xxx.com/result.php";    // 可在商户后台设置
 $callBackURL="http://pay.xxx.com/notify.php";  // 可在商户后台设置
-$payMethod=$_POST["payMethod"];
-$goodsName=$_POST["goodsName"];
+$payMethod= "WANGYIN";//$_POST["payMethod"];
+$goodsName="商品名称";//$_POST["goodsName"];
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
  //商户利用支付订单（payid）和商户号（mobile）进行对账查询
@@ -35,7 +46,6 @@ $jubaopay->setEncrypt("payerName", $payerName);
 $jubaopay->setEncrypt("remark", $remark);
 $jubaopay->setEncrypt("returnURL", $returnURL);
 $jubaopay->setEncrypt("callBackURL", $callBackURL);
-$jubaopay->setEncrypt("goodsName", $goodsName);
 
 //对交易进行加密=$message并签名=$signature
 $jubaopay->interpret();
@@ -43,12 +53,19 @@ $message=$jubaopay->message;
 $signature=$jubaopay->signature;
 //将message和signature一起aPOST到聚宝支付
 ?>
-<form method="post" action="http://www.jubaopay.com/apiwapsyt.htm" id="payForm">
-	<!-- 正式环境 action="https://www.jubaopay.com/apiwapsyt.htm" -->
-	<input type="hidden" name="message" value="<?php echo $message;?>">
-	<input type="hidden" name="signature" value="<?php echo $signature;?>">
+<form method="post" action="http://www.jubaopay.com/apipay.htm" id="payForm">
+	<input type="hidden" name="message" value="<?php echo $message;?>"/>
+	<input type="hidden" name="signature" value="<?php echo $signature;?>"/>
+	<input type="hidden" name="payMethod" value="<?php echo $payMethod;?>"/>
+	<input type="hidden" name="tab" value=""/>
 </form>
+<br />msg=
+<?php echo $message;?>
+<br />signature=
+	<?php echo $signature;?>
+		<br />
+	<?php echo $payMethod;?>
 
 <script type="text/javascript">
-    document.getElementById('payForm').submit();
+    //document.getElementById('payForm').submit();
 </script>

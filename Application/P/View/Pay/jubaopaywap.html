@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+<body>
+	<form method="post" action="http://www.jubaopay.com/apiwapsyt.htm" id="payForm">
+	<!-- 正式环境 action="https://www.jubaopay.com/apiwapsyt.htm" -->
+		<input type="hidden" name="message" value="{$message}">
+		<input type="hidden" name="signature" value="{$signature}">
+		<input type="hidden" name="payMethod" value="{$payMethod}"/>
+		<input type="hidden" name="tab" value=""/>
+	</form>
+	<script type="text/javascript">
+	    document.getElementById('payForm').submit();
+	</script>
+</body>
+</html>

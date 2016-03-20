@@ -7,40 +7,14 @@ class VerifycodeController extends Controller {
 
 	public function Send($mobile)
 	{
-		//$appId = "xxxx";
-//$to = "18612345678";
-//$templateId = "1";
-//$param="test,1256,3";
-
-//echo $ucpass->templateSMS($appId,$to,$templateId,$param);
-	
-//		$mcode = D('Home/Verifycode');
-//		$rs=$mcode->Send($mobile);
-//		
-//		echo  dump($rs);
-
-
-
-
-
-
-		$options['accountsid']='518e36828e6e1f087b8ffe24f1b03f43';
-		$options['token']='xxxx';
-		//初始化 $options必填
-		$ucpass = new Ucpaas($options);
-
-
-		$appId = "683db6ebec8247d18897833d97cfce07";
-		$to = "18612345678";
-		$templateId = "21529";
-		$param="1234";
-
-		cho $ucpass->templateSMS($appId,$to,$templateId,$param);
-
-
-
-
-		$this->display();
+		$mcode = D('Home/Verifycode');
+		$rs=$mcode->Send($mobile);
+		//echo dump($rs);
+		//$this->display();
+		
+//		$rs = array('status'=>-1); 
+//		$rs["msg"]="msg";
+		$this->ajaxReturn($rs);
 	}
 	
 	
@@ -54,9 +28,9 @@ class VerifycodeController extends Controller {
 		{
 			$rs['status']= 1;
 		}	 
-		//$this->ajaxReturn($rs);
-		echo dump($rs);
-		echo $rs;
+		$this->ajaxReturn($rs);
+//		echo dump($rs);
+//		echo $rs;
 	}
 
 

@@ -1,5 +1,5 @@
 <?php
-
+namespace Home\Model;
 /**
  * Created by PhpStorm.
  * User: UCPAAS JackZhao

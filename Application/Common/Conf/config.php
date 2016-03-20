@@ -28,4 +28,16 @@ return array(
         'WEIBO_SCOPE'       => '',
         'WEIBO_CALLBACK'    => 'http://yyg.ritacc.net/index.php/Home/Public/weiboauth',
     ),
+    'MSG'					=> array(
+    	'accountsid'       	=> '518e36828e6e1f087b8ffe24f1b03f43',
+    	'token'           	=> '3fb2cc004c2fe2f8addfae9902d9944e',
+    	'templateId'        => '21529',
+    	'appId'           	=> '683db6ebec8247d18897833d97cfce07',
+	),
+	'jubaopay'					=> array(
+    	'partnerid'       	=> '14061642390911131749',
+    	'returnURL'           	=> 'http://pay.xxx.com/result.php',
+    	'callBackURL'        => 'http://pay.xxx.com/notify.php',
+	),
+		
 );

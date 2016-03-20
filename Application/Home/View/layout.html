@@ -20,8 +20,7 @@
 		<script src="__JS__/jquery.lazy.min.js"></script>
 		<script src="__JS__/jquery.touchSwipe.min.js"></script>
 		<script src="__JS__/android_toast.min.js"></script>
-		<script src="__JS__/jquery.fly.min.js"></script>
-		
+		<script src="__JS__/jquery.fly.min.js"></script>		
 		<script src="__JS__/mobile.js"></script>
 
 		<script type="text/javascript">
@@ -97,8 +96,10 @@
 		});
 		
 		$("#{$pid|default='index'}").addClass("mui-active");
+		var strcarCount='{$Think.session.cartCount }';
+		if(strcarCount=='') strcarCount='0';
 		
-		var cartCount = {$Think.session.cartCount} * 1;
+		var cartCount = parseInt(strcarCount) * 1;
 		var cartCountSpan = $("#cartCount");
 		function countCart(count) {
 			cartCount += count;
