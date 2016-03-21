@@ -35,9 +35,9 @@ return array(
     	'appId'           	=> '683db6ebec8247d18897833d97cfce07',
 	),
 	'jubaopay'					=> array(
-    	'partnerid'       	=> '14061642390911131749',
-    	'returnURL'           	=> 'http://pay.xxx.com/result.php',
-    	'callBackURL'        => 'http://pay.xxx.com/notify.php',
+    	'partnerid'       	=> '16030746521135666706',
+    	'returnURL'           	=> 'http://www.eyuanduobao.com/index.php/P/back',
+    	'callBackURL'        => 'http://www.eyuanduobao.com/index.php/P/notify',
 	),
 		
 );

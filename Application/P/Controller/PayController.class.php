@@ -52,6 +52,16 @@ class PayController extends \Home\Controller\PayController {
 		return $password;
 	}
 	
+	public function noity()
+	{
+		layout(false);
+		$this->display();
+	}
+	public function back()
+	{
+		layout(false);
+		$this->display();
+	}
 	public function paypc()
 	{
 		layout(false);

@@ -16,7 +16,7 @@ class RSA
 		$this->_privFile ="./ThinkPHP/Library/Vendor/jubaopay/shanghu.pfx";
 		$this->_pubFile ="./ThinkPHP/Library/Vendor/jubaopay/jubaopay.cer";
 		$this->_algo = OPENSSL_ALGO_SHA1;
-		$this->_psw ="bc463d9e1759474aae705fc1cdf9c8fe";
+		$this->_psw ="6a0c122821674c8c88dc0f365a84147b";
 	}
 	
 	public function __destruct()
