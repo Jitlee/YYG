@@ -89,58 +89,58 @@ class PayController extends Controller {
 	/**
 	 * 第三方支付
 	 */
-	public function thirdpay() {
-		if(IS_POST) {
-			vendor( "PingppSDK.init");
-			
-			$params = json_decode(file_get_contents('php://input'));
-			if(!($params->third > 0) || empty($params->channel)) {
-				echo $params->third;
-				exit();
-			}
-			
-			$amount = $params->third;
-			$channel = $params->channel;
-			$orderNo = md5(time());
-			session('_trade_no_', $orderNo);
-			
-			session($orderNo, array(
-				'money'			=> $params->money,
-				'third'			=> $params->third,
-				'score'			=> $params->score,
-				'bgid'			=> $params->bgid,
-			));
-			
-			$extra = array();
-        		switch ($channel) {
-	            	case 'alipay_wap' :
-	                $extra['success_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '');
-					$extra['cancel_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '');
-	                break;
-			}
-			\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
-			try {
-				$ch = \Pingpp\Charge::create(
-					array(
-						'subject' 		=> 'Your Subject',
-						'body' 			=> 'Your Body',
-						'amount' 		=> $amount,
-						'order_no' 		=> $orderNo,
-						'currency' 		=> 'cny',
-						'extra' 		=> $extra,
-						'channel' 		=> $channel,
-         				'client_ip' 		=> get_client_ip(),
-         				'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
-					)
-				);
-             	echo $ch;
-			 	exit;
-			} catch (\Pingpp\Error\Base $e) {
-	            header("Content-type:text/html;charset=utf-8");
-	            echo($e->getHttpBody());
-	        }
-		}
-	}
+//	public function thirdpay() {
+//		if(IS_POST) {
+//			vendor( "PingppSDK.init");
+//			
+//			$params = json_decode(file_get_contents('php://input'));
+//			if(!($params->third > 0) || empty($params->channel)) {
+//				echo $params->third;
+//				exit();
+//			}
+//			
+//			$amount = $params->third;
+//			$channel = $params->channel;
+//			$orderNo = md5(time());
+//			session('_trade_no_', $orderNo);
+//			
+//			session($orderNo, array(
+//				'money'			=> $params->money,
+//				'third'			=> $params->third,
+//				'score'			=> $params->score,
+//				'bgid'			=> $params->bgid,
+//			));
+//			
+//			$extra = array();
+//      		switch ($channel) {
+//	            	case 'alipay_wap' :
+//	                $extra['success_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '');
+//					$extra['cancel_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '');
+//	                break;
+//			}
+//			\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
+//			try {
+//				$ch = \Pingpp\Charge::create(
+//					array(
+//						'subject' 		=> 'Your Subject',
+//						'body' 			=> 'Your Body',
+//						'amount' 		=> $amount,
+//						'order_no' 		=> $orderNo,
+//						'currency' 		=> 'cny',
+//						'extra' 		=> $extra,
+//						'channel' 		=> $channel,
+//       				'client_ip' 		=> get_client_ip(),
+//       				'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
+//					)
+//				);
+//           	echo $ch;
+//			 	exit;
+//			} catch (\Pingpp\Error\Base $e) {
+//	            header("Content-type:text/html;charset=utf-8");
+//	            echo($e->getHttpBody());
+//	        }
+//		}
+//	}
 
 	// 第三方支付成功页面
 	public function thirdpaysuccess() {
@@ -248,8 +248,7 @@ class PayController extends Controller {
 		$pmap['status'] = array('lt', 2);
 		$good = $pdb->where($pmap)->field('gid,baozhengjin, baomingrenshu')->find();
 		if($good) {
-			// 商品还存在，还没结束
-			
+			// 商品还存在，还没结束			
 			// 保存商品状态
 			$data['gid'] = $_pay['bgid'];
 			$data['status'] = 1;

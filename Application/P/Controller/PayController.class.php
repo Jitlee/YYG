@@ -76,20 +76,37 @@ class PayController extends \Home\Controller\PayController {
 			$partnerid=C("jubaopay.partnerid");//14061642390911131749";
 			
 			$amount=$_POST["amount"];
+			$accountmoney=$_POST["accountmoney"];
+			$accountscore=$_POST["accountscore"];
+			$accountbgid=$_POST["accountbgid"];
+			
 			$goodsName=$_POST["goodsName"];
 			$remark=$_POST["remark"];
 			$paytype=$_POST["paytype"];
-//			$pamount=0.05;
-//			$amount=$pamount;//$_POST["amount"];
-//			$goodsName="商品名称";//$_POST["goodsName"];
-//			$remark="remark";//$_POST["remark"];
+			
+			
+
+			//$orderNo = md5(time());
+			$orderNo=$payid;
+			session('_trade_no_', $orderNo);
+			
+			
+			session($orderNo, array(
+				'money'			=> $accountmoney,
+				'third'			=> $amount,
+				'score'			=> $accountscore,
+				'bgid'			=> $accountbgid,
+			));
+			
 			
 			$payerName="zs001";//$_POST["payerName"];
 			$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
 			$callBackURL=C("jubaopay.callBackURL");//"http://pay.xxx.com/notify.php";  // 可在商户后台设置
 			$payMethod= "WANGYIN";//$_POST["payMethod"];
 			
-
+			//测试
+			$amount=0.05;
+			
 			//////////////////////////////////////////////////////////////////////////////////////////////////
 			 //商户利用支付订单（payid）和商户号（mobile）进行对账查询
 			$jubaopay=new \jubaopay('jubaopay.ini');

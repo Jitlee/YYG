@@ -114,6 +114,15 @@
 <div style="display: none;">
 	<form method="post" action="{:U('Pay/jubaopay', '', '')}" id="payForm">
 			<input type="hidden" id="amount" name="amount" value="">
+				
+			<input type="hidden" id="amount" name="amount" value="">
+			<input type="hidden" id="amount" name="amount" value="">
+				
+			<input type="hidden" id="accountmoney" name="accountmoney" value="">
+			<input type="hidden" id="accountscore" name="accountscore" value="">
+			<input type="hidden" id="accountbgid" name="accountbgid" value="0">
+				
+				
 			<input type="hidden" id="goodsName" name="goodsName" value="goodsName">
 			<input type="hidden" id="remark" name="remark" value=""/>
 			<input type="hidden" id="paytype" name="paytype" value="pc"/>
@@ -206,6 +215,8 @@ $(function(){
 	
 	function thirdPay() {
 		$("#amount").val(_total);
+		$("accountmoney").val(_money);
+		$("accountscore").val(_score);
 		document.getElementById('payForm').submit();
 		
 //		pingpp_one.init({
