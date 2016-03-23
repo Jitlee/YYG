@@ -52,10 +52,39 @@ class PayController extends \Home\Controller\PayController {
 		return $password;
 	}
 	
-	public function noity()
+	public function notify()
 	{
 		layout(false);
-		$this->display();
+		$message=$_POST["message"];
+		$signature=$_POST["signature"];
+		
+		logger($message);
+		
+		vendor('jubaopay.jubaopay');
+		$jubaopay=new \jubaopay('jubaopay.ini');
+		$jubaopay->decrypt($message);
+		// 校验签名，然后进行业务处理
+		$result=$jubaopay->verify($signature);
+		logger($result);
+		if($result==1) {
+		   // 得到解密的结果后，进行业务处理
+		   // echo "payid=".$jubaopay->getEncrypt("payid")."<br />";
+		   // echo "mobile=".$jubaopay->getEncrypt("mobile")."<br />";
+		   // echo "amount=".$jubaopay->getEncrypt("amount")."<br />";
+		   // echo "remark=".$jubaopay->getEncrypt("remark")."<br />";
+		   // echo "orderNo=".$jubaopay->getEncrypt("orderNo")."<br />";
+		   // echo "state=".$jubaopay->getEncrypt("state")."<br />";
+		   // echo "partnerid=".$jubaopay->getEncrypt("partnerid")."<br />";
+		   // echo "modifyTime=".$jubaopay->getEncrypt("modifyTime")."<br />";
+		   logger("支付成功");
+			echo "success123"; // 像服务返回 "success"
+		} else {
+			echo "verify failed";
+			logger("verify failed");
+		}
+
+		
+		echo 'back'
 	}
 	public function back()
 	{
@@ -84,20 +113,16 @@ class PayController extends \Home\Controller\PayController {
 			$remark=$_POST["remark"];
 			$paytype=$_POST["paytype"];
 			
-			
-
 			//$orderNo = md5(time());
 			$orderNo=$payid;
 			session('_trade_no_', $orderNo);
-			
-			
 			session($orderNo, array(
 				'money'			=> $accountmoney,
 				'third'			=> $amount,
 				'score'			=> $accountscore,
 				'bgid'			=> $accountbgid,
 			));
-			
+			//写入到 account 表。
 			
 			$payerName="zs001";//$_POST["payerName"];
 			$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
