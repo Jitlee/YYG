@@ -84,7 +84,7 @@ class PayController extends \Home\Controller\PayController {
 		}
 
 		
-		echo 'back'
+		echo 'back';
 	}
 	public function back()
 	{
