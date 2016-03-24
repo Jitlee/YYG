@@ -1,4 +1,4 @@
-config.php
+Application/Common/Conf/*
 *.log
 
 *.log
