@@ -631,4 +631,152 @@ class PayController extends Controller {
 		}
 		//$this->ajaxReturn($result, 'JSON');
 	}
+	
+	
+	public function jubaopay()
+	{			
+			vendor('jubaopay.jubaopay');
+				 
+//			$payid=$this->genPayId(20);
+			$partnerid=C("jubaopay.partnerid");//14061642390911131749";			
+			$amount=$_POST["amount"];
+			$accountmoney=$_POST["accountmoney"];
+			$accountscore=$_POST["accountscore"];
+			$accountbgid=$_POST["accountbgid"];
+			
+			$payid=$_POST["payid"];
+			$goodsName=$_POST["goodsName"];
+			$remark=$_POST["remark"];
+			$paytype=$_POST["paytype"]; //rechargepc
+			$accountpaytype=-1;
+			
+			//$orderNo = md5(time());
+			$orderNo=$payid;
+			if($paytype=='pc' || $paytype=='wap')
+			{
+				$type=1;
+				if($paytype=='wap')
+				{
+					$type=11;
+				}
+				
+				$result['status'] = $this->updatePrePay($payid, $accountmoney, $accountscore, $amount,$type);
+				if($status != 0) { // 计算余额失败
+					$this->ajaxReturn($result, 'JSON');
+					return;
+				}
+			}
+			else if($paytype=='rechargepc' || $paytype=='rechargewap')
+			{
+				$adb = M('account');			
+				$uid = session("_uid");
+				$payid=$this->genPayId(20);
+
+				$type=30;
+				if($paytype=='rechargewap')
+				{
+					$type=31;
+				}
+
+				$accountData = array(
+					'payid'			=> $payid,
+					'uid'			=> $uid,
+					'type'			=> $type,
+					'third'			=> $amount,
+					'score'			=> 0,
+					'status'		=> 0
+				);
+			
+				if($adb->add($accountData) !== FALSE) {
+					echo $paytype.'成功';
+				}
+				else
+				{
+					echo $paytype.'失败';		
+				}
+				
+			}
+			
+			
+			
+//				'uid'			=> $uid,
+//				'money'			=> $accountmoney,
+//				'third'			=> $amount,
+//				'score'			=> $accountscore,
+//				'bgid'			=> $accountbgid,
+//				'paytype'		=> 1 ,				//
+//				'status'			=> 0,
+//			session('_trade_no_', $orderNo);
+//			if($paytype=="rechargepc" || $paytype=="rechargewap")//流值
+//			{
+//				$accountpaytype=1;
+//			}
+//			else if($paytype=="wap" || $paytype=="pc") //消费
+//			{
+//				$accountpaytype=-1;
+//			}
+//			
+//			$user = session('user');
+//			$uid = $user['uid'];
+		
+
+		
+//			$data=	array(
+//				'payid'			=>$payid,
+//				'uid'			=> $uid,
+//				'money'			=> $accountmoney,
+//				'third'			=> $amount,
+//				'score'			=> $accountscore,
+//				'bgid'			=> $accountbgid,
+//				'paytype'		=> 1 ,				//
+//				'status'			=> 0,
+//			);
+//			//写入到 account 表。
+//			$adb = M('account');
+//			if($adb->add($data)) {			
+				$payerName="zs001";//$_POST["payerName"];
+				$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
+				$callBackURL=C("jubaopay.callBackURL");//"http://pay.xxx.com/notify.php";  // 可在商户后台设置
+				$payMethod= "WANGYIN";//$_POST["payMethod"];
+				
+				//测试
+				$amount=0.05;
+				
+				//////////////////////////////////////////////////////////////////////////////////////////////////
+				 //商户利用支付订单（payid）和商户号（mobile）进行对账查询
+				$jubaopay=new \jubaopay('jubaopay.ini');
+				$jubaopay->setEncrypt("payid", $payid);
+				$jubaopay->setEncrypt("partnerid", $partnerid);
+				$jubaopay->setEncrypt("amount", $amount);
+				$jubaopay->setEncrypt("payerName", $payerName);
+				$jubaopay->setEncrypt("remark", $remark);
+				$jubaopay->setEncrypt("returnURL", $returnURL);
+				$jubaopay->setEncrypt("callBackURL", $callBackURL);
+				$jubaopay->setEncrypt("goodsName", $goodsName);
+				
+				//对交易进行加密=$message并签名=$signature
+				$jubaopay->interpret();
+				$message=$jubaopay->message;
+				$signature=$jubaopay->signature;			 
+			 
+				$this->assign("message",$message);
+				$this->assign("signature",$signature);
+				$this->assign("payMethod",$payMethod);
+			
+				layout(false);
+//				
+//				 
+				if($paytype=="rechargepc" || $paytype=="pc")
+				{
+					$this->display("jubaopaypc");
+				}
+				else if($paytype=="wap" || $paytype=="rechargewap")
+				{
+					$this->display("jubaopaywap");
+				}
+//			}
+			
+	}
+
+
 }
