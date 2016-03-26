@@ -55,6 +55,7 @@ class PayController extends Controller {
 			$user['score'] = $score;
 			$this->assign('account', $user);
 	    		$this->assign('title', '结算支付');
+			$this->assign('payid', $payid);
 			layout(false);
 			$this->display();
 		} else {
@@ -64,6 +65,7 @@ class PayController extends Controller {
 	
 	function total($list) {
 		$total = 0;
+//		echo dump($list);
 		foreach($list as $cart) {
 			if($cart['type'] == 3) {
 				if($cart['isbz'] == 1) { // 保证金
@@ -154,25 +156,25 @@ class PayController extends Controller {
 		$map['uid'] = get_temp_uid();
 		$map['payid'] = $payid;
 		if($adb->where($map)->save(array('status'	=> -1)) !== FALSE) {
-			reutrn 0;
+			return 0;
 		}
 		return -1;
 	}
 
 	// 修改预支付订单的金额、积分、第三方金额
-	function updatePrePay($payid, $money, $score, $thrid) {
-		$status = $this->checkPrePay($payid, $money, $score, $thrid);
+	function updatePrePay($payid, $money, $score, $third) {
+		$status = $this->checkPrePay($payid, $money, $score, $third);
 		if($status == 0) {
 			$agdb = M('Account');
 			$map['uid'] = get_temp_uid();
 			$map['payid'] = $payid;
 			$money = (float)$money;
 			$score = (int)$score;
-			$thrid = (float)$thrid;
+			$third = (float)$third;
 			$data = array(
 				'money'			=> $money, // 预使用余额
 				'score'			=> $score, // 预使用积分
-				'thrid'			=> $thrid  // 预第三方支付金额
+				'third'			=> $third,  // 预第三方支付金额
 			);
 			if($agdb->where($map)->save($data) === FALSE) {
 				$status = 104; // 修改预支付订单失败
@@ -182,26 +184,31 @@ class PayController extends Controller {
 	}
 	
 	// 检查支付是否合法
-	function checkPrePay($payid, $money, $score, $thrid, $list = null) {
+	function checkPrePay($payid, $money, $score, $third, $list = null) {
 		$uid = get_temp_uid();
 		$udb = M('member');
 		
 		$account = $udb->field('uid, money,score')->find($uid);
-		$account['money'] = intval($account['money']);
+		$account['money'] = floatval($account['money']);
 		$account['score'] = intval($account['score']);
 		
 		if(empty($list)) {
 			$agdb = D('Home/AccountGoods');
 			$map['uid'] = $uid;
 			$map['payid'] = $payid;
-			$list = $cdb->where($map)->relation(true)->select();
+			$list = $agdb->where($map)->relation(true)->select();
 		}
 		$total = $this->total($list);
+//		echo dump($money);
+//		echo dump($third);
+//		echo dump($score);
+//		echo dump($total);
+		
 		if($account['money'] < $money) {
 			return 101;  // 余额不足
 		} if($account['score'] < $score) {
 			return 102;  // 积分不足
-		} else if($money + $thrid + ($score / 100) < $total) {
+		} else if($money + $third + ($score / 100) < $total) {
 			return 103;  // 付款金额不对
 		}
 		return 0;
@@ -240,13 +247,15 @@ class PayController extends Controller {
 		$money = (float)$adata['money'];  // 余额
 		$score = (int)$adata['score'];    // 积分
 		$third = (float)$adata['third'];  // 第三方支付金额
-		$status = $this->checkPrePay($payid, $money, $score, $thrid, $list);
+//		echo dump($third);
+		
+		$status = $this->checkPrePay($payid, $money, $score, $third, $list);
 		if($status != 0) {
 			return $status;
 		}
 		
 		// 第三步 结算商品
-		for($list as $cart) {
+		foreach($list as $cart) {
 			$goodsType = intval($cart['type']);
 			if($goodsType == 3) { // 拍卖
 				if(intval($cart['isbz'] == 1)) { // 保证金
@@ -268,7 +277,8 @@ class PayController extends Controller {
 			'money'				=> array('exp', '`money` - '.$money),
 			'score'				=> array('exp', '`score` + '.$third),// 第三方支付增加消费积分(1:1)
 		);
-		if($udb->where(array('uid' => $uid))->save($account) === FALSE) {
+		if($udb->where(array('uid' => $uid))->save($member) === FALSE) {
+			echo $udb->getLastSql();
 			return 105; // 扣除个人余额失败
 		}
 		
@@ -542,19 +552,23 @@ class PayController extends Controller {
 		$money = (float)$_POST["money"]; // 余额支付
 		$score = (int)$_POST["score"]; // 积分支付
 		
-		$result['status'] = $this->updatePrePay($payid, $money, $score, $thrid);
+		$result['status'] = $this->updatePrePay($payid, $money, $score, $third);
 		if($status != 0) { // 计算余额失败
 			$this->ajaxReturn($result, 'JSON');
 			return;
 		}
 		
-		if($thrid > 0) { // 需要第三方支付
+		if($third > 0) { // 需要第三方支付
 			// TODO: 第三方支付接口
+			$result['status'] = $this->pay($payid);
+//			if($result['status'] == 0) {
+//				$this->redirect('支付成功', 'success');
+//			}
 		} else { // 本地直接支付
 			$result['status'] = $this->pay($payid);
-			if($result['status'] == 0) {
-				$this->redirect('支付成功', 'success');
-			}
+//			if($result['status'] == 0) {
+//				$this->redirect('支付成功', 'success');
+//			}
 		}
 		$this->ajaxReturn($result, 'JSON');
 	}

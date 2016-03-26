@@ -172,15 +172,15 @@ amount=$amount	orderNo=$orderNo ";
 
 		
 			$data=	array(
-				'payid'			=>$payid
-				'uid'			=> $uid
+				'payid'			=>$payid,
+				'uid'			=> $uid,
 				'money'			=> $accountmoney,
 				'third'			=> $amount,
 				'score'			=> $accountscore,
 				'bgid'			=> $accountbgid,
 				'paytype'		=> 1 ,				//
-				'status'		=> 0
-			));
+				'status'			=> 0,
+			);
 			//写入到 account 表。
 			$adb = M('account');
 			if($adb->add($data)) {			
