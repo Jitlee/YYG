@@ -1,10 +1,11 @@
-
+Application/Common/Conf/*
 *.log
 
 *.log
 
 *.log
 task
+ThinkPHP/Library/Vendor/jubaopay/*
 Application/Runtime/Temp/*
 Application/Runtime/Cache/*
 Application/Runtime/Data/task.xml

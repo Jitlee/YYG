@@ -244,11 +244,21 @@ class PayController extends Controller {
 					// 立即拍卖出价购买
 					$status = $this->paimai($cart);
 				}
+<<<<<<< HEAD
 			} else { // 秒杀
 				$status = $this->miaosha($cart);
 			}
 			if($status != 0) {
 				return $status;
+=======
+				if($status == 0) {
+					// 清空购物车
+					$cdb->where('uid='.$account['uid'])->delete();
+					empty_cart();
+				}
+			} else {
+				$status = 2; // 查询购物车失败
+>>>>>>> origin/master
 			}
 		}
 		
