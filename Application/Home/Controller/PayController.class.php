@@ -217,7 +217,7 @@ class PayController extends Controller {
 	}
 
 	// 修改预支付订单的金额、积分、第三方金额
-	function updatePrePay($payid, $money, $score, $third) {
+	function updatePrePay($payid, $money, $score, $third,$type=0) {
 		$status = $this->checkPrePay($payid, $money, $score, $third);
 		if($status == 0) {
 			$agdb = M('Account');
@@ -230,6 +230,7 @@ class PayController extends Controller {
 				'money'			=> $money, // 预使用余额
 				'score'			=> $score, // 预使用积分
 				'third'			=> $third,  // 预第三方支付金额
+				'type'			=>$type
 			);
 			if($agdb->where($map)->save($data) === FALSE) {
 				$status = 104; // 修改预支付订单失败
@@ -602,6 +603,8 @@ class PayController extends Controller {
 		return 0;
 	}
 
+	
+
 	public function topay($payid) {
 		$third = (float)$_POST["third"];  // 第三方付款
 		$money = (float)$_POST["money"]; // 余额支付
@@ -614,8 +617,9 @@ class PayController extends Controller {
 		}
 		
 		if($third > 0) { // 需要第三方支付
+			$this->jubaopay($payid);
 			// TODO: 第三方支付接口
-			$result['status'] = $this->pay($payid);
+			//$result['status'] = $this->pay($payid);
 //			if($result['status'] == 0) {
 //				$this->redirect('支付成功', 'success');
 //			}
@@ -625,6 +629,6 @@ class PayController extends Controller {
 //				$this->redirect('支付成功', 'success');
 //			}
 		}
-		$this->ajaxReturn($result, 'JSON');
+		//$this->ajaxReturn($result, 'JSON');
 	}
 }

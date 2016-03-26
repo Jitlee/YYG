@@ -137,6 +137,20 @@
 	</div>
     
 </div><!--payment_Con end-->
+<!--描述：第三方支付-->
+<div style="display: none;">
+	<form method="post" action="{:U('Pay/jubaopay', '', '')}" id="payForm">
+			<input type="hidden" id="amount" name="amount" value="">	
+			<input type="hidden" id="accountmoney" name="accountmoney" value="">
+			<input type="hidden" id="accountscore" name="accountscore" value="">
+			<input type="hidden" id="accountbgid" name="accountbgid" value="0">
+			<input type="hidden" id="payid" name="payid" value="{$payid}">
+			
+			<input type="hidden" id="goodsName" name="goodsName" value="一元商品">
+			<input type="hidden" id="remark" name="remark" value=""/>
+			<input type="hidden" id="paytype" name="paytype" value="pc"/>
+	</form>
+</div>
 <script type="text/javascript">
 $(function(){
 	var money = {$account.money};
@@ -199,19 +213,31 @@ $(function(){
 	
 	var zhifuButton = $("#zhifuButton").click(function(){
 		// 无需第三方付款
-		zhifuButton.attr("disabled", true);
-		$.post("{:U('Pay/topay','','')}/{$payid}", {
-			score: _score, // 福分支付金额
-			money: _money,  // 余额支付金额
-			third: _total // 第三方支付金额
-		}, function(result) {
-			zhifuButton.removeAttr("disabled");
-			if(result.status == 0) {
-				window.location.href ="{:U('success','','')}";
-			} else {
-				alert("支付失败,错误代码：" + result.status);
+		//alert(_total);
+		if(_total==0)
+		{
+			zhifuButton.attr("disabled", true);
+			$.post("{:U('Pay/topay','','')}/{$payid}", {
+				score: _score, // 福分支付金额
+				money: _money,  // 余额支付金额
+				third: _total // 第三方支付金额
 			}
-		});
+			, function(result) {
+				zhifuButton.removeAttr("disabled");
+				if(result.status == 0) {
+					window.location.href ="{:U('success','','')}";
+				} else {
+					alert("支付失败,错误代码：" + result.status);
+				}
+			});
+		}//第三方支付
+		else
+		{
+			$("#amount").val(_total);
+			$("accountmoney").val("0");
+			$("accountscore").val("0");
+			document.getElementById('payForm').submit();
+		}
 	});
 });
 </script>

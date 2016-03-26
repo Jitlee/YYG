@@ -142,48 +142,83 @@ amount=$amount	orderNo=$orderNo ";
 	{			
 			vendor('jubaopay.jubaopay');
 				 
-			$payid=$this->genPayId(20);
-			$partnerid=C("jubaopay.partnerid");//14061642390911131749";
-			
+//			$payid=$this->genPayId(20);
+			$partnerid=C("jubaopay.partnerid");//14061642390911131749";			
 			$amount=$_POST["amount"];
 			$accountmoney=$_POST["accountmoney"];
 			$accountscore=$_POST["accountscore"];
 			$accountbgid=$_POST["accountbgid"];
 			
+			$payid=$_POST["payid"];
 			$goodsName=$_POST["goodsName"];
 			$remark=$_POST["remark"];
 			$paytype=$_POST["paytype"]; //rechargepc
 			$accountpaytype=-1;
+			
 			//$orderNo = md5(time());
 			$orderNo=$payid;
-			session('_trade_no_', $orderNo);
-			if($paytype=="rechargepc" || $paytype=="rechargewap")//流值
+			if($paytype=='pc')
 			{
-				$accountpaytype=1;
+				$result['status'] = $this->updatePrePay($payid, $accountmoney, $accountscore, $amount,1);
+				if($status != 0) { // 计算余额失败
+					$this->ajaxReturn($result, 'JSON');
+					return;
+				}
 			}
-			else if($paytype=="wap" || $paytype=="pc") //消费
+			else if($paytype=='rechargepc')
 			{
-				$accountpaytype=-1;
+				$adb = M('account');			
+				$uid = get_temp_uid();
+				$payid=$this->genPayId(20);
+				$accountData = array(
+					'payid'			=> $payid,
+					'uid'			=> $uid,
+					'type'			=> 30,
+					'money'			=> 0,
+					'third'			=> $amount,
+					'score'			=> 0,
+					'status'		=> 0
+				);
+				if($adb->add($accountData) !== FALSE) {
+					
+				}
 			}
 			
-			$user = session('user');
-			$uid = $user['uid'];
+//				'uid'			=> $uid,
+//				'money'			=> $accountmoney,
+//				'third'			=> $amount,
+//				'score'			=> $accountscore,
+//				'bgid'			=> $accountbgid,
+//				'paytype'		=> 1 ,				//
+//				'status'			=> 0,
+//			session('_trade_no_', $orderNo);
+//			if($paytype=="rechargepc" || $paytype=="rechargewap")//流值
+//			{
+//				$accountpaytype=1;
+//			}
+//			else if($paytype=="wap" || $paytype=="pc") //消费
+//			{
+//				$accountpaytype=-1;
+//			}
+//			
+//			$user = session('user');
+//			$uid = $user['uid'];
 		
 
 		
-			$data=	array(
-				'payid'			=>$payid,
-				'uid'			=> $uid,
-				'money'			=> $accountmoney,
-				'third'			=> $amount,
-				'score'			=> $accountscore,
-				'bgid'			=> $accountbgid,
-				'paytype'		=> 1 ,				//
-				'status'			=> 0,
-			);
-			//写入到 account 表。
-			$adb = M('account');
-			if($adb->add($data)) {			
+//			$data=	array(
+//				'payid'			=>$payid,
+//				'uid'			=> $uid,
+//				'money'			=> $accountmoney,
+//				'third'			=> $amount,
+//				'score'			=> $accountscore,
+//				'bgid'			=> $accountbgid,
+//				'paytype'		=> 1 ,				//
+//				'status'			=> 0,
+//			);
+//			//写入到 account 表。
+//			$adb = M('account');
+//			if($adb->add($data)) {			
 				$payerName="zs001";//$_POST["payerName"];
 				$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
 				$callBackURL=C("jubaopay.callBackURL");//"http://pay.xxx.com/notify.php";  // 可在商户后台设置
@@ -214,15 +249,15 @@ amount=$amount	orderNo=$orderNo ";
 				$this->assign("payMethod",$payMethod);
 			
 				layout(false);
-				if($paytype=="wap" || $paytype=="rechargewap")
-				{
-					$this->display("jubaopaywap");
-				}
-				else if($paytype=="rechargepc" || $paytype=="pc")
-				{
+//				if($paytype=="wap" || $paytype=="rechargewap")
+//				{
+//					$this->display("jubaopaywap");
+//				}
+//				else if($paytype=="rechargepc" || $paytype=="pc")
+//				{
 					$this->display("jubaopaypc");
-				}
-			}
+//				}
+//			}
 			
 	}
 }
