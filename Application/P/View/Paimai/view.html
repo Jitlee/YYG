@@ -242,7 +242,7 @@
 				    <p class="paimai-money">参与资格： 本次拍卖仅支持注册及以上级别会员参与</p>
 				    
 				    <div id="divBuy" class="Det_button">
-						<a href="{:U('Pay/baozhengjin','','')}/{$data.gid}" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>交保证金报名</a>
+						<a id="bzjButton" class="Det_Shopbut"><img src="__IMG__/baozhengjin.png"/>交保证金报名</a>
 					</div>
 				</present>
 			<else/>
@@ -373,6 +373,19 @@ $(function(){
 		}else if($(window).scrollTop()<941){
 			$("#divProductNav").removeClass("nav-fixed");
 		}
+	});
+	
+	$("#bzjButton").click(function() {
+		// 预创建订单
+		$.post("{:U('Pay/createPreBZJPay', '', '')}/{$data.gid}", null, function(result) {
+			if(result.status == 0) {
+				window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+			} else if(result.status == -2) {
+				alert("请先登录");
+			} else {
+				alert("预创建订单失败");
+			}
+		});
 	});
 });
 </script> 

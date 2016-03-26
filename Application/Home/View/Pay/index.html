@@ -25,8 +25,14 @@
 							<img src="{$item.paimai.thumb}"/>
 						</div>
 						<div class="yyg-cart-body">
-							<p class="yyg-cart-title">( 立即揭标 ) {$item.paimai.title}</p>
-							<h5>立即揭标价:{$item.paimai.lijijia}</h5>
+							<if condition="$item.isbz eq 1">
+								<p class="yyg-cart-title">{$item.paimai.title}</p>
+								<h5>保证金:{$item.paimai.baozhengjin}</h5>
+							<else/>
+								<p class="yyg-cart-title">( 立即揭标 ) {$item.paimai.title}</p>
+								<h5>立即揭标价:{$item.paimai.lijijia}</h5>
+								<h5>起拍价:{$item.paimai.qipaijia}</h5>
+							</if>
 						</div>
 					<else/>
 						<div class="yyg-cart-img-container">
@@ -42,7 +48,7 @@
 			</ul>
 			
 			<p class="yyg-pay-total">总共支付金额：¥ <r> {$total} </r></p>
-			
+			<if condition="$list[0]['isbz'] neq 1">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<label id="yueButton" for="scoreCheckBox" class="mui-input-row mui-checkbox  mui-disabled">
@@ -51,6 +57,7 @@
 					</label>
 				</li>
 			</ul>
+			</if>
 			
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
@@ -123,11 +130,11 @@
 		
 		var zhifuButton = $("#zhifuButton").click(function(){
 			zhifuButton.attr("disabled", true);
-			$.post("{:U('Pay/topay')}/{$payid}", {
+			$.post("{:U('Pay/topay', '', '')}/{$payid}", {
 				score: _score, // 福分支付金额
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
-			} function(result) {
+			}, function(result) {
 				zhifuButton.remove("disabled");
 				if(result.status == 0) {
 					// 支付成功

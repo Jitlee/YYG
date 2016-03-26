@@ -181,7 +181,7 @@
 					var money = Number(moenyCount.text());
 					if(money > 0) {
 						// 预创建订单
-						$.post("{:U('Pay/createPrePay')}", null, function(result) {
+						$.post("{:U('Pay/createPrePay', '', '')}", null, function(result) {
 							if(result.status == 0) {
 								window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
 							} else if(result.status == -2) {

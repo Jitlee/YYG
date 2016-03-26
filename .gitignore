@@ -9,5 +9,5 @@ ThinkPHP/Library/Vendor/jubaopay/*
 Application/Runtime/Temp/*
 Application/Runtime/Cache/*
 Application/Runtime/Data/task.xml
-
+Uploads/*
 Application/Runtime/Data/renci.xml

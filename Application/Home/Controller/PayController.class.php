@@ -46,6 +46,8 @@ class PayController extends Controller {
 				$this->assign('total', $total);
 			}
 			
+//			echo dump($list);
+			
 			$uid = get_temp_uid();
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
@@ -98,6 +100,61 @@ class PayController extends Controller {
 	}
 	
 	/**
+	 * 预创建立即拍卖订单
+	 */
+	 public function createPreLJPPay($gid) {
+	 	$this->createPreBZJPay($gid, 0);
+	 }
+	
+	/**
+	 * 预创建保证金订单
+	 */
+	 public function createPreBZJPay($gid, $isbz = 1) {
+	 	if(is_login()) {
+			$adb = M('account');
+			$agdb = M('AccountGoods');
+			$result['status'] = -1;
+			$adb->startTrans();
+			$uid = get_temp_uid();
+			$payid = \Org\Util\String::keyGen();
+			$accountData = array(
+				'payid'			=> $payid,
+				'uid'			=> $uid,
+				'type'			=> -1,
+				'status'			=> 0
+			);
+			if($adb->add($accountData) !== FALSE) {
+				$map['uid'] = $uid;
+				$result['status'] = 0;
+				$result['message'] = '创建$accountData成功';
+				
+				$agddata = array(
+					'payid'			=> $payid,
+					'uid'			=> $uid,
+					'gid'			=> $gid,
+					'type'			=> 3,
+					'flag'			=> 1,
+					'count'			=> 1,
+					'isbz'			=> $isbz, // 是保证金
+				);
+				if($agdb->add($agddata) === FALSE) {
+					$result['status'] = -1;
+				}
+			}
+			
+			if($result['status'] == 0) {
+				$adb->commit();
+				$result['rst'] = $payid;
+			} else {
+				$adb->rollback();
+			}
+		} else { // 未登录
+			$result['status'] = -2;
+		}
+		$this->ajaxReturn($result, 'JSON');
+	 }
+	
+	/**
 	 * 创建预支付订单
 	 */
 	public function createPrePay() {
@@ -119,13 +176,11 @@ class PayController extends Controller {
 				$map['uid'] = $uid;
 				$list = $cdb->where($map)->select();
 				$result['status'] = 0;
-				$result['message'] = '创建$accountData成功';
 				// 复制购物车
 				foreach($list as $cart) {
 					$cart['payid'] = $payid;
 					if($agdb->add($cart) === FALSE) {
 						$result['status'] = -1;
-						$result['message'] = '复制cart成功';
 						break;
 					}
 				}
@@ -539,7 +594,7 @@ class PayController extends Controller {
 					'content' 		=> '退还保证金,商品id['.$good['gid'].']',
 				);
 				
-				if($adb->add($adata) !== FALSE) {
+				if($adb->add($adata) === FALSE) {
 					return 306;  // 归还拍卖保证金到个人余额纪录资金流水失败
 				}
 			}

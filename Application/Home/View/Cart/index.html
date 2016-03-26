@@ -80,14 +80,16 @@
 <footer id="footer" class="yyg-cart-footer" <notpresent name="list"> style="display:none"</notpresent>>
 	<span>合计 <r id="totalMoney" class="larger">¥2.00</r></span>
 	<h5>共<span id="goodCount">1</span>个商品</h5>
-	<a href="{:U('Pay/index','','')}" class="yyg-btn yyg-btn-primary">去结算</a>
+	<a id="submit" class="yyg-btn yyg-btn-primary">去结算</a>
 </footer>
 
 <script type="text/javascript">
 	$(function() {
+		var total = 0;
+		var count = 0;
 		function sum() {
-			var total = 0;
-			var count = 0;
+			count = 0;
+			total = 0;
 			$(".yyg-cart-item input").each(function() {
 				$this = $(this);
 				total += Number($this.attr("dj")) * Number($this.val());
@@ -161,6 +163,21 @@
 					$this.val(bkCount);
 				}
 			});
+		});
+		
+		$("#submit").click(function() {
+			if(total > 0) {
+				// 预创建订单
+				$.post("{:U('Pay/createPrePay', '', '')}", null, function(result) {
+					if(result.status == 0) {
+						window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+					} else if(result.status == -2) {
+						new Android_Toast({content: "请先登录"});
+					} else {
+						new Android_Toast({content: "预创建订单失败"});
+					}
+				});
+			}
 		});
 	});
 </script>

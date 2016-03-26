@@ -37,7 +37,7 @@
 		<present name="isBaozheng">
 			<a id="chujiaButton" class="yyg-btn yyg-btn-primary">我要出价</a>
 		<else/>
-			<a href="{:U('Pay/baozhengjin','','')}/{$data.gid}" class="yyg-btn yyg-btn-primary">缴纳保证金</a>
+			<a id="bzjButton" class="yyg-btn yyg-btn-primary">缴纳保证金</a>
 		</present>
 	</div>
 	<div class="yyg-footer-right">
@@ -183,17 +183,39 @@
 				var money = Number(inputChujia.val());
 				inputChujia.val(money + jiafujia);
 			});
+			
+		
+			$("#chujiaBlock").click(function(evt) {
+				if(evt.originalEvent.srcElement.id == "chujiaBlock") {
+					chujiaBlock.hide();
+				}
+			});
+			
+		<else/>
+		$("#bzjButton").click(function() {
+			// 预创建订单
+			$.post("{:U('Pay/createPreBZJPay', '', '')}/{$data.gid}", null, function(result) {
+				if(result.status == 0) {
+					window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+				} else if(result.status == -2) {
+					new Android_Toast({content: "请先登录"});
+				} else {
+					new Android_Toast({content: "预创建订单失败"});
+				}
+			});
+		});
 		</present>
 		$("#lijiButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}/3", null, function(result) {
-				window.location.href = "{:U('Cart/index', '','')}";
-			})
-		});
-		
-		document.getElementById("chujiaBlock").addEventListener("click", function(evt) {
-			if(evt.srcElement.id == "chujiaBlock") {
-				chujiaBlock.hide();
-			}
+			// 预创建订单
+			$.post("{:U('Pay/createPreLJPPay', '', '')}/{$data.gid}", null, function(result) {
+				if(result.status == 0) {
+					window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+				} else if(result.status == -2) {
+					new Android_Toast({content: "请先登录"});
+				} else {
+					new Android_Toast({content: "预创建订单失败"});
+				}
+			});
 		});
 	});
 </script>

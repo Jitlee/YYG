@@ -38,20 +38,47 @@
 		<ul class="order_list">
 			<li class="top">
 				<span class="name">商品名称</span>
-				<span class="moneys">价值</span>
-				<span class="money">夺宝价</span>
-				<span class="num">夺宝人次</span>
+				<if condition="$list[0]['type'] eq 3">	
+					<span class="moneys"></span>
+					<if condition="$list[0]['isbz'] eq 1">	
+						<span class="money">保证金</span>
+					<else/>
+						<span class="moneys"></span>
+						<span class="money">立即揭标价</span>
+					</if>
+					<span class="num">数量</span>
+				<else/>
+					<span class="moneys">价值</span>
+					<span class="money">夺宝价</span>
+					<span class="num">夺宝人次</span>
+				</if>
 				<span class="all">小计</span>
 			</li>               
 			<foreach name="list" item="item">
 			<li class="end">
-				<span class="name">
-               		<a class="blue" href="{:U('Index/view', '', '')}/{$item.gid}">{$item.good.title}</a>
-                </span>
-				<span class="moneys">{$item.good.money}</span>
-				<span class="money"><span class="color">￥<b>{$item.good.danjia}</b></span></span>
-				<span class="num orange Fb">{$item.count}</span>
-				<span class="all">{$item['count'] * $item['good']['danjia']}</span>
+				<if condition="$item.type eq 3">
+					<span class="name">
+	               		<a class="blue" href="{:U('Paimai/view', '', '')}/{$item.gid}">{$item.paimai.title}</a>
+	                </span>
+					<span class="moneys"></span>
+	                <if condition="$item.isbz eq 1">
+						<span class="money">¥{$item.paimai.baozhengjin}</span>
+						<span class="num orange Fb">1</span>
+						<span class="all">¥{$item.paimai.baozhengjin}</span>
+					<else/>	
+						<span class="money">¥{$item.paimai.lijijia}</span>
+						<span class="num orange Fb">1</span>
+						<span class="all">¥{$item.paimai.lijijia}</span>
+					</if>
+				<else/>	
+					<span class="name">
+	               		<a class="blue" href="{:U('Index/view', '', '')}/{$item.gid}">{$item.good.title}</a>
+	                </span>
+					<span class="moneys">￥{$item.good.money}</span>
+					<span class="money"><span class="color">￥<b>{$item.good.danjia}</b></span></span>
+					<span class="num orange Fb">{$item.count}</span>
+					<span class="all">{$item['count'] * $item['good']['danjia']}</span>
+				</if>
 			</li>
 			</foreach>         
 			<li class="payment_Total">
