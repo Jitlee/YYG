@@ -148,6 +148,17 @@ class PayController extends Controller {
 		$this->ajaxReturn($result, 'JSON');
 	}
 
+	// 取消预创订单
+	function cancelPrePay($payid) {
+		$adb = M('account');
+		$map['uid'] = get_temp_uid();
+		$map['payid'] = $payid;
+		if($adb->where($map)->save(array('status'	=> -1)) !== FALSE) {
+			reutrn 0;
+		}
+		return -1;
+	}
+
 	// 修改预支付订单的金额、积分、第三方金额
 	function updatePrePay($payid, $money, $score, $thrid) {
 		$status = $this->checkPrePay($payid, $money, $score, $thrid);
@@ -244,21 +255,11 @@ class PayController extends Controller {
 					// 立即拍卖出价购买
 					$status = $this->paimai($cart);
 				}
-<<<<<<< HEAD
 			} else { // 秒杀
 				$status = $this->miaosha($cart);
 			}
 			if($status != 0) {
 				return $status;
-=======
-				if($status == 0) {
-					// 清空购物车
-					$cdb->where('uid='.$account['uid'])->delete();
-					empty_cart();
-				}
-			} else {
-				$status = 2; // 查询购物车失败
->>>>>>> origin/master
 			}
 		}
 		
