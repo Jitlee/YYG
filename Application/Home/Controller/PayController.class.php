@@ -5,34 +5,39 @@ use Think\Controller;
  * 支付界面控制器
  */
 class PayController extends Controller {
-	
-//	1; // 没有登陆
-//	2; // 查询购物车失败
-//	3  // 商品已经完结
-//	5; // 增加秒杀记录失败
-//	7; // 计算结果失败
-//	8; // 获取中奖用户失败
-//	9; // 保存主表失败
-//	10; // 保存历史失败
-//	11; // 增加消费记录失败
-//	12; // 扣除个人余额失败
-//	13; // 生成客户随即码失败
-//	14;  // 余额不足
-//	15;  // 需要第三方支付
-//	16;  // 付款金额不对
-//	17;  // 保存保证金失败
-//	18;  // 支付失败
-//	19;  // session数据丢失
-//	20;  // 商品不允许立即价
-//	21;  // 保存出价记录失败
-//  22;  // 保存最高价失败
-//  23;  // 增加消费积分失败
-//  24;  // 积分不足
-//  25;  // 修改拍卖商品状态、报名人数失败
-	
-	public function index(){
+
+// 101: 余额不足
+// 102: 积分不足
+// 103: 支付金额不对
+// 104: 修改预支付订单失败
+// 105: 扣除余额失败
+// 106: 增加消费积分失败
+// 107: 修改预付订单状态为已支付－修改失败
+// 201: 秒杀商品已经完结
+// 202: 生成秒杀客户随即码失败
+// 203: 计算秒杀结果失败
+// 204: 获取中奖用户失败
+// 205: 保存秒杀历史失败
+// 206: 保存秒杀主表失败
+// 207: 增加秒杀记录失败
+// 301: 拍卖商品不允许立即价
+// 302: 拍卖商品已结束
+// 303: 增加出价纪录失败
+// 304: 立即拍下商品失败
+// 305: 归还拍卖保证金到个人余额失败
+// 306：归还拍卖保证金到个人余额纪录资金流水失败
+// 401: 增加保证金报名人数失败
+// 402: 增加保证金纪录失败
+// 403: 退还保证金记录失败
+// 404: 扣除保证金个人余额失败
+
+	public function index($payid){
 		if(is_login()) {
-			$db = D('cart');
+			if(empty($payid)) {
+				$payid = I('payid');
+			}
+			$db = D('Home/AccountGoods');
+			$map['payid'] = $payid;
 			$map['uid'] = get_temp_uid();
 			$list = $db->where($map)->relation(true)->select();
 			if(!empty($list)) {
@@ -49,7 +54,7 @@ class PayController extends Controller {
 			$score = floor($score / 100) * 100;
 			$user['score'] = $score;
 			$this->assign('account', $user);
-	    	$this->assign('title', '结算支付');
+	    		$this->assign('title', '结算支付');
 			layout(false);
 			$this->display();
 		} else {
@@ -61,7 +66,11 @@ class PayController extends Controller {
 		$total = 0;
 		foreach($list as $cart) {
 			if($cart['type'] == 3) {
-				$total += intval($cart['paimai']['lijijia']);
+				if($cart['isbz'] == 1) { // 保证金
+					$total += intval($cart['paimai']['baozhengjin']);
+				} else {
+					$total += intval($cart['paimai']['lijijia']);
+				}
 			} else {
 				$total += intval($cart['good']['danjia']) * intval($cart['count']) ;
 			}
@@ -87,313 +96,246 @@ class PayController extends Controller {
 	}
 	
 	/**
-	 * 第三方支付
+	 * 创建预支付订单
 	 */
-//	public function thirdpay() {
-//		if(IS_POST) {
-//			vendor( "PingppSDK.init");
-//			
-//			$params = json_decode(file_get_contents('php://input'));
-//			if(!($params->third > 0) || empty($params->channel)) {
-//				echo $params->third;
-//				exit();
-//			}
-//			
-//			$amount = $params->third;
-//			$channel = $params->channel;
-//			$orderNo = md5(time());
-//			session('_trade_no_', $orderNo);
-//			
-//			session($orderNo, array(
-//				'money'			=> $params->money,
-//				'third'			=> $params->third,
-//				'score'			=> $params->score,
-//				'bgid'			=> $params->bgid,
-//			));
-//			
-//			$extra = array();
-//      		switch ($channel) {
-//	            	case 'alipay_wap' :
-//	                $extra['success_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('thirdpaysuccess', '', '');
-//					$extra['cancel_url'] = 'http://' . $_SERVER['HTTP_HOST'] . U('cancel', '', '');
-//	                break;
-//			}
-//			\Pingpp\Pingpp::setApiKey('sk_test_48SSW5e1GqDKv9qnP8vLevLC');
-//			try {
-//				$ch = \Pingpp\Charge::create(
-//					array(
-//						'subject' 		=> 'Your Subject',
-//						'body' 			=> 'Your Body',
-//						'amount' 		=> $amount,
-//						'order_no' 		=> $orderNo,
-//						'currency' 		=> 'cny',
-//						'extra' 		=> $extra,
-//						'channel' 		=> $channel,
-//       				'client_ip' 		=> get_client_ip(),
-//       				'app' => array('id' => 'app_5K8yzLfvnT4Gaj1S')
-//					)
-//				);
-//           	echo $ch;
-//			 	exit;
-//			} catch (\Pingpp\Error\Base $e) {
-//	            header("Content-type:text/html;charset=utf-8");
-//	            echo($e->getHttpBody());
-//	        }
-//		}
-//	}
-
-	// 第三方支付成功页面
-	public function thirdpaysuccess() {
-		layout(false);
-		$tradeNo = I('request.out_trade_no');
-		$result = I('request.result');
-		if($result != 'success') {
-			$this->assign('status', 18);
-			$this->display('error');	
-		} else if($tradeNo == session('_trade_no_') && session("?" . $tradeNo)) {
-			session('_trade_no_', null);
-			$_pay = session($tradeNo);
-			$status = $this->pay(false, $_pay);
-			if($status == 0) {
-				$this->display('success');	
-			} else { // TODO: 失败了没有机制
-				$this->assign('status', $status);
-				$this->display('error');	
+	public function createPrePay() {
+		if(is_login()) {
+			$adb = M('account');
+			$cdb = D('cart');
+			$agdb = M('AccountGoods');
+			$result['status'] = -1;
+			$adb->startTrans();
+			$uid = get_temp_uid();
+			$payid = \Org\Util\String::keyGen();
+			$accountData = array(
+				'payid'			=> $payid,
+				'uid'			=> $uid,
+				'type'			=> -1,
+				'status'			=> 0
+			);
+			if($adb->add($accountData) !== FALSE) {
+				$map['uid'] = $uid;
+				$list = $cdb->where($map)->select();
+				$result['status'] = 0;
+				$result['message'] = '创建$accountData成功';
+				// 复制购物车
+				foreach($list as $cart) {
+					$cart['payid'] = $payid;
+					if($agdb->add($cart) === FALSE) {
+						$result['status'] = -1;
+						$result['message'] = '复制cart成功';
+						break;
+					}
+				}
+				
+				// 清空购物车
+				if($result['status'] == 0 && $cdb->where($map)->delete() === FALSE) {
+					$result['status'] = -1; // 失败
+					$result['message'] = $cdb->getLastSql();
+				}
 			}
-			session($tradeNo, null);
-		} else {
-			$this->assign('status', 19);
-			$this->display('error');	
-		}
-	}
-	
-	/**
-	 * 本地支付入口
-	 */
-	public function localpay() {
-		if(IS_POST) {
-			if(is_login()) {
-				$_pay = array(
-					'money'				=> intval($_POST['money']),
-					'score'				=> intval($_POST['score']),
-					'third'				=> intval($_POST['third']),
-					'bgid'				=> $_POST['bgid'],
-				);
-				$status = $this->pay(true, $_pay);
-				$this->ajaxReturn($status);
+			
+			if($result['status'] == 0) {
+				$adb->commit();
+				$result['rst'] = $payid;
+				empty_cart();
 			} else {
-				$this->ajaxReturn(1);
+				$adb->rollback();
+			}
+		} else { // 未登录
+			$result['status'] = -2;
+		}
+		$this->ajaxReturn($result, 'JSON');
+	}
+
+	// 修改预支付订单的金额、积分、第三方金额
+	function updatePrePay($payid, $money, $score, $thrid) {
+		$status = $this->checkPrePay($payid, $money, $score, $thrid);
+		if($status == 0) {
+			$agdb = M('Account');
+			$map['uid'] = get_temp_uid();
+			$map['payid'] = $payid;
+			$money = (float)$money;
+			$score = (int)$score;
+			$thrid = (float)$thrid;
+			$data = array(
+				'money'			=> $money, // 预使用余额
+				'score'			=> $score, // 预使用积分
+				'thrid'			=> $thrid  // 预第三方支付金额
+			);
+			if($agdb->where($map)->save($data) === FALSE) {
+				$status = 104; // 修改预支付订单失败
 			}
 		}
+		return $status;
 	}
 	
-	/**
-	 * 普通商品和立即揭榜商品结算
-	 */
-	private function pay($needCheckThirdPay, $_pay) {
-		$status = 0;
+	// 检查支付是否合法
+	function checkPrePay($payid, $money, $score, $thrid, $list = null) {
 		$uid = get_temp_uid();
 		$udb = M('member');
-		$udb->startTrans();
+		
 		$account = $udb->field('uid, money,score')->find($uid);
 		$account['money'] = intval($account['money']);
 		$account['score'] = intval($account['score']);
-		if($_pay['bgid']) { // 缴纳保证金
-			$status = $this->doPayBaozhengjin($needCheckThirdPay, $account, $_pay);
-		} else { // 购买商品
-			$cdb = D('cart');
-			$map['uid'] = get_temp_uid();
+		
+		if(empty($list)) {
+			$agdb = D('Home/AccountGoods');
+			$map['uid'] = $uid;
+			$map['payid'] = $payid;
 			$list = $cdb->where($map)->relation(true)->select();
-			if(!empty($list)) {
-				$total = $this->total($list);
-				if($_pay['money'] + $_pay['third'] + ($_pay['score'] / 100) < $total) {
-					$status = 16;  // 付款金额不对
-				} else if($account['score'] < $_pay['score']) {
-					$status = 24;  // 积分不足
-				} else if($account['money'] < $_pay['money']) {
-					$status = 14;  // 余额不足
-				} else if($needCheckThirdPay && $_pay['third'] > 0) {
-					$status = 15;  // 需要第三方支付
+		}
+		$total = $this->total($list);
+		if($account['money'] < $money) {
+			return 101;  // 余额不足
+		} if($account['score'] < $score) {
+			return 102;  // 积分不足
+		} else if($money + $thrid + ($score / 100) < $total) {
+			return 103;  // 付款金额不对
+		}
+		return 0;
+	}
+	
+	// 支付订单
+	function pay($payid) {
+		$adb = M('Account');
+		$adb->startTrans();
+		$status = $this->doPay($payid);
+		if($status == 0) {
+			$adb->commit();
+		} else {
+			$adb->rollback();
+		}
+		return $status;
+	}
+
+	// 支付订单
+	function doPay($payid) {
+		$udb = M('Member');
+		$adb = M('Account');
+		$msdb = M('MemberScore');
+		$agdb = D('Home/AccountGoods');
+		
+		$status = 0;
+		$uid = get_temp_uid();
+		$amap['uid'] = $uid;
+		$amap['payid'] = $payid;
+		
+		// 第一步 查询所购商品
+		$list = $agdb->where($amap)->relation(true)->select();
+		
+		// 第二步 检测余额是否足够 
+		$adata = $adb->where($amap)->find();
+		$money = (float)$adata['money'];  // 余额
+		$score = (int)$adata['score'];    // 积分
+		$third = (float)$adata['third'];  // 第三方支付金额
+		$status = $this->checkPrePay($payid, $money, $score, $thrid, $list);
+		if($status != 0) {
+			return $status;
+		}
+		
+		// 第三步 结算商品
+		for($list as $cart) {
+			$goodsType = intval($cart['type']);
+			if($goodsType == 3) { // 拍卖
+				if(intval($cart['isbz'] == 1)) { // 保证金
+					$status = $this->doPayBaozhengjin($cart['paimai']['gid'], $third);
+				} else {
+					// 立即拍卖出价购买
+					$status = $this->paimai($cart);
 				}
-				if($status == 0) {
-					$status = $this->doPay($list, $account, $_pay);
-				}
-				if($status == 0) {
-					// 清空购物车
-					$cdb->where('uid='.$account['uid'])->delete();
-					empty_cart();
-				}				
-			} else {
-				$status = 2; // 查询购物车失败
+			} else { // 秒杀
+				$status = $this->miaosha($cart);
+			}
+			if($status != 0) {
+				return $status;
 			}
 		}
 		
-		if($status == 0) {
-			$udb->commit();
-		} else {
-			$udb->rollback();
+		// 第四步 扣除个人余额
+		$member = array(
+			'money'				=> array('exp', '`money` - '.$money),
+			'score'				=> array('exp', '`score` + '.$third),// 第三方支付增加消费积分(1:1)
+		);
+		if($udb->where(array('uid' => $uid))->save($account) === FALSE) {
+			return 105; // 扣除个人余额失败
 		}
 		
-		return $status;
+		// 第五步 增加消费纪录流水
+		$msdata = array(
+			'uid'			=> $uid,
+			'scoresource'	=> '购买商品',
+			'score'			=> $third,
+		);
+		if($msdb->add($msdata) === FALSE) {
+			return 106; // 增加消费纪录流水失败
+		}
+		
+		// 第六步 修改account状态为1
+		if($adb->where($amap)->save(array('status'	=> 1)) === FALSE) {
+			return 107; // 修改预付订单状态为已支付－修改失败
+		}
+		
+		return 0;
+		
 	}
 	
 	/**
 	 * 结算保证金
 	 */
-	private function doPayBaozhengjin($needCheckThirdPay, $account, $_pay) {
+	private function doPayBaozhengjin($gid, $third, $money) {
+		$uid = get_temp_uid();
 		$pdb = M('paimai');
 		$adb = M('account');
 		$udb = M('member');
-		$pmap['gid'] = $_pay['bgid'];
+		$pmap['gid'] = $gid;
 		$pmap['status'] = array('lt', 2);
 		$good = $pdb->where($pmap)->field('gid,baozhengjin, baomingrenshu')->find();
 		if($good) {
 			// 商品还存在，还没结束			
 			// 保存商品状态
-			$data['gid'] = $_pay['bgid'];
+			$data['gid'] = $gid;
 			$data['status'] = 1;
 			// 增加报名人数
 			$data['baomingrenshu'] = intval($good['baomingrenshu']) + 1;
-			if($pdb->save($data)) {
-				echo $pdb->getLastSql();
-				return 25;
-			}
-			
-			// 验证
-			$total = intval($good['baozhengjin']);
-			if($_pay['money'] + $_pay['third'] < $total) {
-				return 16;  // 付款金额不对
-			} else if($account['money'] < $_pay['money']) {
-				return 14;  // 余额不足
-			} else if($needCheckThirdPay && $_pay['third'] > 0) {
-				return 15;  // 需要第三方支付
-			}
-				
-			// 增加消费记录
-			$adata = array(
-				'uid'			=> $account['uid'],
-				'type'			=> -1, // 付款
-				'money'			=> $_pay['money'], // 余额
-				'third'			=> $_pay['third'], // 第三方支付类型
-				'content' 		=> '缴纳保证金',
-			);
-			if($adb->add($adata)) {
-				// 扣除个人账户余额
-				$account['money'] -= $_pay['money'];
-				$account['score'] += $_pay['third']; // 增加消费积分
-				if(!$udb->save($account)) {
-					return 12; // 扣除个人余额失败
-				}
-				
-				if($_pay['third'] > 0) {
-					// 增加消费积分记录
-					$msdb = M('MemberScore');
-					$msdata = array(
-						'uid'			=> $account['uid'],
-						'scoresource'	=> '缴纳拍卖保证金',
-						'score'			=> $_pay['third'],
-					);
-					if(!$msdb->add($msdata)) {
-						return 23; // 增加消费积分失败
-					}
-				}
-			} else {
-				return 11; // 增加消费记录失败
+			if($pdb->save($data) === FALSE) {
+				return 401; // 增加报名人数失败
 			}
 			
 			// 增加缴纳保证金记录
 			$mpdb = M('MemberPaimai');
-			$mpdata['uid'] = $account['uid'];
+			$mpdata['uid'] = $uid;
 			$mpdata['gid'] = $good['gid'];
 			$mpdata['flag'] = 0;
-			$mpdata['money'] = $total;
-			if(!$mpdb->add($mpdata)) {
-				return 17; // 保存保证金记录失败
+			$mpdata['money'] = $good['baozhengjin'];
+			if($mpdb->add($mpdata) === FALSE) {
+				return 402; // 增加保证金纪录失败
 			}
-		} else if($_pay['third'] > 0) {
+		} else if($third > 0) {
 			// 商品已结束
 			// 第三方支付的钱转到余额
 			// 增加消费记录
 			$adata = array(
-				'uid'			=> $account['uid'],
-				'type'			=> 1, // 付款
-				'third'			=> $_pay['third'], // 第三方支付类型
-				'content' 		=> '退还商品保证金到余额',
+				'uid'			=> $uid,
+				'type'			=> 1, // 充值
+				'third'			=> $third, // 第三方支付类型
+				'content' 		=> '退还商品保证金到余额，商品id['.$gid.']',
 			);
-			if($adb->add($adata)) {
-				// 扣除个人账户余额
-				$account['money'] += $_pay['money'];
-				if(!$udb->save($account)) {
-					return 12; // 扣除个人余额失败
-				}
-			} else {
-				return 11; // 增加消费记录失败
+			if($adb->add($adata) == FALSE) {
+				return 403; // 增加消费记录失败
+			}
+		
+			// 退还个人账户余额
+			$member = array('money'		=> array('exp', '`money` + '.$third));
+			if($udb->where(array('uid'	=> $uid))->save($member) == FALSE) {
+				return 404; // 扣除个人余额失败
 			}
 		}
 		add_renci(1);
 		return 0;
 	}
 	
-	/**
-	 * 执行结算操作
-	 */
-	private function doPay($list, $account, $_pay) {
-		$adb = M('account');
-		$pdb = M('MemberPaimai');
-					
-		foreach($list as $cart) {
-			if(intval($cart['type']) == 3) {
-				// 拍卖-立即
-				$status = $this->paimai($cart, $account);
-			} else {
-				// 秒杀
-				$status = $this->miaosha($cart, $account);
-			}
-			
-			if($status != 0) {
-				return $status;
-			}
-		}
-		
-		// 增加消费记录
-		$adata = array(
-			'uid'			=> $account['uid'],
-			'type'			=> -1, // 付款
-			'money'			=> $_pay['money'],	// 余额
-			'score'			=> $_pay['score'],  // 积分
-			'third'			=> $_pay['third'],  // 第三方支付
-			'third_type'		=> $_pay['thirdType'], // 第三方支付类型
-			'content' => '购买商品',
-		);
-		if($adb->add($adata)) {
-			$udb = M('member');
-			// 扣除个人账户余额
-			$account['money'] -= $_pay['money'];
-			// 第三方支付增加消费积分(1:1)
-			$account['score'] += $_pay['third'] - $_pay['score'];
-			if(!$udb->save($account)) {
-				return 12; // 扣除个人余额失败
-			}
-			
-			if($_pay['third'] > 0) {
-				// 增加消费积分记录(1:1)
-				$msdb = M('MemberScore');
-				$msdata = array(
-					'uid'			=> $account['uid'],
-					'scoresource'	=> '购买商品',
-					'score'			=> $_pay['third'],
-				);
-				if(!$msdb->add($msdata)) {
-					return 23; // 增加消费积分失败
-				}
-			}
-		} else {
-			return 11; // 增加消费记录失败
-		}
-		return 0;
-	}
-	
-	function miaosha($cart, $account) {
+	function miaosha($cart) {
 		// 更新秒杀主记录
 		$mdb = M('Miaosha');
 		$good = $mdb->find($cart['good']['gid']);
@@ -402,18 +344,18 @@ class PayController extends Controller {
 		$good['shengyurenshu'] = $good['zongrenshu'] - $good['canyurenshu'];
 		
 		if(intval($good['status']) == 2) {
-			return 3;  // 商品已经完结
+			return 201;  // 商品已经完结
 		}
 			
 		$mmdb = M('MemberMiaosha');
 		// 添加用户秒杀记录
-		$data['uid'] = $account['uid'];
+		$data['uid'] = $cart['uid'];
 		$data['gid'] = $cart['good']['gid'];
 		$data['count'] = intval($cart['count']);
 		$data['qishu'] = $good['qishu'];
 		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果  （已废弃）
-		$mid = $mmdb->add($data);
-		if($mid) {
+		$mid = $mmdb->add($data); // 增加秒杀纪录
+		if($mid !== FALSE) {
 			// 生成购买记录随机码
 			$codes = array();
 			for($i = 0; $i < $good['zongrenshu']; ++$i) {
@@ -443,12 +385,12 @@ class PayController extends Controller {
 					'mid'		=> $mid, // 购买记录主表ID
 					'gid'		=> $good['gid'],
 					'qishu'		=> $good['qishu'],
-					'uid'		=> $account['uid'],
+					'uid'		=> $cart['uid'],
 					'pcode'		=> $code, // 生成随机码
 				);
 				
-				if(!$cdb->add($cdata)) {
-					return 13; // 生成客户随即码失败
+				if($cdb->add($cdata) == FALSE) {
+					return 202; // 生成客户随即码失败
 				}
 			}
 			
@@ -465,7 +407,7 @@ class PayController extends Controller {
 				
 				$query = $mdb->query($sql);
 				if(empty($query)) {
-					return 7; // 计算结果失败
+					return 203; // 计算结果失败
 				}
 				
 				$prize = intval($query[0]) % $good['canyurenshu'];
@@ -473,7 +415,7 @@ class PayController extends Controller {
 				$cmap['qishu'] = $good['qishu'];
 				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prize + 1, 1)->find();
 				if(!$presult) {
-					return 8; // 获取中奖用户失败
+					return 204; // 获取中奖用户失败
 				}
 				
 				$good['status'] = 2;
@@ -483,7 +425,7 @@ class PayController extends Controller {
 				
 				$hdb = M('MiaoshaHistory');
 				if(!$hdb->add($good)) {
-					return 10; // 保存历史失败
+					return 205; // 保存历史失败
 				}
 				
 				// 更新期数
@@ -514,94 +456,95 @@ class PayController extends Controller {
 				return 0;
 			}
 			
-			return 9; // 保存主表失败
+			return 206; // 保存主表失败
 		}
-		return 5; // 增加秒杀记录失败
+		return 207; // 增加秒杀记录失败
 	}
 
-	function paimai($cart, $account) {
+	function paimai($cart) {
+		$adb = M('account');
+		$mpdb = M('MemberPaimai');
+		$mdb = M('member');
+		$pdb = M('paimai');
+		
 		$good = $cart['paimai'];
 		$lijijia = intval($good['lijijia']);
 		$good['chujiacishu'] = intval($good['chujiacishu']);
 		$status = intval($good['status']);
-		$mpdb = M('MemberPaimai');
-		if($lijijia > 0) {
-			if($status < 2) {
-				// 增加出价记录
-				$mpdb = M('MemberPaimai');
-				$mpdata['uid'] = $account['uid'];
-				$mpdata['gid'] = $good['gid'];
-				$mpdata['flag'] = 2; // 立即揭标
-				$mpdata['money'] = $lijijia;
-				if($mpdb->add($mpdata)) {
-					$pdb = M('paimai');
-					$good['chujiacishu']++;
-					$good['zuigaojia'] = $lijijia;
-					$good['chujiazhe'] = $account['uid'];
-					$good['status'] = 2; // 商品已结束
-					$good['liji'] = 1; // 立即拍下的商品
-					$good['prizeuid'] = $account['uid']; // 中奖者
-					if($pdb->save($good)) {
-						// 归还保证金
-						$mpdb = M('MemberPaimai');
-						$adb = M('account');
-						$mdb = M('member');
-						$mpfilter['gid'] = $good['gid'];
-						$mpfilter['flag'] = 0; // 保证金
-						// 立即拍，本人须退还保证金
-//						$mpfilter['uid'] = array('neq', $good['prizeuid']); // 过滤拍得者
-						$records = $mpdb->where($mpfilter)->select();
-						if(!empty($records)) {
-							foreach($records as $record) {
-								// 将保证金退还给个人余额
-								$member = $mdb->field('uid, money')->find($record['uid']);
-								if($member) {
-									$member['money'] = intval($member['money']) + intval($record['money']);
-									if(!$mdb->save($member)) {
-										return 23;
-									}
-								}
-								
-								// 记录资金流水
-								$adata = array(
-									'uid'			=> $record['uid'],
-									'type'			=> 1, // 退款
-									'money'			=> $record['money'],	// 余额
-									'content' 		=> '退还保证金',
-								);
-								
-								if(!$adb->add($adata)) {
-									return 24;
-								}
-							}
-						}
-						return 0;
-					} else {
-						return 22; // 保存最高价失败
-					}
-				} else {
-					return 21; // 保存出价记录失败
-				}
-			} else {
-				return 3; // 商品已结束
-			}
-		} else {
-			return 20; // 商品不允许立即价
+		if($lijijia == 0) {
+			return 301; // 商品不允许立即价
 		}
+		if($status >= 2) {
+			return 302; // 商品已结束
+		}
+		
+		// 增加出价记录
+		$mpdata['uid'] = $cart['uid'];
+		$mpdata['gid'] = $good['gid'];
+		$mpdata['flag'] = 2; // 立即揭标
+		$mpdata['money'] = $lijijia;
+		if($mpdb->add($mpdata) === FALSE) {
+			return 303; // 增加出价纪录失败
+		}
+		
+		$good['chujiacishu']++;
+		$good['zuigaojia'] = $lijijia;
+		$good['chujiazhe'] = $cart['uid'];
+		$good['status'] = 2; // 商品已结束
+		$good['liji'] = 1; // 立即拍下的商品
+		$good['prizeuid'] = $cart['uid']; // 中奖者
+		if($pdb->where(array('gid' => $good['gid']))->save($good) === FALSE) {
+			return 304; // 立即拍下商品失败
+		}
+		
+		// 归还保证金
+		$mpfilter['gid'] = $good['gid'];
+		$mpfilter['flag'] = 0; // 保证金
+		// 立即拍，本人须退还保证金
+		// $mpfilter['uid'] = array('neq', $good['prizeuid']); // 过滤拍得者
+		$records = $mpdb->where($mpfilter)->select();
+		if(!empty($records)) {
+			foreach($records as $record) {
+				// 将保证金退还给个人余额
+				if($mdb->where(array('uid' => $record['uid']))->save(array('money'	=> array('exp', '`money` + '.$record['money']))) === FALSE) {
+					return 305; // 归还拍卖保证金到个人余额失败
+				}
+				
+				// 记录资金流水
+				$adata = array(
+					'uid'			=> $record['uid'],
+					'type'			=> 1, // 退款
+					'money'			=> $record['money'],	// 余额
+					'content' 		=> '退还保证金,商品id['.$good['gid'].']',
+				);
+				
+				if($adb->add($adata) !== FALSE) {
+					return 306;  // 归还拍卖保证金到个人余额纪录资金流水失败
+				}
+			}
+		}
+		return 0;
 	}
 
-	public function success() {
-		layout(false);
-		$this->display();
-	}
-	
-	public function cancel() {
-		layout(false);
-		$this->display();
-	}
-	
-	public function error() {
-		layout(false);
-		$this->display();
+	public function topay($payid) {
+		$third = (float)$_POST["third"];  // 第三方付款
+		$money = (float)$_POST["money"]; // 余额支付
+		$score = (int)$_POST["score"]; // 积分支付
+		
+		$result['status'] = $this->updatePrePay($payid, $money, $score, $thrid);
+		if($status != 0) { // 计算余额失败
+			$this->ajaxReturn($result, 'JSON');
+			return;
+		}
+		
+		if($thrid > 0) { // 需要第三方支付
+			// TODO: 第三方支付接口
+		} else { // 本地直接支付
+			$result['status'] = $this->pay($payid);
+			if($result['status'] == 0) {
+				$this->redirect('支付成功', 'success');
+			}
+		}
+		$this->ajaxReturn($result, 'JSON');
 	}
 }

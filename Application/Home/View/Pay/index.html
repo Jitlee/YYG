@@ -75,14 +75,15 @@
 			</footer>
 		</div>
 		<!--描述：第三方支付-->
-		<div style="display: none;">
-			<form method="post" action="{:U('/P/Pay/jubaopay', '', '')}" id="payForm">
+		<!--<div style="display: none;">
+			<form method="post" action="{:U('/P/Pay/jubaopay', '', '')}/{:I('payid')}" id="payForm">
 					<input type="hidden" id="amount" name="amount" value="">
+						<input type="hidden" id="amount" name="amount" value="">
 					<input type="hidden" id="goodsName" name="goodsName" value="goodsName">
 					<input type="hidden" id="remark" name="remark" value=""/>
 					<input type="hidden" id="paytype" name="paytype" value="wap"/>
 			</form>
-		</div>
+		</div>-->
 	</body>
 
 </html>
@@ -133,31 +134,45 @@
 		var zhifuButton = $("#zhifuButton").click(function(){
 			// 无需第三方付款
 			zhifuButton.prop("disabled", true);
-			if(_total > 0) {
-				thirdPay();
-			} else {
-				localPay();
-			}
-		});
-		
-		function localPay() {
-			$.post("{:U('localpay','','')}", {
+			$.post("{:U('Pay/topay')}/{:I('payid')}", {
 				score: _score, // 福分支付金额
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
-			}, function(result) {
-				if(result == 0) {
-					window.location.href ="{:U('success','','')}";
+			} function(result) {
+				if(result.status == 0) {
+					// 支付成功
 				} else {
-					new Android_Toast({content: "支付失败,错误代码：" + result});
+					alert("支付失败，状态码: " + result.status);
 				}
-				zhifuButton.prop("disabled", false);
 			});
-		}
+		});
 		
-		function thirdPay() {
-			$("#amount").val(_total);
-			document.getElementById('payForm').submit();
+//		function localPay() {
+//			$.post("{:U('localpay','','')}", {
+//				score: _score, // 福分支付金额
+//				money: _money,  // 余额支付金额
+//				third: _total // 第三方支付金额
+//			}, function(result) {
+//				if(result == 0) {
+//					window.location.href ="{:U('success','','')}";
+//				} else {
+//					new Android_Toast({content: "支付失败,错误代码：" + result});
+//				}
+//				zhifuButton.prop("disabled", false);
+//			});
+//		}
+		
+//		function thirdPay() {
+//			$.post("{:U('/P/Pay/jubaopay', '', '')}/{:I('payid')}", {
+//				amount: _total,
+//				money: _money,
+//				score: _score
+//			}, function() {
+//				
+//			});
+			
+//			$("#amount").val(_total);
+//			document.getElementById('payForm').submit();
 //			pingpp_one.init({
 //	            app_id:'app_5K8yzLfvnT4Gaj1S',                     //该应用在ping++的应用ID
 //	            order_no:"0",                     //订单在商户系统中的订单号
@@ -196,6 +211,6 @@
 //	                });
 //	            }
 //	        });
-		}// end thirdPay
+//		}// end thirdPay
 	});
 </script>
