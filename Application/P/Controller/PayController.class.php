@@ -71,9 +71,28 @@ class PayController extends \Home\Controller\PayController {
 		   $orderNo=$jubaopay->getEncrypt("orderNo");
 		   $result="payid=	$payid	state=$state 	
 amount=$amount	orderNo=$orderNo ";
-		   if($state == '2')//成功
+		   if($state == '2')//成功 充值
 			{
-			   	
+	   			$adb = M('account');
+				$account = $adb->field('type,uid,third,status')->find($payid);
+				$paytype=$account["type"];
+				$third= floatval($account["third"]);
+				$status=(int)$account["status"];
+				if($paytype==1 && $status==0)
+				{
+					$uid=$account['uid'];
+					//增加金额
+					$db = M('member');
+					$user = $db->field('money,score')->find($uid);
+					$user['money'] = intval($user['money'])+$third;
+					
+					if(!$db->save($user)) {						 
+					}
+					$account["status"]=1;
+					if(!$adb->save($account)) {
+												 
+					}
+				}
 			}
 			else//失败
 			{
@@ -133,56 +152,76 @@ amount=$amount	orderNo=$orderNo ";
 			
 			$goodsName=$_POST["goodsName"];
 			$remark=$_POST["remark"];
-			$paytype=$_POST["paytype"];
-			
+			$paytype=$_POST["paytype"]; //rechargepc
+			$accountpaytype=-1;
 			//$orderNo = md5(time());
 			$orderNo=$payid;
 			session('_trade_no_', $orderNo);
-			session($orderNo, array(
+			if($paytype=="rechargepc" || $paytype=="rechargewap")//流值
+			{
+				$accountpaytype=1;
+			}
+			else if($paytype=="wap" || $paytype=="pc") //消费
+			{
+				$accountpaytype=-1;
+			}
+			
+			$user = session('user');
+			$uid = $user['uid'];
+		
+
+		
+			$data=	array(
+				'payid'			=>$payid
+				'uid'			=> $uid
 				'money'			=> $accountmoney,
 				'third'			=> $amount,
 				'score'			=> $accountscore,
 				'bgid'			=> $accountbgid,
+				'paytype'		=> 1 ,				//
+				'status'		=> 0
 			));
 			//写入到 account 表。
+			$adb = M('account');
+			if($adb->add($data)) {			
+				$payerName="zs001";//$_POST["payerName"];
+				$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
+				$callBackURL=C("jubaopay.callBackURL");//"http://pay.xxx.com/notify.php";  // 可在商户后台设置
+				$payMethod= "WANGYIN";//$_POST["payMethod"];
+				
+				//测试
+				$amount=0.05;
+				
+				//////////////////////////////////////////////////////////////////////////////////////////////////
+				 //商户利用支付订单（payid）和商户号（mobile）进行对账查询
+				$jubaopay=new \jubaopay('jubaopay.ini');
+				$jubaopay->setEncrypt("payid", $payid);
+				$jubaopay->setEncrypt("partnerid", $partnerid);
+				$jubaopay->setEncrypt("amount", $amount);
+				$jubaopay->setEncrypt("payerName", $payerName);
+				$jubaopay->setEncrypt("remark", $remark);
+				$jubaopay->setEncrypt("returnURL", $returnURL);
+				$jubaopay->setEncrypt("callBackURL", $callBackURL);
+				$jubaopay->setEncrypt("goodsName", $goodsName);
+				
+				//对交易进行加密=$message并签名=$signature
+				$jubaopay->interpret();
+				$message=$jubaopay->message;
+				$signature=$jubaopay->signature;			 
+			 
+				$this->assign("message",$message);
+				$this->assign("signature",$signature);
+				$this->assign("payMethod",$payMethod);
 			
-			$payerName="zs001";//$_POST["payerName"];
-			$returnURL=C("jubaopay.returnURL");//"http://pay.xxx.com/result.php";    // 可在商户后台设置
-			$callBackURL=C("jubaopay.callBackURL");//"http://pay.xxx.com/notify.php";  // 可在商户后台设置
-			$payMethod= "WANGYIN";//$_POST["payMethod"];
-			
-			//测试
-			$amount=0.05;
-			
-			//////////////////////////////////////////////////////////////////////////////////////////////////
-			 //商户利用支付订单（payid）和商户号（mobile）进行对账查询
-			$jubaopay=new \jubaopay('jubaopay.ini');
-			$jubaopay->setEncrypt("payid", $payid);
-			$jubaopay->setEncrypt("partnerid", $partnerid);
-			$jubaopay->setEncrypt("amount", $amount);
-			$jubaopay->setEncrypt("payerName", $payerName);
-			$jubaopay->setEncrypt("remark", $remark);
-			$jubaopay->setEncrypt("returnURL", $returnURL);
-			$jubaopay->setEncrypt("callBackURL", $callBackURL);
-			$jubaopay->setEncrypt("goodsName", $goodsName);
-			
-			//对交易进行加密=$message并签名=$signature
-			$jubaopay->interpret();
-			$message=$jubaopay->message;
-			$signature=$jubaopay->signature;			 
-		 
-			$this->assign("message",$message);
-			$this->assign("signature",$signature);
-			$this->assign("payMethod",$payMethod);
-		
-			layout(false);
-			if($paytype=="wap")
-			{
-				$this->display("jubaopaywap");
-			}
-			else
-			{
-				$this->display("jubaopaypc");
+				layout(false);
+				if($paytype=="wap" || $paytype=="rechargewap")
+				{
+					$this->display("jubaopaywap");
+				}
+				else if($paytype=="rechargepc" || $paytype=="pc")
+				{
+					$this->display("jubaopaypc");
+				}
 			}
 			
 	}
