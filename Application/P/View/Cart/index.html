@@ -180,7 +180,16 @@
 				$("#but_ok").click(function() {
 					var money = Number(moenyCount.text());
 					if(money > 0) {
-						window.location.href = "{:U('Pay/index', '', '')}";
+						// 预创建订单
+						$.post("{:U('Pay/createPrePay')}", null, function(result) {
+							if(result.status == 0) {
+								window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+							} else if(result.status == -2) {
+								alert("请先登录");
+							} else {
+								alert("预创建订单失败");
+							}
+						});
 					}
 				});
 			});

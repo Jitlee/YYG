@@ -23,9 +23,9 @@ class PayController extends \Home\Controller\PayController {
 		count_cart(0);
 	}
 	
-	public function index(){
+	public function index($payid){
 		if(is_login()) {
-			parent::index();
+			parent::index($payid);
 		} else {
 			$this->redirect('P/Main/login/'.encode('Pay/index', '', ''));
 		}
