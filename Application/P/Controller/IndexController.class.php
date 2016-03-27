@@ -5,7 +5,7 @@ class IndexController extends CommonController {
 	public function index(){
 		
 		run_task();
-    		$this->assign('title', '壹元夺宝');
+    		$this->assign('title', '壹圆购物');
 		$sdb = M('slide');
 		$slides = $sdb->select();
 		$this->assign('slides', $slides);

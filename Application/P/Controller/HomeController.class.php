@@ -11,7 +11,7 @@ class HomeController extends CommonController {
 	}
 		
 	public function index(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		
 		$userinfo =$Model->where($filter)->find();
@@ -23,9 +23,9 @@ class HomeController extends CommonController {
 		$this->assign('data', $userinfo);
 		$this->display();
     }
-	/*******我的夺宝********/
+	/*******我的购物********/
 	public function userbuylist(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }
 	public function pageAllMR($pageSize, $pageNum) {
@@ -56,7 +56,7 @@ class HomeController extends CommonController {
 	}
 	/*	中奖记录	*/
 	public function orderlist(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }
 	public function pageAllzj($pageSize, $pageNum) {
@@ -166,10 +166,10 @@ class HomeController extends CommonController {
 			$this->display();
 		}
     }
-	/*******end我的夺宝********/
+	/*******end我的购物********/
 	/*******邀请管理********/
 	public function invitefriends($pageSize=10, $pageNum=1){		
-    	$this->assign('title', '壹元夺宝');		
+    	$this->assign('title', '壹圆购物');		
 		$db = M('member');
 		$filter['yaoqing'] = session("_uid");
 		
@@ -186,7 +186,7 @@ class HomeController extends CommonController {
     }
 	
 	public function commissions(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }
 	
@@ -240,7 +240,7 @@ class HomeController extends CommonController {
 		}
 		else
 		{		
-	    	$this->assign('title', '壹元夺宝');
+	    	$this->assign('title', '壹圆购物');
 	    	$data=session('wxUserinfo');
 			$this->assign("data", $data);
 			$this->display();
@@ -275,7 +275,7 @@ class HomeController extends CommonController {
 	
 	/*******账户管理********/
 	public function userbalance($pageSize=20, $pageNum=1){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
     	$data=session('wxUserinfo');
 		$this->assign("data", $data);
 		$this->assign("list", $this->GetRecord($pageSize,$pageNum));
@@ -298,12 +298,12 @@ class HomeController extends CommonController {
 	}
 	
 	public function userrecharge(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }
 	/*******end账户管理********/
 	public function userscore($pageSize=20, $pageNum=1){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$data=session('wxUserinfo');
 		$this->assign("data", $data);
 		
@@ -416,7 +416,7 @@ class HomeController extends CommonController {
     }
 		
 	public function mypage(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }	
 	
@@ -445,13 +445,13 @@ class HomeController extends CommonController {
 		}
 	}
 	public function mobilechecking(){		
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$this->display();
     }	
 	
  
 	public function goodcodelist($gid,$qishu,$pageSize=100, $pageNum=1){		
-    	$this->assign('title', '夺宝码');
+    	$this->assign('title', '购物码');
 		$this->assign("list", $this->GetGoodcodelist($gid,$qishu,$pageSize,$pageNum));
 		$this->display();
     }

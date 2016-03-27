@@ -4,7 +4,7 @@ use Think\Controller;
 class IndexController extends Controller {
 	public function index(){
 		run_task();
-    		$this->assign('title', '壹元夺宝');
+    		$this->assign('title', '壹圆购物');
 		$this->assign('pid', 'home');
 		$sdb = M('slide');
 		$slides = $sdb->select();
@@ -257,7 +257,7 @@ class IndexController extends Controller {
 			$this->assign('qishu', $qishu);
 			$this->assign('username', $username);
 			$this->assign('list', $list);
-			$this->assign('title', '夺宝码列表');
+			$this->assign('title', '购物码列表');
 			layout('sublayout');
 			$this->display();
 		}
@@ -286,7 +286,7 @@ class IndexController extends Controller {
 			$this->assign('mid', $mid);
 			$this->assign('username', $username);
 			$this->assign('list', $list);
-			$this->assign('title', '夺宝码列表');
+			$this->assign('title', '购物码列表');
 			layout('sublayout');
 			$this->display();
 		}

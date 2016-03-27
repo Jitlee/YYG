@@ -4,7 +4,7 @@ class LotteryController extends CommonController {
 		
 	public function index($sort = 0, $pageNo = 1){
 		run_task();
-		$this->assign('title', '壹元夺宝');
+		$this->assign('title', '壹圆购物');
 		$num = 0;
 		$total = 0;
 		$pageSize = 10;

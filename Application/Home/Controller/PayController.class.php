@@ -632,13 +632,23 @@ class PayController extends Controller {
 		//$this->ajaxReturn($result, 'JSON');
 	}
 	
+		// 模拟创建号
+	function genPayId($length = 6 ) {
 	
+		$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$password = "";
+		for ( $i = 0; $i < $length; $i++ )
+			$password .= $chars[ mt_rand(0, strlen($chars) - 1) ];
+	
+		return $password;
+	}
 	public function jubaopay()
 	{			
 			vendor('jubaopay.jubaopay');
 				 
 //			$payid=$this->genPayId(20);
-			$partnerid=C("jubaopay.partnerid");//14061642390911131749";			
+			$partnerid=C("jubaopay.partnerid");
+						
 			$amount=$_POST["amount"];
 			$accountmoney=$_POST["accountmoney"];
 			$accountscore=$_POST["accountscore"];
@@ -696,41 +706,7 @@ class PayController extends Controller {
 				}
 				
 			}
-			
-			
-			
-//				'uid'			=> $uid,
-//				'money'			=> $accountmoney,
-//				'third'			=> $amount,
-//				'score'			=> $accountscore,
-//				'bgid'			=> $accountbgid,
-//				'paytype'		=> 1 ,				//
-//				'status'			=> 0,
-//			session('_trade_no_', $orderNo);
-//			if($paytype=="rechargepc" || $paytype=="rechargewap")//流值
-//			{
-//				$accountpaytype=1;
-//			}
-//			else if($paytype=="wap" || $paytype=="pc") //消费
-//			{
-//				$accountpaytype=-1;
-//			}
-//			
-//			$user = session('user');
-//			$uid = $user['uid'];
-		
 
-		
-//			$data=	array(
-//				'payid'			=>$payid,
-//				'uid'			=> $uid,
-//				'money'			=> $accountmoney,
-//				'third'			=> $amount,
-//				'score'			=> $accountscore,
-//				'bgid'			=> $accountbgid,
-//				'paytype'		=> 1 ,				//
-//				'status'			=> 0,
-//			);
 //			//写入到 account 表。
 //			$adb = M('account');
 //			if($adb->add($data)) {			
@@ -740,7 +716,7 @@ class PayController extends Controller {
 				$payMethod= "WANGYIN";//$_POST["payMethod"];
 				
 				//测试
-				$amount=0.05;
+				$amount=0.5;
 				
 				//////////////////////////////////////////////////////////////////////////////////////////////////
 				 //商户利用支付订单（payid）和商户号（mobile）进行对账查询
@@ -778,5 +754,16 @@ class PayController extends Controller {
 			
 	}
 
+	public function success()
+	{
+		layout(false);
+		$this->display();
+	}
+	
+	public function error()
+	{
+		layout(false);
+		$this->display();
+	}
 
 }

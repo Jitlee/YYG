@@ -21,7 +21,7 @@ class HelpController extends CommonController {
 	}
 	public function index($id=1){
     				
-    	$this->assign('title', '壹元夺宝');
+    	$this->assign('title', '壹圆购物');
 		$m = D('P/ArticleCats');
 		$cats=$m->queryByList(1);
  		

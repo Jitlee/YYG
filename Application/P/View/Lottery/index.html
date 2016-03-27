@@ -21,7 +21,7 @@
 								<img id="imgUserPhoto" src="/Public/Home/images/{$item.img}" width="50" height="50" border="0"/>
 							</a>
 							<p>获得者：<a class="blue Fb" href="{:U('Person/index', '', '')}/{$item.uid}" target="_blank">{$item.username}</a></p>
-							<p>夺宝：<em class="orange Fb">{$item.count}</em>人次</p>							
+							<p>购物：<em class="orange Fb">{$item.count}</em>人次</p>							
 						</div>
 						<div class="publishC-tit">
 							<h3><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" class="gray01">(第{$item.qishu}期){$item.title}</a></h3>
@@ -29,7 +29,7 @@
 							<p class="Announced-time gray02">揭晓时间：{$item.end_time}</p>
 						</div>
 						<div class="details">
-							<p class="fl details-Code">幸运夺宝码：<em class="orange Fb">{$data['prizecode'] + 10000001}</em></p>
+							<p class="fl details-Code">幸运购物码：<em class="orange Fb">{$data['prizecode'] + 10000001}</em></p>
 							<a class="fl details-A" href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" rel="nofollow" target="_blank">查看详情</a>
 							
 						</div>
@@ -65,7 +65,7 @@
 	</div>
 	<div class="NewpublishR">
 		<div class="Newpublishbor">
-			<div class="Rtitle gray01">TA们正在夺宝 </div>
+			<div class="Rtitle gray01">TA们正在购物 </div>
 			<div class="Rcenter buylistH">
 				<ul id="buyList" style="margin-top: 0px;">
 					<foreach name="records" item="item">
@@ -73,7 +73,7 @@
 						<a href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank" class="pic">
 							<img id="imgUserPhoto" src="{$item.thumb|default='__IMG__/prmimg.png'}" width="50" height="50" border="0"/>
 						</a>
-						<p class="Rtagou"><a class="blue" target="_blank">{$item.username}</a>刚刚夺宝了</p>
+						<p class="Rtagou"><a class="blue" target="_blank">{$item.username}</a>刚刚购物了</p>
 						<p class="Rintro"><a class="gray01" href="{:U('Index/view', '', '')}/{$item.gid}" target="_blank">{$item.title}</a></p>
 					</li>
 					</foreach>

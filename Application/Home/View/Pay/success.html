@@ -2,16 +2,88 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="author" content="m.178hui.com" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
 		<meta name="format-detection" content="telephone=no">
-		<title>支付成功</title>
-	</head>
-	<body>
-		<h4>恭喜支付成功</h4>
-		<script>
-			window.setTimeout(function() {
-				window.location.href = "{:U('Index/index', '','')}";
-			}, 2000);
-		</script>
-	</body>
+		<meta property="qc:admins" content="304107566762141336654" />
+		<meta property="wb:webmaster" content="86a35467a2bdb23f" />
+		<title>支付结果</title>
+		<link href="__CSS__/mui.min.css" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/owl.carousel.css" rel="stylesheet">
+		<link href="__FONT_ICON__" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/mobile.css" rel="stylesheet" type="text/css" />
+		<link href="__CSS__/android_toast.min.css" rel="stylesheet" type="text/css" />
+
+		<script src="__JQ__"></script>
+		<script src="__JS__/owl.carousel.min.js"></script>	
+		<script src="__JS__/mobile.js"></script>
+		
+</head>
+<body>
+<header class="mui-bar mui-bar-nav cky-bar-gray">
+	<h1 id="title" class="mui-title">支付结果</h1>
+</header>
+<div class="mui-content">
+	<h4>恭喜您，支付成功！请等待系统为您揭晓！</h4>
+	<h5 class="order-type">
+			</h5>
+	<div class="status-block">
+		<div class="status-block-img status-block-img-done">
+			
+		</div>
+	</div>
+</div>
+
+<footer class="cky-footer">
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell">			 
+			<div class="cky-order-item cky-relative">
+				您现在可以<a href="{:U('Person/miaosharecord', '', '')}" class="blue">查看购物记录</a>
+				或<a href="__MODULE__" class="blue">继续购物</a>
+			</div>		 
+		</li>
+	</ul>
+</footer>
+ 
+<style>
+.cky-footer .cky-update{position:c;right: 0px;top:2px;background-color:#FFFFFF;text-align: right;} 
+ 
+h4{color:blue; text-align: center; line-height: 40px; padding: 10px;}
+.cky-relative{ text-align: center;}
+.status-block-img {
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	height: 150px;
+	width: 150px;
+	line-height: 170px;
+	margin: auto;
+	text-align: center;
+	color: #EA5A2A;
+	font-size: 24px;
+} 
+.status-block-img-done {background-image: url(__IMG__/login_exp04.png);}
+
+.cky-footer {
+	background-color: #fff;
+	border-top: solid 1px #D5D5D5;
+	padding-left: 15px;
+	height: 44px;
+	line-height: 44px;
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	 position: absolute;
+	 bottom: 0;
+}
+.cky-footer a {
+	height: 44px;
+	line-height: 44px;
+	text-align: center;
+	width: 100px;
+	background-color: #f60;
+	color: #fff;
+} 
+</style>
+</body>
 </html>

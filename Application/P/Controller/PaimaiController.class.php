@@ -222,7 +222,7 @@ class PaimaiController extends CommonController {
 	public function article($id) {
 		layout(false);
 		
-		$db = M('article');
+		$db = M('articles');
 		$data = $db->find($id);
 		$content = htmlspecialchars_decode(html_entity_decode($data['content']));
 		$this->assign('content', $content);

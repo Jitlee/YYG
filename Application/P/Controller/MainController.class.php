@@ -43,7 +43,7 @@ class MainController extends Controller {
 			}
 			$this->ajaxReturn($result);	
     	} else  {
-	    	$this->assign('title', '壹元夺宝');
+	    	$this->assign('title', '壹圆购物');
 			$this->assign('yaoqing', $yaoqing);
 			
 			$this->display();
@@ -167,7 +167,7 @@ class MainController extends Controller {
 			$this->ajaxReturn($result);
 		} else  {
 	    	layout(false);
-	    	$this->assign('title', '壹元夺宝');
+	    	$this->assign('title', '壹圆购物');
 			$this->display();
 		}
     }
