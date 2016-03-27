@@ -468,7 +468,6 @@ class PersonController extends CommonController {
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
 		
-		
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
