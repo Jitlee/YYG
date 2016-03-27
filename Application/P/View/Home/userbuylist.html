@@ -36,7 +36,7 @@
 					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
 				</li>
 				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">已揭晓</span></li>
-				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em>{wc:$rt['gonumber']}</em>人次</p></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em></em>人次</p></li>
 				<li class="do" style="margin:23px 0 0 0;"><a href="#" class="blue" title="详情">详情</a></li>
 			</ul>
 			
@@ -50,7 +50,7 @@
 				</li>
 				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">正在进行...</span></li>
 				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
-				<li class="do" style="margin:23px 0 0 0;"><a href=" #" class="blue ycode" title="查看夺宝码">查看夺宝码</a></li>
+				<li class="do" style="margin:23px 0 0 0;"><a href=" #" class="blue ycode" title="查看购物码">查看购物码</a></li>
 			</ul>
 			
 <script type="text/javascript">
@@ -95,11 +95,11 @@
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
 //	       			$(".money", item).text(this.zongrenshu);
-	       			$("r", item).text(this.canyurenshu);
+	       			$("r", item).text(this.count);
 	       			
-	       			$(".pl", item).text(this.canyurenshu);
-					$(".pc", item).text(this.zongrenshu);
-					$(".pr", item).text(this.shengyurenshu);
+//	       			$(".pl", item).text(this.count);
+//					$(".pc", item).text(this.count);
+//					$(".pr", item).text(this.count);
 	       			
 	       			$(".ztime", item).text(this.time);
 	       			goodList.append(item);

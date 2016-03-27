@@ -52,7 +52,7 @@
 				<td><label>邮政编码：</label></td>
 				<td>
 					<input datatype="p" ignore="ignore" errormsg="邮政编码错误！" name="youbian" type="text" maxlength="6" id="txt_ship_zip" class="inputTxt" 
-						value="{$data.jiedao}" > 
+						value="{$data.youbian}" > 
 					<font><a href="http://alexa.ip138.com/post/Search.aspx" class="blue" target="_blank">邮编查询</a></font>
 				</td>
 				<td><div class="Validform_checktip"></div></td>
@@ -61,7 +61,7 @@
 				<td><label>收货人：</label></td>
 				<td>
 					<input datatype="*" nullmsg="收货人不能为空" name="shouhuoren" type="text" maxlength="20" id="txt_ship_name" class="inputTxt" 
-						value="{$data.jiedao}" >
+						value="{$data.shouhuoren}" >
 					<em class="red" id="ship_name_valid_msg">*</em>
 				</td>
 				<td><div class="Validform_checktip"></div></td>
@@ -70,7 +70,7 @@
 				<td><label>手机号码：</label></td>
 				<td>
 					<input datatype="m" nullmsg="手机号不能为空" errormsg="手机号不对" name="mobile" type="text" id="txt_ship_mb" 
-						value="{$data.jiedao}"  class="inputTxt" maxlength="11">
+						value="{$data.mobile}"  class="inputTxt" maxlength="11">
 					<em id="ship_mb_valid_msg" class="red">*</em>
 					<td><div class="Validform_checktip"></div></td>
 				</td>

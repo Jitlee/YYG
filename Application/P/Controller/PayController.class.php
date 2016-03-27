@@ -80,9 +80,18 @@ amount=$amount	orderNo=$orderNo ";
 
 								}
 							}
-						} else if ($type == 1 || $type == 11)//一元购物
+						} 
+						else if ($type == 1 || $type == 11)//一元购物
 						{
-							$this -> pay($payid);
+							$status=$this -> pay($payid);
+							logger("$payid 状态：$status");
+//							if($status==0)//更新状态
+//							{
+//								$data["status"] = 1;
+//								if ($db -> where(array('payid' => $payid)) -> save($data) == FALSE) {
+//	
+//								}	
+//							}//end 更新状态							
 						}
 					}
 				}

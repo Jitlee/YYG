@@ -37,8 +37,8 @@ class HomeController extends CommonController {
 		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid and yyg_member_miaosha.qishu=yyg_miaosha.qishu")			
 		->where($filter)
 		->page($pageNum, $pageSize)
-		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
-		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid")
+		//->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
+		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
 		->select();
 		
 //		$ModelH = M('miaosha_history');
