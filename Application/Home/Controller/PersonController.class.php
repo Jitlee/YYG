@@ -535,6 +535,32 @@ class PersonController extends CommonController {
         $verify = new \Think\Verify($config);
         $verify->entry();
 	}
+	
+	/**
+	 * 个人拍卖纪录
+	 */
+	public function paimai() {
+		$this->assign('title', '拍卖纪录');
+		$this->display();
+	}
+	
+	/**
+	 * 个人拍卖纪录
+	 */
+	public function pagepaimai($pageNo = 1) {
+		$pageSize = 12;
+		$map = array('uid'		=> get_temp_uid());
+		$db = M('MemberPaimai');
+		$list = $db
+			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, mp.id, mp.uid, mp.flag, mp.money, mp.time')
+			->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')
+			->where($map)
+			->order('mp.time desc')
+			->page($pageNo, $pageSize)->select();
+			
+		$num = count($list);
+		$this->ajaxReturn($list, 'JSON');
+	}
  
 
 }

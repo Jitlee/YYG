@@ -30,6 +30,9 @@ class PayController extends Controller {
 // 402: 增加保证金纪录失败
 // 403: 退还保证金记录失败
 // 404: 扣除保证金个人余额失败
+// 504 修改拍卖支付状态失败
+// 505: 归还拍卖保证金到个人余额失败
+// 506：归还拍卖保证金到个人余额纪录资金流水失败
 
 	public function index($payid){
 		if(is_login()) {
@@ -72,6 +75,8 @@ class PayController extends Controller {
 			if($cart['type'] == 3) {
 				if($cart['isbz'] == 1) { // 保证金
 					$total += intval($cart['paimai']['baozhengjin']);
+				} else if($cart['isbz'] == -1) { // 中标支付
+					$total += intval($cart['paimai']['zuigaojia']);
 				} else {
 					$total += intval($cart['paimai']['lijijia']);
 				}
@@ -104,6 +109,13 @@ class PayController extends Controller {
 	 */
 	 public function createPreLJPPay($gid) {
 	 	$this->createPreBZJPay($gid, 0);
+	 }
+	 
+	/**
+	 * 预创建中标拍卖订单
+	 */
+	 public function createPreZBPay($gid) {
+	 	$this->createPreBZJPay($gid, -1);
 	 }
 	
 	/**
@@ -316,6 +328,8 @@ class PayController extends Controller {
 			if($goodsType == 3) { // 拍卖
 				if(intval($cart['isbz'] == 1)) { // 保证金
 					$status = $this->doPayBaozhengjin($cart['paimai']['gid'], $third);
+				} else if(intval($cart['isbz'] == -1)) { // 中标支付
+					$status = $this->zhongbiao($cart);
 				} else {
 					// 立即拍卖出价购买
 					$status = $this->paimai($cart);
@@ -570,6 +584,7 @@ class PayController extends Controller {
 		$good['status'] = 2; // 商品已结束
 		$good['liji'] = 1; // 立即拍下的商品
 		$good['prizeuid'] = $cart['uid']; // 中奖者
+		$good['ispay'] = 1; // 已支付
 		if($pdb->where(array('gid' => $good['gid']))->save($good) === FALSE) {
 			return 304; // 立即拍下商品失败
 		}
@@ -603,6 +618,37 @@ class PayController extends Controller {
 		return 0;
 	}
 
+	// 拍卖中标支付
+	function zhongbiao($cart) {
+		$adb = M('account');
+		$mdb = M('member');
+		$pdb = M('paimai');
+		
+		$good = $cart['paimai'];
+		$status = intval($good['status']);
+		
+		if($pdb->where(array('gid' => $good['gid']))->save(array('ispay'=>1)) === FALSE) {
+			return 504; // 修改拍卖支付状态失败
+		}
+		
+		// 将保证金退还给个人余额
+		if($mdb->where(array('uid' => $cart['uid']))->save(array('money'	=> array('exp', '`money` + '.$good['zuigaojia']))) === FALSE) {
+			return 505; // 归还拍卖保证金到个人余额失败
+		}
+		
+		// 记录资金流水
+		$adata = array(
+			'uid'			=> $cart['uid'],
+			'type'			=> 1, // 退款
+			'money'			=> $good['money'],	// 余额
+			'content' 		=> '退还保证金,商品id['.$good['gid'].']',
+		);
+		
+		if($adb->add($adata) === FALSE) {
+			return 506;  // 归还拍卖保证金到个人余额纪录资金流水失败
+		}
+		return 0;
+	}
 	
 
 	public function topay($payid) {

@@ -504,6 +504,38 @@ class HomeController extends CommonController {
  
 	}	
 		
+	/**
+	 * 个人拍卖纪录（缴纳保证金，）
+	 */
+	public function paimai($pageNo = 1) {
+		$pageSize = 20;
+		$map = array('uid'		=> get_temp_uid());
+		$db = M('MemberPaimai');
+		$list = $db
+			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, mp.id, mp.uid, mp.flag, mp.money, mp.time')
+			->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')
+			->where($map)
+			->order('mp.time desc')
+			->page($pageNo, $pageSize)->select();
+			
+//		echo $db->getLastSql();
+			
+	
+		$num = count($list);
+		$total = $db->where($map)->count();
+		$pageCount = ceil($total / $pageSize);
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNo', $pageNo);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
+			
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		$this->assign('list', $list);
+		$this->assign('title', '拍卖纪录');
 		
+		$this->display();
+	}
 }
 	

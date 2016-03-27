@@ -27,11 +27,14 @@
 						<div class="yyg-cart-body">
 							<if condition="$item.isbz eq 1">
 								<p class="yyg-cart-title">{$item.paimai.title}</p>
-								<h5>保证金:{$item.paimai.baozhengjin}</h5>
+								<h5>保证金:¥{$item.paimai.baozhengjin}</h5>
+							<elseif condition="$item.isbz eq -1"/>
+								<p class="yyg-cart-title">( 中标 ) {$item.paimai.title}</p>
+								<h5>中标金额:¥{$item.paimai.baozhengjin}</h5>
 							<else/>
 								<p class="yyg-cart-title">( 立即揭标 ) {$item.paimai.title}</p>
-								<h5>立即揭标价:{$item.paimai.lijijia}</h5>
-								<h5>起拍价:{$item.paimai.qipaijia}</h5>
+								<h5>立即揭标价:¥{$item.paimai.lijijia}</h5>
+								<h5>起拍价:¥{$item.paimai.qipaijia}</h5>
 							</if>
 						</div>
 					<else/>
@@ -48,7 +51,7 @@
 			</ul>
 			
 			<p class="yyg-pay-total">总共支付金额：¥ <r> {$total} </r></p>
-			<if condition="$list[0]['isbz'] neq 1">
+			<if condition="$list[0]['isbz'] eq 0">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<label id="yueButton" for="scoreCheckBox" class="mui-input-row mui-checkbox  mui-disabled">

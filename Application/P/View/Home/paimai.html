@@ -1,0 +1,104 @@
+<div class="main-content clearfix">
+<include file="left" />
+<link rel="stylesheet" type="text/css" href="__CSS__/layout-recharge.css"/>
+<style type="text/css">
+	table.rtb {
+		width: 100%;
+	}
+	
+	table.rtb th{
+		background-color: #F9F9F9;
+	}
+	
+	table.rtb th,td {
+		border-bottom: #E3E3E3 1px solid;
+		padding: 8px 10px;
+		text-align: center;
+	}
+	
+	table.rtb .leftTitle {
+		text-align: left;
+	}
+</style>
+<div class="R-content">
+	<div class="member-t"><h2>拍卖纪录</h2></div>
+	<table id="listitems" class="rtb">
+		<thead>
+		<tr>
+			<td class="leftTitle">拍卖商品</td>
+			<td class="leftTitle">纪录详情</td>
+			<td>状态</td>
+			<td>时间</td>
+			<td>操作</td>
+		</tr>
+		</thead>
+		 <foreach name="list" item="c">
+			 <tr>
+				<td class="leftTitle"><a target="_blank" href="{:U('Paimai/view/', '', '')}/{$c.gid}" class="blue goodurl">{$c.title}</a></td>
+				<td class="leftTitle">
+					<if condition="$c.flag eq 0">
+						参与并缴纳保证金{$c.money}元
+					<else/>
+						出价{$c.money}元
+					</if>
+				</td>
+				<td>
+					<if condition="$c.flag eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq $c['uid'] AND $c['zuigaojia'] eq $c['money']">
+						<span style="color:orange">[已中标]</span>
+					<elseif condition="$c.flag eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq 0 AND $c['zuigaojia'] eq $c['money']"/>
+						<span style="color:#007AFF">[流拍]</span>
+					<elseif condition="$c.flag eq 1 AND $c['status'] neq 2 AND $c['zuigaojia'] eq $c['money']"/>
+						<span style="color:#007AFF">[当前最高价]</span>
+					</if>
+				</td>
+				<td>{$c.time}</td>
+				<td>
+					<if condition="$c['flag'] eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq $c['uid'] AND $c['ispay'] eq 0 AND $c['zuigaojia'] eq $c['money']">
+					<a class="blue goodurl topay" gid="{$c.gid}" href="javascript:void(0);">去支付</a>
+					</if>
+				</td>
+			</tr>
+		 </foreach>
+	</table> 
+	<if condition="$num lt $total">
+			<div class="pagesx">
+				<ul id="Page_Ul">
+					<li id="Page_Total">{$total}条</li>
+					<li id="Page_One"><a href="{:U('Home/paimai', '', '')}/1">首页</a></li>
+					<if condition="$pageNo gt 1">
+				        <li id="Page_Prev"><a href="{:U('Home/paimai', '', '')}/{$pageNo - 1}">上一页</a></li>
+				  	</if>
+					<if condition="$pageNo gt 1">
+					  <for start="$minPageNo" end="$pageNo">
+					    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$i}">{$i}</a></li>
+						</for>
+					</if>
+					<li class="Page_This">{$pageNo}</li>
+					<for start="$pageNo+1" end="$maxPageNo+1">
+				    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$i}">{$i}</a></li>
+					</for>
+					<if condition="$pageNo lt $pageCount">
+				        <li id="Page_Next"><a href="{:U('Home/paimai', '', '')}/{$pageNo + 1}">下一页</a></li>
+				  	</if>
+					<li id="Page_End"><a href="{:U('Home/paimai', '', '')}/{$pageCount}">尾页</a></li>
+				</ul>
+			</div>
+		</if>
+</div>
+<script type="text/javascript">
+	$(function() {
+		$("a.topay").click(function() {
+			var $this = $(this);
+			$gid = $this.attr("gid");
+			$.post("{:U('Pay/createPreZBPay','','')}/" + $gid, null, function(result) {
+				if(result.status == 0) {
+					window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+				} else if(result.status == -2) {
+					alert("请先登录");
+				} else {
+					alert("预创建订单失败");
+				}
+			});
+		});
+	});
+</script>

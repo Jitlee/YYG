@@ -17,7 +17,7 @@ class AccountGoodsModel extends RelationModel{
             'mapping_type'      		=> self::BELONGS_TO,
             'class_name'        		=> 'Paimai',
             'mapping_name'			=> 'paimai',
-            'mapping_fields'			=> 'gid,title,thumb,qipaijia,lijijia,baozhengjin,status,chujiacishu',
+            'mapping_fields'			=> 'gid,title,thumb,qipaijia,lijijia,baozhengjin,zuigaojia,status,chujiacishu',
             'foreign_key'			=> 'gid',
             'parent_key'				=> 'gid',
             'condition'				=> 'type=3',

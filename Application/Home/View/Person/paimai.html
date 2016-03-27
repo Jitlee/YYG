@@ -1,0 +1,98 @@
+<header class="mui-bar mui-bar-nav">
+	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+			<span class="mui-icon mui-icon-left-nav" ></span>
+	    	返回
+	  </button>
+	  <h1 class="mui-title">{$title}</h1>
+</header>
+<style>
+	
+	button.topay{
+		border-radius: 5px;
+		bottom: -3px;
+    		top: inherit!important;
+    		padding-left: 10px;
+    		padding-right: 10px;
+    		padding-top: 6px;
+    		padding-bottom: 6px;
+	}
+</style>
+<div class="mui-content">
+	<ul class="mui-table-view">
+		<!-- ko foreach: list -->
+		<li class="mui-table-view-cell">
+			<a>
+				<span data-bind="text: title"></span>
+				<h5 data-bind="if: flag == 0">参与并缴纳保证金<span data-bind="text: money"></span>元</h5>
+				<h5 data-bind="ifnot: flag == 0">出价<span data-bind="text: money"></span>元</h5>
+				<h5>
+					<span data-bind="text: time"></span>
+					<!-- ko if: flag == 1 -->
+						<!-- ko if: status == 2 && prizeuid == uid && zuigaojia == money -->
+							<span style="color:orange">[已中标]</span>
+						<!-- /ko -->
+						<!-- ko if: status == 2 && prizeuid == 0 && zuigaojia == money -->
+							<span style="color:#007AFF">[流拍]</span>
+						<!-- /ko -->
+						<!-- ko if: status < 2 && zuigaojia == money -->
+							<span style="color:#007AFF">[当前最高价]</span>
+						<!-- /ko -->
+					<!-- /ko -->
+				</h5>
+				<button class="topay mui-btn mui-btn-primary mui-btn-outlined" data-bind="visible: flag == 1 && status == 2 && prizeuid == uid && ispay == 0 && zuigaojia == money, click: $parent.click">去支付</button>
+			</a>
+		</li>
+		<!-- /ko -->
+	</ul>
+</div>
+<script src="__KO__"></script>
+<script>
+	$(function() {
+		var pageNum = 0;
+		var goodList = $("#recrodList").swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		});
+		
+		var vm = { list: ko.observableArray([]), click: onclick };
+		ko.applyBindings(vm);
+		
+		$(window).bind("scroll", onscrollend);
+		
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+       			page();
+			}
+		}
+		
+		var recrodList = $("#recrodList");
+		var template = $("li:first-child", recrodList);
+		
+		function page() {
+			$.get("{:U('Person/pagepaimai', '', '')}/" + (++pageNum), null, function(list) {
+				if(list && list.length > 0) {
+		       		$.each(list, function() {
+		       			vm.list.push(this);
+		       		});
+		       	} else {
+		       		pageNum--;	
+		       	}
+	        });
+		}
+		page();
+		
+		function onclick(obj) {
+			$.post("{:U('Pay/createPreZBPay','','')}/" + obj.gid, null, function(result) {
+				if(result.status == 0) {
+					window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
+				} else if(result.status == -2) {
+					new Android_Toast({content: "请先登录"});
+				} else {
+					new Android_Toast({content: "预创建订单失败"});
+				}
+			});
+		};
+	});
+</script>

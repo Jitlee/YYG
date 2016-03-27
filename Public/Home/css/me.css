@@ -68,6 +68,10 @@
 			.img-tip {
 				float: left;
 			}
+			
+			.img-tip>*{
+				vertical-align: middle;
+			}
 			.img-tip img{
 				width: 20px;
 				height: 20px;

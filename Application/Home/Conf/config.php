@@ -18,6 +18,7 @@ return array(
 		'__IMG__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/images',
 		'__CSS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/css',
 		'__JS__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/js',
+		'__KO__'				=> __ROOT__ . '/Public/' . MODULE_NAME . '/js/knockout-3.4.0.js',
 		'__FONT_ICON__'		=> 'http://at.alicdn.com/t/font_1449475927_2126234.css',
 		'__PING__'		=> 'https://one.pingxx.com/lib/pingpp_one.js',
 	),

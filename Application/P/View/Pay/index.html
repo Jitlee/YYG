@@ -42,8 +42,9 @@
 					<span class="moneys"></span>
 					<if condition="$list[0]['isbz'] eq 1">	
 						<span class="money">保证金</span>
+					<elseif condition="$list[0]['isbz'] eq -1"/>
+						<span class="money">中标金额</span>
 					<else/>
-						<span class="moneys"></span>
 						<span class="money">立即揭标价</span>
 					</if>
 					<span class="num">数量</span>
@@ -65,6 +66,10 @@
 						<span class="money">¥{$item.paimai.baozhengjin}</span>
 						<span class="num orange Fb">1</span>
 						<span class="all">¥{$item.paimai.baozhengjin}</span>
+	                <elseif condition="$item.isbz eq -1"/>
+						<span class="money">¥{$item.paimai.zuigaojia}</span>
+						<span class="num orange Fb">1</span>
+						<span class="all">¥{$item.paimai.zuigaojia}</span>
 					<else/>	
 						<span class="money">¥{$item.paimai.lijijia}</span>
 						<span class="num orange Fb">1</span>
@@ -82,11 +87,14 @@
 			</li>
 			</foreach>         
 			<li class="payment_Total">
+				<if condition="$list[0]['isbz'] eq 0">
 				<div class="payment_List_Lc">
 					<a href="{:U('Cart/index', '', '')}" class="form_ReturnBut">返回购物车修改订单</a>
 				</div>
+				</if>
 				<p class="payment_List_Rc">商品合计：<span class="orange F20">{$total}</span> 元</p>
 			</li>
+			<if condition="$list[0]['isbz'] eq 0">
 			<!-- 福分 -->
             <if condition="$account.score gt 0">
 			 <li id="liPayByPoints" class="point_out">
@@ -105,6 +113,7 @@
               </li>
              </if>
              <!-- 福分 -->
+            </if>
             <!-- 余额支付 start-->
 			<li class="point_in" id="liPayByBalance">
 				<div class="payment_List_Lc">					
