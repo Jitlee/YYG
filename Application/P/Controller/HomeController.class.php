@@ -8,6 +8,8 @@ class HomeController extends CommonController {
 			$this->redirect('Main/login');
 			return;
 		}
+		
+		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 	}
 		
 	public function index(){		
@@ -506,21 +508,38 @@ class HomeController extends CommonController {
 		
 	/**
 	 * 个人拍卖纪录（缴纳保证金，）
+	 * $type - 0:显示全部，未付款，已付款
 	 */
-	public function paimai($pageNo = 1) {
+	public function paimai($type = 0, $pageNo = 1) {
 		$pageSize = 20;
-		$map = array('uid'		=> get_temp_uid());
+		$uid = get_temp_uid();
+		$map = array('uid'		=> $uid);
+		
+		switch($type) {
+			case 1: //1.待处理
+				$map['status'] = 2;
+				$map['prizeuid'] = $uid;
+				$map['ispay'] = 0;
+				$map['flag'] = 1;
+				$map['zuigaojia'] = array('exp', ' = money');
+				break;
+			case 2:
+				$map['status'] = 2;
+				$map['prizeuid'] = $uid;
+				$map['ispay'] = array('neq', 0);
+				$map['flag'] = 1;
+				$map['zuigaojia'] = array('exp', ' = money');
+				break;
+		}
+		
 		$db = M('MemberPaimai');
 		$list = $db
-			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, mp.id, mp.uid, mp.flag, mp.money, mp.time')
+			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, p.postcode, p.postcompany, mp.id, mp.uid, mp.flag, mp.money, mp.time')
 			->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')
 			->where($map)
 			->order('mp.time desc')
 			->page($pageNo, $pageSize)->select();
-			
 //		echo $db->getLastSql();
-			
-	
 		$num = count($list);
 		$total = $db->where($map)->count();
 		$pageCount = ceil($total / $pageSize);
@@ -532,10 +551,22 @@ class HomeController extends CommonController {
 			
 		$this->assign('num', $num);
 		$this->assign('total', $total);
+		$this->assign('type', $type);
 		$this->assign('list', $list);
+//		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 		$this->assign('title', '拍卖纪录');
 		
 		$this->display();
+	}
+	// 获取未处理拍卖个数
+	function getPaimaiUnfixedCount() {
+		$db = M('Paimai');
+		$uid = get_temp_uid();
+		$map = array(
+			'prizeuid'		=> $uid,
+			'ispay'			=> 0
+		);
+		return $db->where($map)->count();
 	}
 }
 	

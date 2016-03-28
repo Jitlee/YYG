@@ -38,7 +38,7 @@ class PersonController extends CommonController {
 		}
 		
 		$this->assign('data', $userinfo);
-		
+		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 		$this->display();
     }
 	
@@ -539,26 +539,60 @@ class PersonController extends CommonController {
 	/**
 	 * 个人拍卖纪录
 	 */
-	public function paimai() {
+	public function paimai($type = 0) {
+		
+		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 		$this->assign('title', '拍卖纪录');
+		$this->assign('type', $type); // 0 全部，1.待处理，2.已处理
 		$this->display();
+	}
+	
+	// 获取未处理拍卖个数
+	function getPaimaiUnfixedCount() {
+		$db = M('Paimai');
+		$uid = get_temp_uid();
+		$map = array(
+			'prizeuid'		=> $uid,
+			'ispay'			=> 0
+		);
+		return $db->where($map)->count();
 	}
 	
 	/**
 	 * 个人拍卖纪录
 	 */
-	public function pagepaimai($pageNo = 1) {
+	public function pagepaimai($type = 0, $pageNo = 1) {
 		$pageSize = 12;
-		$map = array('uid'		=> get_temp_uid());
+		$uid = get_temp_uid();
+		$map = array('uid'		=> $uid);
+		
+		switch($type) {
+			case 1: //1.待处理
+				$map['status'] = 2;
+				$map['prizeuid'] = $uid;
+				$map['ispay'] = 0;
+				$map['flag'] = 1;
+				$map['zuigaojia'] = array('exp', ' = money');
+				break;
+			case 2:
+				$map['status'] = 2;
+				$map['prizeuid'] = $uid;
+				$map['ispay'] = array('neq', 0);
+				$map['flag'] = 1;
+				$map['zuigaojia'] = array('exp', ' = money');
+				break;
+		}
+		
 		$db = M('MemberPaimai');
 		$list = $db
-			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, mp.id, mp.uid, mp.flag, mp.money, mp.time')
+			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, p.postcode, p.postcompany, mp.id, mp.uid, mp.flag, mp.money, mp.time')
 			->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')
 			->where($map)
 			->order('mp.time desc')
 			->page($pageNo, $pageSize)->select();
-			
-		$num = count($list);
+		
+//		echo $db->getLastSql();
+		
 		$this->ajaxReturn($list, 'JSON');
 	}
  

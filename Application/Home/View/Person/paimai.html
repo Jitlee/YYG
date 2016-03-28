@@ -18,6 +18,17 @@
 	}
 </style>
 <div class="mui-content">
+	<ul class="yyg-tab">
+		<li class="yyg-tab-item <if condition='$type eq 0'>yyg-active</if>" tabId="0">
+			<a>全部</a>
+		</li>
+		<li class="yyg-tab-item <if condition='$type eq 1'>yyg-active</if>" tabId="1">
+			<a>待处理<if condition="$pmcount gt 0">({$pmcount})</if></a>
+		</li>
+		<li class="yyg-tab-item <if condition='$type eq 2'>yyg-active</if>" tabId="2">
+			<a>已处理</a>
+		</li>
+	</ul>
 	<ul class="mui-table-view">
 		<!-- ko foreach: list -->
 		<li class="mui-table-view-cell">
@@ -27,7 +38,7 @@
 				<h5 data-bind="ifnot: flag == 0">出价<span data-bind="text: money"></span>元</h5>
 				<h5>
 					<span data-bind="text: time"></span>
-					<!-- ko if: flag == 1 -->
+					<!-- ko if: flag == 1 && ispay == 0 -->
 						<!-- ko if: status == 2 && prizeuid == uid && zuigaojia == money -->
 							<span style="color:orange">[已中标]</span>
 						<!-- /ko -->
@@ -38,7 +49,22 @@
 							<span style="color:#007AFF">[当前最高价]</span>
 						<!-- /ko -->
 					<!-- /ko -->
+					
+					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == -1 && zuigaojia == money -->
+					<span style="color:#666">[已过期]</span>
+					<!-- /ko -->
+					
+					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && !postcode -->
+					<span style="color:orange">[待发货]</span>
+					<!-- /ko -->
+					
+					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && postcode && postcompany -->
+					<span style="color:#00A0E9">[已发货]</span>
+					<!-- /ko -->
 				</h5>
+				<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && postcode && postcompany -->
+				<h5>快递信息：<span data-bind="text: postcompany"></span>(<span data-bind="text: postcode"></span>)</h5>
+				<!-- /ko -->
 				<button class="topay mui-btn mui-btn-primary mui-btn-outlined" data-bind="visible: flag == 1 && status == 2 && prizeuid == uid && ispay == 0 && zuigaojia == money, click: $parent.click">去支付</button>
 			</a>
 		</li>
@@ -49,6 +75,7 @@
 <script>
 	$(function() {
 		var pageNum = 0;
+		var tabId = Number("{$type}");
 		var goodList = $("#recrodList").swipe({
 			swipeUp: onscrollend,
 			threshold: 100,
@@ -71,7 +98,7 @@
 		var template = $("li:first-child", recrodList);
 		
 		function page() {
-			$.get("{:U('Person/pagepaimai', '', '')}/" + (++pageNum), null, function(list) {
+			$.get("{:U('Person/pagepaimai', '', '')}/" + tabId + "/" + (++pageNum), null, function(list) {
 				if(list && list.length > 0) {
 		       		$.each(list, function() {
 		       			vm.list.push(this);
@@ -94,5 +121,18 @@
 				}
 			});
 		};
+		
+		$("ul.yyg-tab li").click(function() {
+			var $this = $(this);
+			var _tabId = Number($this.attr("tabId"));
+			if(tabId != _tabId) {
+				$("ul.yyg-tab li.yyg-active").removeClass("yyg-active");
+				$this.addClass("yyg-active");
+				vm.list.removeAll();
+				pageNum = 0;
+				tabId = _tabId;
+				page();
+			}
+		})
 	});
 </script>
