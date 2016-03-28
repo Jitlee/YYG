@@ -541,7 +541,7 @@ class HomeController extends CommonController {
 			->page($pageNo, $pageSize)->select();
 //		echo $db->getLastSql();
 		$num = count($list);
-		$total = $db->where($map)->count();
+		$total = $db->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')->where($map)->count();
 		$pageCount = ceil($total / $pageSize);
 		$this->assign('pageSize', $pageSize);
 		$this->assign('pageNo', $pageNo);

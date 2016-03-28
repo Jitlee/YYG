@@ -35,7 +35,7 @@
 			<td>状态</td>
 			<td>时间</td>
 			
-			<if condition="$c.ispay eq 0">
+			<if condition="$type neq 2">
 			<td>操作</td>
 			</if>
 		</tr>
@@ -84,23 +84,23 @@
 			<div class="pagesx">
 				<ul id="Page_Ul">
 					<li id="Page_Total">{$total}条</li>
-					<li id="Page_One"><a href="{:U('Home/paimai', '', '')}/1">首页</a></li>
+					<li id="Page_One"><a href="{:U('Home/paimai', '', '')}/{$type}/1">首页</a></li>
 					<if condition="$pageNo gt 1">
-				        <li id="Page_Prev"><a href="{:U('Home/paimai', '', '')}/{$pageNo - 1}">上一页</a></li>
+				        <li id="Page_Prev"><a href="{:U('Home/paimai', '', '')}/{$type}/{$pageNo - 1}">上一页</a></li>
 				  	</if>
 					<if condition="$pageNo gt 1">
 					  <for start="$minPageNo" end="$pageNo">
-					    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$i}">{$i}</a></li>
+					    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$type}/{$i}">{$i}</a></li>
 						</for>
 					</if>
 					<li class="Page_This">{$pageNo}</li>
 					<for start="$pageNo+1" end="$maxPageNo+1">
-				    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$i}">{$i}</a></li>
+				    		<li class="Page_Num"><a href="{:U('Home/paimai', '', '')}/{$type}/{$i}">{$i}</a></li>
 					</for>
 					<if condition="$pageNo lt $pageCount">
-				        <li id="Page_Next"><a href="{:U('Home/paimai', '', '')}/{$pageNo + 1}">下一页</a></li>
+				        <li id="Page_Next"><a href="{:U('Home/paimai', '', '')}/{$type}/{$pageNo + 1}">下一页</a></li>
 				  	</if>
-					<li id="Page_End"><a href="{:U('Home/paimai', '', '')}/{$pageCount}">尾页</a></li>
+					<li id="Page_End"><a href="{:U('Home/paimai', '', '')}/{$type}/{$pageCount}">尾页</a></li>
 				</ul>
 			</div>
 		</if>
