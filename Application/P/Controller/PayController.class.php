@@ -84,7 +84,11 @@ amount=$amount	orderNo=$orderNo ";
 						else if ($type == 1 || $type == 11)//一元购物
 						{
 							$status=$this -> pay($payid);
-							logger("$payid 状态：$status");
+							if($status !=0 )
+							{
+								logger("支付成功，修改状态失败：$payid 状态：$status");	
+							}
+							
 //							if($status==0)//更新状态
 //							{
 //								$data["status"] = 1;
