@@ -22,6 +22,11 @@
 </style>
 <div class="R-content">
 	<div class="member-t"><h2>拍卖纪录</h2></div>
+	<div id="tab" class="subMenu">
+		<a <if condition="$type eq 0"> class="current" </if> href="{:U('Home/paimai', '', '')}/0">全部</a>
+		<a <if condition="$type eq 1"> class="current" </if> href="{:U('Home/paimai', '', '')}/1">待处理<if condition="$pmcount gt 0">({$pmcount})</if></a>
+		<a <if condition="$type eq 2"> class="current" </if> href="{:U('Home/paimai', '', '')}/2">已处理</a>
+	</div>
 	<table id="listitems" class="rtb">
 		<thead>
 		<tr>
@@ -29,7 +34,10 @@
 			<td class="leftTitle">纪录详情</td>
 			<td>状态</td>
 			<td>时间</td>
+			
+			<if condition="$c.ispay eq 0">
 			<td>操作</td>
+			</if>
 		</tr>
 		</thead>
 		 <foreach name="list" item="c">
@@ -43,20 +51,32 @@
 					</if>
 				</td>
 				<td>
-					<if condition="$c.flag eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq $c['uid'] AND $c['zuigaojia'] eq $c['money']">
-						<span style="color:orange">[已中标]</span>
-					<elseif condition="$c.flag eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq 0 AND $c['zuigaojia'] eq $c['money']"/>
-						<span style="color:#007AFF">[流拍]</span>
-					<elseif condition="$c.flag eq 1 AND $c['status'] neq 2 AND $c['zuigaojia'] eq $c['money']"/>
-						<span style="color:#007AFF">[当前最高价]</span>
+					<if condition="$c.flag eq 1 AND $c.ispay eq 0">
+						<if condition="$c['status'] eq 2 AND $c['prizeuid'] eq $c['uid'] AND $c['zuigaojia'] eq $c['money']">
+							<span style="color:orange">[待付款]</span>
+						<elseif condition="$c['status'] eq 2 AND $c['prizeuid'] eq 0 AND $c['zuigaojia'] eq $c['money']"/>
+							<span style="color:#007AFF">[流拍]</span>
+						<elseif condition="$c['status'] neq 2 AND $c['zuigaojia'] eq $c['money']"/>
+							<span style="color:#007AFF">[当前最高价]</span>
+						</if>
+					<elseif condition="$c.ispay eq -1"/>
+						<span style="color:#666">[已过期]</span>
+					<elseif condition="$c['ispay'] eq 1 AND $c['ispost'] eq 1"/>
+						<span style="color:#00A0E9">[已发货]</span>
+						
+						<h5>快递信息：{$c.postcompany}({$c.postcode})</h5>
+					<elseif condition="$c['ispay'] eq 1 AND $c['ispost'] eq 0"/>
+						<span style="color:orange">[待发货]</span>
 					</if>
 				</td>
 				<td>{$c.time}</td>
+				<if condition="$c.ispay eq 0">
 				<td>
 					<if condition="$c['flag'] eq 1 AND $c['status'] eq 2 AND $c['prizeuid'] eq $c['uid'] AND $c['ispay'] eq 0 AND $c['zuigaojia'] eq $c['money']">
 					<a class="blue goodurl topay" gid="{$c.gid}" href="javascript:void(0);">去支付</a>
 					</if>
 				</td>
+				</if>
 			</tr>
 		 </foreach>
 	</table> 
@@ -90,7 +110,7 @@
 		$("a.topay").click(function() {
 			var $this = $(this);
 			$gid = $this.attr("gid");
-			$.post("{:U('Pay/createPreZBPay','','')}/" + $gid, null, function(result) {
+			$.post("{:U('Pay/createPreZBPay','','')}/{$type}/" + $gid, null, function(result) {
 				if(result.status == 0) {
 					window.location.href = "{:U('Pay/index', '', '')}/" + result.rst;
 				} else if(result.status == -2) {
