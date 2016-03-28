@@ -72,7 +72,7 @@ class ArticlesController extends CommonController{
 	/**
 	 * 分页查询
 	 */
-	public function index($pageNum = 1,$pageSize = 10){
+	public function index($pageNum = 1,$pageSize = 20){
 		$m = D('Admin/Articles');
     	$page = $m->queryByPage($pageSize,$pageNum);
 	  	$pager = new \Think\Page($page['total'],$page['pageSize']);// 实例化分页类 传入总记录数和每页显示的记录数
