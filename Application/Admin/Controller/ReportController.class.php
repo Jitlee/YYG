@@ -16,7 +16,7 @@ class ReportController extends CommonController {
 		->where($filter)
 		->page($pageNum, $pageSize)		
 		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu
-		, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,m.uid,prizeuid,m.username,m.mobile,postcode ")
+		, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,m.uid,prizeuid,m.username,m.mobile,postcode,postcompany ")
 		->order(" yyg_miaosha_history.time  desc")
 		->select();
 		
@@ -24,7 +24,7 @@ class ReportController extends CommonController {
 		$count = $Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->field("mobile,title,thumb,danjia,status,yyg_member.uid")
 		->count();
 		
 		if(!$pageSize) {
@@ -63,7 +63,7 @@ class ReportController extends CommonController {
 		->where($filter)
 		->page($pageNum, $pageSize)		
 		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu
-		, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,m.uid,prizeuid,m.username,m.mobile,postcode ")
+		, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,m.uid,prizeuid,m.username,m.mobile,postcode,postcompany")
 		->order(" yyg_miaosha_history.time  desc")
 		->select(); 
 		
@@ -87,6 +87,7 @@ class ReportController extends CommonController {
 		$gid=$_POST["gid"];
 		 $qishu=$_POST["qishu"];
 		 $postcode=$_POST["postcode"];
+		 $postcompany=$_POST["postcompany"];
 		 $filter = " yyg_miaosha_history.gid=$gid and  yyg_miaosha_history.qishu=$qishu";
 		
 		$db = M('miaosha_history');
@@ -96,6 +97,8 @@ class ReportController extends CommonController {
 		//save
 		$rd = array('status'=>-1);
 		$add["postcode"]=$postcode;
+		$add["postcompany"]=$postcompany;
+		
 		if ($db ->save($add) ) {			
 			$rd["status"]=1;
 		} 

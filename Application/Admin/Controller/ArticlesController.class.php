@@ -16,7 +16,7 @@ class ArticlesController extends CommonController{
 	 /**
 	 * 跳到新增/编辑页面
 	 */
-	public function toEdit($id){
+	public function toEdit($id=0){
 		
 	    $m = D('Admin/Articles');
     	$object = array();

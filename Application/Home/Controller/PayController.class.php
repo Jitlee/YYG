@@ -762,7 +762,7 @@ class PayController extends Controller {
 				$payMethod= "WANGYIN";//$_POST["payMethod"];
 				
 				//测试
-				$amount=0.5;
+				//$amount=0.5;
 				
 				//////////////////////////////////////////////////////////////////////////////////////////////////
 				 //商户利用支付订单（payid）和商户号（mobile）进行对账查询

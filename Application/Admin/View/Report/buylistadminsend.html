@@ -73,6 +73,26 @@
 				 {$address.jiedao}
 			</td>
 		</tr>
+		
+		<tr>
+			<td class="col-sm-2 control-label">
+				<label for="inputSubTitle" class="control-label">快递公司</label>
+			</td>
+			<td>
+					
+				<select name="postcompany" class="form-control" id="postcompany" required="">
+					<option>==请选择==</option>
+					<option value="顺丰速运"  <if condition = "$data.postcompany eq '顺丰速运'" >checked="true"</if>  >顺丰速运</option>
+					<option value="邮政EMS"  <if condition = "$data.postcompany eq '邮政EMS'" >checked="true"</if>  >邮政EMS</option>
+					<option value="圆通快递"  <if condition = "$data.postcompany eq '圆通快递'" >checked="true"</if>  >圆通快递</option>
+					<option value="申通快递"  <if condition = "$data.postcompany eq '申通快递'" >checked="true"</if>  >申通快递</option>
+					<option value="韵达快递"  <if condition = "$data.postcompany eq '韵达快递'" >checked="true"</if>  >韵达快递</option>
+					<option value="汇通快递"  <if condition = "$data.postcompany eq '汇通快递'" >checked="true"</if>  >汇通快递</option>
+					<option value="中通快递"  <if condition = "$data.postcompany eq '中通快递'" >checked="true"</if>  >中通快递</option>
+					<option value="天天快递"  <if condition = "$data.postcompany eq '天天快递'" >checked="true"</if>  >天天快递</option>
+				</select>
+			</td>
+		</tr>
 		<tr>
 			<td class="col-sm-2 control-label">
 				<label for="inputSubTitle" class="control-label">快递号</label>
