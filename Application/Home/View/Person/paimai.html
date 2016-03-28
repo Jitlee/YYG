@@ -54,15 +54,15 @@
 					<span style="color:#666">[已过期]</span>
 					<!-- /ko -->
 					
-					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && !postcode -->
+					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && ispost == 0 -->
 					<span style="color:orange">[待发货]</span>
 					<!-- /ko -->
 					
-					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && postcode && postcompany -->
+					<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && ispost == 1 -->
 					<span style="color:#00A0E9">[已发货]</span>
 					<!-- /ko -->
 				</h5>
-				<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && postcode && postcompany -->
+				<!-- ko if: flag == 1 && status == 2 && prizeuid == uid && ispay == 1 && zuigaojia == money && ispost == 1 -->
 				<h5>快递信息：<span data-bind="text: postcompany"></span>(<span data-bind="text: postcode"></span>)</h5>
 				<!-- /ko -->
 				<button class="topay mui-btn mui-btn-primary mui-btn-outlined" data-bind="visible: flag == 1 && status == 2 && prizeuid == uid && ispay == 0 && zuigaojia == money, click: $parent.click">去支付</button>

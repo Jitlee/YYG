@@ -1,0 +1,73 @@
+<div class="nav">
+	
+</div>
+<table id="listTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>商品标题</th>
+			<th>报名次数</th>
+			<th>出价次数</th>
+			<th>起拍价(元)</th>
+			<th>最高出价(元)</th>
+			<th>结束时间</th>
+			 
+			<th>中奖人姓名</th>
+			 <th>中奖人手机</th>
+			 <th>快递公司</th>
+			 <th>快递号</th>
+			 
+			<th style="width:150px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="good">
+		<tr>
+			<td>{$good.title}</td>
+			<td>{$good.baomingrenshu}</td>
+			<td>{$good.chujiacishu}</td>
+			<td>{$good.qipaijia}</td>
+			<td>{$good.zuigaojia}</td>
+			<td>{$good.end_time}</td>
+			 
+			<td>{$good.username}</td>
+			<td>{$good.mobile}</td>
+			<td>{$good.postcompany}</td>
+			<td>{$good.postcode}</td>
+			 
+			<td gid="{$good.gid}">
+				<if condition="$good.ispost eq 0">
+					<a type="button" class="edit btn btn-warning btn-sm" href='{:U('paimaiadminsend','','')}/{$good.gid}'>发货</a>
+					<a gid="{$good.gid}" type="button" class="edit btn btn-danger btn-sm" >取消资格</a>
+				<else/>
+					<a t	ype="button" class="edit btn btn-default btn-sm" href='{:U('paimaiadminsend','','')}/{$good.gid}'>修改</a>
+				</if>
+			</td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<div id="tips"></div>
+<script type="text/javascript">
+	$(function(){
+		$(".btn-danger").click(function(){
+			var ths = $(this);
+			var gid = ths.attr("gid");
+			UI.confirm("是否取消中标资格", {
+				ok: function() {
+					cancel(gid);
+				}
+			});
+		});
+		
+		function cancel(gid) {
+			$.post("{:U('cancelpaimai','','')}/" + gid, null, function(data) {
+				if(data.status == 0) {
+					window.location.reload();
+				} else {
+					$("#tips").text(data.info);
+				}
+			}, "json");
+		}
+	});
+</script>

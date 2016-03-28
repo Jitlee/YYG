@@ -585,7 +585,7 @@ class PersonController extends CommonController {
 		
 		$db = M('MemberPaimai');
 		$list = $db
-			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, p.postcode, p.postcompany, mp.id, mp.uid, mp.flag, mp.money, mp.time')
+			->field('p.gid, p.title, p.zuigaojia, p.status, p.prizeuid, p.ispay, p.postcode, p.postcompany, p.ispost, mp.id, mp.uid, mp.flag, mp.money, mp.time')
 			->join('mp inner join __PAIMAI__ p on p.gid=mp.gid')
 			->where($map)
 			->order('mp.time desc')

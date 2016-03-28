@@ -61,11 +61,11 @@
 						</if>
 					<elseif condition="$c.ispay eq -1"/>
 						<span style="color:#666">[已过期]</span>
-					<elseif condition="$c['ispay'] eq 1 AND empty($c['postcode']) eq false AND empty($c['postcompany']) eq false"/>
+					<elseif condition="$c['ispay'] eq 1 AND $c['ispost'] eq 1"/>
 						<span style="color:#00A0E9">[已发货]</span>
 						
 						<h5>快递信息：{$c.postcompany}({$c.postcode})</h5>
-					<elseif condition="$c['ispay'] eq 1 AND empty($c['postcode']) eq true"/>
+					<elseif condition="$c['ispay'] eq 1 AND $c['ispost'] eq 0"/>
 						<span style="color:orange">[待发货]</span>
 					</if>
 				</td>
