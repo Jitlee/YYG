@@ -665,17 +665,10 @@ class PayController extends Controller {
 		if($third > 0) { // 需要第三方支付
 			$this->jubaopay($payid);
 			// TODO: 第三方支付接口
-			//$result['status'] = $this->pay($payid);
-//			if($result['status'] == 0) {
-//				$this->redirect('支付成功', 'success');
-//			}
 		} else { // 本地直接支付
 			$result['status'] = $this->pay($payid);
-//			if($result['status'] == 0) {
-//				$this->redirect('支付成功', 'success');
-//			}
 		}
-		//$this->ajaxReturn($result, 'JSON');
+		$this->ajaxReturn($result, 'JSON');
 	}
 	
 		// 模拟创建号
