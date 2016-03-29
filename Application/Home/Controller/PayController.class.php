@@ -13,6 +13,7 @@ class PayController extends Controller {
 // 105: 扣除余额失败
 // 106: 增加消费积分失败
 // 107: 修改预付订单状态为已支付－修改失败
+// 108: 无效订单
 // 201: 秒杀商品已经完结
 // 202: 生成秒杀客户随即码失败
 // 203: 计算秒杀结果失败
@@ -36,12 +37,13 @@ class PayController extends Controller {
 
 	public function index($payid){
 		if(is_login()) {
+			$uid = get_temp_uid();
 			if(empty($payid)) {
 				$payid = I('payid');
 			}
 			$db = D('Home/AccountGoods');
 			$map['payid'] = $payid;
-			$map['uid'] = get_temp_uid();
+			$map['uid'] = $uid;
 			$list = $db->where($map)->relation(true)->select();
 			if(!empty($list)) {
 				$this->assign('list', $list);
@@ -49,9 +51,9 @@ class PayController extends Controller {
 				$this->assign('total', $total);
 			}
 			
+//			echo $db->getLastSql();
 //			echo dump($list);
 			
-			$uid = get_temp_uid();
 			$db = M('member');
 			$user = $db->field('money,score')->find($uid);
 			$score = intval($user['score']);
@@ -220,7 +222,7 @@ class PayController extends Controller {
 	// 取消预创订单
 	function cancelPrePay($payid) {
 		$adb = M('account');
-		$map['uid'] = get_temp_uid();
+//		$map['uid'] = get_temp_uid();
 		$map['payid'] = $payid;
 		if($adb->where($map)->save(array('status'	=> -1)) !== FALSE) {
 			return 0;
@@ -229,11 +231,11 @@ class PayController extends Controller {
 	}
 
 	// 修改预支付订单的金额、积分、第三方金额
-	function updatePrePay($payid, $money, $score, $third,$type=0) {
-		$status = $this->checkPrePay($payid, $money, $score, $third);
+	function updatePrePay($payid, $uid, $money, $score, $third,$type=0) {
+		$status = $this->checkPrePay($payid, $uid, $money, $score, $third);
 		if($status == 0) {
 			$agdb = M('Account');
-			$map['uid'] = get_temp_uid();
+//			$map['uid'] = $uid;
 			$map['payid'] = $payid;
 			$money = (float)$money;
 			$score = (int)$score;
@@ -252,8 +254,8 @@ class PayController extends Controller {
 	}
 	
 	// 检查支付是否合法
-	function checkPrePay($payid, $money, $score, $third, $list = null) {
-		$uid = get_temp_uid();
+	function checkPrePay($payid, $uid, $money, $score, $third, $list = null) {
+//		$uid = get_temp_uid();
 		$udb = M('member');
 		
 		$account = $udb->field('uid, money,score')->find($uid);
@@ -306,21 +308,27 @@ class PayController extends Controller {
 //		$uid = get_temp_uid();
 //		$amap['uid'] = $uid;
 		$amap['payid'] = $payid;		
+		$amap['ispay'] = 0;		
 		// 第一步 查询所购商品
 		$list = $agdb->where($amap)->relation(true)->select();
 		
-		//从payid中获取到uid
-		$accountdata = $adb -> find($payid);
-		$uid=$accountdata["uid"];
+//		//从payid中获取到uid
+//		$accountdata = $adb -> find($payid);
+//		$uid=$accountdata["uid"];
 		
 		// 第二步 检测余额是否足够 
 		$adata = $adb->where($amap)->find();
+		$uid = $adata['uid'];
 		$money = (float)$adata['money'];  // 余额
 		$score = (int)$adata['score'];    // 积分
 		$third = (float)$adata['third'];  // 第三方支付金额
 //		echo dump($third);
+
+		if(empty($adata)) {
+			return 108; // 非法订单号
+		}
 		
-		$status = $this->checkPrePay($payid, $money, $score, $third, $list);
+		$status = $this->checkPrePay($payid, $uid, $money, $score, $third, $list);
 		if($status != 0) {
 			return $status;
 		}
@@ -330,7 +338,7 @@ class PayController extends Controller {
 			$goodsType = intval($cart['type']);
 			if($goodsType == 3) { // 拍卖
 				if(intval($cart['isbz'] == 1)) { // 保证金
-					$status = $this->doPayBaozhengjin($cart['paimai']['gid'], $third);
+					$status = $this->doPayBaozhengjin($uid, $cart['paimai']['gid'], $third);
 				} else if(intval($cart['isbz'] == -1)) { // 中标支付
 					$status = $this->zhongbiao($cart);
 				} else {
@@ -375,8 +383,8 @@ class PayController extends Controller {
 	/**
 	 * 结算保证金
 	 */
-	private function doPayBaozhengjin($gid, $third, $money) {
-		$uid = get_temp_uid();
+	private function doPayBaozhengjin($uid, $gid, $third, $money) {
+//		$uid = get_temp_uid();
 		$pdb = M('paimai');
 		$adb = M('account');
 		$udb = M('member');
@@ -651,14 +659,14 @@ class PayController extends Controller {
 		}
 		return 0;
 	}
-	
 
 	public function topay($payid) {
 		$third = (float)$_POST["third"];  // 第三方付款
 		$money = (float)$_POST["money"]; // 余额支付
 		$score = (int)$_POST["score"]; // 积分支付
+		$uid = get_temp_uid();
 		
-		$result['status'] = $this->updatePrePay($payid, $money, $score, $third);
+		$result['status'] = $this->updatePrePay($payid, $uid, $money, $score, $third);
 		if($status != 0) { // 计算余额失败
 			$this->ajaxReturn($result, 'JSON');
 			return;
@@ -684,7 +692,8 @@ class PayController extends Controller {
 		return $password;
 	}
 	public function jubaopay()
-	{			
+	{				
+			$uid = session("_uid");
 			vendor('jubaopay.jubaopay');
 				 
 //			$payid=$this->genPayId(20);
@@ -711,7 +720,7 @@ class PayController extends Controller {
 					$type=11;
 				}
 				
-				$result['status'] = $this->updatePrePay($payid, $accountmoney, $accountscore, $amount,$type);
+				$result['status'] = $this->updatePrePay($payid, $uid, $accountmoney, $accountscore, $amount,$type);
 				if($status != 0) { // 计算余额失败
 					$this->ajaxReturn($result, 'JSON');
 					return;
@@ -719,8 +728,7 @@ class PayController extends Controller {
 			}
 			else if($paytype=='rechargepc' || $paytype=='rechargewap')
 			{
-				$adb = M('account');			
-				$uid = session("_uid");
+				$adb = M('account');		
 				$payid=$this->genPayId(20);
 
 				$type=30;

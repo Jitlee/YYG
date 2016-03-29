@@ -5,17 +5,29 @@ class JiexiaoController extends Controller {
 	
 	public function index(){
 		run_task();
+    		$this->assign('title', '即将揭晓');
+		$this->assign('pid', 'jiexiao');
+		$this->assign('tabId', 1);
+		$this->display();
+    }
+	
+	public function history() {
+		run_task();
     		$this->assign('title', '最新揭晓');
 		$this->assign('pid', 'jiexiao');
 		$this->assign('tabId', 2);
 		$this->display();
-    }
+	}
 	
 	public function pageAll($pageSize, $pageNum) {
 		// 分页
-		$db = M('miaosha');
-		$filter["jishijiexiao"] = array('gt', 0);
-		$filter['type'] = 1;
+		
+//		$filter['type'] = 1;
+		
+		$tabId = intval(I('get.tabId')); // 1:即将揭晓，2最新揭晓
+		$db = $tabId == 1 ? M("Miaosha") : M("MiaoshaHistory");
+		
+		$filter = $tabId == 1 ? array("jishijiexiao"=>array('gt', 0)) : null;
 		
 		$cid = intval(I('get.cid'));
 		if($cid > 0) {
@@ -34,25 +46,29 @@ class JiexiaoController extends Controller {
 			case 4: // 总需人数
 				$order = ",zongrenshu desc";
 				break;
+			case 12:
+				$order = ",end_time desc";
+				break;
 			default: // 人气
 				$order = ",canyurenshu desc";
 				break;
 		}
 		
-		$filter['status'] = array('elt', 2);
+//		$filter['status'] = array('elt', 2);
 		
 		$list = $db->where($filter)
 			->order('status asc'. $order)
 			->page($pageNum, $pageSize)
 			->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, end_time,prizeuid,prizecode')->select();
-			
-		if(!empty($list)) {
+//		echo $db->getLastSql();
+		
+		if(!empty($list) && $tabId == 2) {
 			$udb = M('member');
 			$mhdb = M('MemberMiaosha');
-			foreach($list as $data) {
+			foreach($list as $key => $data) {
 				if(!empty($data['prizeuid'])) {
 					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
-					$data['prizer'] = $user;
+					$list[$key]['prizer'] = $user;
 					
 					if(empty($user['username'])) {
 						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
@@ -63,7 +79,7 @@ class JiexiaoController extends Controller {
 					$mhmap['gid'] = $data['gid'];
 					$mhmap['qishu'] = $data['qishu'];
 					$count = $mhdb->where($mhmap)->sum('count');
-					$data['prizer']['count'] = $count;
+					$list[$key]['prizer']['count'] = $count;
 				}
 			}
 		}

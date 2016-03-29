@@ -26,7 +26,7 @@ class IndexController extends Controller {
 		$this->assign('category', $category);
 		$this->assign('categoryName', $categoryName);
 		
-		$this->assign('tabId', 1);
+		$this->assign('tabId', 0);
 		
 		$this->display();
     }

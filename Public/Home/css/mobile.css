@@ -724,6 +724,7 @@ label.mui-input-row input[type=checkbox] {
 	background-color: #fff;
 	list-style: none;
 	display: table;
+	table-layout: fixed;
 	margin:0;
 	padding: 0;
 	width:100%;

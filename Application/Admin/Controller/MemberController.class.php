@@ -8,8 +8,7 @@ class MemberController extends CommonController {
 	}
 	
 	public function today($pageSize = 25, $pageNum = 1) {
-		$time=mktime(0,0,0,date("m"),date("d"),date("Y"));
-		$filter['time'] = array('GT', $time);
+		$filter = 'date(time) = curdate()';
 		self::select($pageSize, $pageNum, $filter);
 	}
 	
