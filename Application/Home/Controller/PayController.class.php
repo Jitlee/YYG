@@ -651,7 +651,6 @@ class PayController extends Controller {
 		}
 		return 0;
 	}
-	
 
 	public function topay($payid) {
 		$third = (float)$_POST["third"];  // 第三方付款

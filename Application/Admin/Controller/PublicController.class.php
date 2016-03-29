@@ -42,9 +42,11 @@ class PublicController extends Controller {
 				'login_time'		=> $data['login_time'],
 				'role'			=> $admin['role'],
 				'email'			=> $admin['email'],
+				'username'		=> $username,
 			);
 			session('admin', $auth);
 			session('_uid', $data['uid']);
+			session('username', $username);
 //			echo dump(session('admin'));
 			$this->success('登陆成功', U('Index/index', '', ''));
 		} else if(a_is_login()) {
