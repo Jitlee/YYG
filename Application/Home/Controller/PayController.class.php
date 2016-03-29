@@ -303,12 +303,15 @@ class PayController extends Controller {
 		$agdb = D('Home/AccountGoods');
 		
 		$status = 0;
-		$uid = get_temp_uid();
-		$amap['uid'] = $uid;
-		$amap['payid'] = $payid;
-		
+//		$uid = get_temp_uid();
+//		$amap['uid'] = $uid;
+		$amap['payid'] = $payid;		
 		// 第一步 查询所购商品
 		$list = $agdb->where($amap)->relation(true)->select();
+		
+		//从payid中获取到uid
+		$accountdata = $adb -> find($payid);
+		$uid=$accountdata["uid"];
 		
 		// 第二步 检测余额是否足够 
 		$adata = $adb->where($amap)->find();
@@ -366,9 +369,7 @@ class PayController extends Controller {
 		if($adb->where($amap)->save(array('status'	=> 1)) === FALSE) {
 			return 107; // 修改预付订单状态为已支付－修改失败
 		}
-		
 		return 0;
-		
 	}
 	
 	/**

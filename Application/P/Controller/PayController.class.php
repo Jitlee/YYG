@@ -55,8 +55,8 @@ class PayController extends \Home\Controller\PayController {
 			$state = $jubaopay -> getEncrypt("state");
 			$amount = $jubaopay -> getEncrypt("amount");
 			$orderNo = $jubaopay -> getEncrypt("orderNo");
-			$result = "payid=	$payid	state=$state 	
-amount=$amount	orderNo=$orderNo ";
+			
+			$allStatus="失败001";
 			if ($state == '2')//成功 充值
 			{
 				$db = M('account');
@@ -87,23 +87,21 @@ amount=$amount	orderNo=$orderNo ";
 							if($status !=0 )
 							{
 								logger("支付成功，修改状态失败：$payid 状态：$status");	
-							}
-							
-//							if($status==0)//更新状态
-//							{
-//								$data["status"] = 1;
-//								if ($db -> where(array('payid' => $payid)) -> save($data) == FALSE) {
-//	
-//								}	
-//							}//end 更新状态							
+							}					
 						}
+						$allStatus="成功001";
+					}
+					else
+					{
+						$allStatus="状态已经更新";
 					}
 				}
+				else
+				{
+					$allStatus="account数据不存在。";
+				}
 			} 
-			else//失败
-			{
-
-			}
+			$result = "payid=$payid;state=$state 	orderNo=$orderNo  修改状态:$allStatus ,执行结果：$status";
 			logger($result);
 			echo "success";
 			//向服务返回 "success"
