@@ -35,11 +35,17 @@
 					text-align:center;
 					padding-right:20px;
 					background:url(__IMG__/nav_bg_1.png) no-repeat right top;
-					color:#2a8bbb;
 					top:0px;
 				}
+				
+				.navv .normal.active a {
+					color: #fff;
+					font-weight: bold;
+				}
+				
 				#navbar ul li a{color: #ffffff;}
 				#navbar ul li p{color: #ffffff;}
+				
 			</style>
 	</head>
 
@@ -62,13 +68,13 @@
 						<li>
 							<p class="navbar-text">{$Think.session.username}</p>
 						</li>
-						<li><a href="#">修改密码</a></li>
-						<li><a href="__URL__/../Public/logout">退出</a></li>
+						<li><a href="{:U('User/change')}">修改密码</a></li>
+						<li><a href="{:U('Public/logout')}">退出</a></li>
 					</ul>
 				</div>
 			</div>
 		<ul id="mainNavTabs" class="navv navbar-fixed-top" style="position: absolute; top:40px; left:500px; z-index: 100; background: none; border-bottom: none; ">
-		<li id="sysmgr" class="normal"><a>系统管理</a></li>
+		<if condition="ROLE eq 1"><li id="sysmgr" class="normal"><a>系统管理</a></li></if>
 		<li id="gdmgr" class="normal"><a>商品管理</a></li>
 		<li id="mbmgr" class="normal"><a>会员管理</a></li>
 		<li id="marticles" class="normal"><a>文章管理</a></li>

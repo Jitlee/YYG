@@ -1,7 +1,8 @@
 
 <div id="subNavTabs" style="width: 220px;" >
+	<if condition="ROLE eq 1">
 	<ul id="s_sysmgr" class="nav-sidebar hidden">
-		<if condition="ROLE eq 1">
+		
 		<li id="usrmgr" class="head">
 			<a>管理员管理</a>
 			<ul>
@@ -10,8 +11,8 @@
 				<li id="chagpwd" class="set"><a href="__MODULE__/User/change">修改密码</a></li>
 			</ul>
 		</li>
-		</if>
 	</ul>
+	</if>
 	<ul id="s_gdmgr" class="nav-sidebar hidden">
 		<li id="msmgr">
 			<a>秒杀商品管理</a>
