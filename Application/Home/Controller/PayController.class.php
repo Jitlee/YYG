@@ -501,16 +501,17 @@ class PayController extends Controller {
 					return 203; // 计算结果失败
 				}
 				
-				$prize = intval($query[0]) % $good['canyurenshu'];
+				$prize = 0;
+				$prizeindex = intval($query[0]) % $good['canyurenshu'];
 				$cmap['gid'] = $good['gid'];
 				$cmap['qishu'] = $good['qishu'];
-				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prize + 1, 1)->find();
+				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->find();
 				if(!$presult) {
 					return 204; // 获取中奖用户失败
 				}
 				
 				$good['status'] = 2;
-				$good['prizecode'] = $prize;
+				$good['prizecode'] = $presult['pcode'];
 				$good['prizeuid'] = $presult['uid'];
 				$good['end_time'] = date('y-m-d-H-i-s');
 				

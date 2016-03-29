@@ -291,20 +291,21 @@ function finish_jiexiao() {
 			$prize = 0;
 			$prizeuid = 0;
 			if(!empty($query)) {
-				$prize = intval($query[0]) % $good['canyurenshu'];
+				$prizeindex = intval($query[0]) % $good['canyurenshu'];
 				
 				// 查找中奖用户
 				$cdb = M('MiaoshaCode');
 				$cmap['gid'] = $good['gid'];
 				$cmap['qishu'] = $good['qishu'];
-				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prize + 1, 1)->find();
+				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->find();
 				if($presult) {
 					$prizeuid = $presult['uid'];
+					$prize = $presult['pcode'];
 				}
 			}
 			
 			$good['status'] = 2;
-			$good['prizecode'] = 10000001 + $prize;
+			$good['prizecode'] = $prize;
 			$good['prizeuid'] = $presult['uid'];
 			
 			$hdb = M('MiaoshaHistory');
