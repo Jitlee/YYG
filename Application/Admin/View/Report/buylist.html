@@ -1,0 +1,44 @@
+<div class="nav">
+	
+</div>
+<table id="listTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>充值人</th>
+			<th>充值人手机号</th>
+			
+			<th>时间</th>
+			<th>余额支付金额</th>
+			<th>积分支付金额</th>
+			<th>网银支付金额</th>
+			<th>来源</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="good">
+		<tr>
+			<td>{$good.username}</td>
+			<td>{$good.mobile}</td>
+			
+			<td>{$good.time}</td>
+			
+			<td>{$good.money}</td>
+			<td>{$good.score}</td>
+			<td>{$good.third}</td>
+			
+			<td>
+				<if condition = "$good.type eq '1'" >PC</if>
+				 <if condition = "$good.type eq '11'" >微信</if>
+			</td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$(function(){
+		 
+		
+		 
+	});
+</script>

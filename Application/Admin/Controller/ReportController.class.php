@@ -106,6 +106,82 @@ class ReportController extends CommonController {
 		//$this->display("buylistadminsend");
 		 
 	}
+	/**
+	 * 充值记录
+	 * **/
+	public function userrecharge($pageSize = 25, $pageNum = 1) {
+		
+		$db = M('account');		 
+		$map = ' (a.type=30 or a.type=31) and a.status=1';
+		
+		$list = $db
+			->field('a.*,m.username,m.mobile')
+			->join('a inner join __MEMBER__ m on m.uid=a.uid')
+			->where($map)
+			->page($pageNum, $pageSize)	
+			->order('a.time desc')->select();
+			
+		$num = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
+		
+		if(!$pageSize) {
+			$pageSize = 25;
+		}
+		$pageNum = intval($pageNum);
+		$pageCount = ceil($count / $pageSize);
+		if($pageNum > $pageCount) {
+			$pageNum = $pageCount;
+		}
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('count', $count);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+		
+		$this->assign('list',$list);// 模板变量赋值
+		$this->assign('title', '充值记录');
+		$this->assign('pid', 'mbmgr');
+		$this->assign('mid', 'userrecharge');
+		$this->display();
+	}
+	/**
+	 * 购买记录
+	 * *****/
+	public function buylist($pageSize = 25, $pageNum = 1) {
+		
+		$db = M('account');		 
+		$map = ' (a.type=11 or a.type=1) and a.status=1';
+		
+		$list = $db
+			->field('a.*,m.username,m.mobile')
+			->join('a inner join __MEMBER__ m on m.uid=a.uid')
+			->where($map)
+			->page($pageNum, $pageSize)	
+			->order('a.time desc')->select();
+			
+		$num = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
+		
+		if(!$pageSize) {
+			$pageSize = 25;
+		}
+		$pageNum = intval($pageNum);
+		$pageCount = ceil($count / $pageSize);
+		if($pageNum > $pageCount) {
+			$pageNum = $pageCount;
+		}
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('count', $count);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+		
+		$this->assign('list',$list);// 模板变量赋值
+		$this->assign('title', '购买记录');
+		$this->assign('pid', 'mbmgr');
+		$this->assign('mid', 'buylist');
+		$this->display();
+	}
 	
 	public function paimaiadmin($pageSize = 25, $pageNum = 1) {
 		
