@@ -5,13 +5,65 @@ namespace P\Controller;
  */
 class CartController extends CommonController {
 	
-	public function index(){
+	public function index($payid = null){
     		$this->assign('title', '购物车');
 		$this->assign('pid', 'cart');
 		
 		$db = D('cart');
+		$uid = get_temp_uid();
 		
-		$map['uid'] = get_temp_uid();
+		if(!empty($payid)) {
+			// 还原购物车
+			$adb = M('Account');
+			$agdb = M('AccountGoods');
+			$amap = array(
+				'payid'		=> $payid,
+				'uid'		=> $uid,
+				'ispay'		=> 0,
+				'type'		=> array('neq', 3)
+			);
+			// 判断payid是否合法
+			$account = $adb->where($amap)->find();
+			if(!empty($account)) {
+				$db->startTrans();
+				
+				$status = 0;
+				// 删除account表
+				if($agdb->where($ampa)->delete() === FALSE) {
+					$status == 0;
+				}
+				
+				// 拷贝商品
+				$agmap = array('payid'		=> $payid);
+				if($status == 0) {
+					$agoods = $agdb->field('id, uid, qishu, gid, type, flag, count, time')->where($agmap)->select();
+					// 复制购物车
+					foreach($agoods as $goods) {
+						if($db->add($goods) === FALSE) {
+							$result['status'] = -1;
+							break;
+						}
+					}
+				}
+				
+				if($status == 0) {
+					// 删除商品
+					if($status == 0 && $agdb->where($agmap)->delete() === FALSE) {
+						$status = -2;
+					}
+				}
+				
+				if($status == 0) {
+					$db->commit();	
+				} else {
+					$db->rollback();
+				}
+			
+			}
+		}
+		
+		
+		$map['uid'] = $uid;
 		$list = $db->where($map)->relation(true)->select();
 		if(!empty($list)) {
 			// 检测商品状态

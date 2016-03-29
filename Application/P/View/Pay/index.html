@@ -89,7 +89,7 @@
 			<li class="payment_Total">
 				<if condition="$list[0]['isbz'] eq 0">
 				<div class="payment_List_Lc">
-					<a href="{:U('Cart/index', '', '')}" class="form_ReturnBut">返回购物车修改订单</a>
+					<a href="{:U('Cart/index', '', '')}/{$payid}" class="form_ReturnBut">返回购物车修改订单</a>
 				</div>
 				</if>
 				<p class="payment_List_Rc">商品合计：<span class="orange F20">{$total}</span> 元</p>

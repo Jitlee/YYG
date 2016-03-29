@@ -150,11 +150,16 @@ class MainController extends Controller {
 				$_uid = get_temp_uid();	
 				
 				// 清空之前的商品
-				$cmap['uid'] = $data['uid'];
+				$cmap['uid'] = $_uid;
 				$cdb->where($cmap)->delete();
 				
-				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
-				$row = M()->execute($sql);
+				empty_cart();
+				
+				$cartCount = $cdb->where(array('uid'=>$user['uid']))->count();
+				count_cart($cartCount);
+				
+//				$sql = 'update `yyg_cart` SET `flag` = 1 ,`uid` = ' . $data['uid'] .' WHERE `uid` = ' . $_uid;			
+//				$row = M()->execute($sql);
 				
 				session("_uid", $user['uid']); 					
 				session('wxUserinfo', $user);
