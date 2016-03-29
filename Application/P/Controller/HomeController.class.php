@@ -41,6 +41,7 @@ class HomeController extends CommonController {
 		->page($pageNum, $pageSize)
 		//->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
 		->field("title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
+		->order('time desc')
 		->select();
 		
 //		$ModelH = M('miaosha_history');
