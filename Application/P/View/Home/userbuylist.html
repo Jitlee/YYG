@@ -35,8 +35,8 @@
 	                </a></p>
 					<p class="gray02">揭晓时间：<span class="ztime"></span></p>
 				</li>
-				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange">已揭晓</span></li>
-				<li class="joinInfo" style="margin:23px 0 0 0;"><p><em></em>人次</p></li>
+				<li class="yg_status" style="margin:23px 0 0 0;"><span class="orange1">已揭晓</span></li>
+				<li class="joinInfo" style="margin:23px 0 0 0;"><p><r> </r>人次</p></li>
 				<li class="do" style="margin:23px 0 0 0;"><a href="#" class="blue" title="详情">详情</a></li>
 			</ul>
 			
@@ -84,14 +84,16 @@
 				}
 	       		$.each(list, function() {
 	       			useTemplate=goodTemplateing;
-	       			if(this.jishijiexiao==1)
+	       			if(this.isend==1)
 	       			{
 	       				useTemplate=goodTemplate;
 	       			}	       			 
 	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
 	       			$(".ycode", item).attr("href", "{:U('Home/goodcodelist', '', '')}/" + this.gid+"/"+this.qishu+"/100/1");
-
+	       			
+	       			$(".blue", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
+					
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
 //	       			$(".money", item).text(this.zongrenshu);

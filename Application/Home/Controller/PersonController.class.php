@@ -434,29 +434,17 @@ class PersonController extends CommonController {
 	
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
-//		$Model = M('miaosha');
-//		$filter['yyg_member_miaosha.uid'] = session("_uid");
-//				
-//		$list =$Model
-//		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha.gid and yyg_member_miaosha.qishu=yyg_miaosha.qishu")	
-//		->where($filter)
-//		->page($pageNum, $pageSize)
-//		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
-//		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid")
-//		->select();
-		
-		$Model = M('miaosha_history');
+		$Model = M('member_miaosha');
 		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
-		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha_history.gid and yyg_member_miaosha.qishu=yyg_miaosha_history.qishu")			
+		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid ")			
 		->where($filter)
 		->page($pageNum, $pageSize)
-		//->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
-		->field("title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
-		->order('time desc')
+		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
+		,type,jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
+		->order('yyg_member_miaosha.time desc')
 		->select();
-		
 			
 		$this->ajaxReturn($list, "JSON");
 	}

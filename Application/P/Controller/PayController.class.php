@@ -39,16 +39,21 @@ class PayController extends \Home\Controller\PayController {
 		}
 	}
 
+//	public function t()
+//	{
+//		$this->display();
+//	}
 	public function notify() {
 		layout(false);
 		$message = $_POST["message"];
 		$signature = $_POST["signature"];
-
+ 
 		vendor('jubaopay.jubaopay');
 		$jubaopay = new \jubaopay('jubaopay.ini');
 		$jubaopay -> decrypt($message);
 		// 校验签名，然后进行业务处理
 		$result = $jubaopay -> verify($signature);
+		$allEndStatus=-1;		//判断最终返回状态
 		if ($result == 1) {
 			// 得到解密的结果后，进行业务处理
 			$payid = $jubaopay -> getEncrypt("payid");
@@ -76,9 +81,8 @@ class PayController extends \Home\Controller\PayController {
 								logger('*************失败*************');
 							} else {
 								$data["status"] = 1;
-								if ($db -> where(array('payid' => $payid)) -> save($data) == FALSE) {
-
-								}
+								if ($db -> where(array('payid' => $payid)) -> save($data) == FALSE) {}
+								$allEndStatus=1;
 							}
 						} 
 						else if ($type == 1 || $type == 11)//一元购物
@@ -87,12 +91,17 @@ class PayController extends \Home\Controller\PayController {
 							if($status !=0 )
 							{
 								logger("支付成功，修改状态失败：$payid 状态：$status");	
-							}					
+							}
+							else
+							{
+								$allEndStatus=1;	
+							}
 						}
 						$allStatus="成功001";
 					}
 					else
 					{
+						$allEndStatus=1;
 						$allStatus="状态已经更新";
 					}
 				}
@@ -100,10 +109,14 @@ class PayController extends \Home\Controller\PayController {
 				{
 					$allStatus="account数据不存在。";
 				}
-			} 
-			$result = "payid=$payid;state=$state 	orderNo=$orderNo  修改状态:$allStatus ,执行结果：$status";
+			}
+			$result = "payid=$payid;state=$state 	orderNo=$orderNo  修改状态:$allStatus ,执行结果：$status
+";
 			logger($result);
-			echo "success";
+			if($allEndStatus==1)
+			{
+				echo "success";	
+			}
 			//向服务返回 "success"
 		}
 	}

@@ -359,7 +359,7 @@ class PayController extends Controller {
 			'score'				=> array('exp', '`score` + '.$third),// 第三方支付增加消费积分(1:1)
 		);
 		if($udb->where(array('uid' => $uid))->save($member) === FALSE) {
-			echo $udb->getLastSql();
+			//echo $udb->getLastSql();
 			return 105; // 扣除个人余额失败
 		}
 		

@@ -32,29 +32,18 @@ class HomeController extends CommonController {
     }
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
-		$Model = M('miaosha_history');
+		$Model = M('member_miaosha');
 		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
-		->join(" yyg_member_miaosha ON yyg_member_miaosha.gid=yyg_miaosha_history.gid and yyg_member_miaosha.qishu=yyg_miaosha_history.qishu")			
+		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid ")			
 		->where($filter)
 		->page($pageNum, $pageSize)
-		//->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha.time,yyg_member_miaosha.uid')
-		->field("title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
-		->order('time desc')
+		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
+		,type,jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
+		->order('yyg_member_miaosha.time desc')
 		->select();
-		
-//		$ModelH = M('miaosha_history');
-//		$filterH['yyg_member_miaosha.uid'] = session("_uid");  
-//		$list2 =$ModelH
-//		->join(" yyg_member_miaosha ON yyg_miaosha_history.gid=yyg_member_miaosha.gid")			
-//		->where($filterH)
-//		->page($pageNum, $pageSize)
-//		->group('title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid')
-//		->field("title,thumb,danjia,status,yyg_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member_miaosha.uid")
-//		->select();
-		
-		//$endlist=array_merge($list,$list2);
+		 
 		$this->ajaxReturn($list, "JSON");
 	}
 	/*	中奖记录	*/
@@ -89,12 +78,11 @@ class HomeController extends CommonController {
 		$filter['yyg_miaosha_history.sdstatus'] = 0;
 		 
 		$list =$Model
-		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
-		->where($filter)
+		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")
 		->page($pageNum, $pageSize)		
 		->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
-		$this->ajaxReturn($list, "JSON");
+		 $this->ajaxReturn($list, "JSON");
 	}
 	
 	public function pageAllsdfinish($pageSize, $pageNum) {//已晒单
