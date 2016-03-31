@@ -112,6 +112,7 @@ class PersonController extends CommonController {
 		$list =$Model					
 		->where($filter)
 		->page($pageNum, $pageSize)
+		->order(" time desc")
 		->select();
 		return $list;
 	}
@@ -152,9 +153,6 @@ class PersonController extends CommonController {
 	{
 		$db = M('member');
 		$filter['yaoqing'] = session("_uid");
-		
-		//$total =$db->where($filter)->count();
-		//$this->SetPage($pageSize,$pageNum,$total);
 		
 		$list =$db					
 		->where($filter)
@@ -441,7 +439,7 @@ class PersonController extends CommonController {
 		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid ")			
 		->where($filter)
 		->page($pageNum, $pageSize)
-		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
+		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,yyg_member_miaosha.count,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
 		,type,jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
 		->order('yyg_member_miaosha.time desc')
 		->select();

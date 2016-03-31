@@ -11,7 +11,7 @@
 			<form  role="form" method="post" class="mui-input-group">
 				<div class="mui-input-group">
 					<div class="mui-input-row">
-						<label for="username" class="control-label">申请提现金额</label>
+						<label for="username" class="control-label">申请金额</label>
 						<input type="text" class="mui-input-clear mui-input" id="money" name="money" maxlength="10" placeholder="请输入提现金额" required />
 					</div>
 					
@@ -47,6 +47,12 @@
   
 			</form>
 </div>
+<style>
+	.mui-input-row label {
+				width: 28%; margin-left:3px;
+	}
+</style>
+ <script src="__JS__/util.js"></script>
 <script type="text/javascript">
 	 //表单提交
 	$(document).ajaxStart(function() {
@@ -56,6 +62,18 @@
 	});
 	$(function(){				
 				$("#btnsave").click(function(){
+					var money=$("#money").val();
+					if(money.length <3)
+					{
+						util.msg("金额不能小于100。");	 				
+						return false;
+					}
+					var money=$("#username").val();
+					if(money.length <2)
+					{
+						util.msg("请输入正确的开户人。");	 				
+						return false;
+					}
 						var self = $("form");
 						$.post("{:U('Person/cashout','','')}", self.serialize(), savesuccess, "json");
 						return;

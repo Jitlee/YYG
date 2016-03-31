@@ -1,0 +1,47 @@
+<div class="nav">
+	
+</div>
+<table id="listTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>申请人</th>
+			<th>申请人手机号</th> 
+  
+			<th>开户人</th>
+			<th>金额</th>
+			<th>银行名称</th>
+			
+			<th>支行</th>
+			
+			<th>申请时间</th>
+			<th>银行帐号</th>
+			 <th>联系电话</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="good">
+		<tr>
+			<td>{$good.username}</td>
+			<td>{$good.mobile}</td>
+			
+			<td>{$good.cashoutusername}</td>
+			<td>{$good.cashoutmoney}</td>
+			
+			<td>{$good.bankname}</td>
+			<td>{$good.branch}</td>
+			<td>{$good.cashouttime}</td>
+			<td>{$good.banknumber}</td>
+			<td>{$good.linkphone}</td>
+			 
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$(function(){
+		 
+		
+		 
+	});
+</script>

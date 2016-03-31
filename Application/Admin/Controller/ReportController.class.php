@@ -273,5 +273,57 @@ class ReportController extends CommonController {
 		$this->ajaxReturn($rd, "JSON");
 		 
 	}
+	
+	
+	/*
+	 * 提现记录
+	 * */
+	 public function cashoutlist($pageSize = 25, $pageNum = 1) {
+		 // 分页
+		$Model = M('member_cashout');
+		$list =$Model
+		->join("yyg_member m ON m.uid=yyg_member_cashout.uid")			
+		//->where($filter)
+		->page($pageNum, $pageSize)		
+		->field("id,m.uid,m.username,m.mobile,yyg_member_cashout.username cashoutusername,bankname,branch,yyg_member_cashout.money cashoutmoney
+		,yyg_member_cashout.time cashouttime,banknumber,linkphone,auditstatus,procefees,reviewtime ")
+		->order(" yyg_member_cashout.time  desc")
+		->select();
+		
+		
+		$count = $Model->count();
+		
+		if(!$pageSize) {
+			$pageSize = 25;
+		}
+		$pageNum = intval($pageNum);
+		$pageCount = ceil($count / $pageSize);
+		if($pageNum > $pageCount) {
+			$pageNum = $pageCount;
+		}
+		$this->assign('pageSize', $pageSize);
+		$this->assign('pageNum', $pageNum);
+		$this->assign('count', $count);
+		$this->assign('pageCount', $pageCount);
+		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
+		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
+		
+		 
+		$this->assign('list',$list);// 模板变量赋值
+		
+		
+		 
+		$this->assign('title', '提现记录');
+		$this->assign('pid', 'report');
+		$this->assign('mid', 'cashoutlist');
+		$this->display();
+	}
+	
+	
+	
+	
+	
+	
+	
 }
 	

@@ -353,10 +353,11 @@ class PayController extends Controller {
 			}
 		}
 		
+		$addScore=$third+$money-$score;
 		// 第四步 扣除个人余额
 		$member = array(
 			'money'				=> array('exp', '`money` - '.$money),
-			'score'				=> array('exp', '`score` + '.$third),// 第三方支付增加消费积分(1:1)
+			'score'				=> array('exp', '`score` + '.$addScore),// 第三方支付增加消费积分(1:1)
 		);
 		if($udb->where(array('uid' => $uid))->save($member) === FALSE) {
 			//echo $udb->getLastSql();
@@ -364,15 +365,17 @@ class PayController extends Controller {
 		}
 		
 		// 第五步 增加消费纪录流水
-		$msdata = array(
-			'uid'			=> $uid,
-			'scoresource'	=> '购买商品',
-			'score'			=> $third,
-		);
-		if($msdb->add($msdata) === FALSE) {
-			return 106; // 增加消费纪录流水失败
+		if($addScore != 0)
+		{
+			$msdata = array(
+				'uid'			=> $uid,
+				'scoresource'	=> '购买商品',
+				'score'			=> $addScore,
+			);
+			if($msdb->add($msdata) === FALSE) {
+				return 106; // 增加消费纪录流水失败
+			}	
 		}
-		
 		// 第六步 修改account状态为1
 		if($adb->where($amap)->save(array('status'	=> 1)) === FALSE) {
 			return 107; // 修改预付订单状态为已支付－修改失败
