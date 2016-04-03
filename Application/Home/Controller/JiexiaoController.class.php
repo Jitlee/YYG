@@ -65,7 +65,10 @@ class JiexiaoController extends Controller {
 		if(!empty($list) && $tabId == 2) {
 			$udb = M('member');
 			$mhdb = M('MemberMiaosha');
+			
 			foreach($list as $key => $data) {
+//					echo $key;
+//					echo dump($data);
 				if(!empty($data['prizeuid'])) {
 					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
 					$list[$key]['prizer'] = $user;
@@ -83,6 +86,7 @@ class JiexiaoController extends Controller {
 				}
 			}
 		}
+//		echo dump($list);
 		$this->ajaxReturn($list, "JSON");
 	}
 	

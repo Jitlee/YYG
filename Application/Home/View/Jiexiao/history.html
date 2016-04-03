@@ -366,7 +366,7 @@
 		       			$("time", item).attr("countdown", new Date(this.end_time).getTime());
 	       			} else if(this.status == 2 && this.prizer) {
 	       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
+		       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "'/" + this.qishu);
 		       			$(".qishu", item).text(this.qishu);
 		       			$("img", item).attr("src", this.thumb);
 		       			$("p", item).text(this.title);
@@ -376,7 +376,7 @@
 		       			$(".user", item).text(this.prizer.username);
 	       			} else if(this.status == 2) {
 	       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
+		       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
 		       			$(".qishu", item).text(this.qishu);
 		       			$("img", item).attr("src", this.thumb);
 		       			$("span.money", item).text(Number(this.money).toFixed(2));
