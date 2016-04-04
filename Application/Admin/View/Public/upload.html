@@ -88,7 +88,7 @@
         			fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
 				uploader: "{:U('upload','','')}",
 				onUploadSuccess: function(file, data) {
-					var data = JSON.parse(data);
+					var data = JSON.parse(data.replace(/^[^\{]+/ig, ''));
 					if (data && data.status == 0) {
 						files.push(data);
 						var previewImage = uploadPreviewImageTemplate
