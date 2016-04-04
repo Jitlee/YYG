@@ -7,6 +7,7 @@
 <link rel="stylesheet" type="text/css" href="__CSS__/login.css"/>
 <link href="__CSS__/style.css" rel="stylesheet" type="text/css" />
 <link href="__CSS__/demo.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css"  href="__CSS__/comm1.css" />
 
 <script src="__JQ__"></script>
 <script type="text/javascript" src="__JS__/jquery.Validform.min.js"></script>
@@ -101,7 +102,7 @@ $(function(){
 				<li>
 					<span>密码：</span>					
 					<input class="text_password" name="password" type="password"  datatype="*6-20" nullmsg="请设置密码！" errormsg="密码范围在6~20位之间！"/>
-					<!--<span class="fog"><a href="{WEB_PATH}/member/finduser/findpassword">忘记密码？</a></span>--> 
+					<!--<span class="fog"><a href="/member/finduser/findpassword">忘记密码？</a></span>--> 
 				</li>								
 				<li class="ts" id="pwd_ts"><div class="Validform_checktip">请输入登录密码</div></li>
 				<li class="end"><input name="submit" type="submit" value="登录" class="login_init" ></li>
@@ -109,8 +110,8 @@ $(function(){
 			 
              
  			<div class="loginQQ">使用合作帐号登录：<span id="qq_login_btn">
- 				<a href="{:U('/Home/Public/qq?t=p', '', '')}"><img alt="" class="user-img" src="__IMG__/logo/qq.png"/></a>
- 				<a href="{:U('/Home/Public/weibo?t=p', '', '')}"><img alt="" class="user-img" src="__IMG__/logo/sweibo.png"/></a>
+ 				<a href="{:U('/Home/Public/qq', '', '')}/p"><img alt="" class="user-img" src="__IMG__/logo/qq.png"/></a>
+ 				<a href="{:U('/Home/Public/weibo', '', '')}/p"><img alt="" class="user-img" src="__IMG__/logo/sweibo.png"/></a>
  				</span></div>  
             	
 			<input value="{G_HTTP_REFERER}" name="hidurl" type="hidden">
@@ -135,7 +136,7 @@ $(function(){
 		<a href="{:U('Help/index', '', '')}/13">联系我们</a>
 		<b></b>		
 	</div>
-	<div class="copyright">Copyright © 2014 - 2015</div>
+	<div class="copyright">Copyright © 2015 - 2016</div>
 </div>
 
 </body>

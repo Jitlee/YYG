@@ -769,7 +769,7 @@ div.jqZoomBigPic img {
 	overflow:hidden;
 	background:url(../images/Details_EndCircle.png) no-repeat;
 	_background:none;
-	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="http://skin.1yyg.com/images/Details_EndCircle.png?v=121226");
+	_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/Public/Static/images/Details_EndCircle.png?v=121226");
 }
 .End_DetailsExplain {
 	height:114px;

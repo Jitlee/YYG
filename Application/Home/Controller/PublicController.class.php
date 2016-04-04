@@ -84,14 +84,25 @@ public function Reg($yaoqing=null){
 				if(!$records)
 				{
 					$_POST['img']='tx/211274314672928.jpg';
+					$_POST['score']=100;
+					
 					$db->create();
 					if($db->add() != false) {
 						$records = $db->where($data)->find();
 						$result["status"]=1;
 						session("_uid", $records['uid']);
 						session('wxUserinfo', $records);
-						//如果有邀请添加积分
+						//如果有邀请添加积分		
 						
+						$msdata = array(
+							'uid'			=> $records['uid'],
+							'scoresource'	=> '注册',
+							'score'			=> 100,
+						);
+						$msdb = M('MemberScore');
+						if($msdb->add($msdata) === FALSE) {
+							return 106; // 增加消费纪录流水失败
+						}				
 					} 
 					else 
 					{
@@ -112,8 +123,11 @@ public function Reg($yaoqing=null){
 	
 	
 /*******QQ登录*******/
-public function qq()
+public function qq($t)
 {
+	//session("logintype",$t);
+ 	$_SESSION['logintype']=$t;
+ 
     $appkey = C('OAUTH.QQ_APPKEY');
     $scope = C('OAUTH.QQ_SCOPE');
     $callback = C('OAUTH.QQ_CALLBACK');
@@ -122,14 +136,18 @@ public function qq()
     $qqobj->login($appkey, $callback, $scope);
 }
 
-public function weibo()
+public function weibo($t)
 {
+	$_SESSION['logintype']=$t;
+	
+	
 	$appkey = C('OAUTH.WEIBO_APPKEY');
     $scope = C('OAUTH.WEIBO_SCOPE');
     $callback = C('OAUTH.WEIBO_CALLBACK');
     $weibo =new \Lib\Login\WeiboConnect();
     $weibo->login($appkey, $callback, $scope);
 }
+
 public function auth() {        
         $appkey = C('OAUTH.QQ_APPKEY');
         $appsecretkey = C('OAUTH.QQ_APPSECRETKEY');
@@ -144,8 +162,10 @@ public function auth() {
 		        
         $openid =$info['openid'];
         $img=$user['figureurl_2'];
-		$this->LoginAuth($openid, $img);
+		$username=$user['nickname'];
+		$this->LoginAuth($openid, $img,$username);
 }
+
 public function weiboauth() {
         $appkey = C('OAUTH.WEIBO_APPKEY');
         $appsecretkey = C('OAUTH.WEIBO_APPSECRETKEY');
@@ -159,14 +179,15 @@ public function weiboauth() {
         //print_r($info);
         $openid =$info['openid'];
         $img=$user['profile_image_url'];
-		$this->LoginAuth($openid, $img);
+		$username=$user['screen_name'];
+		$this->LoginAuth($openid, $img,$username);
 }
 
-public function LoginAuth($openid,$imgurl)
+public function LoginAuth($openid,$imgurl,$username)
 {
 	$db = M('member');
-	$data['reg_key'] = $openid;
-	$records = $db->where($data)->find();
+	$where['reg_key'] = $openid;
+	$records = $db->where($where)->find();
 	if(!$records)
 	{
 		$data['login_time']=time();
@@ -192,40 +213,77 @@ public function LoginAuth($openid,$imgurl)
 //	);
 //	$this->assign('userinfo', $records);	
 	$this->assign('title', '登录授权.');
+	$this->assign('username', $username);
 	
-	session("_uid", $records['uid']); 
-	session('wxUserinfo', $records);
+	 
+	$_SESSION["loginitem"]=$records;
+	$_SESSION["loginuid"]=$records['uid'];
+	$logintype=$_SESSION['logintype'];
+	
 	if(empty($records["mobile"]) || empty($records["username"]))	
-	{	
+	{
+		$this->assign('title', '用户手机设置');
+		
+		$this->assign('reg_key', $openid);
+		$this->assign('logintype', $logintype);
 		$this->display("Public/setmobile");
 	}
 	else
 	{
-		$this->redirect("Person/me");		
+//		$this->redirect("/P/Home/index");	
+		session("_uid", $records['uid']); 					
+		session('wxUserinfo', $records);
+					
+		$url = decode(I('post.redirect'));
+		$result["status"]=1;
+		session('loginstatus', 1);
+		if($logintype=="p")
+		{
+			$this->redirect("/P/Home/index");	
+		}
+		else
+		{
+			$this->redirect("Person/me");
+		}		
 	}	
 }
 
 public function setmobile(){
+			$result["status"]=0;
+			$result["msg"]="操作成功。";
 			if(IS_POST) {
 					$db = M('member');
 					$data['mobile'] = $_POST['mobile'];
-					$records = $db->where($data)->find();
-					$result["status"]=0;
-					$result["msg"]="操作成功。";
+					$reg_key=$_POST['reg_key'];
+					$records = $db->where($data)->find();					
 					if(!$records)
 					{
 						$userinfo=session('wxUserinfo');
 						
-						$filter['reg_key'] = $userinfo["openid"];
+						$filter['reg_key'] = $reg_key;
 						$records = $db->where($filter)->find();
 						if($records)
 						{
-							//$records["img"]	=$userinfo["imgurl"];							
-							$records["mobile"]	=$_POST['mobile'];
+							$records["mobile"]		=$_POST['mobile'];
 							$records["username"]	=$_POST['username'];
-							session('wxUserinfo', $records);							
+							$records["score"]		=(int)$records["score"]+100;
+							
+							session('wxUserinfo', $records);
+							$_SESSION["loginitem"]=$records;
+							$_SESSION["loginuid"]=$records['uid'];
+	
 							$db->save($records);						
 							$result["status"]=1;
+							
+							$msdata = array(
+								'uid'			=> $records["uid"],
+								'scoresource'	=> '完善手机号',
+								'score'			=> 100,
+							);
+							$msdb = M('MemberScore');
+							if($msdb->add($msdata) === FALSE) {
+								return 106; // 增加消费纪录流水失败
+							}
 						}
 						else {
 							$this->error('数据错误'.$userinfo["openid"]);
@@ -236,11 +294,11 @@ public function setmobile(){
 						$result["msg"]="手机号已经注册。";
 					}
 					$this->ajaxReturn($result);				
-			} else {
+			}
+			else 
+			{
+				$this->assign('reg_key', 'tttttttt');
 				$this->assign('title', '用户手机设置');
-//				$userinfo=session('wxUserinfo');
-//				$userinfo["openid"]="71EEF3B6651960EA5129E7C14B0EA51C";
-//				session('wxUserinfo',$userinfo);
 				$this->display();
 			}
 	}

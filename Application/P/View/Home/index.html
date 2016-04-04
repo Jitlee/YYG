@@ -30,12 +30,12 @@
 				通知：现在获得的商品请在获得商品页面确认填写收货地址，如果没在获得商品页面确认你的收货地址将无法发货。引导进入获得商品页面！
 				<a href="{:U('Home/address', '', '')}" class="blue">立即确认收货地址</a>
 		</div>
-		<if condition="($data.mobile eq '') OR ($data.username gt '') ">
+		<!--<if condition="($data.mobile eq '') OR ($data.username gt '') ">
 			<div class="tips orange">
 				<em style="background-position: 0 -76px;"></em>新注册用户，可以通过料昵称完善和完成手机验证绑定，获赠100积分！
 				<a href="{:U('Home/modify', '', '')}" class="blue">立即完善</a><a class="close"></a>
 			</div>
-		</if>
+		</if>-->
 	 
             <script type="text/javascript">
                       $(".close").click(function () {
@@ -52,13 +52,7 @@
 	<div class="groups-shadow clearfix">
                  <div class="R-grtit"><h3>公告栏</h3></div>
 		<ul class="gg-list">
-		<!--获取圈子最新动态5条-->
-			<!--{wc:m=group.group mod=get_group_tiezi(5)}
-			{wc:loop $datas $row}	
-			<li><span class="point"></span><span class="info"><a href="{WEB_PATH}/group/nei/{wc:$row['id']}" target="_blank" 
-				class="gray" title="关于“幸运购物码”计算结果错误的公告">{wc:$row['title']}</a></span></li>
-			{wc:loop:end}-->
-			<!--/获取圈子最新动态5条-->
+		 
 		</ul>
 	</div> 
 	<p class="r-line"></p>

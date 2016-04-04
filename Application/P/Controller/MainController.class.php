@@ -16,11 +16,22 @@ class MainController extends Controller {
 			{
 				$_POST['img']='tx/211274314672928.jpg';
 				$_POST['mobilecode']='1111';
+				$_POST['score']=100;
 				//$_POST['username']=$_POST['mobile'];
 				$db->create();
 				if($db->add() != false) {
 					session('registerMobile', $_POST['mobile']);
 					$result["status"]=1;
+					
+					$msdata = array(
+						'uid'			=> $records['uid'],
+						'scoresource'	=> '注册',
+						'score'			=> 100,
+					);
+					$msdb = M('MemberScore');
+					if($msdb->add($msdata) === FALSE) {
+						return 106; // 增加消费纪录流水失败
+					}		
 				}
 				else 
 				{
@@ -123,6 +134,7 @@ class MainController extends Controller {
 		}
 	}
 	public function login(){
+		echo $_SESSION["abc"];
 		if(IS_POST) {
 			$result["status"]=0;
 			$result["msg"]="登录成功。";

@@ -332,8 +332,8 @@ body {
 	display: inline-block;
 	left: 0;
 	top: 0;
-	background: url(http://skin.1yyg.com/DataServer/images/lottery-1.png?v=130205) center top no-repeat;
-	_filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://skin.1yyg.com/DataServer/images/lottery-1.png?v=130205', sizingMethod='crop');
+	background: url(/Public/Static/images/lottery-1.png?v=130205) center top no-repeat;
+	_filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='/Public/Static/images/lottery-1.png?v=130205', sizingMethod='crop');
 	_background-image: none;
 }
 
@@ -351,8 +351,8 @@ body {
 	font-style: normal;
 	color: #fff;
 	text-align: left;
-	background: url(http://skin.1yyg.com/images/auto_04.png?v=13022) center top no-repeat;
-	_filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='http://skin.1yyg.com/images/auto_04.png?v=13022', sizingMethod='crop');
+	background: url(/Public/Static/images/auto_04.png?v=13022) center top no-repeat;
+	_filter: progid: DXImageTransform.Microsoft.AlphaImageLoader(src='/Public/Static/images/auto_04.png?v=13022', sizingMethod='crop');
 	_background-image: none;
 }
 
@@ -497,7 +497,7 @@ body {
 	line-height: 17px\9;
 	_line-height: 15px;
 	padding-left: 3px;
-	background: url(http://skin.1yyg.com/DataServer/images/lottery-2.png?v=130205) no-repeat;
+	background: url(/Public/Static/images/lottery-2.png?v=130205) no-repeat;
 }
 
 .Rcenter li p em {

@@ -213,7 +213,7 @@ a.blue:hover {
 	margin-left: 10px;
 }
 
-.g-frame-top:after,
+/*.g-frame-top:after,
 .g-frame-head:after,
 .g-frame-content:after,
 .g-frame-footer:after,
@@ -230,7 +230,7 @@ a.blue:hover {
 	width: 100%;
 	min-width: 980px;
 	background: #FFF;
-}
+}*/
 
 .g-frame-head {
 	clear: both;
@@ -241,7 +241,7 @@ a.blue:hover {
 	margin: 0 auto;
 }
 
-.g-frame-footer {
+/*.g-frame-footer {
 	width: 100%;
 	min-width: 1190px;
 	background: #FFF;
@@ -253,7 +253,7 @@ a.blue:hover {
 	margin: 0 auto;
 	overflow: hidden;
 	background: #FFF;
-}
+}*/
 
 i {
 	font-style: normal;
@@ -326,7 +326,7 @@ u-popup-Tip b,
 	-moz-box-shadow: #E84C01 0 0 0;
 	box-shadow: #E84C01 0 0 0;
 }
-
+/*
 .class-icon01 s,
 .class-icon02 s,
 .class-icon03 s,
@@ -334,8 +334,8 @@ u-popup-Tip b,
 .class-icon05 s,
 .class-icon06 s,
 .class-icon07 s {
-	background: url(http://skin.1yyg.com/Member/images/new-class-icon.png);
-}
+	background: url(/Public/Static/images/new-class-icon.png);
+}*/
 
 .class-icon01,
 .class-icon02,
@@ -458,7 +458,7 @@ u-popup-Tip b,
 .head-nav-bd .menu .menu-hd em,
 .nav .M-All-goods .U-All-T a b {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(/Public/Static/images/arrow_index.png?v=0722) no-repeat;
 	overflow: hidden;
 }
 
@@ -626,7 +626,7 @@ li.M-my-1yyg .menu-hd a {
 .menu-hd .triangle em,
 .menu-hd .triangle span {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(/Public/Static/images/arrow_index.png?v=0722) no-repeat;
 	width: 7px;
 	height: 4px;
 	overflow: hidden;
@@ -1119,7 +1119,7 @@ li.M-my-1yyg .menu-hd a {
 .head_number li.F-number-bg .mod_dropmenu_arrow {
 	float: left;
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(/Public/Static/images/arrow_index.png?v=0722) no-repeat;
 	width: 4px;
 	height: 7px;
 	background-position: 0 -20px;
@@ -1430,7 +1430,7 @@ body.group .nav-bd .M-nav-column li.F-nav-circle {
 .M-All-goods .U-All-T .triangle em,
 .U-All-T .triangle span {
 	display: block;
-	background: url(http://skin.1yyg.com/images/arrow_index.png?v=0722) no-repeat;
+	background: url(/Public/Static/images/arrow_index.png?v=0722) no-repeat;
 	width: 9px;
 	height: 5px;
 	overflow: hidden;
@@ -1471,7 +1471,7 @@ body.group .nav-bd .M-nav-column li.F-nav-circle {
 	margin: 0 auto;
 	margin-top: 10px;
 }
-
+/*
 .M-guide {
 	width: 100%;
 	display: block;
@@ -1504,7 +1504,7 @@ body.group .nav-bd .M-nav-column li.F-nav-circle {
 .M-guide dd a:hover {
 	color: #f60;
 	text-decoration: underline;
-}
+}*/
 
 .service-promise {
 	height: 101px;
@@ -3013,7 +3013,7 @@ a.red:hover {
 }
 
 .rmb {
-	background: url(http://skin.1yyg.com/images/arrow_button.png) -178px -57px no-repeat;
+	background: url(/Public/Static/images/arrow_button.png) -178px -57px no-repeat;
 	padding-left: 8px;
 	*display: inline-block;
 }
@@ -3116,7 +3116,7 @@ input[type=button]::-moz-focus-inner {
 }
 
 .tips-con i {
-	background: url(http://skin.1yyg.com/images/PublicIcon.png?v=1301241);
+	background: url(/Public/Static/images/PublicIcon.png?v=1301241);
 }
 
 .tips-con {
@@ -3146,7 +3146,7 @@ input[type=button]::-moz-focus-inner {
 .rmbred,
 .rmbgray,
 .rmbwhite {
-	background: url(http://skin.1yyg.com/images/PublicIcon.png?v=1301241) no-repeat;
+	background: url(/Public/Static/images/PublicIcon.png?v=1301241) no-repeat;
 }
 
 .rmbred {
@@ -3236,14 +3236,14 @@ input[type=button]::-moz-focus-inner {
 }
 
 .page_nav ul.pageUL li.prev_page a {
-	background: url("http://skin.1yyg.com/Images/arrow_button.png") no-repeat scroll -170px -13px transparent;
+	background: url("/Public/Static/images/arrow_button.png") no-repeat scroll -170px -13px transparent;
 	padding: 0 0 0 10px;
 	white-space: nowrap;
 	width: 46px;
 }
 
 .page_nav ul.pageUL li.next_page a {
-	background: url("http://skin.1yyg.com/Images/arrow_button.png") no-repeat scroll right 5px transparent;
+	background: url("/Public/Static/images/arrow_button.png") no-repeat scroll right 5px transparent;
 	padding: 0 10px 0 0;
 	white-space: nowrap;
 	width: 46px;

@@ -27,6 +27,7 @@ class PersonController extends CommonController {
 	
 	public function me(){
     	$this->assign('title', '壹圆购物'); 
+		// echo $_SESSION['logintype'];
 		 
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		

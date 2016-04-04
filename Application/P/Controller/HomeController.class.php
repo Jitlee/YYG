@@ -4,15 +4,31 @@ use Think\Controller;
 class HomeController extends CommonController {
 	protected function _initialize() {
 		parent::_initialize();
+		
+		if($_SESSION["loginuid"])
+		{
+			session("_uid",$_SESSION["loginuid"]);
+			session('wxUserinfo',$_SESSION["loginitem"]);
+			session('loginstatus', 1);
+		}	
+		
 		if(!is_login()) {
 			$this->redirect('Main/login');
 			return;
-		}
-		
+		}		
 		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 	}
 		
-	public function index(){		
+	public function index(){
+		echo $_SESSION['logintype'];
+		
+		if($_SESSION["loginuid"])
+		{
+			session("_uid",$_SESSION["loginuid"]);
+			session('wxUserinfo',$_SESSION["loginitem"]);
+			session('loginstatus', 1);
+		}
+		
     	$this->assign('title', '壹圆购物');
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		

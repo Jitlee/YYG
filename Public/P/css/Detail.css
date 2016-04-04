@@ -28,8 +28,7 @@
 .share_box {
 	width:978px;
 	margin:0 auto 20px auto;
-	text-align:left;
-	background:url(http://skin.1yyg.com/Post/images/share_linebg.png?v=130607) repeat-y;
+	text-align:left;	
 	border:1px solid #e1e1e1;
 }
 .share_box:after {
@@ -81,7 +80,7 @@
 	margin-bottom:15px;
 }
 .share-get i,.share-get s,.Comment_victory h3,.page-upgray,.page-updow,.Comment_Collapse b {
-	background:url(http://skin.1yyg.com/Post/images/share_single.png?v=130607) no-repeat;
+	background:url(/Public/Static/images/share_single.png?v=130607) no-repeat;
 }
 .share_goods {
 	width:702px;
@@ -219,7 +218,7 @@
 	text-indent:2em;
 }
 .tsed,.ts,.smile i,.smile-have i,.much i {
-	background:url(http://skin.1yyg.com/Post/images/share_icon.png);
+	background:url(/Public/Static/images/share_icon.png);
 }
 .message {
 	text-align:left;
@@ -795,7 +794,7 @@
 .PopMsgC s {
 	width:21px;
 	height:21px;
-	background:url(http://skin.1yyg.com/Member/images/new-admin.png?v=121019) -57px -96px;
+	background:url(/Public/Static/images/new-admin.png?v=121019) -57px -96px;
 	display:inline-block;
 	vertical-align:top;
 	margin-right:5px;
@@ -833,7 +832,7 @@
 }
 .pageDialogMain div .auth_box ul li .yzwrong {
 	padding:1px 0 5px 25px;
-	background:url(http://skin.1yyg.com/Images/arrow_button.png) no-repeat -166px -75px;
+	background:url(/Public/Static/Images/arrow_button.png) no-repeat -166px -75px;
 	color:#f60;
 	width:100px;
 	line-height:20px;
