@@ -224,7 +224,8 @@ class PaimaiController extends CommonController {
 		
 		$db = M('articles');
 		$data = $db->find($id);
-		$content = htmlspecialchars_decode(html_entity_decode($data['content']));
+		//echo dump($data);
+		$content = htmlspecialchars_decode(html_entity_decode($data['articlecontent']));
 		$this->assign('content', $content);
 		
 		$this->assign('title', $data['name']);

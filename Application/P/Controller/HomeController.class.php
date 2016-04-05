@@ -20,7 +20,7 @@ class HomeController extends CommonController {
 	}
 		
 	public function index(){
-		echo $_SESSION['logintype'];
+		//echo $_SESSION['logintype'];
 		
 		if($_SESSION["loginuid"])
 		{

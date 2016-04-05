@@ -134,7 +134,7 @@ class MainController extends Controller {
 		}
 	}
 	public function login(){
-		echo $_SESSION["abc"];
+		//echo $_SESSION["abc"];
 		if(IS_POST) {
 			$result["status"]=0;
 			$result["msg"]="登录成功。";

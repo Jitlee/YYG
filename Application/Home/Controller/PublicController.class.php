@@ -193,6 +193,8 @@ public function LoginAuth($openid,$imgurl,$username)
 		$data['login_time']=time();
 		$data['time']=time();
 		$data['img']=$imgurl;
+		$data['username']=$username;
+		$data['reg_key'] = $openid;
 		if($db->add($data) == false) {
 			$this->error('数据错误');
 		}
@@ -282,10 +284,12 @@ public function setmobile(){
 							);
 							$msdb = M('MemberScore');
 							if($msdb->add($msdata) === FALSE) {
-								return 106; // 增加消费纪录流水失败
+								//return 106; // 增加消费纪录流水失败
+								$result["msg"]="增加积分流水失败。";
 							}
 						}
 						else {
+							$result["msg"]="异常数据请重试。";
 							$this->error('数据错误'.$userinfo["openid"]);
 						}
 					}
@@ -297,7 +301,6 @@ public function setmobile(){
 			}
 			else 
 			{
-				$this->assign('reg_key', 'tttttttt');
 				$this->assign('title', '用户手机设置');
 				$this->display();
 			}

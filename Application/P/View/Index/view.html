@@ -114,7 +114,11 @@
 						<foreach name="records" item="item">
 						<li>
 						<a target="_blank">
-							<img src="/Public/Home/images/{$item.img}" border="0" alt="" width="20" height="20">
+							<php>if (!ereg('^http://', $item.img)) {</php>
+								<img src="{$item.img}" border="0" alt="" width="20" height="20">
+							<php>}else{</php>
+								<img src="/Public/Home/images/{$item.img}" border="0" alt="" width="20" height="20">
+							<php>}</php>
 						</a>					
 						<a target="_blank" class="blue">{$item.username}</a>
 						<!-- todo: IP -->			

@@ -38,7 +38,7 @@
 <ul class="listCon mui-hidden" id="sdno">
 	<li style="text-align:center;" class="w100"><div class="listConT"><img width="50" src="#"/></div></li>
 	<li style="text-indent:1em;" class="w400"><a class="iteminfo goodurl" href="#" target="_blank"><span class="zcontent"></span></a></li>
-	<li class="w50 fr"><a name="delete" class="iteminfosd" href="{:U('pageAllsdfinish', '', '')}/singleinsert/{wc:$sd['id']}" class="blue">添加晒单</a></li>
+	<li class="w50 fr"><a name="delete" class="iteminfosd" href="{:U('pageAllsdfinish', '', '')}/singleinsert/" class="blue">添加晒单</a></li>
 </ul>
 <script type="text/javascript">
 	$(function(){ 
@@ -69,7 +69,7 @@
 	       		$.each(list, function() {
 	       			useTemplatefinish=goodTemplatefinish;
 	       			
-	       			//{WEB_PATH}/go/shaidan/detail/{wc:$sd['sd_id']}
+	       			 
 	       			
 	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);

@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>支付－{:config("web_name")}</title>
-<meta name="keywords" content="{wc:if isset($keywords)}{wc:$keywords}{wc:else}{wc:fun:_cfg("web_key")}{wc:if:end}" />
-<meta name="description" content="{wc:if isset($description)}{wc:$description}{wc:else}{wc:fun:_cfg("web_des")}{wc:if:end}" />
+<meta name="keywords" content="{:config("web_key")}" />
+<meta name="description" content="{:config("web_des")}" />
 <link rel="stylesheet" type="text/css" href="__CSS__/comm.css"/>
 <link rel="stylesheet" type="text/css" href="__CSS__/MyCart.css"/>
 <script src="__JQ__"></script>	
