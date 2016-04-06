@@ -19,6 +19,7 @@ class MemberController extends CommonController {
 		if(!$pageSize) {
 			$pageSize = 25;
 		}
+		$pageSize = 10;
 		$pageNum = intval($pageNum);
 		$pageCount = ceil($count / $pageSize);
 		if($pageNum > $pageCount) {
@@ -31,7 +32,7 @@ class MemberController extends CommonController {
 		$this->assign('minPageNum', floor(($pageNum-1)/10.0) * 10 + 1);
 		$this->assign('maxPageNum', min(ceil(($pageNum)/10.0) * 10 + 1, $pageCount));
 		
-		$list = $db->where($filter)->page($pageNum, $pageSize)->select();
+		$list = $db->where($filter)->page($pageNum, $pageSize)->order(" time desc ")->select();
 		$this->assign('list',$list);// 模板变量赋值
 		
 		$this->assign('title', '会员列表');
@@ -91,8 +92,10 @@ class MemberController extends CommonController {
 		}
 	}
 	
-	public function find($type = 0, $value = null) {
+	public function find() {
 		if(IS_POST) {
+			$type=I("type");
+			$value=I("inputValue");
 			switch ($type) {
 				case 0:
 					$filter['uid'] = $value;
@@ -104,15 +107,17 @@ class MemberController extends CommonController {
 					$filter['email'] = array('LIKE', '%'.$value.'%');
 			 		break;
 				case 3:
-					$filter['phone'] = array('LIKE', '%'.$value.'%');
+					$filter['mobile'] = array('LIKE', '%'.$value.'%');
 			 		break;
 				default:
 					$filter = null;
 					break;
 			}
+//			echo $value;
+//			echo $type;
 			if($filter && $value) {
 				$db = M('member');
-				$list = $db->where($filter)->limit(100)->select();
+				$list = $db->where($filter)->order("time desc")->limit(100)->select();
 				$this->assign('list',$list);// 模板变量赋值
 			}
 		}

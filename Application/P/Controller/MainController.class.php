@@ -7,7 +7,7 @@ class MainController extends Controller {
 		if(IS_POST) {
 			$_POST['password'] = md5($_POST['password']);
 			$db = M('member');
-			$data['mobile'] = $_POST['mobile'];
+			$data['mobile'] = $_POST['mobile'];			
 			$records = $db->where($data)->find();
 			
 			$result["status"]=0;
@@ -18,6 +18,8 @@ class MainController extends Controller {
 				$_POST['mobilecode']='1111';
 				$_POST['score']=100;
 				//$_POST['username']=$_POST['mobile'];
+				$_POST['login_time'] =date('y-m-d-H-i-s');
+				$_POST['time'] =date('y-m-d-H-i-s');	
 				$db->create();
 				if($db->add() != false) {
 					session('registerMobile', $_POST['mobile']);

@@ -77,6 +77,9 @@ public function Reg($yaoqing=null){
 				
 				$db = M('member');
 				$data['mobile'] = $Mobile;
+				 
+				$data['login_time'] =date('y-m-d-H-i-s');
+				$data['time'] =date('y-m-d-H-i-s');
 				$records = $db->where($data)->find();
 				
 				$result["status"]=0;
@@ -190,8 +193,8 @@ public function LoginAuth($openid,$imgurl,$username)
 	$records = $db->where($where)->find();
 	if(!$records)
 	{
-		$data['login_time']=time();
-		$data['time']=time();
+		$data['login_time'] =date('y-m-d-H-i-s');
+		$data['time'] =date('y-m-d-H-i-s');
 		$data['img']=$imgurl;
 		$data['username']=$username;
 		$data['reg_key'] = $openid;
@@ -204,9 +207,9 @@ public function LoginAuth($openid,$imgurl,$username)
 		}
 	}
 	else
-	{
-		$records['login_time']=time();
-		$records['time']=time();
+	{	 
+		$records['login_time'] =date('y-m-d-H-i-s');
+		$data['time'] =date('y-m-d-H-i-s');
 		$db->save($records);
 	}
 //	$userinfo=array(

@@ -152,18 +152,30 @@
 				<label for="jishiButton" class="control-label">即时揭晓</label>
 			</td>
 			<td>
+				<select id="brandSelect" class="form-control" name="bid" required>
+					<option value="0">不参与</option>
+					<option value="0">1小时</option>
+					<option value="0">2小时</option>
+					<option value="0">3小时</option>
+					<option value="0">5小时</option>
+					<option value="0">10小时</option>
+					<option value="0">12小时</option>
+					<option value="0">1天</option>
+					<option value="0">10小时</option>
+					
+				</select>
   				<div class="btn-group dropup">
 					<button id="jishiButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						参与即时揭晓 <span class="caret"></span>
 					</button>
 					<ul id="jishiMenus" class="dropdown-menu">
-						<li hours="1"><a>1小时</a></li>
-						<li hours="2"><a>2小时</a></li>
-						<li hours="3"><a>3小时</a></li>
+						<li hours="1"><a></a></li>
+						<li hours="2"><a></a></li>
+						<li hours="3"><a></a></li>
 						<li hours="5"><a>5小时</a></li>
-						<li hours="8"><a>10小时</a></li>
-						<li hours="12"><a>12小时</a></li>
-						<li hours="24"><a>1天</a></li>
+						<li hours="8"><a></a></li>
+						<li hours="12"><a></a></li>
+						<li hours="24"><a></a></li>
 						<li hours="48"><a>2天</a></li>
 						<li hours="0"><a>不参与</a></li>
 					</ul>

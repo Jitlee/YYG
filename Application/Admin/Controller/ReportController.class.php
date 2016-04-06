@@ -149,8 +149,13 @@ class ReportController extends CommonController {
 	 * *****/
 	public function buylist($pageSize = 25, $pageNum = 1) {
 		
+		if(!$pageSize) {
+			$pageSize = 25;
+		}
+		$pageSize = 15;
+		
 		$db = M('account');		 
-		$map = ' (a.type=11 or a.type=1) and a.status=1';
+		$map = ' (a.type=11 or a.type=1 or a.type=0) and a.status=1';
 		
 		$list = $db
 			->field('a.*,m.username,m.mobile')
@@ -159,11 +164,9 @@ class ReportController extends CommonController {
 			->page($pageNum, $pageSize)	
 			->order('a.time desc')->select();
 			
-		$num = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
+		$count = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
 		
-		if(!$pageSize) {
-			$pageSize = 25;
-		}
+		
 		$pageNum = intval($pageNum);
 		$pageCount = ceil($count / $pageSize);
 		if($pageNum > $pageCount) {
@@ -200,7 +203,7 @@ class ReportController extends CommonController {
 			->order('p.end_time desc')->select();
 			
 			
-		$num = $db->where($map)->count();
+		$count = $db->where($map)->count();
 		
 		if(!$pageSize) {
 			$pageSize = 25;
