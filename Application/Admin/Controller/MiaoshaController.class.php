@@ -80,6 +80,7 @@ class MiaoshaController extends GoodsBaseController {
 			$this->assign('pid', 'gdmgr');
 			$this->assign('mid', $this->_config['addMid']);
 			$this->assign('title', $this->_config['addTitle']);
+			$this->assign('status', 0);
 			$this->display('Miaosha/add');
 		}
 	}
@@ -137,6 +138,7 @@ class MiaoshaController extends GoodsBaseController {
 			$this->assign('pid', 'gdmgr');
 			$this->assign('mid', $this->_config['addMid']);
 			$this->assign('title', $this->_config['editTitle']);
+			$this->assign('status', $data['status']);
 			
 			$this->display('Miaosha/add');
 		}

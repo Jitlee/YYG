@@ -29,9 +29,13 @@
 				<td>{$good.xiangou}</td>
 			</if>
 			<td gid="{$good.gid}">
-				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$good.gid}'>编辑</a>
-				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
-				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('history','','')}/{$good.gid}'>查看往期</a>
+				<if condition="$good.status lt 2">
+					<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$good.gid}'>编辑</a>
+				</if>
+				<if condition="$good.status eq 0 AND $good.qishu eq 1">
+					<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+				</if>
+				<a type="button" class="edit btn btn-info btn-sm" href='{:U('history','','')}/{$good.gid}'>查看往期</a>
 			</td>
 		</tr>
 		</foreach>
