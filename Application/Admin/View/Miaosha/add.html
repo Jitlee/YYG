@@ -55,41 +55,44 @@
 				<textarea class="form-control automaxlength" name="description" id="inputDescription" rows="2" maxlength="255">{$data.description}</textarea>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
-			</td>
-			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="{$data.money}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
-				<label class="control-label">元</label>
-			</td>
-		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
-			</td>
-			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="{$data.danjia|default='1'}" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">元</label>
-			</td>
-		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
-			</td>
-			<td>
-				<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou|default='0'}" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">元</label>
-				<span>设置限购次数（默认为0，表示不限购）</span>
-			</td>
-		</tr>
+		
+		<if condition="$status eq 0">
+			<tr class="form-inline">
+				<td class="col-sm-2 control-label">
+					<label for="inputZongjia" class="control-label"><r>*</r>商品总价</label>
+				</td>
+				<td>
+					<input type="number" class="form-control" style="width:100px" id="inputZongjia" name="money" value="{$data.money}" maxlength="7" pattern="^(\d+\.\d+)|(\d+)$" required/>
+					<label class="control-label">元</label>
+				</td>
+			</tr>
+			<tr class="form-inline">
+				<td class="col-sm-2 control-label">
+					<label for="inputDanjia" class="control-label"><r>*</r>商品单价</label>
+				</td>
+				<td>
+					<input type="number" class="form-control" style="width:100px" id="inputDanjia" name="danjia" value="{$data.danjia|default='1'}" maxlength="7" pattern="^\d+$" required/>
+					<label class="control-label">元</label>
+				</td>
+			</tr>
+			<tr class="form-inline">
+				<td class="col-sm-2 control-label">
+					<label for="inputXiangou" class="control-label"><r>*</r>限购次数</label>
+				</td>
+				<td>
+					<input type="number" class="form-control" style="width:100px" id="inputXiangou" name="xiangou" value="{$data.xiangou|default='0'}" maxlength="7" pattern="^\d+$" required/>
+					<label class="control-label">元</label>
+					<span>设置限购次数（默认为0，表示不限购）</span>
+				</td>
+			</tr>
+		</if>
 		<tr class="form-inline">
 			<td class="col-sm-2 control-label">
 				<label for="inputMaxQishu" class="control-label"><r>*</r>最大期数</label>
 			</td>
 			<td>
 				<input type="number" class="form-control" style="width:100px" id="inputMaxQishu" name="maxqishu" value="{$data.maxqishu|default=100}" maxlength="7" pattern="^\d+$" required/>
-				<label class="control-label">期，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
+				<label class="control-label">期<if condition="$data.qishu gt 0">当前第{$data.qishu}期</if>，期数上限为65535期,每期揭晓后会根据此值自动添加新一期商品！</label>
 			</td>
 		</tr>
 		<tr class="form-inline">
@@ -147,54 +150,45 @@
 				<html:editor id="contentEdtior" name="content" type="UEDITOR">{$data.content}</html:editor>
 			</td>
 		</tr>
-		<tr class="form-inline">
-			<td class="col-sm-2 control-label">
-				<label for="jishiButton" class="control-label">即时揭晓</label>
-			</td>
-			<td>
-				<select id="brandSelect" class="form-control" name="bid" required>
-					<option value="0">不参与</option>
-					<option value="0">1小时</option>
-					<option value="0">2小时</option>
-					<option value="0">3小时</option>
-					<option value="0">5小时</option>
-					<option value="0">10小时</option>
-					<option value="0">12小时</option>
-					<option value="0">1天</option>
-					<option value="0">10小时</option>
-					
-				</select>
-  				<div class="btn-group dropup">
-					<button id="jishiButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						参与即时揭晓 <span class="caret"></span>
-					</button>
-					<ul id="jishiMenus" class="dropdown-menu">
-						<li hours="1"><a></a></li>
-						<li hours="2"><a></a></li>
-						<li hours="3"><a></a></li>
-						<li hours="5"><a>5小时</a></li>
-						<li hours="8"><a></a></li>
-						<li hours="12"><a></a></li>
-						<li hours="24"><a></a></li>
-						<li hours="48"><a>2天</a></li>
-						<li hours="0"><a>不参与</a></li>
-					</ul>
-				</div>
-				<span id="jishiSpan" class="label <if condition="$data.jishijiexiao eq 0">label-default<else/>label-success</if>">
-					<switch name="data.jishijiexiao">
-					    <case value="1">1小时</case>
-					    <case value="2">2小时</case>
-					    <case value="3">3小时</case>
-					    <case value="5">5小时</case>
-					    <case value="12">12小时</case>
-					    <case value="24">1天</case>
-					    <case value="240">2天</case>
-					    <default />不参与
-					</switch>
-				</span>
-				<input id="jishiInput" type="text" name="jishijiexiao" value="{$data.jishijiexiao}" class="hidden" />
-			</td>
-		</tr>
+ 
+		<if condition="$status eq 0">
+			<tr class="form-inline">
+				<td class="col-sm-2 control-label">
+					<label for="jishiButton" class="control-label">即时揭晓</label>
+				</td>
+				<td>
+	  				<div class="btn-group dropup">
+						<button id="jishiButton" <if condition="$isAllCategories">disabled="true"</if> type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							参与即时揭晓 <span class="caret"></span>
+						</button>
+						<ul id="jishiMenus" class="dropdown-menu">
+							<li hours="1"><a>1小时</a></li>
+							<li hours="2"><a>2小时</a></li>
+							<li hours="3"><a>3小时</a></li>
+							<li hours="5"><a>5小时</a></li>
+							<li hours="8"><a>10小时</a></li>
+							<li hours="12"><a>12小时</a></li>
+							<li hours="24"><a>1天</a></li>
+							<li hours="240"><a>2天</a></li>
+							<li hours="0"><a>不参与</a></li>
+						</ul>
+					</div>
+					<span id="jishiSpan" class="label <if condition="$data.jishijiexiao eq 0">label-default<else/>label-success</if>">
+						<switch name="data.jishijiexiao">
+						    <case value="1">1小时</case>
+						    <case value="2">2小时</case>
+						    <case value="3">3小时</case>
+						    <case value="5">5小时</case>
+						    <case value="12">12小时</case>
+						    <case value="24">1天</case>
+						    <case value="240">2天</case>
+						    <default />不参与
+						</switch>
+					</span>
+					<input id="jishiInput" type="text" name="jishijiexiao" value="{$data.jishijiexiao}" class="hidden" />
+				</td>
+			</tr>
+		</if>
 		<tr>
 			<td class="col-sm-2 control-label">
 				<label class="control-label">商品属性</label>
@@ -212,7 +206,7 @@
 			<td class="col-sm-2">
 			</td>
 			<td>
-				<button type="submit" class="btn btn-primary"> 提交 </button>
+				<button id="submitButton" type="submit" class="btn btn-primary"> 提交 </button>
 				<a class="btn btn-default" href="{:U('index','','')}"> 取消 </a>
 			</td>
 		</tr>
@@ -229,8 +223,23 @@
 	}).ajaxStop(function() {
 		$("button:submit").attr("disabled", false);
 	});
+	
 	//刷新验证码
 	$(function() {
+		
+		$("#submitButton").click(function(evt) {
+			var qishu = Number("{$data.qishu}");
+			var maxqishu = Number($("#inputMaxQishu").val());
+			if(!(maxqishu > 0)) {
+				$("#checkTips").text("最大期数必须大于0");
+				return false;
+			}
+			if(qishu > 0 && maxqishu < qishu) {
+				$("#checkTips").text("最大期数不能低于当前期数");
+				return false;
+			}
+		});
+		
 		var brandSelect = $("#brandSelect");
 		var categorySelect = $("#categorySelect").change(function(evt) {
 			var value = $(this).val();
