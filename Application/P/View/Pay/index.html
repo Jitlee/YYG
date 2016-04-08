@@ -98,18 +98,19 @@
 			<!-- 福分 -->
             <if condition="$account.score gt 0">
 			 <li id="liPayByPoints" class="point_out">
-			 		<div class="payment_List_Lc">
-						<input type="checkbox" class="input_choice" id="scoreCheckBox" name="shop_score" value="1"/>使用福分抵扣现金：您的福分({$account._score})本次消费最多可抵扣现金
-	                    <span class="orange Fb">{:min($account['score'] / 100, $total)}</span>元)
-                   	</div>
+			 		<span class="payment_List_Lc">
+						<input type="checkbox" class="input_choice" id="scoreCheckBox" name="shop_score" value="1"></input>
+						使用福分抵扣现金：您的福分({$account._score})本次消费最多可抵扣现金
+						<span class="orange Fb">{:min($account['score'] / 100, $total)}</span>元
+                   	</span>
                     <p class="payment_List_Rc">福分支付：<span id="pay_score" class="orange F20">0</span> 元</p>
              </li>
              <else/>
               <li id="liPayByPoints" class="point_out point_gray">
-					<div class="payment_List_Lc">
+					<span class="payment_List_Lc">
 						<input type="checkbox" class="input_choice" disabled="disabled"/>使用福分抵扣现金：您的福分({$account._score})本次消费最多可抵扣现金
-                   	</div>
-                    <span class="orange Fb">{$account['score'] / 100}</span>元)
+						<span class="orange Fb">{$account['score'] / 100}</span><span>元</span>
+					</span>
               </li>
              </if>
              <!-- 福分 -->
@@ -225,14 +226,12 @@ $(function(){
 		//alert(_total);
 		if(_total==0)
 		{
-			zhifuButton.attr("disabled", true);
 			$.post("{:U('Pay/topay','','')}/{$payid}", {
 				score: _score, // 福分支付金额
 				money: _money,  // 余额支付金额
 				third: _total // 第三方支付金额
 			}
 			, function(result) {
-				zhifuButton.removeAttr("disabled");
 				if(result.status == 0) {
 					window.location.href ="{:U('success','','')}";
 				} else {

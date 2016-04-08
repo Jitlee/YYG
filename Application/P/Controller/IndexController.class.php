@@ -116,8 +116,10 @@ class IndexController extends CommonController {
 		if($qishu == null) {
 			$db = M('miaosha');
 			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
-			$data['qishu'] = intval($data['qishu']);
-			$data['current'] = $data['qishu'];
+			$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
+			if((int)$data['status'] == 2) {
+				$data['current'] = 0;
+			}
 			$qishu = intval($data['qishu']);
 			// 上期获得者
 			if($qishu > 1) {
@@ -137,9 +139,10 @@ class IndexController extends CommonController {
 			// 获取当情期
 			$mdb = M('miaosha');
 			$mmap['gid'] = $gid;
-			$mmap['status'] = array('lt', 2);
-			$current = $mdb->field('qishu')->where($mmap)->find();
-			$data['current'] = intval($current['qishu']);
+			$current = $mdb->field('qishu, status')->where($mmap)->find();
+//			echo dump($current);
+			$data['max'] = intval($current['qishu']);
+			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
 			
 			// 获取当前中奖用户
 			if($data['prizeuid']) {

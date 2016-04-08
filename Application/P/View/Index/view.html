@@ -13,13 +13,24 @@
 			
 		</div>
 		<ul class="Period_list">
-			<li><a <if condition="$data.current neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}"</if>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第{$data.current}期<i></i></b></a></li>
-			<for start="$data['current'] - 1" end="0" comparison="gt" step="-1">
-				<li><a <if condition="$i neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}/{$i}"</if> class="gray02">第{$i}期</a></li>
+			<!--<li><a <if condition="$data.current neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}"</if>><b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第{$data.current}期<i></i></b></a></li>-->
+			<for start="$data['max']" end="0" comparison="gt" step="-1">
+				<li>
+					<a <if condition="$i neq $qishu">href="{:U('Index/view', '', '')}/{$data.gid}/{$i}"</if> class="gray02">
+						<if condition="$i eq $data['current']">
+							<b class="period_Ongoing period_ArrowCur" style="padding-left:0px;">第{$i}期<i></i></b>
+						<else/>
+						第{$i}期
+						</if>
+					</a>
+				</li>
 			</for>
 		</ul>
 	</div>
 	<script>
+		// 在对一行第9个位置插入一个空展位格
+		$("<li>").insertAfter($(".Period_list li:eq(7)"));
+	
 		$("#btnOpenPeriod").click(function(){
 			var ui_obj = $("#divPeriodList li");
 			if($(this).attr("click")=='off'){

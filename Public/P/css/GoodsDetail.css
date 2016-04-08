@@ -28,8 +28,7 @@
 .show_Period .period_Open {
 	position:absolute;
 	right:-1px;
-	bottom:0;
-	_bottom:-1px;
+	top:-1px;
 	background:#fff;
 	width:106px;
 	height:32px;
