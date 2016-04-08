@@ -286,7 +286,7 @@ function finish_jiexiao() {
 			$endTime = $good['end_time'];
 			
 			// 计算中奖结果
-			$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) FROM yyg_member_miaosha where `time` < \'％s\'  ORDER BY `time` DESC LIMIT 100';
+			$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) FROM yyg_member_miaosha ORDER BY `time` DESC LIMIT 100';
 			$query = $mdb->query($sql);
 			$prize = 0;
 			$prizeuid = 0;
@@ -370,6 +370,7 @@ function finish_paimai() {
 					if($success) {
 						// 记录资金流水
 						$adata = array(
+							'payid'			=> \Org\Util\String::keyGen(),
 							'uid'			=> $record['uid'],
 							'type'			=> 1, // 退款
 							'money'			=> $record['money'],	// 余额

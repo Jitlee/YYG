@@ -92,16 +92,16 @@
 		<foreach name="zuixins" item="item">
             <li >
                 <dl>
-                    <dt><a href="{:U('Index/view','','')}/{$item.gid}" target="_blank" title="第{$item.qishu}期 {$item.title}" rel="nofollow">
+                    <dt><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="第{$item.qishu}期 {$item.title}" rel="nofollow">
                         <img src="{$item.thumb}" alt="第{$item.qishu}期 {$item.title}" width="300" height="300" /></a></dt>
                     <dd class="f-gx">
                         <div class="f-gx-user">
                             <span>恭喜</span>
-                            <span class="blue"><a href="{:U('Index/view','','')}/{$item.gid}" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
+                            <span class="blue"><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
                             <span>获得</span>
                         </div>
                     </dd>
-                    <dd class="u-name"><a href="{:U('Index/view','','')}/{$item.gid}" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>
+                    <dd class="u-name"><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>
                 </dl>
                 <cite></cite>
             </li>
