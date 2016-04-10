@@ -184,8 +184,7 @@ b{font-weight:normal; display:inline-block; color:#f27f02;}
 .latestcomment a:hover{text-decoration:none;}
 
 .footer {
-	color:#fff;
-	height:20px;
+	color:#fff;	
 	padding:20px 0 22px 0;
 	/*border-top:5px solid #eee;*/
 }

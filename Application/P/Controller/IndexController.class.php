@@ -199,7 +199,7 @@ class IndexController extends CommonController {
 			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
 			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
 		}
-		
+		//echo dump($list);
 		$this->assign('gid', $gid);
 		$this->assign('qishu', $qishu);
 		$this->assign('num', $num);

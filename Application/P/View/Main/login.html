@@ -102,7 +102,7 @@ $(function(){
 				<li>
 					<span>密码：</span>					
 					<input class="text_password" name="password" type="password"  datatype="*6-20" nullmsg="请设置密码！" errormsg="密码范围在6~20位之间！"/>
-					<!--<span class="fog"><a href="/member/finduser/findpassword">忘记密码？</a></span>--> 
+					<span class="fog"><a href="{:U('Main/findpassword', '', '')}">忘记密码？</a></span>
 				</li>								
 				<li class="ts" id="pwd_ts"><div class="Validform_checktip">请输入登录密码</div></li>
 				<li class="end"><input name="submit" type="submit" value="登录" class="login_init" ></li>

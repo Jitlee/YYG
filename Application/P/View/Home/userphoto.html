@@ -9,8 +9,13 @@
  		<div class="mui-slider-item">
  			<table>
  				<tr>
- 					<td></td>
- 					<td><img id="showimg" src="__TIMG__/{$data.img}" border=0/></td>
+ 					<td colspan="2"  style="text-align: center;">
+ 							<php>if (!ereg('^http://', $item.img)) {</php>								
+								<img id="showimg" src="{$data.img}" border="0"/>
+							<php>}else{</php>
+								<img id="showimg" src="__TIMG__/{$data.img}" border="0"/>
+							<php>}</php>
+ 					</td>
  					<td>
  						<form   method="post" id="crop_form">
 							<input type="hidden" id="membimg" name="membimg" value="{$data.img}" />

@@ -123,12 +123,12 @@
 					<present name="records">
 					<ul>
 						<foreach name="records" item="item">
-						<li>
+						<li> 
 						<a target="_blank">
 							<php>if (!ereg('^http://', $item.img)) {</php>
-								<img src="{$item.img}" border="0" alt="" width="20" height="20">
+								<img src="__TIMG__/{$item.img}" border="0" alt="" width="20" height="20"/>
 							<php>}else{</php>
-								<img src="/Public/Home/images/{$item.img}" border="0" alt="" width="20" height="20">
+								<img src="{$item.img}" border="0" alt="" width="20" height="20"/>
 							<php>}</php>
 						</a>					
 						<a target="_blank" class="blue">{$item.username}</a>
@@ -160,7 +160,7 @@
 				<!--/我的购物记录-->
 				<div class="Newest_Con _hiden" style="display: none;">
 					<p class="MsgIntro">购是指只需1元就有机会买到想要的商品。即每件商品被平分成若干“等份”出售，每份1元，当一件商品所有“等份”售出后，根据购物规则产生一名幸运者，该幸运者即可获得此商品。</p>
-					<p class="MsgIntro1">以“快乐购物，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。<a href="{:U('Help/index')}/1" class="blue" target="_blank">查看详情&gt;&gt;</a></p>
+					<p class="MsgIntro1">以“快乐购物，惊喜无限”为宗旨，力求打造一个100%公平公正、100%正品保障、寄娱乐与购物一体化的新型购物网站。</p>
 				</div>
 			</div>	
 			</if>
@@ -188,16 +188,10 @@
     <!-- 商品内容 -->
     
     <!-- 购买记录20条 -->
-	<div id="bitem" class="AllRecordCon">
-		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" style="width:930px; border:none;height:600px" frameborder="0" scrolling="no""></iframe>		
-	</div>	
-   <!-- /购买记录20条 -->
-    
-	<!-- 晒单 -->
-	<!--<div id="divPost" class="Single_Content">
-		<iframe id="iframea_divPost" g_src="{WEB_PATH}/go/shaidan/itmeifram/{wc:$itemid}" style="width:978px; border:none;height:300px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['iframea_divPost'].document.documentElement.scrollHeight + 'px'"></iframe>
-	</div>-->
-    <!-- 晒单 -->	
+	<div id="bitem" class="AllRecordCon" style="display: none;">
+		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" 
+			style="width:930px; border:none;height:600px" frameborder="0" scrolling="no"></iframe>		
+	</div>
 </div>
 <!--补丁3.1.6_b.0.1-->
 
@@ -229,13 +223,14 @@ $(function(){
 	});
 	
 	
-//	$("#btnUserBuyMore").click(function(){
-//		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
-//		
-//		$("#divContent .hide").hide().eq(1).show();
-//		$("html,body").animate({scrollTop:941},1500);
-//		$("#divProductNav").addClass("nav-fixed");
-//	});
+	$("#btnUserBuyMore").click(function(){
+		fouli.removeClass("DetailsTCur").eq(1).addClass("DetailsTCur");
+		
+		$("#divContent .hide").hide().eq(1).show();
+		$("html,body").animate({scrollTop:941},1500);
+		$("#divProductNav").addClass("nav-fixed");
+	});
+	
 	$(window).scroll(function(){
 		if($(window).scrollTop()>=941){
 			$("#divProductNav").addClass("nav-fixed");
