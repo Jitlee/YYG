@@ -21,7 +21,7 @@ class IndexController extends CommonController {
 		// 最新揭晓
 		$hdb = M('MiaoshaHistory');
 //		$filter = 'prizeuid is not null and exists(select 0 from yyg_miaosha b where yyg_miaosha_history.gid = b.gid and (yyg_miaosha_history.qishu = b.qishu or yyg_miaosha_history.qishu = b.qishu - 1))';
-		$zuixins = $hdb->join('yyg_member on yyg_member.uid = yyg_miaosha_history.prizeuid')
+		$zuixins = $hdb->join('left join yyg_member on yyg_member.uid = yyg_miaosha_history.prizeuid')
 			->where($filter)->order('end_time desc')
 			->field(array('yyg_miaosha_history.gid','yyg_miaosha_history.title','yyg_miaosha_history.thumb',
 				'yyg_miaosha_history.money','yyg_miaosha_history.danjia','yyg_miaosha_history.xiangou',

@@ -374,7 +374,7 @@
 			       			$("p", item).text(this.title);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
 			       			$("span.end_time", item).text(this.end_time);
-			       			$("r.canyurenshu", item).text(this.prizer.count);
+			       			$("r.canyurenshu", item).text(this.prizer.count || 0);
 			       			$(".user", item).text(this.prizer.username);
 		       			} else if(this.status == 2) {
 		       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");

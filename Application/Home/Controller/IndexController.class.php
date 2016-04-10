@@ -43,23 +43,28 @@ class IndexController extends Controller {
 		}
 		
 		$type = I("get.type");
-		$order = null;
+		$order = 'time desc';
 		switch($type) {
-			case 2:
-				$order = "time desc";
-				break;
 			case 3:
-				$order = "shengyurenshu desc";
+				$order = "shengyurenshu desc,".$order;
 				break;
 			case 4: // 总需人数
-				$order = "zongrenshu desc";
+				$order = "zongrenshu desc,".$order;
 				break;
 			default: // 人气
-				$order = "canyurenshu desc";
+				$order = "canyurenshu desc,".$order;
 				break;
 		}
 		
-		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')->select();
+		$list = $db
+			->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')
+			->where($filter)
+			->order($order)
+			->page($pageNum, $pageSize)
+			->select();
+			
+//		echo $db->getLastSql();
+		
 		$this->ajaxReturn($list, "JSON");
 	}
 	

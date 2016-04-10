@@ -59,19 +59,19 @@ class CategoryController extends CommonController {
 		$order = 'time desc';
 		switch($sort) {
 			case 1:
-				$order = 'end_time desc';
+				$order = 'end_time desc,'.$order;
 				break;
 			case 2:
-				$order = 'canyurenshu desc';
+				$order = 'canyurenshu desc,'.$order;
 				break;
 			case 3:
-				$order = 'shengyurenshu asc';
+				$order = 'shengyurenshu asc,'.$order;
 				break;
 			case 4:
-				$order = 'money asc';
+				$order = 'money asc,'.$order;
 				break;
 			case 5:
-				$order = 'money desc';
+				$order = 'money desc,'.$order;
 				break;
 			default:
 				break;

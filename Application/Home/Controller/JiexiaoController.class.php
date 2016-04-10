@@ -27,37 +27,34 @@ class JiexiaoController extends Controller {
 		$tabId = intval(I('get.tabId')); // 1:即将揭晓，2最新揭晓
 		$db = $tabId == 1 ? M("Miaosha") : M("MiaoshaHistory");
 		
-		$filter = $tabId == 1 ? array("jishijiexiao"=>array('gt', 0)) : null;
+		$filter = $tabId == 1 ? array("jishijiexiao"=>array('gt', 0)) : array();
 		
 		$cid = intval(I('get.cid'));
 		if($cid > 0) {
 			$filter['cid'] = $cid;
 		}
 		$type = I("get.type");
-		$order = '';
+		$order = 'time desc';
 		
 		switch($type) {
-			case 2:
-				$order = ",time desc";
-				break;
 			case 3:
-				$order = ",shengyurenshu desc";
+				$order = "shengyurenshu desc,".$order;
 				break;
 			case 4: // 总需人数
-				$order = ",zongrenshu desc";
+				$order = "zongrenshu desc,".$order;
 				break;
 			case 12:
-				$order = ",end_time desc";
+				$order = "end_time desc,".$order;
 				break;
 			default: // 人气
-				$order = ",canyurenshu desc";
+				$order = "canyurenshu desc,".$order;
 				break;
 		}
 		
 //		$filter['status'] = array('elt', 2);
 		
 		$list = $db->where($filter)
-			->order('status asc'. $order)
+			->order('status asc,'. $order)
 			->page($pageNum, $pageSize)
 			->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, end_time,prizeuid,prizecode')->select();
 //		echo $db->getLastSql();

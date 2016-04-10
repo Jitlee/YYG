@@ -96,9 +96,13 @@
                         <img src="{$item.thumb}" alt="第{$item.qishu}期 {$item.title}" width="300" height="300" /></a></dt>
                     <dd class="f-gx">
                         <div class="f-gx-user">
-                            <span>恭喜</span>
-                            <span class="blue"><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
-                            <span>获得</span>
+                        		<if condition="$item.username neq null">
+	                            <span>恭喜</span>
+	                            <span class="blue"><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="{$item.username}" class="blue" >{$item.username}</a></span>
+	                            <span>获得</span>
+	                        <else/>
+								<h5><i class="iconfont icon-yihan"></i>很遗憾，本期没有幸运获得者</h5>	
+							</if>
                         </div>
                     </dd>
                     <dd class="u-name"><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" title="第{$item.qishu}期 {$item.title}">第{$item.qishu}期 {$item.title}</a></dd>

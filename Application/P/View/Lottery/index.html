@@ -16,13 +16,17 @@
 						<a class="fl goodsimg" href="{:U('Index/view','','')}/{$item.gid}" target="_blank" >
 							<img alt="" src="{$item.thumb}">
 						</a>
-						<div class="publishC-Member gray02">
-							<a class="fl headimg" target="_blank" >
-								<img id="imgUserPhoto" src="/Public/Home/images/{$item.img}" width="50" height="50" border="0"/>
-							</a>
-							<p>获得者：<a class="blue Fb" href="{:U('Index/view','','')}/{$item.gid}" target="_blank">{$item.username}</a></p>
-							<p>购物：<em class="orange Fb">{$item.count}</em>人次</p>							
-						</div>
+							<div class="publishC-Member gray02">
+								<if condition="$item.username neq null">
+									<a class="fl headimg" target="_blank" >
+										<img id="imgUserPhoto" src="/Public/Home/images/{$item.img}" width="50" height="50" border="0"/>
+									</a>
+									<p>获得者：<a class="blue Fb" href="{:U('Index/view','','')}/{$item.gid}" target="_blank">{$item.username}</a></p>
+									<p>购物：<em class="orange Fb">{$item.count}</em>人次</p>	
+								<else/>
+									<h5><i class="iconfont icon-yihan"></i>很遗憾，本期没有幸运获得者</h5>	
+								</if>
+							</div>
 						<div class="publishC-tit">
 							<h3><a href="{:U('Index/view','','')}/{$item.gid}/{$item.qishu}" target="_blank" class="gray01">(第{$item.qishu}期){$item.title}</a></h3>
 							<p class="money">商品价值：<span class="rmb">{$item.money}</span></p>
