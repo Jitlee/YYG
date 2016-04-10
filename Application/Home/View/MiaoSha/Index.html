@@ -227,15 +227,15 @@
 		}
 		
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
 				type: orderType,
 				cid: goodCid,
 				bid: goodBid,
@@ -243,15 +243,18 @@
 				if(clear) {
 					goodList.html("");
 				}
-	       		$.each(list, function() {
-	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
-	       			$("img", item).attr("src", this.thumb);
-	       			$("p", item).text(this.title);
-	       			$("span.money", item).text(this.money);
-	       			$("r", item).text(this.danjia);
-	       			goodList.append(item);
-	       		});
+				if(list && list.length > 0) {
+					++pageNum;
+		       		$.each(list, function() {
+		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+		       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
+		       			$("img", item).attr("src", this.thumb);
+		       			$("p", item).text(this.title);
+		       			$("span.money", item).text(this.money);
+		       			$("r", item).text(this.danjia);
+		       			goodList.append(item);
+		       		});
+	       		}
 	       });
 		}
 		pageAll();

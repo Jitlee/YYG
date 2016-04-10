@@ -122,7 +122,7 @@ $(function(){
 			}
 		}		
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#tbList");
 		var goodTemplate = $("#goodTemplate");
 		 
@@ -130,9 +130,9 @@ $(function(){
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAllzj', '', '')}/10/" + (++pageNum), {
+			$.get("{:U('pageAllzj', '', '')}/10/" + pageNum, {
 				type: orderType
 				 
 			}, function(list) {
@@ -146,6 +146,7 @@ $(function(){
 					goodList.append('<div class="tips-con"><i></i>无相应的获得商品记录</div>');
 					return;
 				}
+				if(list && list.length > 0) { pageNum++; }
 				$("#goodsCount").text(list.length);
 				
 				$('.orange').text((pageNum-1)*10 + list.length);

@@ -334,7 +334,7 @@
 		}
 		
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
 		var endTemplate = $("#endTemplate");
@@ -343,9 +343,9 @@
 		var orderType = 12;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
 				type: orderType,
 				cid: goodCid,
 				tabId: "{$tabId}"
@@ -353,44 +353,47 @@
 				if(clear) {
 					goodList.html("");
 				}
-				var now = new Date().getTime();
-	       		$.each(list, function() {
-//	       			this.endTime = new Date(this.end_time).getTime();
-	       			if(this.status < 2) {
-		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
-		       			$("img", item).attr("src", this.thumb);
-		       			$("p", item).text(this.title);
-		       			$(".qishu", item).text(this.qishu);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("time", item).attr("countdown", new Date(this.end_time).getTime());
-	       			} else if(this.status == 2 && this.prizer) {
-	       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "'/" + this.qishu);
-		       			$(".qishu", item).text(this.qishu);
-		       			$("img", item).attr("src", this.thumb);
-		       			$("p", item).text(this.title);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("span.end_time", item).text(this.end_time);
-		       			$("r.canyurenshu", item).text(this.prizer.count);
-		       			$(".user", item).text(this.prizer.username);
-	       			} else if(this.status == 2) {
-	       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
-		       			$(".qishu", item).text(this.qishu);
-		       			$("img", item).attr("src", this.thumb);
-		       			$("span.money", item).text(Number(this.money).toFixed(2));
-		       			$("p", item).text(this.title);
-	       			}
-	       			
-	       			goodList.append(item);
-	       		});
-	       		
-	       		if(pageNum == 1) {
-	       			$("a", goodList).first().css('padding-top', '3px');
-	       		}
-	       		
-	       		window.countdown();
+				if(list && list.length > 0) {
+					++pageNum
+					var now = new Date().getTime();
+		       		$.each(list, function() {
+	//	       			this.endTime = new Date(this.end_time).getTime();
+		       			if(this.status < 2) {
+			       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+			       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
+			       			$("img", item).attr("src", this.thumb);
+			       			$("p", item).text(this.title);
+			       			$(".qishu", item).text(this.qishu);
+			       			$("span.money", item).text(Number(this.money).toFixed(2));
+			       			$("time", item).attr("countdown", new Date(this.end_time).getTime());
+		       			} else if(this.status == 2 && this.prizer) {
+		       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+			       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "'/" + this.qishu);
+			       			$(".qishu", item).text(this.qishu);
+			       			$("img", item).attr("src", this.thumb);
+			       			$("p", item).text(this.title);
+			       			$("span.money", item).text(Number(this.money).toFixed(2));
+			       			$("span.end_time", item).text(this.end_time);
+			       			$("r.canyurenshu", item).text(this.prizer.count || 0);
+			       			$(".user", item).text(this.prizer.username);
+		       			} else if(this.status == 2) {
+		       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+			       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
+			       			$(".qishu", item).text(this.qishu);
+			       			$("img", item).attr("src", this.thumb);
+			       			$("span.money", item).text(Number(this.money).toFixed(2));
+			       			$("p", item).text(this.title);
+		       			}
+		       			
+		       			goodList.append(item);
+		       		});
+		       		
+		       		if(pageNum == 1) {
+		       			$("a", goodList).first().css('padding-top', '3px');
+		       		}
+		       		
+		       		window.countdown();
+		       	}
 	       });
 		}
 		pageAll();

@@ -74,7 +74,7 @@
 <script src="__KO__"></script>
 <script>
 	$(function() {
-		var pageNum = 0;
+		var pageNum = 1;
 		var tabId = Number("{$type}");
 		var goodList = $("#recrodList").swipe({
 			swipeUp: onscrollend,
@@ -98,15 +98,14 @@
 		var template = $("li:first-child", recrodList);
 		
 		function page() {
-			$.get("{:U('Person/pagepaimai', '', '')}/" + tabId + "/" + (++pageNum), null, function(list) {
+			$.get("{:U('Person/pagepaimai', '', '')}/" + tabId + "/" + pageNum, null, function(list) {
 				if(list && list.length > 0) {
+					++pageNum;
 		       		$.each(list, function() {
 		       			vm.list.push(this);
 		       		});
-		       	} else {
-		       		pageNum--;	
-		       	}
-	        });
+		    		}
+			});
 		}
 		page();
 		

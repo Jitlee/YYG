@@ -1,13 +1,17 @@
 <?php
 namespace P\Controller;
 class CategoryController extends CommonController {
-	public function index($keywords = '', $type = 0, $cid = 0, $bid = 0, $sort = 0, $pageNo = 1){
+	public function index($type = 0, $cid = 0, $bid = 0, $sort = 0, $pageNo = 1, $keywords = ''){
 		$this->assign('cid', $cid);
 		$this->assign('bid', $bid);
 		$this->assign('sort', $sort);
 		$this->assign('type', $type);
 		$this->assign('now', time());
 		$title = '全部商品';
+		
+		if($pageNo < 1) {
+			$pageNo = 1;
+		}
 		
 		// 所有分类
 		$cdb = D('category');
@@ -44,7 +48,7 @@ class CategoryController extends CommonController {
 			$mmap['jishijiexiao'] = array('eq', 0);
 			$title = "热门商品";
 		} else if($type == 2) {
-			$mmap['jishijiexiao'] = array('lt', 0);
+			$mmap['jishijiexiao'] = array('gt', 0);
 			$title = "即将揭晓";
 		}
 		
@@ -55,19 +59,19 @@ class CategoryController extends CommonController {
 		$order = 'time desc';
 		switch($sort) {
 			case 1:
-				$order = 'end_time desc';
+				$order = 'end_time desc,'.$order;
 				break;
 			case 2:
-				$order = 'canyurenshu desc';
+				$order = 'canyurenshu desc,'.$order;
 				break;
 			case 3:
-				$order = 'shengyurenshu asc';
+				$order = 'shengyurenshu asc,'.$order;
 				break;
 			case 4:
-				$order = 'money asc';
+				$order = 'money asc,'.$order;
 				break;
 			case 5:
-				$order = 'money desc';
+				$order = 'money desc,'.$order;
 				break;
 			default:
 				break;

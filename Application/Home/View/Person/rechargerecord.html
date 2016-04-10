@@ -35,7 +35,7 @@
 <script src="__JS__/jquery.touchSwipe.min.js"></script>
 <script>
 	$(function() {
-		var pageNum = 1;
+		var pageNum = 2;
 		var goodList = $("#recrodList").swipe({
 			swipeUp: onscrollend,
 			threshold: 100,
@@ -55,18 +55,17 @@
 		var template = $("li:first-child", recrodList);		
 		function page() 
 		{
-				$.get("{:U('pageAllRechargerecord', '', '')}/20/" + (++pageNum), null, function(list) {
+				$.get("{:U('pageAllRechargerecord', '', '')}/20/" + pageNum, null, function(list) {
 						if(list && list.length > 0) 
 						{
+							++pageNum;
 				       		$.each(list, function() {
 				       			var item = template.clone();
 				       			$(".money", item).text(this.money);
 				       			$(".time", item).text(this.time);
 				       			recrodList.append(item);
 				       		});
-		       	} else {
-		       		pageNum--;	
-		    		}
+		       	}
 		    });
 		}
 	});

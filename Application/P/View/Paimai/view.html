@@ -317,17 +317,17 @@
 	<div class="Product_Con">{$data.content}</div>
     <!-- 商品内容 -->
     
-	<div id="bitem" class="AllRecordCon">
+	<div id="bitem" class="AllRecordCon" style="display: none">
 		<iframe g_src="{:U('Paimai/record', '', '')}/{$data.gid}" style="width:930px; border:none;height:550px" frameborder="0" scrolling="no"></iframe>
 	</div>	
 	<!-- 卖家承诺 -->
-	<div class="Single_Content">
+	<div class="Single_Content" style="display: none">
 		<iframe name="ifrCN" g_src="{:U('Paimai/article', '', '')}/253" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrCN'].document.documentElement.scrollHeight + 'px'"></iframe>
 	</div>
     <!-- 卖家承诺 -->	
     
 	<!-- 保证金须知 -->
-	<div class="Single_Content">
+	<div class="Single_Content" style="display: none">
 		<iframe name="ifrBZ" g_src="{:U('Paimai/article', '', '')}/254" style="width:978px; border:none;height:500px" frameborder="0" scrolling="no" onload="this.style.height=window.frames['ifrBZ'].document.documentElement.scrollHeight + 'px'"></iframe>
 	</div>
     <!-- 保证金须知 -->	

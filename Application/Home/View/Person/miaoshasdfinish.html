@@ -52,7 +52,7 @@
 			}
 		}
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
 		 
@@ -60,31 +60,34 @@
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAllsdfinish', '', '')}/8/" + (++pageNum), {
+			$.get("{:U('pageAllsdfinish', '', '')}/8/" + pageNum, {
 				type: orderType
 				 
 			}, function(list) {
 				if(clear) {
 					goodList.html("");
 				}
-	       		$.each(list, function() {
-	       			useTemplate=goodTemplate;
-	       			
-	       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
-
-					$("img", item).attr("src", this.thumb);
-	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
-	       			
-	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
-	       			$(".money", item).text(this.zongrenshu);
-	       			$("r", item).text(this.canyurenshu);
-	       			
-	       			$(".ztime", item).text(this.time);
-	       			goodList.append(item);
-	       		});
+				if(list && list.length > 0) {
+					++pageNum;
+		       		$.each(list, function() {
+		       			useTemplate=goodTemplate;
+		       			
+		       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+		       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	
+						$("img", item).attr("src", this.thumb);
+		       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
+		       			
+		       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
+		       			$(".money", item).text(this.zongrenshu);
+		       			$("r", item).text(this.canyurenshu);
+		       			
+		       			$(".ztime", item).text(this.time);
+		       			goodList.append(item);
+		       		});
+		       	}
 	       });
 		}
 		pageAll(); 

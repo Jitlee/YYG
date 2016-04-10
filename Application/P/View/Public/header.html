@@ -147,9 +147,9 @@ window.onerror=function(){return true;}
                  <div class="form">
                      <input id="txtSearch" type="text" value="输入“手机”试试" />
                      <span>
-                         <a href="{:U('Category/index', '', '')}/苹果" target="_blank">苹果</a>
-                         <a href="{:U('Category/index', '', '')}/电脑" target="_blank">电脑</a>
-                         <a href="{:U('Category/index', '', '')}/手机" target="_blank">手机</a>
+                         <a href="{:U('Category/index', '', '')}/0/0/0/0/1/苹果" target="_blank">苹果</a>
+                         <a href="{:U('Category/index', '', '')}/0/0/0/0/1/电脑" target="_blank">电脑</a>
+                         <a href="{:U('Category/index', '', '')}/0/0/0/0/1/手机" target="_blank">手机</a>
                      </span>
                  </div>
                  <a id="butSearch" href="javascript:;" class="seaIcon"><i></i></a>
@@ -204,11 +204,11 @@ window.onerror=function(){return true;}
  			txtSearch.isEmpty = txtSearch.val().length == 0;	
  		}).keydown(function(evt) {
  			if(evt.keyCode == 13 && txtSearch.val().length > 0) {
- 				window.location.href = "{:U('Category/index', '', '')}/" + txtSearch.val();
+ 				window.location.href = "{:U('Category/index', '', '')}/0/0/0/0/1/" + txtSearch.val();
  			}
  		});
  		$("#butSearch").click(function() {
- 			window.location.href = "{:U('Category/index', '', '')}/" + txtSearch.val();
+ 			window.location.href = "{:U('Category/index', '', '')}/0/0/0/0/1/" + txtSearch.val();
  		});
  	});
  </script>
