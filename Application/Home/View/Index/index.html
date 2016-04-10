@@ -340,21 +340,23 @@
 				if(clear) {
 					goodList.html("");
 				}
-				pageNum++;
-	       		$.each(list, function() {
-	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
-					$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-					if(this.xiangou > 0) {
-						item.addClass('yyg-xiangou');
-					}
-	       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
-	       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
-	       			$("span.money", item).text(this.money);
-	       			$(".yyg-good-cart", item).attr("gid", this.gid).attr("src", this.thumb);
-	       			$("r", item).text(this.danjia);
-	       			goodList.append(item);
-	       		});
+				if(list && list.length > 0) {
+					pageNum++;
+		       		$.each(list, function() {
+		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+		       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
+						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+						if(this.xiangou > 0) {
+							item.addClass('yyg-xiangou');
+						}
+		       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
+		       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
+		       			$("span.money", item).text(this.money);
+		       			$(".yyg-good-cart", item).attr("gid", this.gid).attr("src", this.thumb);
+		       			$("r", item).text(this.danjia);
+		       			goodList.append(item);
+		       		});
+		       	}
 	       });
 		}
 		pageAll();
