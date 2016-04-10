@@ -52,7 +52,7 @@
 <script>
 	$(function(){ 
 		// 全部商品翻页
-		var pageNumfinish = 0;
+		var pageNumfinish = 2;
 		var goodListfinish = $("#divList0");
 		var Template = $("#Template");
 		 
@@ -60,9 +60,9 @@
 		var orderTypefinish = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNumfinish = 0;
+				pageNumfinish = 1;
 			}
-			$.get("{:U('pagescore', '', '')}/20/" + (++pageNumfinish), {
+			$.get("{:U('pagescore', '', '')}/20/" + pageNumfinish, {
 				type: orderTypefinish
 				 
 			}, function(list) {
@@ -71,6 +71,7 @@
 					goodListfinish.append('<div class="tips-con"><i></i>暂无记录</div>');
 					return;
 				}
+				if(list && list.length > 0) { pageNumfinish++; }
 	       		$.each(list, function() {
 	       			useTemplatefinish=Template;
 	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
@@ -81,7 +82,13 @@
 	       		});
 	       });
 		}
-		pageAll(); 
+		$(document).bind("scroll", onscrollend);
+		function onscrollend() {
+			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+       			console.info("滚动到底了");
+				pageAll();
+			}
+		}	
 		
 	});
 </script>

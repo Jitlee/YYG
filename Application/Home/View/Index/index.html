@@ -324,22 +324,23 @@
 		}
 		
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
 		var goodCid = 0;
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
 				type: orderType,
 				cid: goodCid
 			}, function(list) {
 				if(clear) {
 					goodList.html("");
 				}
+				pageNum++;
 	       		$.each(list, function() {
 	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);

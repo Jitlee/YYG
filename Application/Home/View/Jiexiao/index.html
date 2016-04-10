@@ -336,7 +336,7 @@
 		}
 		
 		// 全部商品翻页
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList");
 		var goodTemplate = $("#goodTemplate");
 		var endTemplate = $("#endTemplate");
@@ -345,9 +345,9 @@
 		var orderType = 1;
 		function pageAll(clear) {
 			if(clear) {
-				pageNum = 0;
+				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
 				type: orderType,
 				cid: goodCid,
 				tabId: "{$tabId}"
@@ -355,6 +355,7 @@
 				if(clear) {
 					goodList.html("");
 				}
+				pageNum++;
 				var now = new Date().getTime();
 	       		$.each(list, function() {
 //	       			this.endTime = new Date(this.end_time).getTime();

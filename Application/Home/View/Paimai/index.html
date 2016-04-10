@@ -64,7 +64,7 @@
 
 <script>
 	$(function() {
-		var pageNum = 0;
+		var pageNum = 1;
 		var goodList = $("#goodList").swipe({
 			swipeUp: onscrollend,
 			threshold: 100,
@@ -85,34 +85,37 @@
 		var emptyTemplate = $("#emptyTemplate");
 		
 		function page() {
-			$.get("{:U('page', '', '')}/8/" + (++pageNum), null, function(list) {
-	       		$.each(list, function() {
-	       			if(this.status < 2) {
-		       			var item = goodTemplate.clone().removeAttr("id").removeClass("mui-hidden");
-						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-		       			$("p", item).text(this.title);
-		       			$("h5 r:last-child", item).text(this.zuigaojia);
-		       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
-		       			$("time", item).attr("_countdown", this._end_time);
-						goodList.append(item);
-					} else if(this.prizeuid > 0) {
-						var item = endTemplate.clone().removeAttr("id").removeClass("mui-hidden");
-						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-		       			$("p", item).text(this.title);
-		       			$("h5 r:last-child", item).text(this.zuigaojia);
-		       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
-		       			$(".end-time", item).text(this.end_time);
-		       			$(".label", item).text("成交价格");
-						goodList.append(item);
-					} else {
-						var item = emptyTemplate.clone().removeAttr("id").removeClass("mui-hidden");
-						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-		       			$("p", item).text(this.title);
-		       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
-						goodList.append(item);
-					}
-	       		});
-	       		countdown();
+			$.get("{:U('page', '', '')}/8/" + pageNum, null, function(list) {
+				if(list && list.length > 0) {
+					++pageNum;
+		       		$.each(list, function() {
+		       			if(this.status < 2) {
+			       			var item = goodTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+							$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+			       			$("p", item).text(this.title);
+			       			$("h5 r:last-child", item).text(this.zuigaojia);
+			       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
+			       			$("time", item).attr("_countdown", this._end_time);
+							goodList.append(item);
+						} else if(this.prizeuid > 0) {
+							var item = endTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+							$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+			       			$("p", item).text(this.title);
+			       			$("h5 r:last-child", item).text(this.zuigaojia);
+			       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
+			       			$(".end-time", item).text(this.end_time);
+			       			$(".label", item).text("成交价格");
+							goodList.append(item);
+						} else {
+							var item = emptyTemplate.clone().removeAttr("id").removeClass("mui-hidden");
+							$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
+			       			$("p", item).text(this.title);
+			       			$(">a", item).attr("href", "__CONTROLLER__/" + this.gid);
+							goodList.append(item);
+						}
+		       		});
+		       		countdown();
+	       		}
 	       });
 		}
 		
