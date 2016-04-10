@@ -70,19 +70,17 @@
 	       		$.each(list, function() {
 	       			useTemplatefinish=goodTemplatefinish;
 	       			
-	       			 
-	       			
 	       			var item = useTemplatefinish.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
-					$(".sdview", item).attr("href", "{:U('Saidan/detail', '', '')}/" + this.gid +"/"+this.qishu);
+	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid);
+					$(".sdview", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid +"/"+this.qishu);
 					
 					$("img", item).attr("src", this.thumb);
 					$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
-	       			$(".iteminfo", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid); 
+	       			$(".iteminfo", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid); 
 	       			goodListfinish.append(item);
 	       		});
 	       });
-		}
+		}		 
 		pageAll(); 
 		
 	});
@@ -102,7 +100,6 @@
 			}
 			$.get("{:U('pageAllsdno', '', '')}/8/" + pageNumNo, {
 				type: orderTypeNo
-				 
 			}, function(list) {
 				if(clear) {goodListNo.html("");}
 				if(pageNumNo ==1 && list && list.length==0){
@@ -166,14 +163,5 @@ $(function(){
 		$(".R-content .topic").hide().eq(id).show();
 	});
 })
-function shaidan(id){
-	if(confirm("您确认要删除该条信息吗？")){
-		window.location.href="{WEB_PATH}/member/home/shaidandel/"+id;
-	}
-}
- 
- 
-
-
 </script>
 </div>

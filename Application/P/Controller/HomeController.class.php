@@ -27,6 +27,8 @@ class HomeController extends CommonController {
 			session("_uid",$_SESSION["loginuid"]);
 			session('wxUserinfo',$_SESSION["loginitem"]);
 			session('loginstatus', 1);
+			$_SESSION["loginuid"]=null;
+			$_SESSION["loginitem"]=null;
 		}
 		
     	$this->assign('title', '壹圆购物');
@@ -84,19 +86,20 @@ class HomeController extends CommonController {
 	
 	
 	public function singlelist(){		
-    	$this->assign('title', '晒单列表');
+    	$this->assign('title', '晒单列表'); 
 		$this->display();
     }
 	public function pageAllsdno($pageSize, $pageNum) {//未晒单
 		// 分页
-		$Model = M('miaosha_history');
+		$m = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
 		$filter['yyg_miaosha_history.sdstatus'] = 0;
 		 
-		$list =$Model
-		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")
+		$list =$m
+		->where($filter)
+		//->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")
 		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		//->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu,canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
 		 $this->ajaxReturn($list, "JSON");
 	}
@@ -108,10 +111,10 @@ class HomeController extends CommonController {
 		$filter['yyg_miaosha_history.sdstatus'] = 1;
 		
 		$list =$Model
-		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
+		//->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
 		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		//->field("mobile,title,thumb,danjia,status,sdstatus,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
 		$this->ajaxReturn($list, "JSON");
 	}
@@ -121,43 +124,53 @@ class HomeController extends CommonController {
 			$result["status"]=0;
 			$result["msg"]="成功。";
 			$db=M("shaidan");
-			$data['uid'] = session("_uid");
+			//$data['uid'] = session("_uid");
+			$data['gid'] = $gid;
+			$data['qishu'] = $qishu;
 			$add = $db->where($data)->find();
-			
-			$_POST['uid']=  session("_uid");
-			$_POST['time'] = date('y-m-d-h-i-s');
-			$_POST['ip'] = get_client_ip(1);
-								
-			$db->create();
-			if($db->add() != false) {
-				//修改状态
-				$fit['gid'] = $_POST['gid'];
-				$fit['qishu'] = $_POST['qishu'];
-				$fit['zan'] = 0;
-				$fit['ping'] = 0;
-				
-				$dbzt=M("miaosha_history");					
-				$addzt = $dbzt->where($fit)->find();
-				if($addzt)
+			if(!$add) //是否已晒单
+			{
+				$_POST['uid']=  session("_uid");
+				$_POST['time'] = date('y-m-d-h-i-s');
+				$_POST['ip'] = get_client_ip(1);
+									
+				$db->create();
+				if($db->add() != false) {
+					//修改状态
+					$fit['gid'] = $_POST['gid'];
+					$fit['qishu'] = $_POST['qishu'];
+					$fit['zan'] = 0;
+					$fit['ping'] = 0;
+					
+					$dbzt=M("miaosha_history");					
+					$addzt = $dbzt->where($fit)->find();
+					if($addzt)
+					{
+						$addzt["sdstatus"]=1;
+						$dbzt->save($addzt);
+						
+						//添加晒单积分
+						$m = D('P/MemberScore');
+						$resultr = $m->AddLessScore('晒单赠送积分。',100);
+						if($resultr && $resultr["status"]=1)
+						{
+							$result["status"]=1;					
+						}
+						else
+						{
+							$result["msg"]=$resultr["msg"];
+						}
+					
+					}
+				}//  if($db->add() != false) {
+				else 
 				{
-					$addzt["sdstatus"]=1;
-					$dbzt->save($addzt);	
-				}
-				//添加晒单积分				
-				$m = D('P/MemberScore');
-				$resultr = $m->AddLessScore('晒单赠送积分。',100);
-				if($resultr && $resultr["status"]=1)
-				{
-					$result["status"]=1;					
-				}					
-				else
-				{
-					$result["msg"]=$resultr["msg"];
-				}
-			} 
+					$result["msg"]='数据错误';
+				}				
+			}// end if(!$add) //是否已晒单
 			else 
 			{
-				$result["msg"]='数据错误';
+				$result["msg"]='已晒单不能重复晒单。';
 			}
 			 
 			$this->ajaxReturn($result, "JSON");

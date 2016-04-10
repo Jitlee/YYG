@@ -18,7 +18,7 @@ class LotteryController extends CommonController {
 				'yyg_miaosha_history.money','yyg_miaosha_history.danjia','yyg_miaosha_history.xiangou',
 				'yyg_miaosha_history.status','yyg_miaosha_history.qishu','yyg_miaosha_history.canyurenshu',
 				'yyg_miaosha_history.zongrenshu','yyg_miaosha_history.type','yyg_miaosha_history.prizeuid',
-				'yyg_miaosha_history.prizecode','yyg_miaosha_history.end_time',
+				'yyg_miaosha_history.prizecode','yyg_miaosha_history.end_time','yyg_member.img',
 				'(select sum(count) from yyg_member_miaosha ms where ms.uid=yyg_miaosha_history.prizeuid and ms.qishu=yyg_miaosha_history.qishu and ms.gid=yyg_miaosha_history.gid) count',
 				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
 			->page($pageNo, $pageSize)->select();

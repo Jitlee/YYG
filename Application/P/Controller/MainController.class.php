@@ -202,25 +202,25 @@ class MainController extends Controller {
 		
 public function findpassword(){
 		if(IS_POST) {
-			 
-			$db = M('member');
-			$data['mobile'] = $_POST['mobile'];			
-			$records = $db->where($data)->find();
-			
 			$result["status"]=0;
 			$result["msg"]="操作成功。";
+			 
+			$db = M('member');
+			$data['mobile'] = $_POST['userAccount'];			
+			$records = $db->where($data)->find();
+			 
 			if($records)
 			{
 				 $result["status"]=1;
+				 session("findmobile",$data['mobile']);
 			}
 			else
 			{
-				 $result["msg"]="帐号不存在。";
+				 $result["msg"]="帐号不存在。".$records["mobile"];
 			}
 			$this->ajaxReturn($result);	
     	} else  {
 	    	$this->assign('title', '壹圆购物');
-			$this->assign('yaoqing', $yaoqing);			
 			$this->display();
 		}
     }
@@ -231,7 +231,7 @@ public function findpassword(){
 			$result["msg"]="登录成功。";
 			
 			$checkmobile=$_POST['mobile'];
-			if($checkmobile != session('registerMobile'))
+			if($checkmobile != session('findmobile'))
 			{
 				$result["msg"]='非法操作,请刷新重试。';
 			}
@@ -254,46 +254,57 @@ public function findpassword(){
 				$user=$m->getByMobile($checkmobile);
 				if($user)
 				{
-					//更新用户验证码状态
-					$user['mobilecode']=$_POST['Code'];
-					$db = M('member');
-					$db->save($user);
-					session('registerMobile','');
-					session('loginstatus', 0);
-					session('wxUserinfo', null);
-					$yaoqing=floatval($user["yaoqing"]);
-					if($yaoqing>0)
-					{
-						$yaoqinguser=$m->getByYaoqing($yaoqing);
-						if($yaoqinguser)
-						{
-							//添加晒单积分				
-							$mscore = D('P/MemberScore');
-							$resultr = $mscore->AddScore($yaoqinguser["uid"],'邀请赠送积分。',100);
-						}
-					}
-					$result["status"]=1;
-					
-					//默认已登录
-					session("_uid", $user['uid']); 					
-					session('wxUserinfo', $user);
-								
+					//更新用户验证码状态 
+					session("findmobile",$checkmobile);
 					$url = decode(I('post.redirect'));
-					$result["status"]=1;
-					session('loginstatus', 1);
+					 $result["status"]=1;
 				}
 				else
 				{
 					$result["msg"]="用户错误。";
 				}
- 
 			}
 			$this->ajaxReturn($result);	
     	} else  {
-			$this->assign('enname', session('registerMobile'));
-			$this->assign('namestr',session('registerMobile'));
-			
+			$this->assign('namestr',session('findmobile'));			 
 			$this->assign('time', 60);
+			$this->display();
+		}
+	}
+	
+	public function findpasswordset()
+	{
+		if(IS_POST) {
+			$result["status"]=0;
+			$result["msg"]="登录成功。";
+			
+			$checkmobile=$_POST['mobile'];
+			if($checkmobile != session('findmobile'))
+			{
+				$result["msg"]='非法操作,请刷新重试。';
+			}
+			else
+			{
+				$password= md5($_POST['password']);
+				$m = D('P/Member');
+				$user=$m->getByMobile($checkmobile);
+				if($user)
+				{
+					//更新用户验证码状态
+					$user['password']=$password;
+					$db = M('member');
+					$db->save($user); 
+					$url = decode(I('post.redirect'));
+					 $result["status"]=1;
+				}
+				else
+				{
+					$result["msg"]="用户错误。".$checkmobile;
+				}
+			}
+			$this->ajaxReturn($result);	
+		} else  {
+			$this->assign('namestr',session('findmobile'));	 
 			$this->display();
 		}
 	}

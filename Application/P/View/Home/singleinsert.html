@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="__CSS__/uploadify.css" type="text/css"> 
 <script type="text/javascript" charset="utf-8" src="__G_PLUGIN_PATH__/UEditor/ueditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="__G_PLUGIN_PATH__/UEditor/ueditor.all.min.js"></script>
-<script type="text/javascript" charset="utf-8" src="__STATIC__/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/jquery.uploadify.min.js"></script>
 <style type="text/css">
 	.R-content .sd_lilie{display:block; width:780px; margin:10px 0 10px 0; float:left;}
 	.R-content .sd_lilie .sd_span{font-size:14px; float:left; display:block;width:70px;}
@@ -43,8 +43,8 @@
 				<span class="sd_span">晒图：</span>
 				<div style="float:left;">
 					<div id="fileInput"></div>
-					<input type="hidden" style="width:300px;min-height: 20px;" id="inputThumb" name="thumbs" readonly value="{$data.thumbs}" />
-					<img id="thumbImages"  style="max-width: 100px;max-height: 100px;border: 1px slid #E0DFE3;" />
+					<input type="hidden" style="width:300px;min-height: 20px;" id="inputThumb" name="thumbs" />
+					<img id="thumbImages"  style="max-width: 100px;max-height: 100px;border: 1px slid #E0DFE3; display: none;" />
 				</div>
 			</div>
 			<div class="sd_lilie" style="width:580px; padding-left: 200px;">
@@ -86,12 +86,13 @@
 				fileTypeDesc : "图片文件",
 				fileTypeExts : "*.png;*.jpg;*.gif;*.jpeg",
 				uploader: "{:U('upload','','')}",
-				onUploadSuccess: function(file, data) {
-					var data = JSON.parse(data);
+				onUploadSuccess: function(file, data) { 
+					var data =eval('(' + data + ')');					 
 					if (data && data.status == 0) {
 						var url = data.url;
-						files.push(url);
+						files.push(url);						
 						$("#thumbImages").attr("src", url);
+						$("#thumbImages").show();
 						inputThumb.val(files.join(","));
 					}
 					// 单张循环上传
@@ -110,6 +111,12 @@
 				$("#sd_text").focus();
 				return false;
 			}
+			if($("#inputThumb").val().length< 5)
+			{
+				alert("大侠请赐张图吧。。");
+				return false;
+			}
+			
 			var self = $("form");
 			$.post("{:U('Home/singleinsert','','')}", self.serialize(), savesuccess, "json");
 			return;

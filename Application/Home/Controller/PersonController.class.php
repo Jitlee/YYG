@@ -483,7 +483,8 @@ class PersonController extends CommonController {
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
 		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
+		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, 
+		canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
 		->select();
 		$this->ajaxReturn($list, "JSON");
 	}
