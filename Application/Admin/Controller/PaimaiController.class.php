@@ -105,4 +105,15 @@ class PaimaiController extends GoodsBaseController {
 			$this->display('add');
 		}
 	}
+
+	public function remove($gid = 0) {
+		$db = M('paimai');
+		$ret = $db->delete($gid);
+		if($ret > -1) {
+			$this->success('操作成功');
+		} else {
+			$this->error('数据错误');
+		}
+	}
+
 }

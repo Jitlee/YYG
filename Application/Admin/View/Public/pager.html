@@ -20,7 +20,7 @@
 		</for>
 	</if>
 	<li class="active"><a>{$pageNum}</a></li>
-  <for start="$pageNum+1" end="$maxPageNum">
+  <for start="$pageNum+1" end="$maxPageNum"  comparison="elt">
     		<li><a href="__ACTION__/{$pageSize}/{$i}" >{$i}</a></li>
 	</for>
 	<if condition="$maxPageNum lt $pageCount AND $maxPageNum gt 0">

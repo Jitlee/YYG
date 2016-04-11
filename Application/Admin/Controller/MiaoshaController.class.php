@@ -10,14 +10,14 @@ class MiaoshaController extends GoodsBaseController {
 		'addMid'			=> 'addms',
 	);
 	
-	public function index($pageSize = 25, $pageNum = 1) {
+	public function index($pageSize = 10, $pageNum = 1) {
 		$this->assign('type', $this->_config['type']);
 		$map['type'] = $this->_config['type'];
 		// 分页
 		$db = D('miaosha');
 		$count = $db->where($map)->count();
 		if(!$pageSize) {
-			$pageSize = 25;
+			$pageSize = 10;
 		}
 		$pageNum = intval($pageNum);
 		$pageCount = ceil($count / $pageSize);
