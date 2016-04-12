@@ -62,7 +62,7 @@ public function Reg($yaoqing=null){
 		if(IS_POST) {
 				$_POST['password'] = md5($_POST['password']);				
 				$Mobile=$_POST['mobile'];	
-				$verycode=I("verycode");				
+				$verycode=$_POST['verycode']; 			
 				//验证验证码.
 				
 				$mcode = D('Home/Verifycode');	
@@ -76,11 +76,8 @@ public function Reg($yaoqing=null){
 				}
 				
 				$db = M('member');
-				$data['mobile'] = $Mobile;
-				 
-				$data['login_time'] =date('y-m-d-H-i-s');
-				$data['time'] =date('y-m-d-H-i-s');
-				$records = $db->where($data)->find();
+				$f['mobile'] = $Mobile;
+				$records = $db->where($f)->find();
 				
 				$result["status"]=0;
 				$result["msg"]="操作成功。";
@@ -88,6 +85,8 @@ public function Reg($yaoqing=null){
 				{
 					$_POST['img']='tx/211274314672928.jpg';
 					$_POST['score']=100;
+					$_POST['login_time'] =date('y-m-d-H-i-s');
+					$_POST['time'] =date('y-m-d-H-i-s');
 					
 					$db->create();
 					if($db->add() != false) {

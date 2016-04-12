@@ -64,7 +64,7 @@ max-width: 85px !important; border: 1px solid #808182;  overflow: hidden;}
 			<a href="#" class="goodurl">
 				<p class="userinfonh" style="color:rgba(128,128,128,0.5);">已揭晓</p>
 				<p class="zcontent" style="color:#252525;">(第53期)xx</p>
-				<p class='mui-ellipsis userinfot' style="color:#535353;">获得者：<em class="blue">134****4666</em></p>
+				<p class='mui-ellipsis ' style="color:#535353;">获得者：<em class="blue zjuser"></em></p>
 				<p class='mui-ellipsis userinfot gray6' style="color:#535353;">揭晓时间：<em class="gray6 ztime"> 2015-11-28 15:12:00.000</em></p>
 			</a>		
 		</div>	
@@ -117,13 +117,9 @@ max-width: 85px !important; border: 1px solid #808182;  overflow: hidden;}
 						$("img", item).attr("src", this.thumb);
 		       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
 		       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
-		       			//$(".money", item).text(this.zongrenshu);
-		       			//$("r", item).text(this.canyurenshu);
+		       		 
 		       			$(".count", item).text(this.count);
-		       			
-	//	       			$(".pl", item).text(this.canyurenshu);
-	//					$(".pc", item).text(this.zongrenshu);
-	//					$(".pr", item).text(this.shengyurenshu);
+		       			$(".zjuser", item).text(this.username);
 		       			
 		       			$(".ztime", item).text(this.time);
 		       			goodList.append(item);

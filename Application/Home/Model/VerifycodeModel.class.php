@@ -80,7 +80,7 @@ class VerifycodeModel extends BaseModel{
 		return $rd;
 	}
 	
-	//http://localhost:505/index.php/M/Verifycode/Check/mobile/18617097726/code/7843
+	 
 	public function Check($mobile,$code)
 	{
 		$sql="select * from yyg_verifycode
@@ -101,7 +101,6 @@ order by createTime desc limit 1 ";
 		}
 		return $rd;
 	}
-	
 	
    
 }

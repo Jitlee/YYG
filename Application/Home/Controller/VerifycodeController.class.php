@@ -7,13 +7,20 @@ class VerifycodeController extends Controller {
 
 	public function Send($mobile)
 	{
-		$mcode = D('Home/Verifycode');
-		$rs=$mcode->Send($mobile);
-		//echo dump($rs);
-		//$this->display();
+		$rs= array("status" => -1);
 		
-//		$rs = array('status'=>-1); 
-//		$rs["msg"]="msg";
+		$db = M('member');
+		$f['mobile'] = $mobile;
+		$records = $db->where($f)->find();
+		if(!$records)
+		{
+			$mcode = D('Home/Verifycode');
+			$rs=$mcode->Send($mobile);	
+		}
+		else
+		{
+			$rs["msg"]="手机号已注册.";	
+		}
 		$this->ajaxReturn($rs);
 	}
 	

@@ -114,11 +114,12 @@
 				$("form").submit(function() {
 					var self = $(this);
 					$.post("{:U('Public/login','','')}", self.serialize(), success, "json");
+					$("button:submit").attr("disabled", false);
 					return false;
 					function success(data) {
-						if (data.status)
+						$("button:submit").attr("disabled", true);
+						if (data.status==1)
 						{
-							//layer.alert(data.msg);
 							window.location.href = "{:U('Person/me','','')}";
 						}
 						else
