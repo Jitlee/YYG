@@ -90,7 +90,7 @@ public function Reg($yaoqing=null){
 					
 					$db->create();
 					if($db->add() != false) {
-						$records = $db->where($data)->find();
+						$records = $db->where($f)->find();
 						$result["status"]=1;
 						session("_uid", $records['uid']);
 						session('wxUserinfo', $records);

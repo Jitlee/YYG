@@ -750,11 +750,13 @@ class PayController extends Controller {
 				);
 			
 				if($adb->add($accountData) !== FALSE) {
-					echo $paytype.'成功';
+					//echo $paytype.'成功';
 				}
 				else
 				{
-					echo $paytype.'失败';		
+					$this->display("error");
+					//echo $paytype.'失败';
+					return ;		
 				}
 				
 			}

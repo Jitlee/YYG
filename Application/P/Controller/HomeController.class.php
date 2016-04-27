@@ -58,7 +58,7 @@ class HomeController extends CommonController {
 		->where($filter)
 		->page($pageNum, $pageSize)
 		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
-		,type,jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
+		,type,jishijiexiao,yyg_member_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
 		->order('yyg_member_miaosha.time desc')
 		->select();
 		 

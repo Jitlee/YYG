@@ -4,22 +4,27 @@
 <table id="listTable" class="table table-bordered">
 	<thead>
 		<tr>
+			<th>payid</th>
 			<th>充值人</th>
 			<th>充值人手机号</th>
 			<th>充值金额</th>
 			<th>时间</th>
-			 
+			<th>状态</th>
 			<th>来源</th>
 		</tr>
 	</thead>
 	<tbody>
 		<foreach name="list" item="good">
 		<tr>
+			<td>{$good.payid}</td>
 			<td>{$good.username}</td>
 			<td>{$good.mobile}</td>
 			<td>{$good.third}</td>
 			<td>{$good.time}</td>
-			 
+			 <td>
+				<if condition = "$good.status eq '1'" >成功</if>
+				<if condition = "$good.type eq '0'" >-</if>
+			</td>
 			<td>
 				<if condition = "$good.type eq '30'" >PC</if>
 				 <if condition = "$good.type eq '31'" >微信</if>

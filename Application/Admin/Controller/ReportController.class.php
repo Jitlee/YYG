@@ -112,7 +112,7 @@ class ReportController extends CommonController {
 	public function userrecharge($pageSize = 25, $pageNum = 1) {
 		
 		$db = M('account');		 
-		$map = ' (a.type=30 or a.type=31) and a.status=1';
+		$map = ' (a.type=30 or a.type=31)';
 		
 		$list = $db
 			->field('a.*,m.username,m.mobile')
@@ -121,7 +121,7 @@ class ReportController extends CommonController {
 			->page($pageNum, $pageSize)	
 			->order('a.time desc')->select();
 			
-		$num = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
+		$count = $db->join('a inner join __MEMBER__ m on m.uid=a.uid')->where($map)->count();
 		
 		if(!$pageSize) {
 			$pageSize = 25;

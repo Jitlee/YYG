@@ -433,24 +433,14 @@ class PersonController extends CommonController {
 	
 	public function pageAllMR($pageSize, $pageNum) {
 		// 分页
-//		$Model = M('member_miaosha');
-//		$filter['yyg_member_miaosha.uid'] = session("_uid");  
-//		
-//		$list =$Model
-//		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid ")			
-//		->where($filter)
-//		->page($pageNum, $pageSize)
-//		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,yyg_member_miaosha.count,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
-//		,type,jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
-//		->order('yyg_member_miaosha.time desc')
-//		->select();
+
 			$s=$pageSize* ($pageNum-1);
 			$e=$pageSize* $pageNum;
 			
 			$uid=session("_uid");
 			$sql="select 
 pm.username,yyg_member_miaosha.`qishu` <m.qishu as IsEnd,yyg_member_miaosha.count,m.title,m.thumb,m.danjia,m.status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu
-, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao,m.time,yyg_member_miaosha.uid,yyg_member_miaosha.count
+, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao,yyg_member_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count
  from yyg_member_miaosha
 inner join yyg_miaosha m ON yyg_member_miaosha.gid=m.gid
 LEFT JOIN yyg_miaosha_history mh ON mh.qishu=yyg_member_miaosha.qishu and mh.`gid` =yyg_member_miaosha.gid 
