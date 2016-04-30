@@ -499,7 +499,9 @@ class PayController extends Controller {
 			
 			$good['status'] = 1; // 修改状态为已购买
 			// 结果判断
-			if($good['shengyurenshu'] == 0) {
+			if((int)$good['shengyurenshu'] == 0
+				&& (int)$good['zongrenshu'] == (int)$good['canyurenshu']
+				&& (int)$good['canyurenshu'] > 0) {
 				// 计算结果
 				// 公式： 中奖号码  = 最后所有商品100条购买时间时分秒之和  % 参与人数 + 原始号
 				$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) FROM yyg_member_miaosha';

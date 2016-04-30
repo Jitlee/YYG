@@ -283,6 +283,7 @@ function finish_jiexiao() {
 			$good['qishu'] = intval($good['qishu']);
 			$good['maxqishu'] = intval($good['maxqishu']);
 			$good['canyurenshu'] = intval($good['canyurenshu']);
+			$good['zongrenshu'] = intval($good['zongrenshu']);
 			$endTime = $good['end_time'];
 			
 			// 计算中奖结果
@@ -292,6 +293,7 @@ function finish_jiexiao() {
 			$prizeuid = 0;
 			if(!empty($query)) {
 				$prizeindex = intval($query[0]) % $good['canyurenshu'];
+//				$prizeindex = intval($query[0]) % $good['zongrenshu'];
 				
 				// 查找中奖用户
 				$cdb = M('MiaoshaCode');
@@ -311,7 +313,7 @@ function finish_jiexiao() {
 			$hdb = M('MiaoshaHistory');
 			$hresult = $hdb->add($good);
 			
-			if($good['qishu'] < $good['maxqishu']) {
+			if($good['qishu'] <= $good['maxqishu']) {
 				// 重新开始
 				$good['qishu'] = $good['qishu'] + 1;
 				$good['status'] = 0;
