@@ -410,10 +410,11 @@ class PersonController extends CommonController {
 			$result["msg"]="操作成功。";
 			if($user)
 			{						 					
-				$records["mobile"]	=$_POST['mobile'];
-				$records["username"]	=$_POST['username'];
-				session('wxUserinfo', $records);							
-				$db->save($records);						
+				$user["mobile"]	=$_POST['mobile'];
+				$user["username"]	=$_POST['username'];
+//				$user["username"]	=$_POST['username'];
+				session('wxUserinfo', $user);//更新缓存					
+				$db->save($user);						
 				$result["status"]=1;
 			}
 			else
@@ -451,7 +452,8 @@ order by yyg_member_miaosha.time desc
 limit $s,$e";
 
 		//$rd = array('status'=>-1);
-		$list= M()->page($pageNum, $pageSize)->query($sql);
+//		$list= M()->page($pageNum, $pageSize)->query($sql);
+		$list= M()->query($sql);
 		
 		$this->ajaxReturn($list, "JSON");
 	}
@@ -464,15 +466,23 @@ limit $s,$e";
 	
 	public function pageAllzj($pageSize, $pageNum) {
 		// 分页
-		$Model = M('miaosha_history');
-		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+//		$Model = M('miaosha_history');
+		$uid = session("_uid");
+		$s=$pageSize* ($pageNum-1);
+		$e=$pageSize* $pageNum;
 		
-		$list =$Model
-		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
-		->where($filter)
-		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
-		->select();
+			$sql="select 
+pm.username,mm.`qishu` <m.qishu as IsEnd,mm.count,m.title,m.thumb,m.danjia,m.status,mm.gid, mm.qishu
+, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao,mm.time,mm.uid,mm.count
+ from yyg_miaosha_history mh 
+inner JOIN yyg_member_miaosha mm ON mh.qishu=mm.qishu and mh.`gid` =mm.gid and mm.`uid` = mh.prizeuid
+inner join yyg_miaosha m ON mm.gid=m.gid
+Left join yyg_member pm on pm.uid=mh.prizeuid
+where
+	mh.prizeuid=$uid
+order by mm.time desc
+limit $s,$e";
+		$list= M()->query($sql);		
 		$this->ajaxReturn($list, "JSON");
 	}
 

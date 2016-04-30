@@ -180,16 +180,15 @@
 		</div>
 	</div>
 </div>
-
-<!--补丁3.1.6_b.0.1-->
+ 
 <div id="divContent" class="Product_Content">
 	<!-- 商品内容 -->
-	<div class="Product_Con">{$data.content}</div>
+	<div class="Product_Con divContent">{$data.content}</div>
     <!-- 商品内容 -->
     
     <!-- 购买记录20条 -->
-	<div id="bitem" class="AllRecordCon" style="display: none;">
-		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" 
+	<div id="bitem" class="AllRecordCon divContent" style="display: none;">
+		<iframe id="iframea_bitem" g_src="{:U('Index/record', '', '')}/{$gid}/{$qishu}"  src="{:U('Index/record', '', '')}/{$gid}/{$qishu}" 
 			style="width:930px; border:none;height:600px" frameborder="0" scrolling="no"></iframe>		
 	</div> 
 <script type="text/javascript">
@@ -205,17 +204,17 @@ $(function(){
 	});
 	
 	var DetailsT_TitP = $(".DetailsT_TitP ul li");
-	var divContent    = $("#divContent div");	
+	var divContent    = $("#divContent .divContent");	
 	DetailsT_TitP.click(function(){
 		var index = $(this).index();
-			DetailsT_TitP.removeClass("DetailsTCur").eq(index).addClass("DetailsTCur");
-	
-			var iframe = divContent.hide().eq(index).find("iframe");
-			if (typeof(iframe.attr("g_src")) != "undefined") {
-			  	 iframe.attr("src",iframe.attr("g_src"));
-				 iframe.removeAttr("g_src");
-			}
-			divContent.hide().eq(index).show();
+		DetailsT_TitP.removeClass("DetailsTCur").eq(index).addClass("DetailsTCur");
+
+		var iframe = divContent.hide().eq(index).find("iframe");
+		if (typeof(iframe.attr("g_src")) != "undefined") {
+		  	 iframe.attr("src",iframe.attr("g_src"));
+			 iframe.removeAttr("g_src");
+		}
+		divContent.hide().eq(index).show();
 	});
 	
 	

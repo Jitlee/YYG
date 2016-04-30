@@ -170,7 +170,7 @@ class IndexController extends CommonController {
 			->find();
 	}
 	
-	public function record($gid, $qishu, $pageNo = 1) {
+	public function record($gid, $qishu=1, $pageNo = 1) {
 		// 购买记录
 		$db = M('MemberMiaosha');
 		$map['gid'] = $gid;
