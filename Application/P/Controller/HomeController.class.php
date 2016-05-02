@@ -71,21 +71,26 @@ class HomeController extends CommonController {
     }
 	public function pageAllzj($pageSize, $pageNum) {
 		// 分页
-		$Model = M('miaosha_history');
-		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
+		$uid = session("_uid");
+		$s=$pageSize* ($pageNum-1);
+		$e=$pageSize* $pageNum;
 		
-		
-		$list =$Model
-		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
-		->where($filter)
-		->page($pageNum, $pageSize)		
-		->field("mobile,title,thumb,danjia,status,yyg_miaosha_history.gid, yyg_miaosha_history.qishu, canyurenshu, zongrenshu,type,jishijiexiao,yyg_miaosha_history.time,yyg_member.uid")
-		->select();
+		$sql="select 
+pm.username,mh.`qishu` <m.qishu as IsEnd, m.title,m.thumb,m.danjia,m.status, mh.gid,  mh.qishu
+, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao, mh.end_time as time 
+from yyg_miaosha_history mh
+inner join yyg_miaosha m ON mh.gid=m.gid
+Left join yyg_member pm on pm.uid=mh.prizeuid
+where
+	mh.prizeuid=$uid
+order by  mh.time desc
+limit $s,$e";
+		$list= M()->query($sql);		
 		$this->ajaxReturn($list, "JSON");
 	}
 	
 	
-	public function singlelist(){		
+	public function singlelist(){
     	$this->assign('title', '晒单列表'); 
 		$this->display();
     }

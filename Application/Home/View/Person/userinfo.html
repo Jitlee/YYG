@@ -11,7 +11,8 @@
 				<div class="mui-input-group">
 					<div class="mui-input-row">
 						<label for="mobile" class="control-label">手机号:</label>
-						<input type="text" class="mui-input-clear mui-input" id="mobile" value="{$data.mobile}" name="mobile" placeholder="请输入您的手机号码" required />
+						<input type="text" class="mui-input-clear mui-input" id="mobile" readonly="readonly"
+							 value="{$data.mobile}" name="mobile" />
 					</div>
 
 					<div class="mui-input-row">
@@ -39,6 +40,12 @@
  
 			$(function(){				
 				$("#btnsave").click(function(){
+					var username=$("#username").val();
+					if(username.length <1)
+					{
+						util.msg("请输入昵称。");	 				
+						return false;
+					}
 					var self = $("form");					
 					$.post("{:U('Person/userinfo','','')}", self.serialize(), success, "json");					
 					function success(data) {

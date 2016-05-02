@@ -4,7 +4,7 @@ use Think\Controller;
 class PersonController extends CommonController {
 		 		
 	protected function _initialize() {
-		if(!is_login()) {
+		if(!home_is_login()) {
 			$this->redirect('Public/login');
 			return;
 		}
@@ -410,7 +410,7 @@ class PersonController extends CommonController {
 			$result["msg"]="操作成功。";
 			if($user)
 			{						 					
-				$user["mobile"]	=$_POST['mobile'];
+				//$user["mobile"]	=$_POST['mobile'];
 				$user["username"]	=$_POST['username'];
 //				$user["username"]	=$_POST['username'];
 				session('wxUserinfo', $user);//更新缓存					
@@ -472,15 +472,14 @@ limit $s,$e";
 		$e=$pageSize* $pageNum;
 		
 			$sql="select 
-pm.username,mm.`qishu` <m.qishu as IsEnd,mm.count,m.title,m.thumb,m.danjia,m.status,mm.gid, mm.qishu
-, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao,mm.time,mm.uid,mm.count
- from yyg_miaosha_history mh 
-inner JOIN yyg_member_miaosha mm ON mh.qishu=mm.qishu and mh.`gid` =mm.gid and mm.`uid` = mh.prizeuid
-inner join yyg_miaosha m ON mm.gid=m.gid
+pm.username,mh.`qishu` <m.qishu as IsEnd, m.title,m.thumb,m.danjia,m.status, mh.gid,  mh.qishu
+, m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao, mh.end_time as time 
+from yyg_miaosha_history mh
+inner join yyg_miaosha m ON mh.gid=m.gid
 Left join yyg_member pm on pm.uid=mh.prizeuid
 where
 	mh.prizeuid=$uid
-order by mm.time desc
+order by  mh.time desc
 limit $s,$e";
 		$list= M()->query($sql);		
 		$this->ajaxReturn($list, "JSON");
@@ -496,7 +495,7 @@ limit $s,$e";
 		// 分页
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
-		
+		$filter['yyg_miaosha_history.sdstatus'] = 0;
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)
@@ -517,7 +516,7 @@ limit $s,$e";
 		// 分页
 		$Model = M('miaosha_history');
 		$filter['yyg_miaosha_history.prizeuid'] = session("_uid");
-		
+		$filter['yyg_miaosha_history.sdstatus'] = 1;
 		$list =$Model
 		->join("yyg_member ON yyg_member.uid=yyg_miaosha_history.prizeuid")			
 		->where($filter)

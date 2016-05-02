@@ -6,6 +6,7 @@ Application/Common/Conf/*
 *.log
 task
 ThinkPHP/Library/Vendor/jubaopay/*
+ThinkPHP/Library/Vendor/Weixinpay/*
 Application/Runtime/Temp/*
 Application/Runtime/Cache/*
 Application/Runtime/Data/task.xml

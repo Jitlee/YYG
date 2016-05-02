@@ -26,7 +26,7 @@ class OrderPayController extends Controller {
 //		{
 //			$result["status"]=0;
 //			$result["msg"]="操作成功。";
-//			if(is_login()) {
+//			if(home_is_login()) {
 //				$db = M('member_addmoney_record');
 //				$datasave = array(
 //					'uid'		=>session("_uid"),

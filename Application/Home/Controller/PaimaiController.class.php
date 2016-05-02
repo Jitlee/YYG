@@ -52,7 +52,7 @@ class PaimaiController extends Controller {
 	}
 	
 	protected function view($gid) {
-		if(is_login()) {
+		if(home_is_login()) {
 			$this->assign('title', '拍卖详情');
 			$db = M('paimai');
 			$data = $db->field('gid, title, subtitle,thumb, baoliujia,qipaijia,lijijia,jiafujia,zuigaojia,chujiacishu,baozhengjin,prizeuid, liji,status,end_time')->find($gid);
@@ -120,7 +120,7 @@ class PaimaiController extends Controller {
 	}
 
 	public function chujia($gid, $money) {
-		if(is_login()) {
+		if(home_is_login()) {
 			$pdb = M('paimai');
 			$good = $pdb->field('gid,zuigaojia, qipaijia, jiafujia, chujiacishu, status')->find($gid);
 			$result = array();

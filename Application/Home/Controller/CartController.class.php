@@ -61,7 +61,7 @@ class CartController extends Controller {
 			$data['gid'] = $gid;
 			$data['uid'] = get_temp_uid();
 			$data['type'] = $type;
-			$data['flag'] = is_login() ? 1 : 0; // 0 没有登陆， 1登陆
+			$data['flag'] = home_is_login() ? 1 : 0; // 0 没有登陆， 1登陆
 			
 			if($db->add($data)) {
 				count_cart(1);

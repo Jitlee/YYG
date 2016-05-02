@@ -312,8 +312,9 @@ function finish_jiexiao() {
 			
 			$hdb = M('MiaoshaHistory');
 			$hresult = $hdb->add($good);
-			
-			if($good['qishu'] <= $good['maxqishu']) {
+			$qishu=intval($good['qishu'])+1;
+			$maxqishu=intval($good['maxqishu']);
+			if($qishu <= $maxqishu) { //下一期
 				// 重新开始
 				$good['qishu'] = $good['qishu'] + 1;
 				$good['status'] = 0;

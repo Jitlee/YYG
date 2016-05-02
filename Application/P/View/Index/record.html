@@ -46,10 +46,10 @@
 				</tr>
 				<foreach name="list" item="item">
 				<tr>
-					<php>if (!ereg('^http://', $item.img)) {</php>
-						<td><img src="__TIMG__/{$item.img}" height="30" width="30" alt=""/></td>
-					<php>}else{</php>
+					<php>if (ereg('^http', $item["img"])) {</php>
 						<td><img src="{$item.img}" height="30" width="30" alt=""/></td>
+					<php>}else{</php>
+						<td><img src="__TIMG__/{$item.img}" height="30" width="30" alt=""/></td>
 					<php>}</php>
 					<td>{$item.username}</td>
 					<td>{$item.count}</td>

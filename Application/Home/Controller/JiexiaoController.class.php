@@ -20,8 +20,7 @@ class JiexiaoController extends Controller {
 	}
 	
 	public function pageAll($pageSize, $pageNum) {
-		// 分页
-		
+		// 分页		
 //		$filter['type'] = 1;
 		
 		$tabId = intval(I('get.tabId')); // 1:即将揭晓，2最新揭晓

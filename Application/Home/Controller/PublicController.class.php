@@ -19,11 +19,13 @@ public function login() {
 				$result["msg"]='用户名或密码不正确';
 			}
 			else{
+				$openid=get_user_open_id();
 				$data = array(
 					'uid'			=> $user['uid'],
 					'login'			=> array('exp', '`login` + 1'),
 					'login_time'	=> date('y-m-d-H-i-s'),
 					'login_ip'		=> get_client_ip(),
+					'openid'		=> $openid
 				);
 				$db->save($data);
 				// 将临时购物车的记录替换成真的			
@@ -46,6 +48,8 @@ public function login() {
 			}
 			$this->ajaxReturn($result);
 		} else  {
+			$openid=get_user_open_id();
+			echo $openid;
 			layout(false);
 			$this->assign('redirect', $mobile);
 			$this->display();
@@ -81,12 +85,17 @@ public function Reg($yaoqing=null){
 				
 				$result["status"]=0;
 				$result["msg"]="操作成功。";
+				
+				 
 				if(!$records)
 				{
+					$openid=get_user_open_id(); 
+					
 					$_POST['img']='tx/211274314672928.jpg';
 					$_POST['score']=100;
 					$_POST['login_time'] =date('y-m-d-H-i-s');
 					$_POST['time'] =date('y-m-d-H-i-s');
+					$_POST['openid'] =$openid;
 					
 					$db->create();
 					if($db->add() != false) {
@@ -192,11 +201,14 @@ public function LoginAuth($openid,$imgurl,$username)
 	$records = $db->where($where)->find();
 	if(!$records)
 	{
+		$wxopenid=get_user_open_id();
+					
 		$data['login_time'] =date('y-m-d-H-i-s');
 		$data['time'] =date('y-m-d-H-i-s');
 		$data['img']=$imgurl;
 		$data['username']=$username;
 		$data['reg_key'] = $openid;
+		$data['openid'] = $wxopenid;
 		if($db->add($data) == false) {
 			$this->error('数据错误');
 		}
