@@ -504,7 +504,7 @@ class PayController extends Controller {
 				&& (int)$good['canyurenshu'] > 0) {
 				// 计算结果
 				// 公式： 中奖号码  = 最后所有商品100条购买时间时分秒之和  % 参与人数 + 原始号
-				$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) FROM yyg_member_miaosha';
+				$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) code FROM yyg_member_miaosha';
 //				if(intval($good['jishijiexiao']) == 0) { // 非即时揭晓
 //					$sql = $sql . ' WHERE gid = ' . + $good['gid'];
 //				}
@@ -516,18 +516,20 @@ class PayController extends Controller {
 				}
 				
 				$prize = 0;
-				$prizeindex = intval($query[0]) % $good['canyurenshu'];
+				$prizeindex = intval($query[0]['code']) % $good['canyurenshu'];
 				$cmap['gid'] = $good['gid'];
 				$cmap['qishu'] = $good['qishu'];
-				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->find();
+				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->select();
 				if(!$presult) {
 					return 204; // 获取中奖用户失败
 				}
 				
 				$good['status'] = 2;
-				$good['prizecode'] = $presult['pcode'];
-				$good['prizeuid'] = $presult['uid'];
+				$good['prizecode'] = $presult[0]['pcode'];
+				$good['prizeuid'] = $presult[0]['uid'];
 				$good['end_time'] = date('y-m-d-H-i-s');
+				
+				$good['content'] = $cdb->getLastSql().'\r\nprizeindex:'.$prizeindex.'\r\nquery0'.$query[0]['code'].'\r\ncanyuerenshu'.$good['canyurenshu'];
 				
 				$hdb = M('MiaoshaHistory');
 				if(!$hdb->add($good)) {
