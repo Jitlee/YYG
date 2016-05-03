@@ -22,10 +22,16 @@
 	<p class="yyg-view-title yyg-view-margin">
 		(第{$data.qishu}期) {$data.title} <r>{$data.subtitle}</r>
 	</p>
+	<if condition="$data.shengyurenshu eq 0">
+		<r class="yyg-view-title yyg-view-margin">
+			正在开奖计算中，请稍后...
+		</r>
+	</if>
 	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger">{$data.money}</r></h5>
 	<if condition="$data.xiangou gt 0">
 		<h5 class="yyg-view-margin">限购：{$data.xiangou} 人次</h5>
 	</if>
+	
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
 			<div class="yyg-progressing" style="width:{$data.percentage|default=0}%"></div>
@@ -48,6 +54,8 @@
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 </ul>
+
+<if condition="$data.shengyurenshu neq 0">
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.go(-1)"><i class="mui-icon mui-icon-back"></i></a>
@@ -58,6 +66,7 @@
 		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
+</if>
 
 <script type="text/javascript">
 	$(function() {

@@ -44,28 +44,38 @@ class MiaoshaController extends GoodsBaseController {
 	public function add() {
 		if(IS_POST) {
 			$jishi = intval($_POST['jishijiexiao']);
-			if($jishi > 0) {
-				$now = time();
-				$end_time = $now + $jishi * 3600;
-				$_POST['end_time'] = date('y-m-d-H-i-s', $end_time);
-			}
-			
 			$money = floatval($_POST['money']);
 			$danjia = floatval($_POST['danjia']);
 			$_POST['zongrenshu'] = ceil($money / $danjia);
 			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
+			$zongrenshu = (int)$_POST['zongrenshu'];
 			
 			$db = M('miaosha');
+//			$db->startTrans();
 			$data = $db->create();
 			if($data) {
+				$status = -1;
 				$result = $db->add(); // 写入数据到数据库 
-				if($result != false) {
+				if($result > 0) {
+					$rst = $db->execute("call p_create_miaosha_code($result, 1, $zongrenshu)");
+//					echo dump($rst);
+					if($rst > 0) {
+						$status = 1;
+					}
+				}
+				
+				if($status == 1) {
+//					$db->commit();
 					self::saveImages($result, $this->_config['type']);
+//					echo '成功';
 					$this->success('操作成功', U('index', '', ''));
 				} else {
-					$this->ajaxReturn('数据错误');
+//					$db->rollback();
+//					echo '失败';
+					$this->ajaxReturn('数据错误');						
 				}
-			} else {
+ 			} else {
+// 				$db->rollback();
 				$this->ajaxReturn('数据创建错误');
 			}
 		} else {
@@ -88,12 +98,6 @@ class MiaoshaController extends GoodsBaseController {
 	public function edit($gid = null) {
 		if(IS_POST) {
 			$jishi = intval($_POST['jishijiexiao']);
-			if($jishi > 0) {
-				$now = time();
-				$end_time = $now + $jishi * 3600;
-				$_POST['end_time'] = date('y-m-d-H-i-s', $end_time);
-			}
-			
 			$money = floatval($_POST['money']);
 			$danjia = floatval($_POST['danjia']);
 			$_POST['zongrenshu'] = ceil($money / $danjia);

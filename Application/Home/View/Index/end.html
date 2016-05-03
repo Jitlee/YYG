@@ -69,27 +69,40 @@
 </div>
 
 <div class="yyg-body">
-	<present name="data.prizer">
+	<if condition="$data.prizeuid gt 0">
 		<div class="yyg-prize">
-			<div class="yyg-prize-img" style="background-image: url({$data.prizer.img});">
+			<div class="yyg-prize-img" style="background-image: url({$data.userimg});">
 			</div>
 			<div class="yyg-prize-content">
-				<a >{$data.prizer.username}</a>
-				<h5>本次参与:<r>{$data.prizer.count}</r></h5>
+				<a >{$data.username}</a>
+				<h5>本次参与:<r>{$data.prizecount}</r></h5>
 				<h5>幸运购物码:<r>{$data['prizecode'] + 10000001}</r></h5>
 				<h5>揭晓时间：{$data.end_time}</h5>
 			</div>
-			<a class="yyg-prize-all" href="{:U('prizerecord','','')}/{$data.qishu}/{$data.gid}/{$data.prizeuid}/{$data.prizer.username}">
+			<a class="yyg-prize-all" href="{:U('prizerecord','','')}/{$data.qishu}/{$data.gid}/{$data.prizeuid}/{$data.username}">
 				获得者本期所有购物码 >
 			</a>
 		</div>
-	<else/>
+	<elseif condition="$data.goumaicishu gt 0"/>
+		<div class="yyg-prize">
+			<div class="yyg-prize-img" style="background-image: url({$data.userimg});">
+			</div>
+			<div class="yyg-prize-content">
+				<h5>本期剩余:<r>{$data.shengyurenshu}</r>人次</h5>
+				<h5>幸运购物码:<r>{$data['prizecode'] + 10000001}</r></h5>
+				<h5>揭晓时间：{$data.end_time}</h5>
+			</div>
+			<a class="yyg-prize-all">
+				很遗憾，本期没有幸运获得者
+			</a>
+		</div>
+	<elseif/>
 		<div id="emptyBlock" class="yyg-prize">
 			<i class="iconfont icon-yihan"></i>
 			<br/>
 			很遗憾，本期没有人参与
 		</div>
-	</present>
+	</if>
 	<section class="tuijian yyg-content">
 		<div class="tuijian-left">
 			<div class="tuijian-img-container">
@@ -104,14 +117,14 @@
 </div>
 
 <ul class="mui-table-view yyg-margin20">
-	<present name="data.prizer">
+	<if condition="$data.prizeid gt 0">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">计算结果</a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.canyurenshu})</span></a></li>
-	</present>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.goumaicishu})</span></a></li>
+	</if>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
-	<present name="data.prizer">
+	<if condition="$data.prizeuid gt 0">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
-	</present>
+	</if>
 </ul>
 <footer class="yyg-footer">
 	<div class="yyg-footer-block">

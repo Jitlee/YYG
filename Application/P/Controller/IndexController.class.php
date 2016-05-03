@@ -4,7 +4,7 @@ class IndexController extends CommonController {
 		
 	public function index(){
 		
-		run_task();
+//		run_task();
     		$this->assign('title', '壹圆购物');
 		$sdb = M('slide');
 		$slides = $sdb->select();
@@ -63,7 +63,7 @@ class IndexController extends CommonController {
     }
 
 	public function view($gid, $qishu = null) {
-		run_task();
+//		run_task();
 		
 		$this->assign('title', '商品详情');
 		$data = $this->getGood($gid, $qishu);
@@ -115,7 +115,7 @@ class IndexController extends CommonController {
 	private function getGood($gid, $qishu = null) {
 		if($qishu == null) {
 			$db = M('miaosha');
-			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time,content')->find($gid);
+			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,date_add(`time`,interval -jishijiexiao hour) end_time,content')->find($gid);
 			$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
 			if((int)$data['status'] == 2) {
 				$data['current'] = 0;
@@ -131,7 +131,10 @@ class IndexController extends CommonController {
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time,content')->where($map)->find();
+			$data = $db
+				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
 			if(empty($data)) {
 				return $this->getGood($gid);
 			}
@@ -144,10 +147,10 @@ class IndexController extends CommonController {
 			$data['max'] = intval($current['qishu']);
 			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
 			
-			// 获取当前中奖用户
-			if($data['prizeuid']) {
-				$data['prizer'] = $this->getPrizer($gid, $qishu);
-			}
+//			// 获取当前中奖用户
+//			if($data['prizeuid']) {
+//				$data['prizer'] = $this->getPrizer($gid, $qishu);
+//			}
 			
 			return $data;
 		}

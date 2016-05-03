@@ -3,7 +3,7 @@ namespace P\Controller;
 class LotteryController extends CommonController {
 		
 	public function index($sort = 0, $pageNo = 1){
-		run_task();
+//		run_task();
 		$this->assign('title', '壹圆购物');
 		$num = 0;
 		$total = 0;
@@ -12,23 +12,17 @@ class LotteryController extends CommonController {
 		// 最新揭晓
 		$hdb = M('MiaoshaHistory');
 //		$filter = 'prizeuid is not null and exists(select 0 from yyg_miaosha b where yyg_miaosha_history.gid = b.gid and (yyg_miaosha_history.qishu = b.qishu or yyg_miaosha_history.qishu = b.qishu - 1))';
-		$list = $hdb->join('left join yyg_member on yyg_member.uid = yyg_miaosha_history.prizeuid')
-			->where($filter)->order('end_time desc')
-			->field(array('yyg_miaosha_history.gid','yyg_miaosha_history.title','yyg_miaosha_history.thumb',
-				'yyg_miaosha_history.money','yyg_miaosha_history.danjia','yyg_miaosha_history.xiangou',
-				'yyg_miaosha_history.status','yyg_miaosha_history.qishu','yyg_miaosha_history.canyurenshu',
-				'yyg_miaosha_history.zongrenshu','yyg_miaosha_history.type','yyg_miaosha_history.prizeuid',
-				'yyg_miaosha_history.prizecode','yyg_miaosha_history.end_time','yyg_member.img',
-				'(select sum(count) from yyg_member_miaosha ms where ms.uid=yyg_miaosha_history.prizeuid and ms.qishu=yyg_miaosha_history.qishu and ms.gid=yyg_miaosha_history.gid) count',
-				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+		$list = $hdb->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
+				->order('end_time desc, gid desc, qishu desc')
 			->page($pageNo, $pageSize)->select();
 		$this->assign('list', $list);
 		
 //		echo $hdb->getLastSql();
 		
 		$num = count($list);
-		$total = $hdb->join('left join yyg_member on yyg_member.uid = yyg_miaosha_history.prizeuid')
-			->where($filter)->count();
+		$total = $hdb->where($filter)->count();
 		
 		$pageCount = ceil($total / $pageSize);
 		$this->assign('pageSize', $pageSize);

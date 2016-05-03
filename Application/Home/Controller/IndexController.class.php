@@ -3,7 +3,7 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
 	public function index(){
-		run_task();
+//		run_task();
     	$this->assign('title', '壹圆购物');
 		$this->assign('pid', 'home');
 		//自动登录
@@ -22,7 +22,7 @@ class IndexController extends Controller {
     }
 	
 	public function all($category = 0, $categoryName = '商品分类'){
-		run_task();
+//		run_task();
     	$this->assign('title', '热门秒杀');
 		$this->assign('pid', 'jiexiao');
 		
@@ -157,13 +157,17 @@ class IndexController extends Controller {
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
+			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,date_add(`time`,interval -jishijiexiao hour) end_time')->find($gid);
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
-			$data = $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,prizeuid,prizecode,end_time')->where($map)->find();
+			$data = $db
+				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
+			->where($map)->find();
 			if(empty($data)) {
 				return $this->getGood($gid);
 			}
@@ -174,21 +178,21 @@ class IndexController extends Controller {
 			$mmap['status'] = array('lt', 2);
 			$current = $mdb->field('qishu')->where($mmap)->find();
 			$data['current'] = $current['qishu'];
-			
-			// 获取当前中奖用户
-			if($data['prizeuid']) {
-				$udb = M('member');
-				$user = $udb->field(array('uid','IFNULL(NULLIF(username, \'\'), INSERT(mobile,4,4,\'****\'))'  => 'username', 'img'))->find($data['prizeuid']);
-				$data['prizer'] = $user;
-				
-				// 获取用户当期购买数量
-				$mhdb = M('MiaoshaCode');
-				$mhmap['uid'] = $data['prizeuid'];
-				$mhmap['gid'] = $data['gid'];
-				$mhmap['qishu'] = $data['qishu'];
-				$count = $mhdb->where($mhmap)->count();
-				$data['prizer']['count'] = $count;
-			}
+//			
+//			// 获取当前中奖用户
+//			if($data['prizeuid']) {
+//				$udb = M('member');
+//				$user = $udb->field(array('uid','IFNULL(NULLIF(username, \'\'), INSERT(mobile,4,4,\'****\'))'  => 'username', 'img'))->find($data['prizeuid']);
+//				$data['prizer'] = $user;
+//				
+//				// 获取用户当期购买数量
+//				$mhdb = M('MiaoshaCode');
+//				$mhmap['uid'] = $data['prizeuid'];
+//				$mhmap['gid'] = $data['gid'];
+//				$mhmap['qishu'] = $data['qishu'];
+//				$count = $mhdb->where($mhmap)->count();
+//				$data['prizer']['count'] = $count;
+//			}
 			
 			return $data;
 		}

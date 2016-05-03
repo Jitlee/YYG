@@ -96,12 +96,10 @@
 			<p class="Det_money">价值：<span class="rmbgray">{$data.money}</span></p>
 			<if condition="$data.status eq 2">
 				<include file="view_end"/>
+			<elseif condition="$data.shengyurenshu eq 0"/>
+				<include file="view_animation"/>
 			<else/>
-				<present name="end_time">
-					<include file="view_animation"/>
-				<else/>
-					<include file="view_contents"/>
-				</present>
+				<include file="view_contents"/>
 			</if>
 			
 			<!--显示揭晓动画 end-->		

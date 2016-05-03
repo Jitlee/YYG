@@ -442,13 +442,14 @@ class PayController extends Controller {
 		// 更新秒杀主记录
 		$mdb = M('Miaosha');
 		$good = $mdb->find($cart['good']['gid']);
+		
+		if(intval($good['status']) == 2 || intval($good['shengyurenshu']) == 0) {
+			return 201;  // 商品已经完结
+		}
+		
 		$good['zongrenshu'] = intval($good['zongrenshu']);
 		$good['canyurenshu'] = min(intval($good['canyurenshu']) + intval($cart['count']), $good['zongrenshu']);
 		$good['shengyurenshu'] = $good['zongrenshu'] - $good['canyurenshu'];
-		
-		if(intval($good['status']) == 2) {
-			return 201;  // 商品已经完结
-		}
 			
 		$mmdb = M('MemberMiaosha');
 		// 添加用户秒杀记录
@@ -459,112 +460,123 @@ class PayController extends Controller {
 		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果  （已废弃）
 		$mid = $mmdb->add($data); // 增加秒杀纪录
 		if($mid !== FALSE) {
-			// 生成购买记录随机码
-			$codes = array();
-			for($i = 0; $i < $good['zongrenshu']; ++$i) {
-				array_push($codes, $i);
+			$gid = (int)$data['gid'];
+			$uid = (int)$data['uid'];
+			$count = (int)$data['count'];
+			$qishu = (int)$data['qishu'];
+			$rst = $mmdb->execute("call p_buy_miaosha($gid, $qishu, $mid, $uid, $count)");
+			if(!$rst > 0) {
+				return 206; // 保存主表失败
 			}
 			
-			$cdb = M('MiaoshaCode');
-			$cmap['gid'] = $good['gid'];
-			$cmap['qishu'] = $good['qishu'];
-			$clist = $cdb->where($cmap)->field('pcode')->select();
+			return 0;
 			
-			// 去掉已使用的
-			if(!empty($clist)) {
-				foreach($clist as $c) {
-					unset($codes[intval($c['pcode'])]);
-				}
-				$codes = array_values($codes); // 重建索引
-			}
-			
-			for($i = 0; $i < $data['count']; ++$i) {
-				$offset = rand(0, count($codes) - 1);
-				$code = $codes[$offset];
-				array_splice($codes, $offset, 1);
-				$codes = array_values($codes); // 重建索引
-				
-				$cdata = array(
-					'mid'		=> $mid, // 购买记录主表ID
-					'gid'		=> $good['gid'],
-					'qishu'		=> $good['qishu'],
-					'uid'		=> $cart['uid'],
-					'pcode'		=> $code, // 生成随机码
-				);
-				
-				if($cdb->add($cdata) == FALSE) {
-					return 202; // 生成客户随即码失败
-				}
-			}
-			
-			$good['status'] = 1; // 修改状态为已购买
-			// 结果判断
-			if((int)$good['shengyurenshu'] == 0
-				&& (int)$good['zongrenshu'] == (int)$good['canyurenshu']
-				&& (int)$good['canyurenshu'] > 0) {
-				// 计算结果
-				// 公式： 中奖号码  = 最后所有商品100条购买时间时分秒之和  % 参与人数 + 原始号
-				$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) code FROM yyg_member_miaosha';
-//				if(intval($good['jishijiexiao']) == 0) { // 非即时揭晓
-//					$sql = $sql . ' WHERE gid = ' . + $good['gid'];
+//			// 生成购买记录随机码
+//			$codes = array();
+//			for($i = 0; $i < $good['zongrenshu']; ++$i) {
+//				array_push($codes, $i);
+//			}
+//			
+//			$cdb = M('MiaoshaCode');
+//			$cmap['gid'] = $good['gid'];
+//			$cmap['qishu'] = $good['qishu'];
+//			$clist = $cdb->where($cmap)->field('pcode')->select();
+//			
+//			// 去掉已使用的
+//			if(!empty($clist)) {
+//				foreach($clist as $c) {
+//					unset($codes[intval($c['pcode'])]);
 //				}
-				$sql = $sql . ' ORDER BY `time` DESC LIMIT 100';
-				
-				$query = $mdb->query($sql);
-				if(empty($query)) {
-					return 203; // 计算结果失败
-				}
-				
-				$prize = 0;
-				$prizeindex = intval($query[0]['code']) % $good['canyurenshu'];
-				$cmap['gid'] = $good['gid'];
-				$cmap['qishu'] = $good['qishu'];
-				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->select();
-				if(!$presult) {
-					return 204; // 获取中奖用户失败
-				}
-				
-				$good['status'] = 2;
-				$good['prizecode'] = $presult[0]['pcode'];
-				$good['prizeuid'] = $presult[0]['uid'];
-				$good['end_time'] = date('y-m-d-H-i-s');
-				
-				$good['content'] = $cdb->getLastSql().'\r\nprizeindex:'.$prizeindex.'\r\nquery0'.$query[0]['code'].'\r\ncanyuerenshu'.$good['canyurenshu'];
-				
-				$hdb = M('MiaoshaHistory');
-				if(!$hdb->add($good)) {
-					return 205; // 保存历史失败
-				}
-				
-				// 更新期数
-				$maxqishu = intval($good['maxqishu']);
-				$qishu = intval($good['qishu']);
-				if($qishu <= $maxqishu) {
-					// 重新开始
-					$good['qishu'] = $qishu + 1;
-					$good['status'] = 0;
-					$good['prizeuid'] = null;
-					$good['prizecode'] = null;
-					$good['canyurenshu'] = 0;
-					$good['shengyurenshu'] = $good['zongrenshu'];
-					$good['time'] = date('y-m-d-H-i-s');
-					$jishi = intval($good['jishijiexiao']);
-					if($jishi > 0) {
-						$now = time();
-						$end_time = $now + $jishi * 3600;
-						$good['end_time'] =  date('y-m-d-H-i-s', $end_time);
-					} else {
-						$good['end_time'] = null;
-					}
-				}
-			}
-
-			if($mdb->save($good)) {
-				add_renci($data['count']);
-				return 0;
-			}
-			
-			return 206; // 保存主表失败
+//				$codes = array_values($codes); // 重建索引
+//			}
+//			
+//			for($i = 0; $i < $data['count']; ++$i) {
+//				$offset = rand(0, count($codes) - 1);
+//				$code = $codes[$offset];
+//				array_splice($codes, $offset, 1);
+//				$codes = array_values($codes); // 重建索引
+//				
+//				$cdata = array(
+//					'mid'		=> $mid, // 购买记录主表ID
+//					'gid'		=> $good['gid'],
+//					'qishu'		=> $good['qishu'],
+//					'uid'		=> $cart['uid'],
+//					'pcode'		=> $code, // 生成随机码
+//				);
+//				
+//				if($cdb->add($cdata) == FALSE) {
+//					return 202; // 生成客户随即码失败
+//				}
+//			}
+//			
+//			$good['status'] = 1; // 修改状态为已购买
+//			// 结果判断
+//			if((int)$good['shengyurenshu'] == 0
+//				&& (int)$good['zongrenshu'] == (int)$good['canyurenshu']
+//				&& (int)$good['canyurenshu'] > 0) {
+//				// 计算结果
+//				// 公式： 中奖号码  = 最后所有商品100条购买时间时分秒之和  % 参与人数 + 原始号
+//				$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) code FROM yyg_member_miaosha';
+////				if(intval($good['jishijiexiao']) == 0) { // 非即时揭晓
+////					$sql = $sql . ' WHERE gid = ' . + $good['gid'];
+////				}
+//				$sql = $sql . ' ORDER BY `time` DESC LIMIT 100';
+//				
+//				$query = $mdb->query($sql);
+//				if(empty($query)) {
+//					return 203; // 计算结果失败
+//				}
+//				
+//				$prize = 0;
+//				$prizeindex = intval($query[0]['code']) % $good['canyurenshu'];
+//				$cmap['gid'] = $good['gid'];
+//				$cmap['qishu'] = $good['qishu'];
+//				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->select();
+//				if(!$presult) {
+//					return 204; // 获取中奖用户失败
+//				}
+//				
+//				$good['status'] = 2;
+//				$good['prizecode'] = $presult[0]['pcode'];
+//				$good['prizeuid'] = $presult[0]['uid'];
+//				$good['end_time'] = date('y-m-d-H-i-s');
+//				
+//				$good['content'] = $cdb->getLastSql().'\r\nprizeindex:'.$prizeindex.'\r\nquery0'.$query[0]['code'].'\r\ncanyuerenshu'.$good['canyurenshu'];
+//				
+//				$hdb = M('MiaoshaHistory');
+//				if(!$hdb->add($good)) {
+//					return 205; // 保存历史失败
+//				}
+//				
+//				// 更新期数
+//				$maxqishu = intval($good['maxqishu']);
+//				$qishu = intval($good['qishu']);
+//				if($qishu <= $maxqishu) {
+//					// 重新开始
+//					$good['qishu'] = $qishu + 1;
+//					$good['status'] = 0;
+//					$good['prizeuid'] = null;
+//					$good['prizecode'] = null;
+//					$good['canyurenshu'] = 0;
+//					$good['shengyurenshu'] = $good['zongrenshu'];
+//					$good['time'] = date('y-m-d-H-i-s');
+//					$jishi = intval($good['jishijiexiao']);
+//					if($jishi > 0) {
+//						$now = time();
+//						$end_time = $now + $jishi * 3600;
+//						$good['end_time'] =  date('y-m-d-H-i-s', $end_time);
+//					} else {
+//						$good['end_time'] = null;
+//					}
+//				}
+//			}
+//
+//			if($mdb->save($good)) {
+//				add_renci($data['count']);
+//				return 0;
+//			}
+//			
+//			return 206; // 保存主表失败
 		}
 		return 207; // 增加秒杀记录失败
 	}

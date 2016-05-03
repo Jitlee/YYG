@@ -1,13 +1,28 @@
-<present name="data.prizer">
+<if condition="$data.prizeuid gt 0">
 	<div class="Pro_GetPrize">		
 		<div class="GetPrize">				    
 			<dl>
-				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.prizer.img}"></a></dt>
+				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.userimg}"></a></dt>
 				<dd class="gray02">
-					<p>恭喜 <a target="_blank" class="blue">{$data.prizer.username}</a>获得了本商品</p>
-					<p>揭晓时间：{$data.prizer.end_time}</p>
-					<p>购物时间：{$data.prizer.record_time}</p>
-					<p>幸运购物码：<em class="orange Fb">{$data['prizer']['prizecode']+10000001}</em></p>
+					<p>恭喜 <a target="_blank" class="blue">{$data.username}</a>获得了本商品</p>
+					<p>揭晓时间：{$data.end_time}</p>
+					<p>幸运购物码：<em class="orange Fb">{$data['prizecode']+10000001}</em></p>
+				</dd>
+			</dl>				
+		</div>
+	</div>
+	<div id="divBuy" class="Det_button">
+		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
+	</div>
+<elseif condition="$data.prizeid gt 0"/>
+	<div class="Pro_GetPrize">		
+		<div class="GetPrize">				    
+			<dl>
+				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.userimg}"></a></dt>
+				<dd class="gray02">
+					<p>很遗憾，本期没有幸运获得者</p>
+					<p>揭晓时间：{$data.end_time}</p>
+					<p>幸运购物码：<em class="orange Fb">{$data['prizecode']+10000001}</em></p>
 				</dd>
 			</dl>				
 		</div>
@@ -19,4 +34,4 @@
 <div class="Immediate">
 	<span style="left:10px;right:0px;">很遗憾，本期没有人参与</span>
 </div>
-</present>
+</if>

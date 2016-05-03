@@ -367,8 +367,12 @@
 			       			$("p", item).text(this.title);
 			       			$(".qishu", item).text(this.qishu);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
-			       			$("time", item).attr("countdown", new Date(this.end_time).getTime());
-		       			} else if(this.status == 2 && this.prizer) {
+			       			if(this.shengyurenshu == 0) {
+			       				$("time", item).parent().html("正在开奖计算中...");
+			       			} else {
+			       				$("time", item).attr("countdown", new Date(this.end_time).getTime());
+			       			}
+		       			} else if(this.status == 2) {
 		       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 			       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
 			       			$(".qishu", item).text(this.qishu);
@@ -376,16 +380,21 @@
 			       			$("p", item).text(this.title);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
 			       			$("span.end_time", item).text(this.end_time);
-			       			$("r.canyurenshu", item).text(this.prizer.count);
-			       			$(".user", item).text(this.prizer.username);
-		       			} else if(this.status == 2) {
+			       			if(this.username) {
+				       			$("r.canyurenshu", item).text(this.prizecount);
+				       			$(".user", item).text(this.username);
+			       			} else {
+			       				$("r.canyurenshu", item).text(0);
+			       				$(".user", item).text("本期没有幸运获得者");
+			       			}
+		       			}/* else if(this.status == 2) {
 		       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");
 			       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
 			       			$(".qishu", item).text(this.qishu);
 			       			$("img", item).attr("src", this.thumb);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
 			       			$("p", item).text(this.title);
-		       			}
+		       			}*/
 		       			
 		       			goodList.append(item);
 		       		});

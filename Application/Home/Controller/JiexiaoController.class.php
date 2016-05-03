@@ -4,7 +4,7 @@ use Think\Controller;
 class JiexiaoController extends Controller {
 	
 	public function index(){
-		run_task();
+//		run_task();
     		$this->assign('title', '即将揭晓');
 		$this->assign('pid', 'jiexiao');
 		$this->assign('tabId', 1);
@@ -12,7 +12,7 @@ class JiexiaoController extends Controller {
     }
 	
 	public function history() {
-		run_task();
+//		run_task();
     		$this->assign('title', '最新揭晓');
 		$this->assign('pid', 'jiexiao');
 		$this->assign('tabId', 2);
@@ -52,36 +52,46 @@ class JiexiaoController extends Controller {
 		
 //		$filter['status'] = array('elt', 2);
 		
-		$list = $db->where($filter)
-			->order('status asc,'. $order)
-			->page($pageNum, $pageSize)
-			->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, end_time,prizeuid,prizecode')->select();
+		if($tabId == 1) {
+			$list = $db->where($filter)
+				->order('status asc,'. $order)
+				->page($pageNum, $pageSize)
+				->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, date_add(`time`,interval -jishijiexiao hour) end_time, goumaicishu')->select();
+		} else {
+			$list = $db
+				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
+				->where($filter)
+				->order('end_time desc, gid desc, qishu desc')
+				->page($pageNum, $pageSize)->select();
+		}
 //		echo $db->getLastSql();
 		
-		if(!empty($list)) {
-			$udb = M('member');
-			$mhdb = M('MemberMiaosha');
-			
-			foreach($list as $key => $data) {
-//					echo $key;
-//					echo dump($data);
-				if(!empty($data['prizeuid'])) {
-					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
-					$list[$key]['prizer'] = $user;
-					
-					if(empty($user['username'])) {
-						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
-					}
-					
-					// 获取用户当期购买数量
-					$mhmap['uid'] = $data['prizeuid'];
-					$mhmap['gid'] = $data['gid'];
-					$mhmap['qishu'] = $data['qishu'];
-					$count = $mhdb->where($mhmap)->sum('count');
-					$list[$key]['prizer']['count'] = $count;
-				}
-			}
-		}
+//		if(!empty($list)) {
+//			$udb = M('member');
+//			$mhdb = M('MemberMiaosha');
+//			
+//			foreach($list as $key => $data) {
+////					echo $key;
+////					echo dump($data);
+//				if(!empty($data['prizeuid'])) {
+//					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
+//					$list[$key]['prizer'] = $user;
+//					
+//					if(empty($user['username'])) {
+//						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
+//					}
+//					
+//					// 获取用户当期购买数量
+//					$mhmap['uid'] = $data['prizeuid'];
+//					$mhmap['gid'] = $data['gid'];
+//					$mhmap['qishu'] = $data['qishu'];
+//					$count = $mhdb->where($mhmap)->sum('count');
+//					$list[$key]['prizer']['count'] = $count;
+//				}
+//			}
+//		}
 //		echo dump($list);
 		$this->ajaxReturn($list, "JSON");
 	}

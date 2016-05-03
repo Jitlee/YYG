@@ -14,7 +14,7 @@
 </if>
 
  <!-- 限时揭晓 -->
-<present name="data.end_time">
+<if condition="data.jieshijiexiao gt 0">
 	<div id="divAutoRTime" class="Immediate">
 	    <span><a class="orange" target="_blank" href="#">限时揭晓的规则？</a></span>
 	     <i id="timeall" endtime="{$data.end_time}" lxfday="no"></i>		                           
@@ -49,17 +49,17 @@
 		}							
   	}			  
  	$(function(){
- 		lxfEndtime($("#timeall"),{$serverTime}000);
+ 			lxfEndtime($("#timeall"),{$serverTime}000);
  	});
 </script>
-</present>		
+</if>		
 <!-- 限时揭晓end -->
 
 <p class="Pro_Detsingle" style="font-size:14px;">购物价格：¥<b style="color:#999;">{$data.danjia}</b></p>
 <if condition="$data.xiangou gt 0">
 <p class="Pro_Detsingle" style="font-size:14px;">限购次数：<b style="color:#999;">{$data.xiangou}</b>人次</p>
 </if>
-<div id="divNumber" class="Pro_number">
+<div id="divNumber"	 class="Pro_number">
 	我要购物 
 	<a href="javascript:void(0);" class="num_del" id="shopsub">-</a>
 	<input style="border:1px solid #CFCFCF" type="text" value="1" maxlength="7" onKeyUp="value=value.replace(/\D/g,'')" class="num_dig" id="num_dig"/>

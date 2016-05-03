@@ -3,7 +3,7 @@ namespace P\Controller;
 use Think\Controller;
 class PaimaiController extends CommonController {
     public function index($cid = 0, $pageNo = 1){
-		run_task();
+//		run_task();
 		$this->assign('title', '拍卖专区');
 		$this->assign('pid', 'paimai');
 		
