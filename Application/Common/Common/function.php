@@ -287,22 +287,22 @@ function finish_jiexiao() {
 			$endTime = $good['end_time'];
 			
 			// 计算中奖结果
-			$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) FROM yyg_member_miaosha ORDER BY `time` DESC LIMIT 100';
+			$sql = 'SELECT SUM(HOUR(TIME)+MINUTE(TIME)+SECOND(TIME)+MICROSECOND(TIME)) code FROM yyg_member_miaosha ORDER BY `time` DESC LIMIT 100';
 			$query = $mdb->query($sql);
 			$prize = 0;
 			$prizeuid = 0;
 			if(!empty($query)) {
-				$prizeindex = intval($query[0]) % $good['canyurenshu'];
+				$prizeindex = intval($query[0]['code']) % $good['canyurenshu'];
 //				$prizeindex = intval($query[0]) % $good['zongrenshu'];
 				
 				// 查找中奖用户
 				$cdb = M('MiaoshaCode');
 				$cmap['gid'] = $good['gid'];
 				$cmap['qishu'] = $good['qishu'];
-				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->find();
-				if($presult) {
-					$prizeuid = $presult['uid'];
-					$prize = $presult['pcode'];
+				$presult = $cdb->field('uid, pcode')->where($cmap)->page($prizeindex + 1, 1)->select();
+				if($presult && $presult[0]) {
+					$prizeuid = $presult[0]['uid'];
+					$prize = $presult[0]['pcode'];
 				}
 			}
 			

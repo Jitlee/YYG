@@ -58,7 +58,7 @@ class JiexiaoController extends Controller {
 			->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, end_time,prizeuid,prizecode')->select();
 //		echo $db->getLastSql();
 		
-		if(!empty($list) && $tabId == 2) {
+		if(!empty($list)) {
 			$udb = M('member');
 			$mhdb = M('MemberMiaosha');
 			
