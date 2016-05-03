@@ -49,7 +49,13 @@ public function login() {
 			$this->ajaxReturn($result);
 		} else  {
 			$openid=get_user_open_id();
-			echo $openid;
+			if(!empty($openid))
+			{
+				if(home_is_login()) {
+					$this->redirect('Person/me');
+					return;
+				}
+			}
 			layout(false);
 			$this->assign('redirect', $mobile);
 			$this->display();

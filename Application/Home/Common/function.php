@@ -38,6 +38,8 @@ function home_is_login() {
 		$admin = $db->where($data)->find();
 		if(!$admin)
 			return 0;
+		
+		session("_uid", $admin['uid']);
 		session('wxUserinfo',$admin);
 	} else {
 		define('UID', $admin['uid']);
