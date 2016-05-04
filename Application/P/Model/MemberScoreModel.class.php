@@ -100,7 +100,7 @@ class MemberScoreModel extends Model{
 	public  function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,end_time')->find($gid);
+			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,time end_time')->find($gid);
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');

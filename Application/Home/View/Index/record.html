@@ -73,10 +73,10 @@
 		}
 		
 		var recrodList = $("#recrodList");
-		var template = $("li:first-child", recrodList);
+		var template = $("tr:first-child", recrodList);
 		
 		function page() {
-			$.get("{:U('record', '', '')}/{$gid}/" + pageNum, null, function(list) {
+			$.get("{:U('record', '', '')}/{$qishu}/{$gid}/" + pageNum, null, function(list) {
 				if(list && list.length > 0) {
 					++pageNum;
 		       		$.each(list, function() {
