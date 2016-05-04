@@ -53,15 +53,17 @@
 			
 <script type="text/javascript">
 	$(function(){
-		
-		$(document).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-				pageAll();
-			}
-		}		
+//		
+//		$(document).bind("scroll", onscrollend);
+//		
+//		function onscrollend() {
+//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+//     			console.info("滚动到底了");
+//				pageAll();
+//			}
+//		}		
+
+		window.onScrollEnd(pageAll);
 		// 全部商品翻页
 		var pageNum = 1;
 		var goodList = $("#GoodsList");

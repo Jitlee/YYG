@@ -46,10 +46,13 @@ class IndexController extends Controller {
 		}
 		
 		$type = I("get.type");
-		$order = 'time desc';
+		$order = 'gid desc';
 		switch($type) {
+			case 2:
+				$order = "time desc,".$order;
+				break;
 			case 3:
-				$order = "shengyurenshu desc,".$order;
+				$order = "shengyurenshu asc,".$order;
 				break;
 			case 4: // 总需人数
 				$order = "zongrenshu desc,".$order;
@@ -83,35 +86,18 @@ class IndexController extends Controller {
 		$data['percentage'] = min(100, intval($data['canyurenshu'])*100/ intval($data['zongrenshu']));
 		$this->assign('data', $data);
 		
+		$db = M('miaosha');
+		$current = $db->field('qishu, status')->find($gid);
+		$this->assign('current', $current);
+		
+//		echo dump($data);
+		
 		$data['status'] = intval($data['status']);
 		$data['qishu'] = intval($data['qishu']);
 		$data['maxqishu'] = intval($data['maxqishu']);
-		$qishuArray = array();
 		if($data['status'] == 2) {
-			// 下一期
-			if($data['qishu'] < $data['maxqishu']) {
-				array_push($qishuArray, array(
-					'qishu'		=> $data['qishu'] + 1,
-					'gid'		=> $data['gid'],
-				));
-			}
 			
-			// 当期
-			array_push($qishuArray, array(
-				'qishu'		=> $data['qishu'],
-				'gid'		=> $data['gid'],
-				'active'		=> true,
-			));
-			
-			// 上一期
-			if($data['qishu'] > 1) {
-				array_push($qishuArray, array(
-					'qishu'		=> $data['qishu'] - 1,
-					'gid'		=> $data['gid'],
-				));
-			}
 		} else {
-			
 			$imgdb = M('GoodsImages');
 			$imgmap['gid'] = $gid;
 			$imgmap['type'] = $data['type'];
@@ -121,31 +107,8 @@ class IndexController extends Controller {
 				array_push($images, $image);
 			}
 			$this->assign('images', $images);
-		
-			// 当期
-			array_push($qishuArray, array(
-				'qishu'		=> $data['qishu'],
-				'gid'		=> $data['gid'],
-				'active'		=> true,
-			));
-			
-			// 上一期
-			if($data['qishu'] > 1) {
-				array_push($qishuArray, array(
-					'qishu'		=> $data['qishu'] - 1,
-					'gid'		=> $data['gid'],
-				));
-			}
-			
-			// 上上期
-			if($data['qishu'] > 2) {
-				array_push($qishuArray, array(
-					'qishu'		=> $data['qishu'] - 2,
-					'gid'		=> $data['gid'],
-				));
-			}
 		}
-		$this->assign('periods', $qishuArray);
+//		$this->assign('periods', $qishuArray);
 		
 		if($data['status'] == 2) {
 			$this->display('end');
@@ -157,42 +120,27 @@ class IndexController extends Controller {
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			return $db->field('gid,title,subtitle,thumb,money,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,date_add(`time`,interval -jishijiexiao hour) end_time')->find($gid);
+			$goods = $db->field('gid,title,subtitle,thumb,money, goumaicishu,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time')->find($gid);
+			
+//			echo $db->getLastSql();
+			if((int)$goods['status'] == 2) {
+				return $this->getGood($gid, (int)$goods['qishu']);
+			}
+			return $goods;
 		} else {
 			// 历史
 			$db = M('MiaoshaHistory');
 			$map['gid'] = $gid;
 			$map['qishu'] = $qishu;
 			$data = $db
-				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
 					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
 			->where($map)->find();
-			if(empty($data)) {
-				return $this->getGood($gid);
-			}
 			
-			// 获取当情期
-			$mdb = M('miaosha');
-			$mmap['gid'] = $gid;
-			$mmap['status'] = array('lt', 2);
-			$current = $mdb->field('qishu')->where($mmap)->find();
-			$data['current'] = $current['qishu'];
-//			
-//			// 获取当前中奖用户
-//			if($data['prizeuid']) {
-//				$udb = M('member');
-//				$user = $udb->field(array('uid','IFNULL(NULLIF(username, \'\'), INSERT(mobile,4,4,\'****\'))'  => 'username', 'img'))->find($data['prizeuid']);
-//				$data['prizer'] = $user;
-//				
-//				// 获取用户当期购买数量
-//				$mhdb = M('MiaoshaCode');
-//				$mhmap['uid'] = $data['prizeuid'];
-//				$mhmap['gid'] = $data['gid'];
-//				$mhmap['qishu'] = $data['qishu'];
-//				$count = $mhdb->where($mhmap)->count();
-//				$data['prizer']['count'] = $count;
-//			}
+			if(empty($data)) {
+				return $this->getGood($gid, null);
+			}
 			
 			return $data;
 		}

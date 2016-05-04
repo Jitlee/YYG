@@ -1,8 +1,26 @@
 <div class="yyg-qishu">
 	<ul class="yyg-qishu-view">
-		<foreach name="periods" item="item">
-		<a class="yyg-qishu-item <present name="item.active">yyg-active</present>" <notpresent name="item.active">href="{:U('view','','')}/{$item.gid}/{$item.qishu}"</notpresent> >第{$item.qishu}期</a>
-		</foreach>
+		<if condition="$current['qishu'] eq $data['qishu']">
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+			<if condition="$data['qishu'] gt 1">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
+			</if>
+			<if condition="$data['qishu'] gt 2">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 2}">第{$data['qishu'] - 2}期</a>
+			</if>
+		<elseif condition="$data['qishu'] eq 1"/>
+			<if condition="$data['qishu'] + 2 elt $current['qishu']">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 2}">第{$data['qishu'] + 2}期</a>
+			</if>
+			<if condition="$data['qishu'] + 1 elt $current['qishu']">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
+			</if>
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+		<else/>
+			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
+		</if>
 	</ul>
 	<!--<a class="yyg-qishu-all">+</a>-->
 </div>
@@ -50,7 +68,7 @@
 </div>
 
 <ul class="mui-table-view yyg-margin20">
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.canyurenshu})</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.goumaicishu})</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 </ul>

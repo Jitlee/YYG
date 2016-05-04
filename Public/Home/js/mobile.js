@@ -86,3 +86,29 @@ $(function(){
 	
 	
 });
+
+
+	
+	/**
+	 * body滚动到底部时触发 
+	 * @param {Function} callback 回调函数
+	 * @param {Number} threshold 阀值，默认为200
+	 * @return {Object} 句柄
+	 */
+	window.onScrollEnd = function(callback, threshold) {
+		var threshold = threshold || 200;
+		var timeHandler = null;
+		var onscrollend = function() {
+			if ($(window).scrollTop() + $(window).height() + threshold > $(document).height()) {
+				console.info("滚动到了底部");
+				window.clearTimeout(timeHandler);
+       			timeHandler = window.setTimeout(callback, 300);
+			}
+		}
+		$(document).bind("scroll", onscrollend);
+		return {
+			destory: function() {
+				$(document).unbind("scroll", onscrollend);
+			}
+		};
+	}

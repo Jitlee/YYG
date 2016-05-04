@@ -297,7 +297,7 @@
 				<p class="tuijian-content-title"></p>
 				<h4>获得者：<span class="user">希望下次一定中</span></h4>
 				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5>本期参与：<r class="canyurenshu"></r> 人次</h5>
+				<h5><span class="benqi">本期参与</span>：<r class="canyurenshu"></r> 人次</h5>
 				<h5>揭晓时间：<span class="end_time"></span></h5>
 			</div>
 		</section>
@@ -324,14 +324,15 @@
 <script type="text/javascript">
 	$(function(){
 		
-		$(document).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-				pageAll();
-			}
-		}
+//		$(document).bind("scroll", onscrollend);
+//		
+//		function onscrollend() {
+//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+//     			console.info("滚动到底了");
+//				pageAll();
+//			}
+//		}
+		window.onScrollEnd(pageAll);
 		
 		// 全部商品翻页
 		var pageNum = 1;
@@ -382,8 +383,9 @@
 				       			$("r.canyurenshu", item).text(this.prizecount);
 				       			$(".user", item).text(this.username);
 			       			} else {
-			       				$("r.canyurenshu", item).text(0);
-			       				$(".user", item).text("本期没有幸运获得者");
+			       				$("r.canyurenshu", item).text(this.shengyurenshu);
+			       				$(".benqi", item).text("本期剩余");
+			       				$(".user", item).parent().text("本期没有幸运获得者");
 			       			}
 		       			}
 		       			

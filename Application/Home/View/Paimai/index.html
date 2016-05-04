@@ -65,20 +65,22 @@
 <script>
 	$(function() {
 		var pageNum = 1;
-		var goodList = $("#goodList").swipe({
-			swipeUp: onscrollend,
-			threshold: 100,
-			allowPageScroll: "vertical"
-		});
+//		var goodList = $("#goodList").swipe({
+//			swipeUp: onscrollend,
+//			threshold: 100,
+//			allowPageScroll: "vertical"
+//		});
+//		
+//		$(window).bind("scroll", onscrollend);
+//		
+//		function onscrollend() {
+//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+//     			console.info("滚动到底了");
+//     			page();
+//			}
+//		}
 		
-		$(window).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-       			page();
-			}
-		}
+		window.onScrollEnd(page);
 		
 		var goodTemplate = $("#goodTemplate");
 		var endTemplate = $("#endTemplate");

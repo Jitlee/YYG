@@ -299,7 +299,7 @@
 				<p class="tuijian-content-title"></p>
 				<h4>获得者：<span class="user">希望下次一定中</span></h4>
 				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5>本期参与：<r class="canyurenshu"></r> 人次</h5>
+				<h5><span class="benqi">本期参与</span>：<r class="canyurenshu"></r> 人次</h5>
 				<h5>揭晓时间：<span class="end_time"></span></h5>
 			</div>
 		</section>
@@ -326,14 +326,16 @@
 <script type="text/javascript">
 	$(function(){
 		
-		$(document).bind("scroll", onscrollend);
-		
-		function onscrollend() {
-			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-       			console.info("滚动到底了");
-				pageAll();
-			}
-		}
+//		$(document).bind("scroll", onscrollend);
+//		
+//		function onscrollend() {
+//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+//     			console.info("滚动到底了");
+//				pageAll();
+//			}
+//		}
+
+		window.onScrollEnd(pageAll);
 		
 		// 全部商品翻页
 		var pageNum = 1;
@@ -370,7 +372,7 @@
 			       			if(this.shengyurenshu == 0) {
 			       				$("time", item).parent().html("正在开奖计算中...");
 			       			} else {
-			       				$("time", item).attr("countdown", new Date(this.end_time).getTime());
+			       				$("time", item).attr("countdown", new Date(Number(this.end_time)).getTime());
 			       			}
 		       			} else if(this.status == 2) {
 		       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
@@ -379,13 +381,14 @@
 			       			$("img", item).attr("src", this.thumb);
 			       			$("p", item).text(this.title);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
-			       			$("span.end_time", item).text(this.end_time);
+			       			$("span.end_time", item).text(this.endtime || this.endTime);
 			       			if(this.username) {
 				       			$("r.canyurenshu", item).text(this.prizecount);
 				       			$(".user", item).text(this.username);
 			       			} else {
-			       				$("r.canyurenshu", item).text(0);
-			       				$(".user", item).text("本期没有幸运获得者");
+			       				$("r.canyurenshu", item).text(this.shengyurenshu);
+			       				$(".benqi", item).text("本期剩余");
+			       				$(".user", item).parent().text("本期没有幸运获得者");
 			       			}
 		       			}/* else if(this.status == 2) {
 		       				var item = emptyTemplate.clone().removeClass("mui-hidden").removeAttr("id");

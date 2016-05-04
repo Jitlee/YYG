@@ -115,12 +115,12 @@ class IndexController extends CommonController {
 	private function getGood($gid, $qishu = null) {
 		if($qishu == null) {
 			$db = M('miaosha');
-			$data = $db->field('gid,title,subtitle,thumb,money,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,date_add(`time`,interval -jishijiexiao hour) end_time,content')->find($gid);
+			$data = $db->field('gid,title,subtitle,thumb,money, goumaicishu,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000,content')->find($gid);
 			$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
-			if((int)$data['status'] == 2) {
-				$data['current'] = 0;
-			}
 			$qishu = intval($data['qishu']);
+			if((int)$data['status'] == 2) {
+				return $this->getGood($gid, $qishu);
+			}
 			// 上期获得者
 			if($qishu > 1) {
 				$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
@@ -139,13 +139,13 @@ class IndexController extends CommonController {
 				return $this->getGood($gid);
 			}
 			
-			// 获取当情期
-			$mdb = M('miaosha');
-			$mmap['gid'] = $gid;
-			$current = $mdb->field('qishu, status')->where($mmap)->find();
-//			echo dump($current);
-			$data['max'] = intval($current['qishu']);
-			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
+//			// 获取当情期
+//			$mdb = M('miaosha');
+//			$mmap['gid'] = $gid;
+//			$current = $mdb->field('qishu, status')->where($mmap)->find();
+////			echo dump($current);
+//			$data['max'] = intval($current['qishu']);
+//			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
 			
 //			// 获取当前中奖用户
 //			if($data['prizeuid']) {

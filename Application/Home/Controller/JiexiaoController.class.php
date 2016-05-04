@@ -26,27 +26,27 @@ class JiexiaoController extends Controller {
 		$tabId = intval(I('get.tabId')); // 1:即将揭晓，2最新揭晓
 		$db = $tabId == 1 ? M("Miaosha") : M("MiaoshaHistory");
 		
-		$filter = $tabId == 1 ? array("jishijiexiao"=>array('gt', 0)) : array();
+		$filter = $tabId == 1 ? array("m.jishijiexiao"=>array('gt', 0)) : array();
 		
 		$cid = intval(I('get.cid'));
 		if($cid > 0) {
-			$filter['cid'] = $cid;
+			$filter['m..cid'] = $cid;
 		}
 		$type = I("get.type");
-		$order = 'time desc';
+		$order = 'm.gid desc';
 		
 		switch($type) {
+			case 2:
+				$order = "m.time desc,".$order;
+				break;
 			case 3:
-				$order = "shengyurenshu desc,".$order;
+				$order = "m.shengyurenshu asc,".$order;
 				break;
 			case 4: // 总需人数
-				$order = "zongrenshu desc,".$order;
-				break;
-			case 12:
-				$order = "end_time desc,".$order;
+				$order = "m.zongrenshu desc,".$order;
 				break;
 			default: // 人气
-				$order = "canyurenshu desc,".$order;
+				$order = "m.canyurenshu desc,".$order;
 				break;
 		}
 		
@@ -56,10 +56,18 @@ class JiexiaoController extends Controller {
 			$list = $db->where($filter)
 				->order('status asc,'. $order)
 				->page($pageNum, $pageSize)
-				->field('gid,title,qishu,thumb,money,danjia,status, canyurenshu, date_add(`time`,interval -jishijiexiao hour) end_time, goumaicishu')->select();
+				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia,m.status, m.shengyurenshu, m.canyurenshu, 
+					UNIX_TIMESTAMP(date_add(m.`time`,interval +m.jishijiexiao hour)) * 1000 end_time, m.goumaicishu
+					, mh.end_time endTime
+					, prizeid, prizeuid, prizecode, prizecount,
+					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				->join('m inner join __MIAOSHA_HISTORY__ mh on m.qishu=mh.qishu and m.gid=mh.gid')
+				->join("left join __MEMBER__ u on u.uid = mh.prizeuid")
+				->where($filter)
+				->select();
 		} else {
 			$list = $db
-				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
 					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
 				->where($filter)

@@ -61,11 +61,28 @@
 
 <div class="yyg-qishu">
 	<ul class="yyg-qishu-view">
-		<foreach name="periods" item="item">
-		<a class="yyg-qishu-item <present name="item.active">yyg-active</present>" <notpresent name="item.active">href="{:U('view','','')}/{$item.gid}/{$item.qishu}"</notpresent> >第{$item.qishu}期</a>
-		</foreach>
+		<if condition="$current['qishu'] eq $data['qishu']">
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+			<if condition="$data['qishu'] gt 1">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
+			</if>
+			<if condition="$data['qishu'] gt 2">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 2}">第{$data['qishu'] - 2}期</a>
+			</if>
+		<elseif condition="$data['qishu'] eq 1"/>
+			<if condition="$data['qishu'] + 2 elt $current['qishu']">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 2}">第{$data['qishu'] + 2}期</a>
+			</if>
+			<if condition="$data['qishu'] + 1 elt $current['qishu']">
+				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
+			</if>
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+		<else/>
+			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
+			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
+			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
+		</if>
 	</ul>
-	<!--<a class="yyg-qishu-all">+</a>-->
 </div>
 
 <div class="yyg-body">
@@ -96,7 +113,7 @@
 				很遗憾，本期没有幸运获得者
 			</a>
 		</div>
-	<elseif/>
+	<else/>
 		<div id="emptyBlock" class="yyg-prize">
 			<i class="iconfont icon-yihan"></i>
 			<br/>
@@ -129,15 +146,15 @@
 <footer class="yyg-footer">
 	<div class="yyg-footer-block">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.go(-1)"><i class="mui-icon mui-icon-back"></i></a>
-		<present name="data.current">
-			<a id="addCartButton" href="{:U('view','','')}/{$data.gid}/{$data.current}" class="yyg-btn yyg-btn-primary">
-				第{$data.current}期正在进行中...
+		<if condition="$current['status'] lt 2">
+			<a id="addCartButton" href="{:U('view','','')}/{$data.gid}/{$current.qishu}" class="yyg-btn yyg-btn-primary">
+				第{$current.qishu}期正在进行中...
 			</a>
 		<else /> 
 			<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
 				商品已经结束活动
 			</a>
-		</present> 
+		</if> 
 		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
