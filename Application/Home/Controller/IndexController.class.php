@@ -7,7 +7,7 @@ class IndexController extends Controller {
     	$this->assign('title', '壹圆购物');
 		$this->assign('pid', 'home');
 		//自动登录
-		home_is_login();
+		//home_is_login();
 		
 		$sdb = M('slide');
 		$slides = $sdb->select();

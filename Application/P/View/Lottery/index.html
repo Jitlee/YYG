@@ -19,10 +19,10 @@
 							<div class="publishC-Member gray02">
 								<if condition="$item.username neq null">
 									<a class="fl headimg" target="_blank" >
-										<php>if (!ereg('^http://', $item.img)) {</php>
-											<img src="__TIMG__/{$item.img}" border="0" alt="" width="50" height="50"/>
+										<php>if (!ereg('^http://', $item["userimg"])) {</php>
+											<img src="__TIMG__/{$item.userimg}" border="0" alt="" width="50" height="50"/>
 										<php>}else{</php>
-											<img src="{$item.img}" border="0" alt="" width="50" height="50"/>
+											<img src="{$item.userimg}" border="0" alt="" width="50" height="50"/>
 										<php>}</php>
 										
 									</a>
