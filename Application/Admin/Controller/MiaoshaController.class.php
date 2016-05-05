@@ -100,8 +100,8 @@ class MiaoshaController extends GoodsBaseController {
 			$jishi = intval($_POST['jishijiexiao']);
 			$money = floatval($_POST['money']);
 			$danjia = floatval($_POST['danjia']);
-			$_POST['zongrenshu'] = ceil($money / $danjia);
-			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
+//			$_POST['zongrenshu'] = ceil($money / $danjia);
+//			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
 			
 			$db = M('miaosha');
 			$data = $db->create();

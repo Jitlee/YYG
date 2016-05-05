@@ -61,7 +61,7 @@ class JiexiaoController extends Controller {
 					, mh.end_time endTime
 					, prizeid, prizeuid, prizecode, prizecount,
 					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
-				->join('m inner join __MIAOSHA_HISTORY__ mh on m.qishu=mh.qishu and m.gid=mh.gid')
+				->join('m left join __MIAOSHA_HISTORY__ mh on m.qishu=mh.qishu and m.gid=mh.gid')
 				->join("left join __MEMBER__ u on u.uid = mh.prizeuid")
 				->where($filter)
 				->select();
