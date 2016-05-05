@@ -139,18 +139,18 @@ class IndexController extends CommonController {
 				return $this->getGood($gid);
 			}
 			
-//			// 获取当情期
-//			$mdb = M('miaosha');
-//			$mmap['gid'] = $gid;
-//			$current = $mdb->field('qishu, status')->where($mmap)->find();
-////			echo dump($current);
-//			$data['max'] = intval($current['qishu']);
-//			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
+			// 获取当情期
+			$mdb = M('miaosha');
+			$mmap['gid'] = $gid;
+			$current = $mdb->field('qishu, status')->where($mmap)->find();
+//			echo dump($current);
+			$data['max'] = intval($current['qishu']);
+			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
 			
-//			// 获取当前中奖用户
-//			if($data['prizeuid']) {
-//				$data['prizer'] = $this->getPrizer($gid, $qishu);
-//			}
+			// 获取当前中奖用户
+			if($data['prizeuid']) {
+				$data['prizer'] = $this->getPrizer($gid, $qishu);
+			}
 			
 			return $data;
 		}
