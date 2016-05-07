@@ -369,7 +369,7 @@
 			       			$("p", item).text(this.title);
 			       			$(".qishu", item).text(this.qishu);
 			       			$("span.money", item).text(Number(this.money).toFixed(2));
-			       			if(this.shengyurenshu == 0) {
+			       			if(this.shengyurenshu == 0 || (Number(this.jishijiexiao) > 0 && Number(this.end_time) <= Number(this.now) )) {
 			       				$("time", item).parent().html("正在开奖计算中...");
 			       			} else {
 			       				$("time", item).attr("countdown", new Date(Number(this.end_time)).getTime());
@@ -487,5 +487,9 @@
 			$("span", buttonCategoy).text($this.text());
 			window.removeEventListener("click", onclosecategory);
 		}
+		
+//		window.setInterval(function() {
+//			pageAll(true);
+//		}, 15 * 1000);
 	});
 </script>

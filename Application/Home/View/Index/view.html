@@ -40,11 +40,7 @@
 	<p class="yyg-view-title yyg-view-margin">
 		(第{$data.qishu}期) {$data.title} <r>{$data.subtitle}</r>
 	</p>
-	<if condition="$data.shengyurenshu eq 0">
-		<r class="yyg-view-title yyg-view-margin">
-			正在开奖计算中，请稍后...
-		</r>
-	</if>
+	
 	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger">{$data.money}</r></h5>
 	<if condition="$data.xiangou gt 0">
 		<h5 class="yyg-view-margin">限购：{$data.xiangou} 人次</h5>
@@ -66,14 +62,28 @@
 		</div>
 	</div>
 </div>
-
+	<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
+		<ul class="mui-table-view yyg-margin20"><li class="mui-table-view-cell">
+		<r class="yyg-view-title yyg-view-margin">
+			正在开奖计算中，请稍后...
+		</r>
+		</li></li></ul>
+	<elseif condition="(int)$data['jishijiexiao'] gt 0"/>
+		<ul class="mui-table-view yyg-margin20"><li class="mui-table-view-cell">
+		<span class="yyg-view-title yyg-view-margin">
+			剩余时间：<time countdown="{$data.end_time}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
+		</span>
+		</li></li></ul>
+	</if>
+	
 <ul class="mui-table-view yyg-margin20">
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.goumaicishu})</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 </ul>
 
-<if condition="$data.shengyurenshu neq 0">
+<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
+<elseif condition="$data.shengyurenshu neq 0"/>
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.go(-1)"><i class="mui-icon mui-icon-back"></i></a>
@@ -88,15 +98,26 @@
 
 <script type="text/javascript">
 	$(function() {
-		$("#addCartButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-				new Android_Toast({content: result.message});
-			})
-		});
-		$("#lijiButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-				window.location.href = "{:U('Cart/index', '','')}";
-			})
-		});
+		<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
+			window.setInterval(function() {
+				window.location.reload();
+			}, 60 * 1000);
+		<elseif condition="$data.shengyurenshu neq 0"/>
+			var time = {$data.end_time} - {$data.now} + 10*1000;
+			window.setInterval(function() {
+				window.location.reload();
+			}, time);
+			
+			$("#addCartButton").click(function() {
+				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+					new Android_Toast({content: result.message});
+				})
+			});
+			$("#lijiButton").click(function() {
+				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+					window.location.href = "{:U('Cart/index', '','')}";
+				})
+			});
+		</if>
 	});
 </script>

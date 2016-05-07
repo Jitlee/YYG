@@ -100,6 +100,13 @@
 //				show_date_time((new Date().getTime())+(parseInt(sdata))*1000,null);
 //			}
 //		});
-		show_date_time({$data.end_time|strtotime} * 1000, null);
+		<if condition="$data.jieshijiexiao gt 0">
+		show_date_time({$data.end_time} + 180 * 1000, null);
+		<else/>
+		show_date_time({$data.now}, null);
+		</if>
+		window.setTimeout(function() {
+			window.location.reload();
+		}, 60 * 1000);
 	});
 </script>

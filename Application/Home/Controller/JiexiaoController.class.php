@@ -56,7 +56,7 @@ class JiexiaoController extends Controller {
 			$list = $db->where($filter)
 				->order('status asc,'. $order)
 				->page($pageNum, $pageSize)
-				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia,m.status, m.shengyurenshu, m.canyurenshu, 
+				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia,m.status, m.shengyurenshu, m.canyurenshu, m.jishijiexiao,UNIX_TIMESTAMP() * 1000 now,
 					UNIX_TIMESTAMP(date_add(m.`time`,interval +m.jishijiexiao hour)) * 1000 end_time, m.goumaicishu
 					, mh.end_time endTime
 					, prizeid, prizeuid, prizecode, prizecount,

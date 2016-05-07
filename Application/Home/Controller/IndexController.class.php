@@ -120,7 +120,7 @@ class IndexController extends Controller {
 	private function getGood($gid, $qishu = null) {
 		if(!$qishu) {
 			$db = M('miaosha');
-			$goods = $db->field('gid,title,subtitle,thumb,money, goumaicishu,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time')->find($gid);
+			$goods = $db->field('gid,title,subtitle,thumb,money, jishijiexiao, UNIX_TIMESTAMP() * 1000 now, goumaicishu,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time')->find($gid);
 			
 //			echo $db->getLastSql();
 			if((int)$goods['status'] == 2) {

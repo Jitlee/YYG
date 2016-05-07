@@ -57,7 +57,9 @@ class IndexController extends CommonController {
 			$this->assign('records', $records);
 		}
 		
-		$jijiagns = $gdb->where('status <> 2 and jishijiexiao>0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
+		$jijiagns = $gdb->where('status <> 2 and jishijiexiao>0')->order('time desc')
+			->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
+//		echo $gdb->getLastSql();
 		$this->assign('jijiagns', $jijiagns);
 		$this->display();
     }
@@ -115,7 +117,7 @@ class IndexController extends CommonController {
 	private function getGood($gid, $qishu = null) {
 		if($qishu == null) {
 			$db = M('miaosha');
-			$data = $db->field('gid,title,subtitle,thumb,money, goumaicishu,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000,content')->find($gid);
+			$data = $db->field('gid,title,subtitle,thumb,money, goumaicishu,jishijiexiao,UNIX_TIMESTAMP() * 1000 now,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time,content')->find($gid);
 			$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
 			$qishu = intval($data['qishu']);
 			if((int)$data['status'] == 2) {

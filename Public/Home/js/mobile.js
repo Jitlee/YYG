@@ -22,11 +22,12 @@ $(function(){
 		window.clearInterval(countHandler);
 		scrollHandler = window.setTimeout(function() {
 			countdowns.length = 0;
-			var wTop = $(window).scrollTop();
 			var wHeight = $(window).height();
 			$("time").each(function() {
-				var top = this.offsetTop;
-                if (top >= wTop && top < (wTop + wHeight)) {
+				var rect = this.getBoundingClientRect();
+				var top = rect.top;
+				var bottom = rect.bottom;
+                if (bottom > 0 && top < wHeight) {
                 		if(typeof this.countdown != "number") {
 						this.countdown = Number(this.getAttribute("countdown"));
 						if(!(this.countdown > 0)) {
@@ -50,34 +51,47 @@ $(function(){
 		var now = new Date().getTime();
 		$.each(countdowns, function(){
 			var time = this.countdown - now;
-			var _hours = Math.min(Math.floor(time / 1000 / 3600), 99);
-			var _muintes = Math.floor(time /1000 / 60) % 60;
-			var _seconds = Math.floor(time/1000)%60;
-			var _milliseconds = time%1000;
-			if(this.digits && this.digits.length > 0) {
-				hours = _hours > 9 ? String(_hours) : "0" + _hours;
-				muintes = _muintes > 9 ? String(_muintes) : "0" + _muintes;
-				seconds = _seconds > 9 ? String(_seconds) : "0" + _seconds;
-				milliseconds = _milliseconds > 9 ? String(_milliseconds) : "0" + _milliseconds;
-				if(hours > 1) {
-					this.digits[0].innerHTML = hours[0];
-					this.digits[1].innerHTML = hours[1];
-					this.digits[2].innerHTML = muintes[0];
-					this.digits[3].innerHTML = muintes[1];
-					this.digits[4].innerHTML = seconds[0];
-					this.digits[5].innerHTML = seconds[1];
+			if(time > 0) {
+				var _hours = Math.min(Math.floor(time / 1000 / 3600), 99);
+				var _muintes = Math.floor(time /1000 / 60) % 60;
+				var _seconds = Math.floor(time/1000)%60;
+				var _milliseconds = time%1000;
+				if(this.digits && this.digits.length > 0) {
+					hours = _hours > 9 ? String(_hours) : "0" + _hours;
+					muintes = _muintes > 9 ? String(_muintes) : "0" + _muintes;
+					seconds = _seconds > 9 ? String(_seconds) : "0" + _seconds;
+					milliseconds = _milliseconds > 9 ? String(_milliseconds) : "0" + _milliseconds;
+					if(hours > 1) {
+						this.digits[0].innerHTML = hours[0];
+						this.digits[1].innerHTML = hours[1];
+						this.digits[2].innerHTML = muintes[0];
+						this.digits[3].innerHTML = muintes[1];
+						this.digits[4].innerHTML = seconds[0];
+						this.digits[5].innerHTML = seconds[1];
+					} else {
+						this.digits[0].innerHTML = muintes[0];
+						this.digits[1].innerHTML = muintes[1];
+						this.digits[2].innerHTML = seconds[0];
+						this.digits[3].innerHTML = seconds[1];
+						this.digits[4].innerHTML = milliseconds[0];
+						this.digits[5].innerHTML = milliseconds[1];
+					}
 				} else {
-					this.digits[0].innerHTML = muintes[0];
-					this.digits[1].innerHTML = muintes[1];
-					this.digits[2].innerHTML = seconds[0];
-					this.digits[3].innerHTML = seconds[1];
-					this.digits[4].innerHTML = milliseconds[0];
-					this.digits[5].innerHTML = milliseconds[1];
+					var _days = Math.floor(time / 24 / 1000 / 3600);
+					var _hours = Math.floor(time / 1000 / 3600) % 24;
+					this.innerHTML = [_days, "天", _hours, "小时", _muintes, "分", _seconds, "秒", _milliseconds].join("");
 				}
 			} else {
-				var _days = Math.floor(time / 24 / 1000 / 3600);
-				var _hours = Math.floor(time / 1000 / 3600) % 24;
-				this.innerHTML = [_days, "天", _hours, "小时", _muintes, "分", _seconds, "秒", _milliseconds].join("");
+				if(this.digits && this.digits.length > 0) {
+					this.digits[0].innerHTML = "0";
+					this.digits[1].innerHTML = "0";
+					this.digits[2].innerHTML = "0";
+					this.digits[3].innerHTML = "0";
+					this.digits[4].innerHTML = "0";
+					this.digits[5].innerHTML = "0";
+				} else {
+					this.innerHTML = "00:00:00";
+				}
 			}
 		});
 	}
