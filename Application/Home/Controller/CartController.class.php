@@ -51,6 +51,14 @@ class CartController extends Controller {
     }
 	
 	public function add($gid, $type) {
+		$islogin=logincheck();
+		if($islogin==0)
+		{
+			$result['status'] = 1000;
+			$result['message'] = '未登录';
+			$this->ajaxReturn($result);
+			return;
+		}
 		$db = D('cart');
 		$map['gid'] = $gid;
 		$map['type'] = $type;

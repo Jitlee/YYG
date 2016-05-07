@@ -22,6 +22,26 @@ function config($key)
 	return $user["value"];	
 }
 
+function GetBuyNum()
+{
+	$buynum =S("web_buynum");
+	if(!$buynum)
+	{
+		$key="buynum";
+		$db = M('config');
+		$data['name'] = $key;
+		$user = $db->where($data)->find();
+		if($user)
+		{
+			S("web_buynum",$user["value"],360000);
+			S("web_buynum_old",$user["value"],360000);
+			return $user["value"];
+		}
+	}
+	
+	return $buynum;	
+}
+
 function footerHelp()
 {
 	$m = D('P/ArticleCats');

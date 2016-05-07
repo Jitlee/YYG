@@ -25,6 +25,11 @@ class PersonController extends CommonController {
 		$this->redirect('Public/login');
     }
 	
+	public function trylogin(){
+		$url= I("url");
+		$this.redirect($url);
+	}
+	
 	public function me(){
     	$this->assign('title', '壹圆购物'); 
 		// echo $_SESSION['logintype'];

@@ -26,6 +26,16 @@ function get_user_open_id() {
 	}
 }
 
+function logincheck()
+{
+	$admin = session('wxUserinfo');
+	if(empty($admin)) {		 
+		return 0; 
+	} else {		 
+		return 1;
+	}
+}
+
 function home_is_login() {
 	$admin = session('wxUserinfo');
 	if(empty($admin)) {
