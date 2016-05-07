@@ -98,7 +98,6 @@
 
 <script type="text/javascript">
 	$(function() {
-<<<<<<< HEAD
 		<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
 			window.setInterval(function() {
 				window.location.reload();
@@ -111,36 +110,24 @@
 			
 			$("#addCartButton").click(function() {
 				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+					if(result.status==1000)
+					{
+						window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
+						return;
+					}
 					new Android_Toast({content: result.message});
 				})
 			});
 			$("#lijiButton").click(function() {
 				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+					if(result.status==1000)
+					{
+						window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
+						return;
+					}
 					window.location.href = "{:U('Cart/index', '','')}";
 				})
 			});
 		</if>
-=======
-		$("#addCartButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-				if(result.status==1000)
-				{
-					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
-					return;
-				}
-				new Android_Toast({content: result.message});
-			})
-		});
-		$("#lijiButton").click(function() {
-			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-				if(result.status==1000)
-				{
-					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
-					return;
-				}
-				window.location.href = "{:U('Cart/index', '','')}";
-			})
-		});
->>>>>>> origin/master
 	});
 </script>
