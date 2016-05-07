@@ -90,11 +90,21 @@
 	$(function() {
 		$("#addCartButton").click(function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+				if(result.status==1000)
+				{
+					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
+					return;
+				}
 				new Android_Toast({content: result.message});
 			})
 		});
 		$("#lijiButton").click(function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
+				if(result.status==1000)
+				{
+					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
+					return;
+				}
 				window.location.href = "{:U('Cart/index', '','')}";
 			})
 		});

@@ -160,16 +160,41 @@ function http_build_query_multi($params, $boundary) {
 
 function add_renci($count = 1) {
 	try {
-		$path = $_SERVER['DOCUMENT_ROOT'] . '/Application/Runtime/Data/renci.xml';
-		// check task
-		if(file_exists($path)) {
-			$file = fopen($path, 'r');
-			$renci = intval(fgets($file));
-			fclose($file);
-			$file = fopen($path, 'w');
-			fwrite($file, $renci + $count);
-			fclose($file);
+		$key="buynum";
+		$db = M('config');
+		$data['name'] = $key;
+			
+		$buynum=S("web_buynum");
+		$buynumOld=S("web_buynum_old");
+		if(!$buynum)
+		{		
+			$user = $db->where($data)->find();
+			if($user)
+			{
+				$num=(int)$user["value"]+$count;
+				S("web_buynum",$num,360000);
+				S("web_buynum_old",$num,360000);
+				return $user["value"];
+			}
 		}
+		else//缓存存在
+		{
+			$lastNum=(int)$buynum+(int)$count;
+			$buynumCJ=$lastNum-(int)$buynumOld;
+			S("web_buynum",$lastNum,360000);
+			if($buynumCJ >100)//更新到数据库
+			{
+				$userbuynum = $db->where($data)->find();
+				if($userbuynum)
+				{
+					$userbuynum["value"]=$lastNum;
+					$db->where("name='".$key."'")->save($userbuynum);
+					//更新缓存
+					S("web_buynum_old",$lastNum,360000);
+				}
+			}
+		}
+			
 	} catch(Exception $e) {
 //		echo dump($e);
 	}

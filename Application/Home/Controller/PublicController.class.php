@@ -5,6 +5,11 @@ use Think\Controller;
  
 class PublicController extends Controller {
 	
+//	public function trylogin(){
+//		$url= I("url");
+//		$this.redirect($url);
+//	}
+
 public function login() {
 		if(IS_POST) {
 			$result["status"]=0;
