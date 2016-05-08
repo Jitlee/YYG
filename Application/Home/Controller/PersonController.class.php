@@ -445,7 +445,7 @@ class PersonController extends CommonController {
 			
 			$uid=session("_uid");
 			$sql="select 
-pm.username,yyg_member_miaosha.`qishu` <m.qishu as IsEnd,yyg_member_miaosha.count,m.title,m.thumb,m.danjia,m.status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu
+pm.username,mh.qishu >0 as IsEnd,yyg_member_miaosha.count,m.title,m.thumb,m.danjia,m.status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu
 , m.canyurenshu, m.zongrenshu,m.shengyurenshu,m.type,m.jishijiexiao,yyg_member_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count
  from yyg_member_miaosha
 inner join yyg_miaosha m ON yyg_member_miaosha.gid=m.gid
