@@ -61,7 +61,7 @@ $(function(){
 					muintes = _muintes > 9 ? String(_muintes) : "0" + _muintes;
 					seconds = _seconds > 9 ? String(_seconds) : "0" + _seconds;
 					milliseconds = _milliseconds > 9 ? String(_milliseconds) : "0" + _milliseconds;
-					if(hours > 1) {
+					if(_hours > 1) {
 						this.digits[0].innerHTML = hours[0];
 						this.digits[1].innerHTML = hours[1];
 						this.digits[2].innerHTML = muintes[0];
