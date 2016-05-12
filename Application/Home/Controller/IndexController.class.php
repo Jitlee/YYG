@@ -38,6 +38,7 @@ class IndexController extends Controller {
 		// 分页
 		$db = M('miaosha');
 		$filter['jishijiexiao'] = 0;
+		$filter['status'] = array('lt', 3);
 		
 		$cid = intval(I('get.cid'));
 		if($cid > 0) {
@@ -61,7 +62,7 @@ class IndexController extends Controller {
 				break;
 		}
 		
-		$field = 'gid,title,thumb,money,danjia,xiangou, qishu, canyurenshu, zongrenshu
+		$field = 'gid,title, subtitle,thumb,money,danjia,xiangou, qishu, canyurenshu, zongrenshu
 			, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() * 1000 now
 			, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
 			,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime';
@@ -120,8 +121,10 @@ class IndexController extends Controller {
 		$db = M('Miaosha');
 		$goods = $db->field($field)->find($gid);
 		$current = (int)$goods['qishu'];
+		$currentStatus = (int)$goods['status'];
 		if($current == $qishu || $qishu == 0) {
 			$goods['current'] = $current;
+			$goods['currentStatus'] = $currentStatus;
 			return $goods;
 		}
 		
@@ -130,12 +133,13 @@ class IndexController extends Controller {
 		$map['gid'] = $gid;
 		$map['qishu'] = $qishu;
 		$history = $db
-			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,prizeno,
 				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
 			->where($map)->find();
 //		echo $db->getLastSql();
 		$history['current'] = $current;
+		$history['currentStatus'] = $currentStatus;
 		return $history;
 	}
 	

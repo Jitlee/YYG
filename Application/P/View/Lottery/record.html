@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-		<link rel="stylesheet" href="__CSS__/comm.css" />
+
 		<style type="text/css">
 			body {
 				padding:0 10px;
@@ -34,8 +29,6 @@
 			}
 			
 		</style>
-	</head>
-	<body>
 		<table class="yyg-record-table" cellpadding="0" cellspacing="0">
 			<tbody>
 				<tr>
@@ -46,10 +39,10 @@
 				</tr>
 				<foreach name="list" item="item">
 				<tr>
-					<php>if (ereg('^http', $item["img"])) {</php>
-						<td><img src="{$item.img}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
+					<php>if (ereg('^http', $item["userimage"])) {</php>
+						<td><img src="{$item.userimage}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
 					<php>}else{</php>
-						<td><img src="__TIMG__/{$item.img}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
+						<td><img src="__TIMG__/{$item.userimage}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
 					<php>}</php>
 					<td>{$item.username}</td>
 					<td>{$item.count}</td>
@@ -82,5 +75,3 @@
 				</ul>
 			</div>
 		</if>
-	</body>
-</html>

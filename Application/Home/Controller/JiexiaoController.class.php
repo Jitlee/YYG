@@ -125,4 +125,34 @@ class JiexiaoController extends Controller {
 		array_unshift($brands, $all);
 		$this->ajaxReturn($brands,'JSON');
 	}
+	
+	public function record($gid, $qishu) {
+		$mdb = M('MiaoshaHistory');
+		$filter = array(
+			'm.gid'		=> $gid,
+			'm.qishu'		=> $qishu
+		);
+		$data = $mdb->field("gid,qishu,title,end_time,prizecode,prizeuid,prizeid,prizecount,prizeno,canyurenshu
+			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
+			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
+			->where($filter)->find();
+		$this->assign('data', $data);
+		$title = $data['title'];
+		$this->assign('title', "(第$qishu)期 $title 结果公示");
+		$this->display();
+	}
+	
+	public function r($gid, $qishu) {
+		$mdb = M('MiaoshaRecord');
+		$filter = array(
+			'r.gid'		=> $gid,
+			'r.qishu'		=> $qishu
+		);
+		$list = $mdb->field("r.gid,r.mid,ms.time,ms.count
+			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
+			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
+			->join("inner join __MEMBER__ u on u.uid = ms.uid")
+			->where($filter)->order('ms.time desc')->select();
+		$this->ajaxReturn($list, 'JSON');
+	}
 }

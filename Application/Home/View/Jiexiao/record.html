@@ -1,0 +1,137 @@
+<header class="mui-bar mui-bar-nav">
+	  <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="history.go(-1)">
+			<span class="mui-icon mui-icon-left-nav" ></span>
+	    	返回
+	  </button>
+	  <h1 class="mui-title">{$title}</h1>
+</header>
+<style>
+	.yyg-prize-calc {
+		background-color: #fff;
+		padding: 10px 0;
+	}
+	
+	 .yyg-prize-calc-split, .yyg-prize-calc h5 {
+	 	color: #999;
+	 }
+	 
+	 .yyg-prize-calc-split {
+	 	width:25px;
+	 	-webkit-transform: translateY(10px);
+	 }
+	 
+	 .yyg-prize {
+		border:1px solid #FF002B;
+		border-radius: 5px;
+		margin:8px;
+		background-color: #FDF5E6;
+		min-height: 80px;
+		position: relative;
+	}
+	#emptyBlock {
+		text-align: center;
+		font-size:20px;
+		color:#666;
+		padding: 20px 0;
+	}
+	
+	#emptyBlock .iconfont {
+		font-size: 80px;
+		line-height: 100px;
+	}
+	span.var {
+		color: #2af;
+	}
+	span.time {
+		color: #f0ad4e;
+	}
+	
+	.mui-btn {
+		border-radius: 3px;
+	}
+	
+	.yyg-prize-count {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+	}
+</style>
+<div class="mui-content">
+	<div id="emptyBlock" class="yyg-prize">
+		中奖号码：<r>{$data['prizecode'] + 10000001}</r>
+		<h5>开奖时间：{$data.end_time}</h5>
+	</div>
+	<h5 class="mui-content-padded">如何计算?</h5>
+	<div class="mui-table mui-text-center yyg-prize-calc">
+		<div class="mui-table-cell">
+			<r>{$data['prizecode'] + 10000001}</r>
+			<h5>本期幸运号码</h5>
+		</div>
+		<div class="mui-table-cell yyg-prize-calc-split">=</div>
+		<div class="mui-table-cell">
+			<r>10000001</r>
+			<h5>固定数值</h5>
+		</div>
+		<div class="mui-table-cell yyg-prize-calc-split">+</div>
+		<div class="mui-table-cell">
+			<r>{$data['prizecode']}</r>
+			<h5><span class="var">变化数值</span></h5>
+		</div>
+	</div>
+	<h5 class="mui-content-padded"><span class="var">变化数值</span>是取下面公式的余数</h5>
+	<div class="mui-table mui-text-center yyg-prize-calc">
+		<div class="mui-table-cell">
+			<r>{$data['prizeno']}</r>
+			<h5><span class="time">购买时间</span>求和</h5>
+		</div>
+		<div class="mui-table-cell yyg-prize-calc-split">%</div>
+		<div class="mui-table-cell">
+			<r>{$data.canyurenshu}</r>
+			<h5>参与人数</h5>
+		</div>
+		<div class="mui-table-cell yyg-prize-calc-split"></div>
+		<div class="mui-table-cell">
+		</div>
+	</div>
+	<h5 class="mui-content-padded"><span class="time">购买时间</span>和=最后100条购买时间的时分秒之和</h5>
+	<div class="mui-content-padded" id="viewButton">
+		<a class="mui-btn mui-btn-block mui-btn-primary">查看最后的100条购买纪录</a>
+	</div>
+	<div id="recrodList" style="display: none;">
+	<ul class="mui-table-view" data-bind="foreach: records">
+		<div class="mui-loading">
+			<div class="mui-spinner">
+			</div>
+		</div>
+		<li class="mui-table-view-cell mui-media">
+			<a>
+				<img data-bind="attr: { src: userimg }" class="mui-media-object mui-pull-left" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/>
+				<div class="mui-media-body">
+					<p data-bind="text: username"></p>
+					<h5 class="yyg-prize-count"><r data-bind="text: count"></r>人次</h5>
+					<h5>购买时间：<span data-bind="text: time"></span></h5>
+				</div>
+			</a>
+		</li>
+	</ul>
+	</div>
+</div>
+<script src="__KO__"></script>
+<script>
+	$(function() {
+		var vm = {
+			records: ko.observableArray([])
+		};
+		ko.applyBindings(vm);
+		var viewButton = $("#viewButton").click(function() {
+			viewButton.remove();
+			$("#recrodList").show();
+			$.getJSON("{:U('Jiexiao/r','','')}/{$data.gid}/{$data.qishu}", null, function(list) {
+				if(list && list.length > 0) {
+					vm.records(list);
+				}
+				$(".mui-loading").remove();
+			});
+		});
+	});
+</script>

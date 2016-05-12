@@ -139,8 +139,7 @@
 	
 	<!-- ko if: goods().status == 3 && Number(goods().goumaicishu) > 0 -->
 	<div class="yyg-prize">
-		<div class="yyg-prize-img" data-bind="style: { 'background-image': 'url(' + goods().userimg + ')' }">
-		</div>
+		<img class="yyg-prize-img" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';" data-bind="attr: { src: 'url(' + goods().userimg + ')' }"/>
 		<div class="yyg-prize-content">
 			<a data-bind="text: goods().username"></a>
 			<h5>本次参与:<r data-bind="text: goods().prizecount"></r>人次</h5>
@@ -189,6 +188,9 @@
 </ul>
 	
 <ul class="mui-table-view yyg-margin20" data-bind="if: goods()">
+	<!-- ko if: goods().status == 3 && goods().prizeno > 0 -->
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" data-bind="attr: { href: '{:U('Jiexiao/record','','')}/' + goods().gid + '/' + goods().qishu }">计算结果</a></li>
+	<!-- /ko -->
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" data-bind="attr: { href: '{:U('Index/record','','')}/' + goods().qishu + '/' + goods().gid }">参与记录 <span class="yyg-tiny">(<span data-bind="text: goods().goumaicishu"></span>)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right" data-bind="attr: { href: '{:U('Index/detail','','')}/' + goods().gid }">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
@@ -206,6 +208,31 @@
 	</div>
 </footer>
 <!-- /ko -->
+
+<!-- ko if: goods() && goods().status > 1 -->
+<footer class="yyg-footer">
+	<div class="yyg-footer-block">
+		<a class="yyg-btn yyg-btn-link" href="javascript:history.go(-1)"><i class="mui-icon mui-icon-back"></i></a>
+		<!-- ko if: goods().status == 2 -->
+			<a id="addCartButton" class="yyg-btn yyg-btn-primary">
+				计算机正在努力计算中...
+			</a>
+		<!-- /ko -->
+		<!-- ko if: goods().currentStatus < 3 && goods().status == 3 -->
+			<a id="addCartButton" data-bind="attr: { href: '{:U('Index/view','','')}/{$gid}/' + goods().current }" class="yyg-btn yyg-btn-primary">
+				第<span data-bind="text: goods().current"></span>期正在进行中...
+			</a>
+		<!-- /ko -->
+		<!-- ko if: goods().currentStatus == 3 -->
+			<a id="addCartButton" class="yyg-btn yyg-btn-disabed">
+				商品已经结束活动
+			</a>
+		<!-- /ko -->
+		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
+	</div>
+</footer>
+<!-- /ko -->
+
 <div class="yyg-loading"></div>
 <script src="__KO__"></script>
 <script type="text/javascript">
@@ -227,6 +254,7 @@
 					goods.qishu = Number(goods.qishu);
 					goods.status = Number(goods.status);
 					goods.current = Number(goods.current);
+					goods.currentStatus = Number(goods.currentStatus);
 					vm.max(goods.current);
 					vm.goods(goods);
 					countdown(Number(goods.now));

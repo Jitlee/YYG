@@ -1,19 +1,144 @@
 <if condition="$data.prizeuid gt 0">
-	<div class="Pro_GetPrize">		
-		<div class="GetPrize">				    
-			<dl>
-				<dt><a rel="nofollow" target="_blank"><img width="80" height="80" alt="" src="/Public/Home/images/{$data.userimg}"></a></dt>
-				<dd class="gray02">
-					<p>恭喜 <a target="_blank" class="blue">{$data.username}</a>获得了本商品</p>
-					<p>揭晓时间：{$data.end_time}</p>
-					<p>幸运购物码：<em class="orange Fb">{$data['prizecode']+10000001}</em></p>
-				</dd>
-			</dl>				
-		</div>
-	</div>
-	<div id="divBuy" class="Det_button">
-		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
-	</div>
+	<style>
+		.paimai-time {
+			margin: 0;
+			padding: 0;
+			height: 50px;	
+			position: relative;
+			border:#F60 1px solid;
+			overflow: hidden;
+			width: 335px;
+			margin-bottom: 10px;
+		}
+		.paimai-time dt{
+			background-color: #F60;
+			width: 50px;
+			height:50px;
+			line-height: 20px;
+			border: 0;
+			padding: 0;
+			padding-top: 5px;
+			float: left;
+			color: #fff;
+			font-size: 13px;
+			text-align: center;
+		}
+		
+		.paimai-time dd {
+			padding-left: 55px;
+			display: block;
+			height: 50px;
+			line-height: 50px;
+			font-size: 20px;
+			color: #f20;
+		}
+		
+		.prize-img {
+			height: 50px;
+			width: 50px;
+			border:0;
+		}
+		.prize-user-table {
+			width: 100%;
+		}
+		.prize-user-table td {
+			padding:5px;
+		}
+		
+		.r {
+			color: red;
+		}
+		
+		.prize-hr {
+			border:0;
+			border-bottom:solid 1px #FF002B;
+		}
+		
+		 .yyg-prize {
+			background-color: #FDF5E6;
+			min-height: 80px;
+			position: relative;
+			padding: 10px;
+		}
+		
+		
+		.var {
+			color: #2af;
+		}
+		.time {
+			color: #f0ad4e;
+		}
+		
+		.prize-calc-table {
+			border: solid 1px #eee;
+			text-align: center;
+		}
+		
+		.prize-calc-table td{
+			padding: 5px 0;
+		}
+		
+		.prize-calc-split {
+			width: 25px;
+		}
+	</style>
+	<div class="yyg-prize">
+		<dl class="paimai-time">
+			<dt>中奖<br/>号码</dt>
+	    		<dd>{$data['prizecode'] + 10000001}</dd>
+	    </dl>
+	    <table class="prize-user-table">
+		    	<tr>
+		    		<td rowspan="2" style="width: 60px;padding: 5px 0;">
+		    			<img class="prize-img" src="{$data.userimg}" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/>
+		    		</td>
+		    		<td>中奖用户: {$data.username}</td>
+		    		<td>购买时间: {$data.end_time}</td>
+		    	</tr>
+		    	<tr>
+		    		<td>本期参与: <span class="r">{$data.prizecount}</span>人次</td>
+		    		<td>商品价值: <span class="r">{$data.money}</span>元</td>
+		    	</tr>
+	    </table>
+    </div>
+    <br />
+    <table>
+    		<tr>
+    			<td>如何计算?</td>
+    			<td style="padding-left: 15px"><span class="var">变化数值</span>是取下面公式的余数</td>
+    		</tr>
+    		<tr>
+			<td>
+			    <table class="prize-calc-table">
+				    	<tr>
+				    		<td style="padding-left: 5px" class="r">{$data['prizecode'] + 10000001}</td>
+				    		<td class="prize-calc-split" rowspan="2">=</td>
+				    		<td class="r">10000001</td>
+				    		<td class="prize-calc-split" rowspan="2">+</td>
+				    		<td style="padding-right: 5px" class="r">{$data['prizecode']}</td>
+				    	</tr>
+				    	<tr>
+				    		<td style="padding-left: 5px">本期幸运号码</td>
+				    		<td>&nbsp;&nbsp;固定数值&nbsp;&nbsp;</td>
+				    		<td style="padding-right: 5px" class="var">&nbsp;&nbsp;变化数值&nbsp;&nbsp;</td>
+				    	</tr>
+			    </table>
+			</td>
+			<td>
+			    <table class="prize-calc-table" style="margin-left: 15px;">
+				    	<tr>
+				    		<td style="padding-left: 5px" class="r">{$data['prizeno']}</td>
+				    		<td class="prize-calc-split" rowspan="2">%</td>
+				    		<td style="padding-right: 5px" class="r">{$data.canyurenshu}</td>
+				    	</tr>
+				    	<tr>
+				    		<td style="padding-left: 5px">购买时间求和</td>
+				    		<td style="padding-right: 5px">&nbsp;&nbsp;参与人数&nbsp;&nbsp;</td>
+				    	</tr>
+			    </table>
+			</td>
+		</tr>
+	</table>
 <elseif condition="$data.prizeid gt 0"/>
 	<div class="Pro_GetPrize">		
 		<div class="GetPrize">				    

@@ -63,5 +63,44 @@ class LotteryController extends CommonController {
 
 	public function view($gid, $qishu = null) {
 	}
+	
+	
+	// 前一百个购买纪录
+	public function r($gid, $qishu, $pageNo = 1) {
+		$mdb = M('MiaoshaRecord');
+		$pageSize = 10;
+		$filter = array(
+			'r.gid'		=> $gid,
+			'r.qishu'		=> $qishu
+		);
+		$list = $mdb->field("r.gid,r.mid,ms.time,ms.count
+			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
+			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
+			->join("inner join __MEMBER__ u on u.uid = ms.uid")
+			->where($filter)->order('ms.time desc')->page($pageNo, $pageSize)->select();
+		$num = 0;
+		
+//		echo $mdb->getLastSql();
+		$total = 0;
+		if($list) {
+			$this->assign('list', $list);
+			$num = count($list);
+			
+			$total = $mdb->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")->where($filter)->count();
+			
+			$pageCount = ceil($total / $pageSize);
+			$this->assign('pageSize', $pageSize);
+			$this->assign('pageNo', $pageNo);
+			$this->assign('pageCount', $pageCount);
+			$this->assign('minPageNo', floor(($pageNo-1)/10.0) * 10 + 1);
+			$this->assign('maxPageNo', min(ceil(($pageNo)/10.0) * 10 + 1, $pageCount));
+		}
+		$this->assign('gid', $gid);
+		$this->assign('qishu', $qishu);
+		$this->assign('num', $num);
+		$this->assign('total', $total);
+		layout(false);
+		$this->display('record');
+	}
 }
 	

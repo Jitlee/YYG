@@ -236,7 +236,7 @@
 				</div>
 				<div class="yyg-goods-media">
 					<p class="yyg-content-title">
-						
+						<span>(第<span data-bind="text: qishu"></span>期)</span> <span data-bind="text: title"></span> <r data-bind="text: subtitle"></r>
 					</p>
 					<div class="yyg-progress">
 						<div class="yyg-progressing"  data-bind="style: { width: (Number(canyurenshu) / Number(zongrenshu)) * 100 + '%' }"></div>
@@ -300,9 +300,9 @@
 						goods = goods.concat(list);
 						vm.goods(goods);
 			      	}
-					window.closeLoading();
 		       		window.countdown();
 		        }
+				window.closeLoading();
 	       });
 		}
 		pageAll();

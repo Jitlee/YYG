@@ -141,7 +141,7 @@ class IndexController extends CommonController {
 		$map['gid'] = $gid;
 		$map['qishu'] = $qishu;
 		$history = $db
-			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,content,
+			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,content,prizeno,
 				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
 		
