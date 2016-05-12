@@ -14,6 +14,8 @@ class CartController extends Controller {
 		
 		$map['uid'] = get_temp_uid();
 		$list = $db->where($map)->relation(true)->select();
+//		echo $db->getLastSql();
+//		echo dump($list);
 		if(!empty($list)) {
 			// 检测商品状态
 			foreach($list as $cart) {
@@ -142,6 +144,7 @@ class CartController extends Controller {
 			$result['status'] = 0;
 			$result['message'] = '删除成功';
 		} else {
+			echo $db->getLastSql();
 			$result['status'] = 1;
 			$result['message'] = '删除失败';
 		}

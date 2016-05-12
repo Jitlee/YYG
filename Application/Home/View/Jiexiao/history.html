@@ -220,6 +220,10 @@
 		background-color: #ff3300;
 	}
 	
+	.yyg-jiexiao-list a.jiexiao:first-child{
+		padding-top: 3px;
+	}
+	
 	.yyg-jiexiao-list yyg-content{
 		background-color: #fff;
 	}
@@ -249,8 +253,10 @@
 <include file="Public:tab"/>
 <div id="goodNav" class="yyg-bar-nav">
 	<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
-	<a type="12" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">最新</a>
-	<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
+	<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">最新</a>
+	<a class="yyg-bar-nav-btn" style="visibility: hidden;"></a>
+	<a class="yyg-bar-nav-btn" style="visibility: hidden;"></a>
+	<a class="yyg-bar-nav-btn" style="visibility: hidden;"></a>
 </div>
 
 <div id="goodCategories" class="yyg-category">
@@ -258,80 +264,41 @@
 		
 	</ul>
 </div>
-<ul id="goodList" class="yyg-goods-list">
+<ul id="goodList" class="yyg-goods-list" data-bind="foreach: goods">
+	<li id="goodTemplate" class="yyg-jiexiao-list">
+		<a data-bind="css: { 'jiexiao': status < 3 }, attr: { href: '{:U('Index/view', '', '')}/' + gid }">
+			<section class="tuijian yyg-content">
+				<!-- ko if: status < 3 -->
+				<label class="jiexiao-label">即将揭晓</label>
+				<!-- /ko -->
+				<div class="tuijian-left">
+					<div class="tuijian-img-container">
+						<img class="tuijian-img" data-bind="attr: { src: thumb }" />
+						<label>第<span class="qishu" data-bind="text: qishu"></span>期</label>
+					</div>
+				</div>
+				<div class="tuijian-content">
+					<p class="tuijian-content-title" data-bind="text: title"></p>
+					<!-- ko if: status == 3 && username -->
+					<h4>获得者：<span class="user" data-bind="text: username"></span></h4>
+					<h5>商品价值：¥ <span data-bind="text: money"></span></h5>
+					<h5>本期参与: <r data-bind="text: prizecount"></r> 人次</h5>
+					<h5>幸运云购码：<b data-bind="text: Number(prizecode) + 10000001"></b></h5>
+					<h5>揭晓时间：<span data-bind="text: end_time"></span></h5>
+					<!-- /ko -->
+					<!-- ko if: status == 3 && !username -->
+					<h5>商品价值：¥ <span data-bind="text: money"></span></h5>
+					<h5><i class="iconfont icon-yihan"></i>很遗憾，本期没有人参与</h5>
+					<!-- /ko -->
+				</div>
+			</section>
+		</a>
+	</li>
 </ul>
-					
-<li id="goodTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="jiexiao">
-		<section class="tuijian yyg-content">
-			<label class="jiexiao-label">正在揭晓</label>
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="{$tuijian.thumb}" />
-					
-					<label>第<span class="qishu"></span>期</label>
-				</div>
-			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h5>价值：¥ <span class="money"></span></h5>
-				<label>
-					<i class="iconfont icon-weibiaoti5"></i>揭晓倒计时
-					<time countdown=""><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
-				</label>
-			</div>
-		</section>
-	</a>
-</li>
-
-<li id="endTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="yijiexiao" alt="">
-		<section class="tuijian yyg-content">
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="" />
-					<label>第<span class="qishu"></span>期</label>
-				</div>
-			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h4>获得者：<span class="user">希望下次一定中</span></h4>
-				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5><span class="benqi">本期参与</span>：<r class="canyurenshu"></r> 人次</h5>
-				<h5>揭晓时间：<span class="end_time"></span></h5>
-			</div>
-		</section>
-	</a>
-</li>
-
-<li id="emptyTemplate" class="mui-hidden yyg-jiexiao-list">
-	<a class="yijiexiao yyg-empty" alt="">
-		<section class="tuijian yyg-content">
-			<div class="tuijian-left">
-				<div class="tuijian-img-container">
-					<img class="tuijian-img" src="" />
-					<label>第<span class="qishu"></span>期</label>
-				</div>
-			</div>
-			<div class="tuijian-content">
-				<p class="tuijian-content-title"></p>
-				<h5>商品价值：¥ <span class="money"></span></h5>
-				<h5><i class="iconfont icon-yihan"></i>很遗憾，本期没有人参与</h5>
-			</div>
-		</section>
-	</a>
-</li>
+<div class="yyg-loading"></div>
+<script src="__KO__"></script>
 <script type="text/javascript">
 	$(function(){
-		
-//		$(document).bind("scroll", onscrollend);
-//		
-//		function onscrollend() {
-//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-//     			console.info("滚动到底了");
-//				pageAll();
-//			}
-//		}
 		window.onScrollEnd(pageAll);
 		
 		// 全部商品翻页
@@ -341,12 +308,17 @@
 		var endTemplate = $("#endTemplate");
 		var emptyTemplate = $("#emptyTemplate");
 		var goodCid = 0;
-		var orderType = 12;
+		var orderType = 2;
+		var goods = [];
+		var vm = {
+			goods: ko.observableArray(goods)
+		};
+		ko.applyBindings(vm, document.getElementById("goodList"));
 		function pageAll(clear) {
 			if(clear) {
 				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
+			$.get("{:U('pageAll', '', '')}/10/" + pageNum, {
 				type: orderType,
 				cid: goodCid,
 				tabId: "{$tabId}"
@@ -355,49 +327,12 @@
 					goodList.html("");
 				}
 				if(list && list.length > 0) {
-					++pageNum
-					var now = new Date().getTime();
-		       		$.each(list, function() {
-	//	       			this.endTime = new Date(this.end_time).getTime();
-		       			if(this.status < 2) {
-			       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-			       			$(">a", item).attr("href", "{:U('Index/" + this.gid + "', '', '')}");
-			       			$("img", item).attr("src", this.thumb);
-			       			$("p", item).text(this.title);
-			       			$(".qishu", item).text(this.qishu);
-			       			$("span.money", item).text(Number(this.money).toFixed(2));
-			       			if(this.shengyurenshu == 0) {
-			       				$("time", item).parent().html("正在开奖计算中...");
-			       			} else {
-			       				$("time", item).attr("countdown", new Date(this.end_time).getTime());
-			       			}
-		       			} else if(this.status == 2) {
-		       				var item = endTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-			       			$(">a", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
-			       			$(".qishu", item).text(this.qishu);
-			       			$("img", item).attr("src", this.thumb);
-			       			$("p", item).text(this.title);
-			       			$("span.money", item).text(Number(this.money).toFixed(2));
-			       			$("span.end_time", item).text(this.end_time);
-			       			if(this.username) {
-				       			$("r.canyurenshu", item).text(this.prizecount);
-				       			$(".user", item).text(this.username);
-			       			} else {
-			       				$("r.canyurenshu", item).text(this.shengyurenshu);
-			       				$(".benqi", item).text("本期剩余");
-			       				$(".user", item).parent().text("本期没有幸运获得者");
-			       			}
-		       			}
-		       			
-		       			goodList.append(item);
-		       		});
-		       		
-		       		if(pageNum == 1) {
-		       			$("a", goodList).first().css('padding-top', '3px');
-		       		}
-		       		
-		       		window.countdown();
-		       	}
+					pageNum++;
+					goods = goods.concat(list);
+					vm.goods(goods);
+		      	}
+				window.closeLoading();
+	       		window.countdown();
 	       });
 		}
 		pageAll();

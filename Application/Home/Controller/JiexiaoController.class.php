@@ -22,8 +22,7 @@ class JiexiaoController extends Controller {
 	public function pageAll($pageSize, $pageNum) {
 		// 分页		
 //		$filter['type'] = 1;
-		
-		$tabId = intval(I('get.tabId')); // 1:即将揭晓，2最新揭晓
+		$tabId = intval(I('tabId', 1)); // 1:即将揭晓，2最新揭晓
 		$db = $tabId == 1 ? M("Miaosha") : M("MiaoshaHistory");
 		
 		$filter = $tabId == 1 ? array("m.jishijiexiao"=>array('gt', 0)) : array();
@@ -56,9 +55,10 @@ class JiexiaoController extends Controller {
 			$list = $db->where($filter)
 				->order('status asc,'. $order)
 				->page($pageNum, $pageSize)
-				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia,m.status, m.shengyurenshu, m.canyurenshu, m.jishijiexiao,UNIX_TIMESTAMP() * 1000 now,
-					UNIX_TIMESTAMP(date_add(m.`time`,interval +m.jishijiexiao hour)) * 1000 end_time, m.goumaicishu
-					, mh.end_time endTime
+				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia, m.shengyurenshu, m.canyurenshu, m.jishijiexiao
+					, if(m.status < 2 and m.shengyurenshu = 0, 2, m.status) status, unix_timestamp() now
+					, unix_timestamp(date_add(m.time, interval m.jishijiexiao hour))*1000 end
+					,unix_timestamp(date_add(m.lastTime, interval 3 minute))*1000 lasttime
 					, prizeid, prizeuid, prizecode, prizecount,
 					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 				->join('m left join __MIAOSHA_HISTORY__ mh on m.qishu=mh.qishu and m.gid=mh.gid')
@@ -73,34 +73,8 @@ class JiexiaoController extends Controller {
 				->where($filter)
 				->order('end_time desc, gid desc, qishu desc')
 				->page($pageNum, $pageSize)->select();
+//			echo $db->getLastSql();
 		}
-//		echo $db->getLastSql();
-		
-//		if(!empty($list)) {
-//			$udb = M('member');
-//			$mhdb = M('MemberMiaosha');
-//			
-//			foreach($list as $key => $data) {
-////					echo $key;
-////					echo dump($data);
-//				if(!empty($data['prizeuid'])) {
-//					$user = $udb->field('uid, username, email, mobile, img, qianming')->find($data['prizeuid']);
-//					$list[$key]['prizer'] = $user;
-//					
-//					if(empty($user['username'])) {
-//						$user['username'] = substr($user['mobile'], 0, 3).'****'.substr($user['mobile'], 7, 4);
-//					}
-//					
-//					// 获取用户当期购买数量
-//					$mhmap['uid'] = $data['prizeuid'];
-//					$mhmap['gid'] = $data['gid'];
-//					$mhmap['qishu'] = $data['qishu'];
-//					$count = $mhdb->where($mhmap)->sum('count');
-//					$list[$key]['prizer']['count'] = $count;
-//				}
-//			}
-//		}
-//		echo dump($list);
 		$this->ajaxReturn($list, "JSON");
 	}
 	

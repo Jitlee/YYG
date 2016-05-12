@@ -127,9 +127,31 @@
 		font-size:14px;
 	}
 	
+
 	.yyg-list-price {
 		position: relative;
-		
+		color: #666;
+		line-height: 23px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	.yyg-prize-lasttime {
+		font-size: 13px;
+		color: red;
+	}
+	
+	@media only screen and (min-width: 321px) and (max-width: 375px) {
+		.yyg-prize-lasttime {
+			font-size: 15px;
+		}
+	}
+	
+	@media only screen and (min-width: 376px) {
+		.yyg-prize-lasttime {
+			font-size: 17px;
+		}
 	}
 	
 	.yyg-right {
@@ -286,31 +308,42 @@
 		<a href="{:U('all','','')}" class="yyg-cell-right">更多&gt;&gt;</a>
 	</div>
 	
-	<ul id="goodList" class="yyg-goods-list">
+	<ul id="goodList" class="yyg-goods-list" data-bind="foreach: goods">
+		<li id="goodTemplate" class="yyg-goods-list-item">
+			<a data-bind="css: { 'jiexiao': status < 3 }, attr: { href: '{:U('Index/view', '', '')}/' + gid }">
+				<div>
+					<div class="yyg-good-cart">
+						<i class="iconfont icon-jiarugouwuche"></i>
+					</div>
+					<div class="yyg-goods-img-container" data-bind="style: { backgroundImage: 'url(' + thumb + ')' }">
+					</div>
+					<div class="yyg-goods-media">
+						<p class="yyg-content-title">
+							
+						</p>
+						<div class="yyg-progress">
+							<div class="yyg-progressing"  data-bind="style: { width: (Number(canyurenshu) / Number(zongrenshu)) * 100 + '%' }"></div>
+						</div>
+						<!-- ko if: status == 2 -->
+						<div class="yyg-list-price yyg-prize-lasttime">
+							正在开奖：<span data-bind="attr: { countdown: lasttime||new Date().getTime() +100000 }"></span>
+						</div>
+							
+						<!-- /ko -->
+						<!-- ko ifnot: status == 2 -->
+						<div class="yyg-list-price">
+							<span>¥<r data-bind="text: danjia">1</r></span><span class="yyg-del">¥</span><span class="yyg-del money" data-bind="text: money"></span>
+							<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+						</div>
+						<!-- /ko -->
+					</div>
+				</div>
+			</a>
+		</li>
 	</ul>
 </div>
-					
-<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
-	<a href="">
-		<div>
-			<div class="yyg-good-cart">
-				<i class="iconfont icon-jiarugouwuche"></i>
-			</div>
-			<div class="yyg-goods-img-container">
-			</div>
-			<div class="yyg-goods-media">
-				<p class="yyg-content-title"></p>
-				<div class="yyg-progress">
-					<div class="yyg-progressing" style="width:0%"></div>
-				</div>
-				<div class="yyg-list-price">
-					<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
-					<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
-				</div>
-			</div>
-		</div>
-	</a>
-</li>
+
+<script src="__KO__"></script>
 <script type="text/javascript">
 	$(function(){
 		
@@ -330,34 +363,36 @@
 		var goodTemplate = $("#goodTemplate");
 		var goodCid = 0;
 		var orderType = 1;
+		var goods = [];
+		var vm = {
+			goods: ko.observableArray(goods),
+		}
+		ko.applyBindings(vm);
 		function pageAll(clear) {
 			if(clear) {
 				pageNum = 1;
 			}
-			$.get("{:U('pageAll', '', '')}/8/" + pageNum, {
+			$.get("{:U('pageAll', '', '')}/10/" + pageNum, {
 				type: orderType,
 				cid: goodCid
 			}, function(list) {
 				if(clear) {
-					goodList.html("");
+					goods.length = 0;
+					vm.goods.removeAll();
 				}
 				if(list && list.length > 0) {
 					pageNum++;
-		       		$.each(list, function() {
-		       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
-						$(".yyg-goods-img-container", item).css("background-image", "url(" + this.thumb + ")");
-						if(this.xiangou > 0) {
-							item.addClass('yyg-xiangou');
-						}
-		       			$("p", item).text("(第" + this.qishu + "期) " + this.title);
-		       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");
-		       			$("span.money", item).text(this.money);
-		       			$(".yyg-good-cart", item).attr("gid", this.gid).attr("src", this.thumb);
-		       			$("r", item).text(this.danjia);
-		       			goodList.append(item);
-		       		});
-		       	}
+		       		if(clear) {
+						goodList.html("");
+					}
+					if(list && list.length > 0) {
+						pageNum++;
+						goods = goods.concat(list);
+						vm.goods(goods);
+			      	}
+					window.closeLoading();
+		       		window.countdown();
+		        }
 	       });
 		}
 		pageAll();

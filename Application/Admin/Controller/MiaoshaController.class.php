@@ -51,31 +51,21 @@ class MiaoshaController extends GoodsBaseController {
 			$zongrenshu = (int)$_POST['zongrenshu'];
 			
 			$db = M('miaosha');
-//			$db->startTrans();
 			$data = $db->create();
 			if($data) {
 				$status = -1;
 				$result = $db->add(); // 写入数据到数据库 
 				if($result > 0) {
-					$rst = $db->execute("call p_create_miaosha_code($result, 1, $zongrenshu)");
-//					echo dump($rst);
-					if($rst > 0) {
-						$status = 1;
-					}
+					$status = 1;
 				}
 				
 				if($status == 1) {
-//					$db->commit();
 					self::saveImages($result, $this->_config['type']);
-//					echo '成功';
 					$this->success('操作成功', U('index', '', ''));
 				} else {
-//					$db->rollback();
-//					echo '失败';
 					$this->ajaxReturn('数据错误');						
 				}
  			} else {
-// 				$db->rollback();
 				$this->ajaxReturn('数据创建错误');
 			}
 		} else {
@@ -100,8 +90,6 @@ class MiaoshaController extends GoodsBaseController {
 			$jishi = intval($_POST['jishijiexiao']);
 			$money = floatval($_POST['money']);
 			$danjia = floatval($_POST['danjia']);
-//			$_POST['zongrenshu'] = ceil($money / $danjia);
-//			$_POST['shengyurenshu'] = $_POST['zongrenshu'];
 			
 			$db = M('miaosha');
 			$data = $db->create();

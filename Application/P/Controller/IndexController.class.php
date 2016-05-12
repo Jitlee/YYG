@@ -33,7 +33,7 @@ class IndexController extends CommonController {
 		
 		// 推荐商品
 		$gdb = M('miaosha');
-		$tuijians = $gdb->where('status <> 2 and tuijian = 1')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')->page(1,2)->select();
+		$tuijians = $gdb->where('status < 3 and tuijian = 1')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')->page(1,2)->select();
 		$this->assign('tuijians', $tuijians);
 		
 //		// 最新揭晓count
@@ -41,7 +41,11 @@ class IndexController extends CommonController {
 //		$jiexiaocount = $hdb->where('jishijiexiao > 0 and to_days(end_time) = to_days(now())')->count();
 //		$this->assign('jiexiaocount', $jiexiaocount);
 
-		$remens = $gdb->where('status <> 2 and jishijiexiao=0')->order('time desc')->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
+		$field = 'gid,title,thumb,money,danjia,xiangou, qishu, canyurenshu, zongrenshu,shengyurenshu,type
+			, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() * 1000 now
+			, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
+			,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime';
+		$remens = $gdb->where('status < 3 and jishijiexiao=0')->order('time desc')->field($field)->page(1,8)->select();
 		$this->assign('remens', $remens);
 		
 		// 他们购买记录
@@ -57,14 +61,14 @@ class IndexController extends CommonController {
 			$this->assign('records', $records);
 		}
 		
-		$jijiagns = $gdb->where('status <> 2 and jishijiexiao>0')->order('time desc')
-			->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,shengyurenshu,type')->page(1,8)->select();
+		$jijiagns = $gdb->where('status < 3 and jishijiexiao>0')->order('time desc')
+			->field($field)->page(1,8)->select();
 //		echo $gdb->getLastSql();
 		$this->assign('jijiagns', $jijiagns);
 		$this->display();
     }
 
-	public function view($gid, $qishu = null) {
+	public function view($gid, $qishu = 0) {
 //		run_task();
 		
 		$this->assign('title', '商品详情');
@@ -114,48 +118,51 @@ class IndexController extends CommonController {
 		$this->display();
 	}
 	
-	private function getGood($gid, $qishu = null) {
-		if($qishu == null) {
-			$db = M('miaosha');
-			$data = $db->field('gid,title,subtitle,thumb,money, goumaicishu,jishijiexiao,UNIX_TIMESTAMP() * 1000 now,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time,content')->find($gid);
-			$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
-			$qishu = intval($data['qishu']);
-			if((int)$data['status'] == 2) {
-				return $this->getGood($gid, $qishu);
-			}
+	private function getGood($gid, $qishu = 0) {
+		$db = M('miaosha');
+		$field = "gid,title,subtitle,thumb,money,goumaicishu,jishijiexiao,danjia,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,type,content
+			, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() * 1000 now
+			, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
+			,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime";
+		$data = $db->field($field)->find($gid);
+		$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
+		$qs = intval($data['qishu']);
+		if($qishu == 0 || $qs == $qishu) {
 			// 上期获得者
-			if($qishu > 1) {
-				$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
-			}	
-			return $data;
-		} else {
-			// 历史
-			$db = M('MiaoshaHistory');
-			$map['gid'] = $gid;
-			$map['qishu'] = $qishu;
-			$data = $db
-				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
-					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
-				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
-			if(empty($data)) {
-				return $this->getGood($gid);
+			if($qs > 1) {
+				$data['lastprizer'] = $this->getPrizer($gid, $qs - 1);
 			}
 			
-			// 获取当情期
-			$mdb = M('miaosha');
-			$mmap['gid'] = $gid;
-			$current = $mdb->field('qishu, status')->where($mmap)->find();
-//			echo dump($current);
-			$data['max'] = intval($current['qishu']);
-			$data['current'] = (int)$current['status'] < 2 ? $data['max'] : 0;
-			
-			// 获取当前中奖用户
-			if($data['prizeuid']) {
-				$data['prizer'] = $this->getPrizer($gid, $qishu);
-			}
-			
+//			echo dump($data);
 			return $data;
 		}
+		// 历史
+		$db = M('MiaoshaHistory');
+		$map['gid'] = $gid;
+		$map['qishu'] = $qishu;
+		$history = $db
+			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,content,
+				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
+		
+		// 获取当情期
+		$mdb = M('miaosha');
+		$mmap['gid'] = $gid;
+		$current = $mdb->field('qishu, status')->where($mmap)->find();
+//			echo dump($current);
+		$history['max'] = intval($current['qishu']);
+		$history['current'] = (int)$current['status'] < 2 ? $history['max'] : 0;
+		
+		// 获取当前中奖用户
+		if($history['prizeuid']) {
+			$history['prizer'] = $this->getPrizer($gid, $qishu);
+		}
+		// 上期获得者
+		if($qishu > 1) {
+			$data['lastprizer'] = $this->getPrizer($gid, $qishu - 1);
+		}
+		
+		return $history;
 	}
 
 	private function getPrizer($gid, $qishu) {

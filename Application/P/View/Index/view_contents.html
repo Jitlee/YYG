@@ -10,7 +10,7 @@
 
 <if condition="(int)$data['jishijiexiao'] gt 0">               
     <div class="Immediate">
-      <span style="left:10px;right:0px;">剩余时间：<time countdown="{$data.end_time}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time></span>  
+      <span style="left:10px;right:0px;">剩余时间：<time countdown="{$data.end}"></time></span>  
     </div>             
 </if>
 
@@ -24,7 +24,7 @@
 <if condition="data.jieshijiexiao gt 0">
 	<div id="divAutoRTime" class="Immediate">
 	    <span><a class="orange" target="_blank" href="#">限时揭晓的规则？</a></span>
-	     <i id="timeall" endtime="{$data.end_time}" lxfday="no"></i>		                           
+	     <i id="timeall" endtime="{$data.end}" lxfday="no"></i>		                           
 	</div>
 <script type="text/javascript">			
 	function lxfEndtime(xsjx_time_shop,this_time){	
@@ -34,7 +34,7 @@
 		}
 		this.this_time = this.this_time + 1000;
 		lxfEndtime_setTimeout  = window.setTimeout("lxfEndtime()",1000);				
-		var endtime = {$data.end_time|strtotime}000;
+		var endtime = {$data.end};
 	    var youtime = endtime - this.this_time;	   	   //还有多久(毫秒值)
 		
 		var seconds = youtime/1000;
@@ -56,7 +56,7 @@
 		}							
   	}			  
  	$(function(){
- 			lxfEndtime($("#timeall"),{$serverTime}000);
+ 			lxfEndtime($("#timeall"),{$data.now});
  	});
 </script>
 </if>		
@@ -122,12 +122,11 @@
 				window.location.href = "{:U('Cart/index', '','')}";
 			})
 		});
-		
-		<if condition="$data.jishijiexiao gt 0">
-			var time = {$data.end_time} - {$data.now} + 15000;
-			window.setTimeout(function() {
-				window.location.reload();
-			}, time);
-		</if>
+//		
+//		<if condition="$data.jishijiexiao gt 0">
+//			window.setTimeout(function() {
+//				window.location.reload();
+//			}, 15000);
+//		</if>
 	});
 </script>

@@ -100,13 +100,9 @@
 //				show_date_time((new Date().getTime())+(parseInt(sdata))*1000,null);
 //			}
 //		});
-		<if condition="$data.jieshijiexiao gt 0">
-		show_date_time({$data.end_time} + 180 * 1000, null);
-		<else/>
-		show_date_time({$data.now}, null);
-		</if>
+		show_date_time({$data.lasttime}, null);
 		window.setTimeout(function() {
 			window.location.reload();
-		}, 60 * 1000);
+		}, Math.max({$data.lasttime} - {$data.now}, 3000) + 3000);
 	});
 </script>

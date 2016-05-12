@@ -1,32 +1,100 @@
+<style type="text/css">
+	.yyg-prize {
+		border:1px solid #FF002B;
+		border-radius: 5px;
+		margin:8px;
+		background-color: #FDF5E6;
+		min-height: 80px;
+		position: relative;
+	}
+	#emptyBlock {
+		text-align: center;
+		font-size:20px;
+		color:#666;
+		padding: 20px 0;
+	}
+	
+	#emptyBlock .iconfont {
+		font-size: 80px;
+		line-height: 100px;
+	}
+	
+	.yyg-prize-img {
+		position: absolute;
+		left:10px;
+		background-repeat: no-repeat;
+		background-position: 50% 50%;
+		background-size: 100% 100%;
+		width:64px;
+		height:64px;
+		border-radius: 32px;
+		left: 10px;
+		top:15px;
+	}
+	
+	.yyg-prize-content {
+		padding-left: 90px;
+		margin-top:8px;
+		margin-bottom:8px;
+	}
+	
+	.yyg-prize-content h5 {
+		line-height: 20px;
+	}
+	
+	.yyg-prize-content a{
+		font-size:16px;
+		color: #2af;
+	}
+	
+	.yyg-prize-all {
+		border-top:solid 1px rgba(255,0, 43, 0.2);
+		line-height: 30px;
+		display: block;
+		/*color:#FF002B;*/
+		color:#999;
+		font-size: 16px;
+		text-align: center;
+	}
+	
+	.yyg-prize-lasttime {
+		font-size: 20px;
+		color: #333;
+		padding: 20px 0px;
+	}
+	
+</style>
+
 <div class="yyg-qishu">
-	<ul class="yyg-qishu-view">
-		<if condition="$current['qishu'] eq $data['qishu']">
-			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
-			<if condition="$data['qishu'] gt 1">
-				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
-			</if>
-			<if condition="$data['qishu'] gt 2">
-				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 2}">第{$data['qishu'] - 2}期</a>
-			</if>
-		<elseif condition="$data['qishu'] eq 1"/>
-			<if condition="$data['qishu'] + 2 elt $current['qishu']">
-				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 2}">第{$data['qishu'] + 2}期</a>
-			</if>
-			<if condition="$data['qishu'] + 1 elt $current['qishu']">
-				<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
-			</if>
-			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
-		<else/>
-			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] + 1}">第{$data['qishu'] + 1}期</a>
-			<a class="yyg-qishu-item yyg-active">第{$data.qishu}期</a>
-			<a class="yyg-qishu-item" href="{:U('view','','')}/{$data.gid}/{$data['qishu'] - 1}">第{$data['qishu'] - 1}期</a>
-		</if>
+	<ul class="yyg-qishu-view" data-bind="if: goods()">
+		<!-- ko if: goods().qishu == max() -->
+			<a class="yyg-qishu-item yyg-active">第<span data-bind="text: max"></span>期</a>
+			<!-- ko if: max() > 1 -->
+				<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: max()-1 }">第<span data-bind="text: max()-1"></span>期</a>
+			<!-- /ko -->
+			<!-- ko if: max() > 2 -->
+				<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: max()-2 }">第<span data-bind="text: max()-2"></span>期</a>
+			<!-- /ko -->
+		<!-- /ko -->
+		<!-- ko if: goods().qishu == 1 && goods().qishu != max() -->
+			<!-- ko if: goods().qishu + 2 <= max() -->
+				<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: goods().qishu + 2 }">第<span data-bind="text: goods().qishu + 2"></span>期</a>
+			<!-- /ko -->
+			<!-- ko if: goods().qishu + 1 <= max() -->
+				<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: goods().qishu + 1 }">第<span data-bind="text: goods().qishu + 1"></span>期</a>
+			<!-- /ko -->
+			<a class="yyg-qishu-item yyg-active">第<span data-bind="text: goods().qishu"></span>期</a>
+		<!-- /ko -->
+		<!-- ko if: goods().qishu != max() && goods().qishu != 1 -->
+			<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: goods().qishu + 1 }">第<span data-bind="text: goods().qishu + 1"></span>期</a>
+			<a class="yyg-qishu-item yyg-active">第<span data-bind="text: goods().qishu"></span>期</a>
+			<a class="yyg-qishu-item" data-bind="click: goto, attr: { qishu: goods().qishu - 1 }">第<span data-bind="text: goods().qishu - 1"></span>期</a>
+		<!-- /ko -->
 	</ul>
-	<!--<a class="yyg-qishu-all">+</a>-->
 </div>
 
 <div class="yyg-body">
-	<div class="swiper-outter">
+	<div class="swiper-outter" data-bind="visible: goods() && goods().status < 2">
 		<div class="swiper-container swiper-loop">
 		    <div class="swiper-wrapper">
 		    	<foreach name="images" item="image">
@@ -36,24 +104,23 @@
 		</div>
 		<div class="pagination pagination-loop"></div>
 	</div>
-	
+	<!-- ko if: goods() -->
+	<!-- ko if: goods().status < 2 -->
 	<p class="yyg-view-title yyg-view-margin">
-		(第{$data.qishu}期) {$data.title} <r>{$data.subtitle}</r>
+		(第<span data-bind="text: goods().qishu"></span>期) <span data-bind="text: goods().title"></span> <r data-bind="text: goods().subtitle"></r>
 	</p>
 	
-	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger">{$data.money}</r></h5>
-	<if condition="$data.xiangou gt 0">
-		<h5 class="yyg-view-margin">限购：{$data.xiangou} 人次</h5>
-	</if>
+	<h5 class="yyg-view-margin">价值：<r class="small">¥</r> <r class="larger" data-bind="text: goods().money"></r></h5>
+	<h5 class="yyg-view-margin" data-bind="if: goods().xiangou > 0">限购：<span data-bind="text: goods().xiangou"></span> 人次</h5>
 	
 	<div class="yyg-progress-bar yyg-view-margin">
 		<div class="yyg-progress">
-			<div class="yyg-progressing" style="width:{$data.percentage|default=0}%"></div>
+			<div class="yyg-progressing" data-bind="style: { width: (Number(goods().canyurenshu) / Number(goods().zongrenshu)) * 100 + '%' }"></div>
 		</div>
 		<div class="yyg-progess-indicator">
-			<span class="yyg-progess-l">{$data.canyurenshu}</span>
-			<span class="yyg-progess-c">{$data.zongrenshu}</span>
-			<span class="yyg-progess-r">{$data.shengyurenshu}</span>
+			<span class="yyg-progess-l" data-bind="text: goods().canyurenshu"></span>
+			<span class="yyg-progess-c" data-bind="text: goods().zongrenshu"></span>
+			<span class="yyg-progess-r" data-bind="text: goods().shengyurenshu"></span>
 		</div>
 		<div class="yyg-progess-label">
 			<span class="yyg-progess-l">已参与</span>
@@ -61,73 +128,144 @@
 			<span class="yyg-progess-r">剩余</span>
 		</div>
 	</div>
-</div>
-	<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
-		<ul class="mui-table-view yyg-margin20"><li class="mui-table-view-cell">
-		<r class="yyg-view-title yyg-view-margin">
-			正在开奖计算中，请稍后...
-		</r>
-		</li></li></ul>
-	<elseif condition="(int)$data['jishijiexiao'] gt 0"/>
-		<ul class="mui-table-view yyg-margin20"><li class="mui-table-view-cell">
-		<span class="yyg-view-title yyg-view-margin">
-			剩余时间：<time countdown="{$data.end_time}"><d>0</d><d>0</d>:<d>0</d><d>0</d>:<d>0</d><d>0</d></time>
-		</span>
-		</li></li></ul>
-	</if>
+	<!-- /ko -->
 	
-<ul class="mui-table-view yyg-margin20">
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('record', '', '')}/{$data.qishu}/{$data.gid}">参与记录 <span class="yyg-tiny">({$data.goumaicishu})</span></a></li>
-	<li class="mui-table-view-cell"><a class="mui-navigate-right" href="{:U('detail', '', '')}/{$data.gid}">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
+	<!-- ko if: goods().status == 2 -->
+	<div id="emptyBlock" class="yyg-prize">
+		<div class="yyg-prize-lasttime">正在开奖：<span data-bind="attr: { countdown: goods().lasttime }"></span></div>
+		<h5>表着急，正在努力计算当中...</h5>
+	</div>
+	<!-- /ko -->
+	
+	<!-- ko if: goods().status == 3 && Number(goods().goumaicishu) > 0 -->
+	<div class="yyg-prize">
+		<div class="yyg-prize-img" data-bind="style: { 'background-image': 'url(' + goods().userimg + ')' }">
+		</div>
+		<div class="yyg-prize-content">
+			<a data-bind="text: goods().username"></a>
+			<h5>本次参与:<r data-bind="text: goods().prizecount"></r>人次</h5>
+			<h5>幸运购物码:<r data-bind="text: Number(goods().prizecode) + 10000001"></r></h5>
+			<h5>揭晓时间：<span data-bind="text: goods().end_time"></span></h5>
+		</div>
+		<a class="yyg-prize-all" data-bind="attr: { href: '{:U('prizerecord','','')}/' + [goods().qishu, goods().gid, goods().prizeuid, goods().username].join('/') }">
+			获得者本期所有购物码 &gt
+		</a>
+	</div>
+	<!-- /ko -->
+	
+	<!-- ko if: goods().status == 3 && Number(goods().canyurenshu) == 0 -->
+	<div id="emptyBlock" class="yyg-prize">
+		<i class="iconfont icon-yihan"></i>
+		<br/>
+		很遗憾，本期没有人参与
+	</div>
+	<!-- /ko -->
+	
+	<!-- ko if: goods().status >= 2 -->
+	<section class="tuijian yyg-content">
+		<div class="tuijian-left">
+			<div class="tuijian-img-container">
+				<img class="tuijian-img" src="{$current.thumb}" />
+			</div>
+		</div>
+		<div class="tuijian-content">
+			<p class="tuijian-content-title">(第<span data-bind="text: goods().qishu"></span>期) <span data-bind="text: goods().title"></span> <r data-bind="text: goods().subtitle"></r></p>
+			<h5>价值：¥ <span data-bind="text: goods().money"></span></h5>
+			<h5>购买：¥ <span data-bind="text: goods().canyurenshu"></span> 人次</h5>
+			<h5>剩余：¥ <span data-bind="text: goods().shengyurenshu"></span> 人次</h5>
+		</div>
+	</section>
+	<!-- /ko -->
+	<!-- /ko -->
+</div>
+
+
+<ul class="mui-table-view yyg-margin20" data-bind="if: goods() && goods().status < 2 && goods().jishijiexiao > 0">
+	<li class="mui-table-view-cell">
+		<span class="yyg-view-title yyg-view-margin">
+			剩余时间：<time data-bind="attr: { countdown: goods().end }"></time>
+		</span>
+	</li>
+</ul>
+	
+<ul class="mui-table-view yyg-margin20" data-bind="if: goods()">
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" data-bind="attr: { href: '{:U('Index/record','','')}/' + goods().qishu + '/' + goods().gid }">参与记录 <span class="yyg-tiny">(<span data-bind="text: goods().goumaicishu"></span>)</span></a></li>
+	<li class="mui-table-view-cell"><a class="mui-navigate-right" data-bind="attr: { href: '{:U('Index/detail','','')}/' + goods().gid }">图文详情 <span class="yyg-tiny">(建议WIFI下使用)</span></a></li>
 	<li class="mui-table-view-cell"><a class="mui-navigate-right">商品晒单</a></li>
 </ul>
 
-<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
-<elseif condition="$data.shengyurenshu neq 0"/>
+<!-- ko if: goods() && goods().status < 2 -->
 <footer class="yyg-footer">
 	<div class="yyg-footer-left">
 		<a class="yyg-btn yyg-btn-link" href="javascript:history.go(-1)"><i class="mui-icon mui-icon-back"></i></a>
-		<div id="lijiButton" class="yyg-btn yyg-btn-primary">立即一元秒杀</div>
+		<div id="lijiButton" class="yyg-btn yyg-btn-primary" data-bind="click: go">立即一元秒杀</div>
 	</div>
 	<div class="yyg-footer-right">
-		<div id="addCartButton" class="yyg-btn yyg-btn-success">加入购物车</div>
+		<div id="addCartButton" class="yyg-btn yyg-btn-success" data-bind="click: add">加入购物车</div>
 		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
-</if>
-
+<!-- /ko -->
+<div class="yyg-loading"></div>
+<script src="__KO__"></script>
 <script type="text/javascript">
 	$(function() {
-		<if condition="(int)$data['shengyurenshu'] eq 0 or ((int)$data['jishijiexiao'] gt 0 and (int)$data['end_time'] elt $data['now'])">
-			window.setInterval(function() {
-				window.location.reload();
-			}, 60 * 1000);
-		<elseif condition="$data.shengyurenshu neq 0"/>
-			var time = {$data.end_time} - {$data.now} + 10*1000;
-			window.setInterval(function() {
-				window.location.reload();
-			}, time);
-			
-			$("#addCartButton").click(function() {
-				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-					if(result.status==1000)
-					{
-						window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
-						return;
+		var vm = {
+			goods: ko.observable(null),
+			max: ko.observable("{$current.qishu}"),
+			go: go,
+			add: add,
+			goto: goto
+		};
+		ko.applyBindings(vm);
+		var gid = Number("{$gid}");
+		var qishu = Number("{$qishu}");
+		
+		function query() {
+			$.getJSON("{:U('Index/g', '', '')}/" + gid + "/" + qishu, null, function(goods) {
+				if(goods) {
+					goods.qishu = Number(goods.qishu);
+					goods.status = Number(goods.status);
+					goods.current = Number(goods.current);
+					vm.max(goods.current);
+					vm.goods(goods);
+					countdown(Number(goods.now));
+					
+					if(goods.status == 2) {
+						window.setTimeout(query, Math.max(goods.lasttime - goods.now, 3000) + 3000);
+					} else if(goods.status < 2 && Number(goods.jishijiexiao) > 0) {
+						window.setTimeout(query, Math.max(goods.end - goods.now, 3000) + 3000);
 					}
-					new Android_Toast({content: result.message});
-				})
+				}
+				window.closeLoading()
 			});
-			$("#lijiButton").click(function() {
-				$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}", null, function(result) {
-					if(result.status==1000)
-					{
-						window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI(window.location.href);
-						return;
-					}
-					window.location.href = "{:U('Cart/index', '','')}";
-				})
+		}
+		query();
+		
+		function goto(obj, evt) {
+			var $this = $(evt.delegateTarget);
+			qishu = Number($this.attr("qishu"));
+			query();
+		}
+		
+		function add(obj, evt) {
+			$.post("{:U('Cart/add', '', '')}/"+ gid + "/" + vm.goods().type, null, function(result) {
+				if(result.status==1000) {
+					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI("{:U('Index/view', '', '')}/"+ gid + "/" + qishu);
+					return;
+				}
+				new Android_Toast({content: result.message});
 			});
-		</if>
+		};
+		
+		function go() {
+			$.post("{:U('Cart/add', '', '')}/"+ gid + "/" + vm.goods().type, null, function(result) {
+				if(result.status==1000) {
+					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI("{:U('Index/view', '', '')}/"+ gid + "/" + qishu);
+					return;
+				}
+				window.location.href = "{:U('Cart/index', '','')}";
+			});
+		};
 	});
 </script>

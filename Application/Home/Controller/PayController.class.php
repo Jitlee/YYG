@@ -464,8 +464,9 @@ class PayController extends Controller {
 			$uid = (int)$data['uid'];
 			$count = (int)$data['count'];
 			$qishu = (int)$data['qishu'];
-			$rst = $mmdb->execute("call p_buy_miaosha($gid, $qishu, $mid, $uid, $count)");
-			if(!$rst > 0) {
+			$rst = $mmdb->execute("select f_buy_miaosha($gid, $qishu, $mid, $uid, $count) rst");
+//			echo $mmdb->getLastSql();
+			if((int)$rst['rst'] < 0) {
 				return 206; // 保存主表失败
 			}
 			

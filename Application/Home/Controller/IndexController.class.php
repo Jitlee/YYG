@@ -23,7 +23,7 @@ class IndexController extends Controller {
 	
 	public function all($category = 0, $categoryName = '商品分类'){
 //		run_task();
-    	$this->assign('title', '热门秒杀');
+    		$this->assign('title', '热门秒杀');
 		$this->assign('pid', 'jiexiao');
 		
 		$this->assign('category', $category);
@@ -38,7 +38,6 @@ class IndexController extends Controller {
 		// 分页
 		$db = M('miaosha');
 		$filter['jishijiexiao'] = 0;
-		$filter['type'] = 1;
 		
 		$cid = intval(I('get.cid'));
 		if($cid > 0) {
@@ -62,8 +61,13 @@ class IndexController extends Controller {
 				break;
 		}
 		
+		$field = 'gid,title,thumb,money,danjia,xiangou, qishu, canyurenshu, zongrenshu
+			, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() * 1000 now
+			, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
+			,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime';
+		
 		$list = $db
-			->field('gid,title,thumb,money,danjia,xiangou,status, qishu, canyurenshu, zongrenshu,type')
+			->field($field)
 			->where($filter)
 			->order($order)
 			->page($pageNum, $pageSize)
@@ -78,72 +82,61 @@ class IndexController extends Controller {
 		$this->view($gid, $qishu);
 	}
 	
-	public function view($gid, $qishu = null) {
-		layout('sublayout');
-		$this->assign('title', '商品详情');
-		
-		$data = $this->getGood($gid, $qishu);
-		$data['percentage'] = min(100, intval($data['canyurenshu'])*100/ intval($data['zongrenshu']));
-		$this->assign('data', $data);
-		
+	public function view($gid = 0, $qishu = 0) {
 		$db = M('miaosha');
-		$current = $db->field('qishu, status')->find($gid);
+		$current = $db->field('qishu, status,thumb,type')->find($gid);
 		$this->assign('current', $current);
 		
-//		echo dump($data);
+		$this->assign('gid', $gid);
+		$this->assign('qishu', $qishu);
 		
-		$data['status'] = intval($data['status']);
-		$data['qishu'] = intval($data['qishu']);
-		$data['maxqishu'] = intval($data['maxqishu']);
-		if($data['status'] == 2) {
-			
-		} else {
-			$imgdb = M('GoodsImages');
-			$imgmap['gid'] = $gid;
-			$imgmap['type'] = $data['type'];
-			$images = $imgdb->where($imgmap)->select();
-			if(empty($images)) {
-				$image['image_url'] = $data['thumb'];
-				array_push($images, $image);
-			}
-			$this->assign('images', $images);
+		$imgdb = M('GoodsImages');
+		$imgmap['gid'] = $gid;
+		$imgmap['type'] = $current['type'];
+		$images = $imgdb->where($imgmap)->select();
+		if(empty($images)) {
+			$image['image_url'] = $current['thumb'];
+			array_push($images, $image);
 		}
-//		$this->assign('periods', $qishuArray);
+		$this->assign('images', $images);
 		
-		if($data['status'] == 2) {
-			$this->display('end');
-		} else {
-			$this->display('view');
-		}
+		layout('sublayout');	
+		$this->assign('title', '商品详情');
+		$this->display();
 	}
 	
-	private function getGood($gid, $qishu = null) {
-		if(!$qishu) {
-			$db = M('miaosha');
-			$goods = $db->field('gid,title,subtitle,thumb,money, jishijiexiao, UNIX_TIMESTAMP() * 1000 now, goumaicishu,xiangou,canyurenshu,zongrenshu,shengyurenshu,qishu,maxqishu,status,type,UNIX_TIMESTAMP(date_add(`time`,interval +jishijiexiao hour)) * 1000 end_time')->find($gid);
-			
-//			echo $db->getLastSql();
-			if((int)$goods['status'] == 2) {
-				return $this->getGood($gid, (int)$goods['qishu']);
-			}
+	public function g($gid = 0, $qishu = 0) {
+		$goods = $this->getGood($gid, $qishu);
+//		echo dump($goods);
+		$this->ajaxReturn($goods, 'JSON');
+	}
+	
+	private function getGood($gid = 0, $qishu = 0) {
+		$field = 'gid,title,subtitle,thumb,money, jishijiexiao, goumaicishu,xiangou,canyurenshu,
+			zongrenshu,shengyurenshu,qishu,maxqishu,type
+		, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() * 1000 now
+		, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
+		,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime';
+		$db = M('Miaosha');
+		$goods = $db->field($field)->find($gid);
+		$current = (int)$goods['qishu'];
+		if($current == $qishu || $qishu == 0) {
+			$goods['current'] = $current;
 			return $goods;
-		} else {
-			// 历史
-			$db = M('MiaoshaHistory');
-			$map['gid'] = $gid;
-			$map['qishu'] = $qishu;
-			$data = $db
-				->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
-					INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
-				->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
-			->where($map)->find();
-			
-			if(empty($data)) {
-				return $this->getGood($gid, null);
-			}
-			
-			return $data;
 		}
+		
+		// 历史
+		$db = M('MiaoshaHistory');
+		$map['gid'] = $gid;
+		$map['qishu'] = $qishu;
+		$history = $db
+			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,
+				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
+			->where($map)->find();
+//		echo $db->getLastSql();
+		$history['current'] = $current;
+		return $history;
 	}
 	
 	public function detail($gid) {

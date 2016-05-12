@@ -17,7 +17,30 @@
 <link rel="stylesheet" href="__CSS__/swiper.min.css" />
 <link rel="stylesheet" href="__CSS__/comm1.css" />
 <script src="__JS__/swiper.jquery.min.js"></script>
-
+<style type="text/css">
+	a.yyg-prize-lasttime {
+		height: 35px;
+		font-size: 17px;
+		color: red!important;
+		display: block;
+		line-height: 35px;
+		text-align: center;
+	}
+	
+	.yyg-prize-endtime {
+		position: absolute;
+		display: block;
+		left: 0px;
+		right:0px;
+		bottom: 165px;
+		height: 35px;
+		font-size: 17px;
+		color: #f60;
+		line-height: 35px;
+		text-align: center;
+		background-image: url(__IMG__/Guide_13.jpg);
+	}
+</style>
 <div class="home-banner fl">
 	<div id="div_slide" class="slide-scroll">
 		 <!-- Slider main container -->
@@ -147,7 +170,13 @@
 							</dl>
 						</li>
 						<li>
+							<if condition="$item.status eq 2">
+							<a class="yyg-prize-lasttime" title="前往查看" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">
+								正在开奖: <span countdown="{$item.lasttime}"></span>
+							</a>
+							<else/>
 							<a class="u-imm" title="立即壹圆购物" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即壹圆购物</a>
+							</if>
 						</li>
 					</ul>
 				</div>
@@ -191,6 +220,11 @@
 					<li class="g-soon-pic">
 						<a title="第{$item.qishu}期 {$item.title}" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">
 							<img id="img_274277" src="{$item.thumb}" alt="第{$item.qishu}期 {$item.title}">
+							<if condition="$item.status lt 2">
+							<div class="yyg-prize-endtime">
+								剩余时间：<span countdown="{$item.end}"></span>
+							</div>
+							</if>
 						</a>
 					</li>
 					<li class="soon-list-name">
@@ -210,10 +244,16 @@
 						</dl>
 					</li>
 					<li>
+						<if condition="$item.status eq 2">
+						<a class="yyg-prize-lasttime" title="前往查看" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">
+							正在开奖: <span countdown="{$item.lasttime}"></span>
+						</a>
+						<else/>
 						<a class="u-now" title="立即壹圆购物" target="_blank" href="{:U('Index/view','','')}/{$item.gid}">立即壹圆购物</a>
 						<a class="u-cart add-cart" title="加入到购物车" href="javascript:void(0);" src="{$item.thumb}" gid="{$item.gid}">
 							<s></s>
 						</a>
+						</if>
 					</li>
 				</ul>
 			</div>

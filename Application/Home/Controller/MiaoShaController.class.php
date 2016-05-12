@@ -39,7 +39,12 @@ class MiaoshaController extends Controller {
 				break;
 		}
 		
-		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field('gid,title,thumb,money,danjia,status')->select();
+		$field = 'gid,title,thumb,money,danjia
+			, if(status < 2 and shengyurenshu = 0, 2, status) status, unix_timestamp() now
+			, unix_timestamp(date_add(time, interval jishijiexiao hour))*1000 end
+			,unix_timestamp(date_add(lastTime, interval 3 minute))*1000 lasttime';
+		
+		$list = $db->where($filter)->order($order)->page($pageNum, $pageSize)->field($field)->select();
 		$this->ajaxReturn($list, "JSON");
 	}
 	
