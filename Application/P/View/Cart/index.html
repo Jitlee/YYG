@@ -109,10 +109,6 @@
 						return;
 					}
 					
-					if(count > shengyu) {
-						count = shengyu
-					}
-					
 					if(flag == -1 && count <= 1) {
 						return;
 					}
@@ -122,7 +118,7 @@
 						return;
 					}
 					
-					if(count + flag == bkCount) {
+					if(count + flag < 0 || count + flag > shengyu) {
 						return;
 					}
 					count += flag;
@@ -130,18 +126,18 @@
 					xj.text(count * danjia);
 					sum();
 					message.text("");
-					
-					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
-						if(result.status == 0) {
-							input.attr("bk", result.count);
-						} else { // 失败
-							message.text("修改失败");
-							
-							xj.text(bkCount * danjia);
-							input.val(bkCount);
-							sum();
-						}
-					});
+//					
+//					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
+//						if(result.status == 0) {
+//							input.attr("bk", result.count);
+//						} else { // 失败
+//							message.text("修改失败");
+//							
+//							xj.text(bkCount * danjia);
+//							input.val(bkCount);
+//							sum();
+//						}
+//					});
 				}
 				
 				var moenyCount = $("#moenyCount");

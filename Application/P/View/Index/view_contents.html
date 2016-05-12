@@ -74,7 +74,7 @@
 </div>
 <div style="display:none;" id="hqid">{$data.gid}</div>
 <div id="divBuy" class="Det_button">
-	<a href="javascript:void(0);" class="Det_Shopbut">立即购物</a>
+	<a href="javascript:void(0);" id="liligouwu" class="Det_Shopbut">立即购物</a>
 	<a href="javascript:void(0);" class="Det_Cart add-cart" src="{$data.thumb}" gid="{$data.gid}"><i></i>加入购物车</a>							
 </div>
 <script type="text/javascript">
@@ -97,8 +97,8 @@
 				return;
 			}
 			
-			if(count > shengyu) {
-				count = shengyu;
+			if(count >= shengyu - 1 && flag == 1) {
+				count = shengyu - 1;
 			}
 			
 			if(flag == -1 && count <= 1) {
@@ -117,16 +117,10 @@
 		}
 		
 		// 立即购物
-		$(".Det_Shopbut").click(function() {
+		$("#divBuy").on("click", "#liligouwu", function() {
 			$.post("{:U('Cart/add', '', '')}/{$data.gid}/{$data.type}/" + Number(input.val()), null, function(result) {
 				window.location.href = "{:U('Cart/index', '','')}";
 			})
 		});
-//		
-//		<if condition="$data.jishijiexiao gt 0">
-//			window.setTimeout(function() {
-//				window.location.reload();
-//			}, 15000);
-//		</if>
 	});
 </script>
