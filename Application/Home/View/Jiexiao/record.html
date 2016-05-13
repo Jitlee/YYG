@@ -95,7 +95,7 @@
 	</div>
 	<h5 class="mui-content-padded"><span class="time">购买时间</span>和=最后100条购买时间的时分秒之和</h5>
 	<div class="mui-content-padded" id="viewButton">
-		<a class="mui-btn mui-btn-block mui-btn-primary">查看最后的100条购买纪录</a>
+		<a class="mui-btn mui-btn-block mui-btn-primary">查看全站最后的100条购买纪录</a>
 	</div>
 	<div id="recrodList" style="display: none;">
 	<ul class="mui-table-view" data-bind="foreach: records">
@@ -107,9 +107,13 @@
 			<a>
 				<img data-bind="attr: { src: userimg }" class="mui-media-object mui-pull-left" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/>
 				<div class="mui-media-body">
+					<div class="mui-ellipsis">
+						(第<span data-bind="text: qishu"></span>期)<span data-bind="text: title"></span>
+					</div>
 					<p data-bind="text: username"></p>
 					<h5 class="yyg-prize-count"><r data-bind="text: count"></r>人次</h5>
-					<h5>购买时间：<span data-bind="text: time"></span></h5>
+					<h5>购买时间：<span data-bind="text: time"></span>.<span data-bind="text: ms > 0 ? ms : '000' "></span></h5>
+					<h5>时间求和：<span class="time" data-bind="text: prizeno"></span></h5>
 				</div>
 			</a>
 		</li>

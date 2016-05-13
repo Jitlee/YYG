@@ -111,11 +111,7 @@ max-width: 85px !important; border: 1px solid #808182;  overflow: hidden;}
 		       			}
 		       			
 		       			var item = useTemplate.clone().removeClass("mui-hidden").removeAttr("id");
-		       			$(".goodurl", item).attr("href", "{:U('/Home/Index/view', '', '')}/" + this.gid);
-						if(this.isend==1)
-		       			{
-		       				$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/view/" + this.gid+"/"+this.qishu);
-		       			}
+	       				$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid+"/"+this.qishu);
 						$("img", item).attr("src", this.thumb);
 		       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);
 		       			$(".yyg-progressing", item).css("width", 100 * (this.canyurenshu/this.zongrenshu) + "%");

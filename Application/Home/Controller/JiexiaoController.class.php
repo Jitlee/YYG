@@ -138,7 +138,7 @@ class JiexiaoController extends Controller {
 			->where($filter)->find();
 		$this->assign('data', $data);
 		$title = $data['title'];
-		$this->assign('title', "(第$qishu)期 $title 结果公示");
+		$this->assign('title', "(第$qishu)期 $title 结算结果");
 		$this->display();
 	}
 	
@@ -148,9 +148,11 @@ class JiexiaoController extends Controller {
 			'r.gid'		=> $gid,
 			'r.qishu'		=> $qishu
 		);
-		$list = $mdb->field("r.gid,r.mid,ms.time,ms.count
+		$list = $mdb->field("r.gid,r.qishu,r.mid,ms.time,ms.count,m.title,ms.ms,
+			(HOUR(ms.time)*10000000+MINUTE(ms.time)*100000+SECOND(ms.time)*1000 + ms.ms) prizeno
 			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
 			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
+			->join("inner join __MIAOSHA__ m on m.gid = r.gid")
 			->join("inner join __MEMBER__ u on u.uid = ms.uid")
 			->where($filter)->order('ms.time desc')->select();
 		$this->ajaxReturn($list, 'JSON');

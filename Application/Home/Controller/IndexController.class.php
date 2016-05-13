@@ -175,7 +175,7 @@ class IndexController extends Controller {
 		$map['gid'] = $gid;
 		$map['qishu'] = $qishu;
 		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
-			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member_miaosha.count','yyg_member_miaosha.time','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member_miaosha.count','yyg_member_miaosha.time', 'yyg_member_miaosha.ms','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
 			->where($map)->order('id desc')->page($pageNum, 20)->select();
 		if($pageNum > 1) {
 			if(empty($list)) {

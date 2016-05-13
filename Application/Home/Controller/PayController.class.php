@@ -456,6 +456,7 @@ class PayController extends Controller {
 		$data['uid'] = $cart['uid'];
 		$data['gid'] = $cart['good']['gid'];
 		$data['count'] = intval($cart['count']);
+		$data['ms'] = rand(0,999);
 		$data['qishu'] = $good['qishu'];
 		$data['canyu'] = $good['canyurenshu']; // 记录当前参与人数，用于计算中奖结果  （已废弃）
 		$mid = $mmdb->add($data); // 增加秒杀纪录

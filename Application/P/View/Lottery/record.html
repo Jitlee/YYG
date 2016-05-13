@@ -28,14 +28,38 @@
 			    padding-left: 10px;
 			}
 			
+			.prize-right {
+				background-repeat: no-repeat;
+				background-image: url(__IMG__/prize-right.png);
+				background-position: 50% 50%;
+				width: 16px;
+				height: 16px;
+				vertical-align: middle;
+				display: inline-block;
+				zoom: *;
+			}
+			
+			.r {
+				color: #eb4f38;
+				font-weight: bold;
+			}
+			
+			h5 {
+				margin-top: 0px;
+				background-color: #FDF5E6;	
+				padding: 6px;
+			}
+			
 		</style>
+		<h5>截止到当前商品揭晓时间({$end_time})全站最后的100条参与纪录</h5>
 		<table class="yyg-record-table" cellpadding="0" cellspacing="0">
 			<tbody>
 				<tr>
 					<th style="width:40px"></th>
-					<th>会员</th>
-					<th>购物次数</th>
-					<th>时间</th>
+					<th style="width: 150px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">会员</th>
+					<th style="width: 230px;">时间</th>
+					<th>购买商品</th>
+					<th style="width: 60px">购物次数</th>
 				</tr>
 				<foreach name="list" item="item">
 				<tr>
@@ -45,8 +69,13 @@
 						<td><img src="__TIMG__/{$item.userimage}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
 					<php>}</php>
 					<td>{$item.username}</td>
-					<td>{$item.count}</td>
-					<td>{$item.time}</td>
+					<td>
+						{$item.time}.<if condition="$item.ms gt 0">{$item.ms}<else/>000</if>
+						<div class="prize-right"></div>
+						<span class="r">{$item.prizeno}</span>
+					</td>
+					<td style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">(第{$item.qishu}期) {$item.title}</td>
+					<td style="text-align: center;">{$item.count}</td>
 				</tr>
 				</foreach>
 			</tbody>

@@ -7,7 +7,7 @@ class LotteryController extends CommonController {
 		$this->assign('title', '壹圆购物');
 		$num = 0;
 		$total = 0;
-		$pageSize = 14;
+		$pageSize = 28;
 		
 		// 最新揭晓
 		$hdb = M('MiaoshaHistory');
@@ -40,13 +40,15 @@ class LotteryController extends CommonController {
 		$records = $mmdb->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
 			->join('yyg_miaosha on yyg_miaosha.gid = yyg_member_miaosha.gid and yyg_miaosha.qishu = yyg_member_miaosha.qishu')
 			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 
-				'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time',
+				'yyg_member.img', 'yyg_member_miaosha.count','yyg_member_miaosha.time','yyg_member_miaosha.ms',
 				'IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username',
 				'yyg_miaosha.gid', 'yyg_miaosha.thumb','yyg_miaosha.title','yyg_miaosha.qishu'))
 			->where($mmmap)->order('yyg_member_miaosha.time desc')->page(1, 6)->select();
 		if(!empty($records)) {
 			$this->assign('records', $records);
 		}
+		
+//		echo $mmdb->getLastSql();
 		
 		// 人气排行榜
 		$mdb = M('Miaosha');
@@ -68,17 +70,26 @@ class LotteryController extends CommonController {
 	// 前一百个购买纪录
 	public function r($gid, $qishu, $pageNo = 1) {
 		$mdb = M('MiaoshaRecord');
-		$pageSize = 10;
+		$pageSize = 14;
 		$filter = array(
 			'r.gid'		=> $gid,
 			'r.qishu'		=> $qishu
 		);
-		$list = $mdb->field("r.gid,r.mid,ms.time,ms.count
+		$list = $mdb->field("r.gid,r.qishu,r.mid,ms.time,ms.count,ms.ms,m.title
+			,(HOUR(ms.time)*10000000+MINUTE(ms.time)*100000+SECOND(ms.time)*1000+ms) prizeno
 			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
 			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
+			->join("inner join __MIAOSHA__ m on r.gid = m.gid")
 			->join("inner join __MEMBER__ u on u.uid = ms.uid")
 			->where($filter)->order('ms.time desc')->page($pageNo, $pageSize)->select();
 		$num = 0;
+		
+		$db = M('MiaoshaHistory');
+		$data = $db->where(array(
+			'gid'		=> $gid,
+			'qishu'		=> $qishu
+		))->field("end_time")->find();
+		$this->assign('end_time', $data['end_time']);
 		
 //		echo $mdb->getLastSql();
 		$total = 0;
