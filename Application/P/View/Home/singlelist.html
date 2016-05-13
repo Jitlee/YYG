@@ -110,11 +110,11 @@
 	       		$.each(list, function() {
 	       			useTemplateNo=goodTemplateNo;
 	       			var item = useTemplateNo.clone().removeClass("mui-hidden").removeAttr("id");
-	       			$(".goodurl", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".goodurl", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
 					
 					$("img", item).attr("src", this.thumb);
 	       			$(".zcontent", item).text("(第" + this.qishu + "期) " + this.title);	       			
-	       			$(".iteminfo", item).attr("href", "{:U('/Home/Index', '', '')}/" + this.gid);
+	       			$(".iteminfo", item).attr("href", "{:U('Index/view', '', '')}/" + this.gid + "/" + this.qishu);
 	       			$(".iteminfosd", item).attr("href", "{:U('Home/singleinsert', '', '')}/" + this.gid +"/"+this.qishu);
 	       			goodListNo.append(item);
 	       		});

@@ -10,11 +10,7 @@
  			<table>
  				<tr>
  					<td colspan="2"  style="text-align: center;">
- 							<php>if (!ereg('^http://', $item.img)) {</php>								
-								<img id="showimg" src="{$data.img}" border="0"/>
-							<php>}else{</php>
-								<img id="showimg" src="__TIMG__/{$data.img}" border="0"/>
-							<php>}</php>
+						<img id="showimg" src="{$data.img}" border="0"/>
  					</td>
  					<td>
  						<form   method="post" id="crop_form">
@@ -60,7 +56,7 @@
 <script type="text/javascript">
 	function checked(ss){
 		$("#showimg").attr("src",ss.src);
-		$("#membimg").val(ss.id);
+		$("#membimg").val("__TIMG__/" + ss.id);
 	}
 	
 	$(document).ajaxStart(function() {

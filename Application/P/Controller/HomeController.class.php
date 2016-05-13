@@ -15,7 +15,8 @@ class HomeController extends CommonController {
 		if(!is_login()) {
 			$this->redirect('Main/login');
 			return;
-		}		
+		}
+		
 		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
 	}
 		
@@ -31,7 +32,7 @@ class HomeController extends CommonController {
 			$_SESSION["loginitem"]=null;
 		}
 		
-    	$this->assign('title', '壹圆购物');
+    		$this->assign('title', '壹圆购物');
 		$Model = M('member');
 		$filter['uid'] = session("_uid");		
 		$userinfo =$Model->where($filter)->find();
@@ -40,6 +41,7 @@ class HomeController extends CommonController {
 		{
 			$userinfo['sstatus']=1;
 		}
+		session("img", $userinfo['img']);
 		$this->assign('data', $userinfo);
 		$this->display();
     }
@@ -66,7 +68,7 @@ class HomeController extends CommonController {
 	}
 	/*	中奖记录	*/
 	public function orderlist(){		
-    	$this->assign('title', '壹圆购物');
+    		$this->assign('title', '壹圆购物');
 		$this->display();
     }
 	public function pageAllzj($pageSize, $pageNum) {
@@ -457,6 +459,7 @@ limit $s,$e";
 			}
 			$user["img"]=$_POST['membimg'];
 			$db->save($user);
+			session("img", $user["img"]);
 			$result["status"]=1;
 			session('wxUserinfo', $user);
 			$this->ajaxReturn($result, "JSON");

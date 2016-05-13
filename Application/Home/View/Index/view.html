@@ -139,7 +139,7 @@
 	
 	<!-- ko if: goods().status == 3 && Number(goods().goumaicishu) > 0 -->
 	<div class="yyg-prize">
-		<img class="yyg-prize-img" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';" data-bind="attr: { src: 'url(' + goods().userimg + ')' }"/>
+		<img class="yyg-prize-img" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';" data-bind="attr: { src: goods().userimg }"/>
 		<div class="yyg-prize-content">
 			<a data-bind="text: goods().username"></a>
 			<h5>本次参与:<r data-bind="text: goods().prizecount"></r>人次</h5>
@@ -204,7 +204,7 @@
 	</div>
 	<div class="yyg-footer-right">
 		<div id="addCartButton" class="yyg-btn yyg-btn-success" data-bind="click: add">加入购物车</div>
-		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
+		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}?{:rand()}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
 <!-- /ko -->
@@ -228,7 +228,7 @@
 				商品已经结束活动
 			</a>
 		<!-- /ko -->
-		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
+		<a class="yyg-btn yyg-btn-link" href="{:U('Cart/index', '','')}?{:rand()}"><i class="iconfont icon-yyg_cart mui-icon"></i></a>
 	</div>
 </footer>
 <!-- /ko -->
@@ -245,7 +245,7 @@
 			goto: goto
 		};
 		ko.applyBindings(vm);
-		var gid = Number("{$gid}");
+		var gid = Number("{$current.gid}");
 		var qishu = Number("{$qishu}");
 		
 		function query() {
@@ -292,7 +292,7 @@
 					window.location.href="{:U('Person/trylogin', '', '')}?url="+encodeURI("{:U('Index/view', '', '')}/"+ gid + "/" + qishu);
 					return;
 				}
-				window.location.href = "{:U('Cart/index', '','')}";
+				window.location.href = "{:U('Cart/index', '','')}?{:rand()}";
 			});
 		};
 	});

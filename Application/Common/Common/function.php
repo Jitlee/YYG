@@ -241,22 +241,22 @@ function empty_cart() {
 }
 function get_user_img($id=null)
 {
-	$db = M('member');
-	if($id)
-	{
-		$data['uid'] =$id;
-	}
-	else
-	{
-		$data['uid'] = session("_uid");
-	}
-	$user = $db->where($data)->find();
-	$img=$user['img'];
-	if (!ereg('^http://', $user['img'])) 
-	{
-		$img='/Public/Home/images/'.$user['img'];
-	}	 
-	return $img;	
+//	$db = M('member');
+//	if($id)
+//	{
+//		$data['uid'] =$id;
+//	}
+//	else
+//	{
+//		$data['uid'] = session("_uid");
+//	}
+//	$user = $db->where($data)->find();
+//	$img=$user['img'];
+//	if (!ereg('^http://', $user['img'])) 
+//	{
+//		$img='/Public/Home/images/'.$user['img'];
+//	}	 
+//	return $img;	
 }
 
 function run_task() {

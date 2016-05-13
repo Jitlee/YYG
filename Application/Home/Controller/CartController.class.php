@@ -10,49 +10,70 @@ class CartController extends Controller {
     	$this->assign('title', '购物车');
 		$this->assign('pid', 'cart');
 		
-		$db = D('cart');
+		$db = M('cart');
 		
-		$map['uid'] = get_temp_uid();
-		$list = $db->where($map)->relation(true)->select();
-//		echo $db->getLastSql();
-//		echo dump($list);
+		$uid = session("_uid");
+		
+		$sql = "select c.gid,c.qishu,c.count,c.id,c.type,c.time
+			,title,thumb,shengyurenshu,danjia,xiangou, 0 qipaijia, 0 lijijia, 0 baozhengjin, 0 chujiacishu
+			from __CART__ c inner join __MIAOSHA__ m on c.gid=m.gid and c.type <> 3
+			where uid=$uid and m.status < 2
+			union all
+			select c.gid,c.qishu,c.count,c.id,c.type,c.time
+			,title,thumb,0 shengyurenshu, 0 danjia, 0 xiangou, qipaijia,lijijia,baozhengjin,chujiacishu
+			from __CART__ c inner join __PAIMAI__ p on c.gid=p.gid and c.type = 3
+			where uid=$uid and p.status < 2
+			order by time desc";
+		$list = $db->query($sql);
 		if(!empty($list)) {
-			// 检测商品状态
-			foreach($list as $cart) {
-				$count = intval($cart['count']);
-				if($cart['paimai']) {
-					if(intval($cart['paimai']['status']) == 2) {
-						$db->delete($cart['id']);
-						$cart['status'] = 1; // 竞拍已结束
-					}
-				} else if($cart['good']) {
-					if(intval($cart['good']['status']) == 2) {
-						$db->delete($cart['id']);
-						$cart['status'] = 1; // 商品已结束
-					} else {
-						$shengyurenshu = intval($cart['good']['shengyurenshu']);
-						if($shengyurenshu < $count) {
-							$cart['count'] = $shengyurenshu;
-						}
-						
-						if($cart['qishu'] != $cart['good']['qishu']) {
-							$data = array();
-							$data['id'] = $cart['id'];
-							$data['qishu'] = $cart['good']['qishu'];
-							$db->save($data);
-							$cart['qishu'] = $cart['good']['qishu'];
-						}
-					}
-				}
-			}
-			
 			$this->assign('list', $list);
 		}
+//		$list = $db->field("c.gid,c.qishu,c.count,c.id,c.type
+//			,m.title m_title,m.thumb m_thumb,shengyurenshu,danjia,m.type m_type,xiangou
+//			,p.title p_title,p.thumb p_thumb,qipaijia,lijijia,baozhengjin,chujiacishu")
+//			->join("c left join __MIAOSHA__ m on c.gid=m.gid and c.qishu=m.qishu and c.type <> 3")
+//			->join("left join __PAIMAI__ p on c.gid=p.gid and c.flag=3")
+//			->where("c.uid=$uid and flag=1")->order("c.time desc")->select(); 
+			
+//		echo $db->getLastSql();
+//		echo dump($list);
+//		if(!empty($list)) {
+//			// 检测商品状态
+//			foreach($list as $cart) {
+//				$count = intval($cart['count']);
+//				if($cart['paimai']) {
+//					if(intval($cart['paimai']['status']) == 2) {
+//						$db->delete($cart['id']);
+//						$cart['status'] = 1; // 竞拍已结束
+//					}
+//				} else if($cart['good']) {
+//					if(intval($cart['good']['status']) == 3) {
+//						$db->delete($cart['id']);
+//						$cart['status'] = 1; // 商品已结束
+//					} else {
+//						$shengyurenshu = intval($cart['good']['shengyurenshu']);
+//						if($shengyurenshu < $count) {
+//							$cart['count'] = $shengyurenshu;
+//						}
+//						
+//						if($cart['qishu'] != $cart['good']['qishu']) {
+//							$data = array();
+//							$data['id'] = $cart['id'];
+//							$data['qishu'] = $cart['good']['qishu'];
+//							$db->save($data);
+//							$cart['qishu'] = $cart['good']['qishu'];
+//						}
+//					}
+//				}
+//			}
+			
+//			$this->assign('list', $list);
+//		}
 		
 		$this->display();
     }
 	
-	public function add($gid, $type) {
+	public function add($gid, $type, $qishu=0) {
 		$islogin=logincheck();
 		if($islogin==0)
 		{
@@ -61,11 +82,11 @@ class CartController extends Controller {
 			$this->ajaxReturn($result);
 			return;
 		}
-		$db = D('cart');
+		$db = M('cart');
 		$map['gid'] = $gid;
 		$map['type'] = $type;
-		$map['uid'] = get_temp_uid();
-		$exists = $db->where($map)->relation(true)->find();
+		$map['uid'] = session("_uid");
+		$exists = $db->where($map)->find();
 		$result = array();
 		if(empty($exists)) {
 			$data['gid'] = $gid;

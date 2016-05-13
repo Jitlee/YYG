@@ -46,25 +46,25 @@
 <present name="list">
 <ul class="mui-table-view yyg-cart">
 	<foreach name="list" item="item">
-		<li class="mui-table-view-cell yyg-cart-item <if condition="$item.status eq 1">yyg-removed</if>" id="{$item.id}">
+		<li class="mui-table-view-cell yyg-cart-item" id="{$item.id}">
 		<if condition="$item.type eq 3">
 			<div class="yyg-cart-img-container">
-				<img src="{$item.paimai.thumb}"/>
+				<img src="{$item.thumb}"/>
 			</div>
 			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">( 立即揭标 ) {$item.paimai.title}</p>
-				<h5>起拍价:{$item.paimai.qipaijia}</h5>
-				<input type="number" disabled="disabled" name="count" dj="1" value="{$item.paimai.lijijia}" class="mui-input" />
+				<p class="yyg-cart-title">( 立即揭标 ) {$item.title}</p>
+				<h5>起拍价:{$item.qipaijia}</h5>
+				<input type="number" disabled="disabled" name="count" dj="1" value="{$item.lijijia}" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="{$item.id}"><i class="iconfont icon-remove"></i></a>
 			</div>
 		<else/>
 			<div class="yyg-cart-img-container">
-				<img src="{$item.good.thumb}"/>
+				<img src="{$item.thumb}"/>
 			</div>
 			<div class="yyg-cart-body">
-				<p class="yyg-cart-title">(第 {$item.good.qishu} 期){$item.good.title}</p>
-				<h5>剩余{$item.good.shengyurenshu}人次</h5>
-				<input type="number" name="count" cid="{$item.id}" sy="{$item.good.shengyurenshu}" <if condition="$item.status eq 1">disabled="disabled"</if> xg="{$item.good.xiangou}" dj="{$item.good.danjia}" value="{$item.count}" bk="{$item.count}" class="mui-input" />
+				<p class="yyg-cart-title">(第 {$item.qishu} 期){$item.title}</p>
+				<h5>剩余{$item.shengyurenshu}人次</h5>
+				<input type="number" name="count" cid="{$item.id}" sy="{$item.shengyurenshu}" xg="{$item.xiangou}" dj="{$item.danjia}" value="{$item.count}" bk="{$item.count}" class="mui-input" />
 				<a class="yyg-cart-remove yyg-btn yyg-btn-link" cid="{$item.id}"><i class="iconfont icon-remove"></i></a>
 			</div>
 		</if>
@@ -120,6 +120,7 @@
 						count = shengyu;
 						$this.val(count);
 					}
+					sum();
 					
 					$.post("{:U('edit', '', '')}/" + id + "/" + count, null, function(result) {
 						if(result.status == 0) {

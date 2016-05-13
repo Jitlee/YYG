@@ -62,6 +62,7 @@
 	</a>
 </li>
 
+<div class="yyg-loading"></div>
 <script>
 	$(function() {
 		var pageNum = 1;
@@ -79,7 +80,7 @@
 //     			page();
 //			}
 //		}
-		
+		var goodList = $("#goodList");
 		window.onScrollEnd(page);
 		
 		var goodTemplate = $("#goodTemplate");
@@ -116,6 +117,7 @@
 							goodList.append(item);
 						}
 		       		});
+		       		window.closeLoading();
 		       		countdown();
 	       		}
 	       });

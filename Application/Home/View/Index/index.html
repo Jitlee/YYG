@@ -312,7 +312,7 @@
 		<li id="goodTemplate" class="yyg-goods-list-item">
 			<a data-bind="css: { 'jiexiao': status < 3 }, attr: { href: '{:U('Index/view', '', '')}/' + gid }">
 				<div>
-					<div class="yyg-good-cart">
+					<div class="yyg-good-cart"  data-bind="attr: { 'gid': gid }">
 						<i class="iconfont icon-jiarugouwuche"></i>
 					</div>
 					<div class="yyg-goods-img-container" data-bind="style: { backgroundImage: 'url(' + thumb + ')' }">

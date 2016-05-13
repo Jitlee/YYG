@@ -13,7 +13,7 @@
 		<div class="m-round m-name mui-content">
 				<div class="fl f-Himg ac">
 					<span>
-							<img id="showimg" src="__IMG__/{$data.img}" border=0/> 
+							<img id="showimg" src="{$data.img}" border=0/> 
 					</span>
 				 <span>
 						<form   method="post" id="crop_form">
@@ -58,7 +58,7 @@
 <script type="text/javascript">
 	function checked(ss){
 		$("#showimg").attr("src",ss.src);
-		$("#membimg").val(ss.id);
+		$("#membimg").val("__IMG__/" + ss.id);
 	}
 	
 	$(document).ajaxStart(function() {

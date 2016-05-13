@@ -46,11 +46,7 @@
 				</tr>
 				<foreach name="list" item="item">
 				<tr>
-					<php>if (ereg('^http', $item["img"])) {</php>
-						<td><img src="{$item.img}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
-					<php>}else{</php>
-						<td><img src="{$item.img}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
-					<php>}</php>
+					<td><img src="{$item.img}" height="30" width="30" alt="" onerror="this.src='__ROOT__/Public/P/images/Personal_image1.png';"/></td>
 					<td>{$item.username}</td>
 					<td>{$item.count}</td>
 					<td>{$item.time}.<if condition="$item.ms gt 0">{$item.ms}<else/>000</if></td>

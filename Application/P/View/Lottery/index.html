@@ -19,12 +19,7 @@
 							<div class="publishC-Member gray02">
 								<if condition="$item.username neq null">
 									<a class="fl headimg" target="_blank" >
-										<php>if (!ereg('^http://', $item["userimg"])) {</php>
-											<img src="__TIMG__/{$item.userimg}" border="0" alt="" width="50" height="50"/>
-										<php>}else{</php>
-											<img src="{$item.userimg}" border="0" alt="" width="50" height="50"/>
-										<php>}</php>
-										
+										<img src="{$item.userimg}" border="0" alt="" width="50" height="50"/>
 									</a>
 									<p>获得者：<a class="blue Fb" href="{:U('Index/view','','')}/{$item.gid}" target="_blank">{$item.username}</a></p>
 									<p>购物：<em class="orange Fb">{$item.count}</em>人次</p>	

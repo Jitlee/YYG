@@ -61,7 +61,7 @@
 				<span class="mui-icon iconfont icon-yyg_paimai"></span>
 				<span class="mui-tab-label">拍卖</span>
 			</a>
-			<a id="cart" class="mui-tab-item" href="{:U('Cart/index', '', '')}">
+			<a id="cart" class="mui-tab-item" href="{:U('Cart/index', '', '')}?{:rand()}">
 				<span class="mui-icon iconfont icon-yyg_cart"><span id="cartCount" class="mui-badge"  <if condition="$Think.session.cartCount eq 0">style="display:none"</if>>{:session('cartCount')}</span></span>
 				<span class="mui-tab-label">购物车</span>
 			</a>

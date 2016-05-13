@@ -85,7 +85,7 @@ class IndexController extends Controller {
 	
 	public function view($gid = 0, $qishu = 0) {
 		$db = M('miaosha');
-		$current = $db->field('qishu, status,thumb,type')->find($gid);
+		$current = $db->field('gid, qishu, status,thumb,type')->find($gid);
 		$this->assign('current', $current);
 		
 		$this->assign('gid', $gid);

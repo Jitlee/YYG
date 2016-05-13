@@ -266,7 +266,7 @@
 </div>
 <ul id="goodList" class="yyg-goods-list" data-bind="foreach: goods">
 	<li id="goodTemplate" class="yyg-jiexiao-list">
-		<a data-bind="css: { 'jiexiao': status < 3 }, attr: { href: '{:U('Index/view', '', '')}/' + gid }">
+		<a data-bind="css: { 'jiexiao': status < 3 }, attr: { href: '{:U('Index/view', '', '')}/' + gid + '/' + qishu }">
 			<section class="tuijian yyg-content">
 				<!-- ko if: status < 3 -->
 				<label class="jiexiao-label">即将揭晓</label>
