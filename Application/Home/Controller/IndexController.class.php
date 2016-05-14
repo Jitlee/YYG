@@ -122,7 +122,7 @@ class IndexController extends Controller {
 		$goods = $db->field($field)->find($gid);
 		$current = (int)$goods['qishu'];
 		$currentStatus = (int)$goods['status'];
-		if($current == $qishu || $qishu == 0) {
+		if(($current == $qishu || $qishu == 0) && $currentStatus < 3) {
 			$goods['current'] = $current;
 			$goods['currentStatus'] = $currentStatus;
 			return $goods;
@@ -131,7 +131,7 @@ class IndexController extends Controller {
 		// 历史
 		$db = M('MiaoshaHistory');
 		$map['gid'] = $gid;
-		$map['qishu'] = $qishu;
+		$map['qishu'] = $qishu == 0 ? $current : $qishu;
 		$history = $db
 			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, shengyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,prizeno,
 				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
@@ -175,7 +175,7 @@ class IndexController extends Controller {
 		$map['gid'] = $gid;
 		$map['qishu'] = $qishu;
 		$list = $db->join('yyg_member on yyg_member.uid = yyg_member_miaosha.uid')
-			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member_miaosha.count','yyg_member_miaosha.time', 'yyg_member_miaosha.ms','IFNULL(NULLIF(yyg_member.username, \'\'), INSERT(yyg_member.mobile,4,4,\'****\'))' => 'username'))
+			->field(array('yyg_member_miaosha.id'=>'mid','yyg_member_miaosha.uid', 'yyg_member_miaosha.count','yyg_member_miaosha.time', 'yyg_member_miaosha.ms','INSERT(username,ROUND(CHAR_LENGTH(username) / 2),ROUND(CHAR_LENGTH(username) / 4),\'****\')' => 'username'))
 			->where($map)->order('id desc')->page($pageNum, 20)->select();
 		if($pageNum > 1) {
 			if(empty($list)) {

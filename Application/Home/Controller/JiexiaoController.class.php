@@ -55,7 +55,7 @@ class JiexiaoController extends Controller {
 			$list = $db->where($filter)
 				->order('status asc,'. $order)
 				->page($pageNum, $pageSize)
-				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia, m.shengyurenshu, m.canyurenshu, m.jishijiexiao
+				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia, m.shengyurenshu, m.canyurenshu, m.jishijiexiao,mh.end_time
 					, if(m.status < 2 and m.shengyurenshu = 0, 2, m.status) status, unix_timestamp() now
 					, unix_timestamp(date_add(m.time, interval m.jishijiexiao hour))*1000 end
 					,unix_timestamp(date_add(m.lastTime, interval 3 minute))*1000 lasttime
@@ -145,14 +145,14 @@ class JiexiaoController extends Controller {
 	public function r($gid, $qishu) {
 		$mdb = M('MiaoshaRecord');
 		$filter = array(
-			'r.gid'		=> $gid,
-			'r.qishu'		=> $qishu
+			'r.prize_gid'		=> $gid,
+			'r.prize_qishu'		=> $qishu
 		);
 		$list = $mdb->field("r.gid,r.qishu,r.mid,ms.time,ms.count,m.title,ms.ms,
 			(HOUR(ms.time)*10000000+MINUTE(ms.time)*100000+SECOND(ms.time)*1000 + ms.ms) prizeno
 			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
 			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
-			->join("inner join __MIAOSHA__ m on m.gid = r.gid")
+			->join("inner join __MIAOSHA__ m on m.gid = ms.gid")
 			->join("inner join __MEMBER__ u on u.uid = ms.uid")
 			->where($filter)->order('ms.time desc')->select();
 		$this->ajaxReturn($list, 'JSON');

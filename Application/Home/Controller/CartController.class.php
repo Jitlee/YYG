@@ -14,9 +14,13 @@ class CartController extends Controller {
 		
 		$uid = session("_uid");
 		
+		if(!($uid > 0)) {
+			$uid = 0;
+		}
+		
 		$sql = "select c.gid,c.qishu,c.count,c.id,c.type,c.time
 			,title,thumb,shengyurenshu,danjia,xiangou, 0 qipaijia, 0 lijijia, 0 baozhengjin, 0 chujiacishu
-			from __CART__ c inner join __MIAOSHA__ m on c.gid=m.gid and c.type <> 3
+			from __CART__ c inner join __MIAOSHA__ m on c.gid=m.gid and c.type < 3
 			where uid=$uid and m.status < 2
 			union all
 			select c.gid,c.qishu,c.count,c.id,c.type,c.time

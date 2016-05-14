@@ -30,12 +30,17 @@ a, a:link, a:focus{
 	background: #fff;
 }
 
+.yyg-content .user {
+	color: #2af;
+}
+
 /** 推荐样式开始 */
 .tuijian {
 	position:relative;
 	padding:10px;
 	min-height: 36vw;
 	overflow: hidden;
+	color: #333;
 }
 
 .tuijian-img-container {
@@ -52,6 +57,7 @@ a, a:link, a:focus{
 .tuijian-img {
 	width: 30vw;
 	max-width: 140px;
+	border:0px;
 }
 
 .tuijian-content {
@@ -804,4 +810,23 @@ label.mui-input-row input[type=checkbox] {
 	width: 24px;
 	height: 24px;
 	content: url(../images/loading.gif);
+}
+
+
+.yyg-up-refresh {
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+	text-align: center;
+}
+
+.yyg-up-refresh::after{
+	content: "正在加载...";
+	color: #666;
+	font-size: 15px;
+	display: inline-block;
+	padding-left: 30px;
+	background-image: url(../images/loading.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 50%;
 }

@@ -80,20 +80,74 @@ $(function(){
 	 * @param {Number} threshold 阀值，默认为200
 	 * @return {Object} 句柄
 	 */
-	window.onScrollEnd = function(callback, threshold) {
+	window.onScrollEnd = function(callback, selector, threshold) {
 		var threshold = threshold || 200;
-		var timeHandler = null;
+		var handler = 0;
+		var parent = $(".mui-content").length == 0 ? $(document.body) : $(".mui-content");
+		if(selector) {
+			parent = $(selector);
+		}
+		
 		var onscrollend = function() {
-			if ($(window).scrollTop() + $(window).height() + threshold > $(document).height()) {
-				console.info("滚动到了底部");
-				window.clearTimeout(timeHandler);
-       			timeHandler = window.setTimeout(callback, 300);
+			if(!parent.data("isScrollInBuzy")) {
+				if ($(window).scrollTop() + $(window).height() + threshold > $(document).height()) {
+					parent.data("isScrollInBuzy", true);
+					console.info("滚动到了底部");
+					
+					if($(".yyg-up-refresh", selector).length == 0) {
+						$("<div class=\"yyg-up-refresh\" stytle=\"display:none\"></div>").appendTo(parent);
+					}
+					
+					$(".yyg-up-refresh", selector).show();
+					callback();
+					
+					window.__scrollHandler = window.setTimeout(function() {
+						if(parent.data("isScrollInBuzy")) {
+							window.endScroll(selector);
+						}
+					}, 3000);
+				}
 			}
 		}
-		$(document).bind("scroll", onscrollend);
-		return {
-			destory: function() {
-				$(document).unbind("scroll", onscrollend);
+		
+		var x1 = 0, y1 = 0;
+		var moveHandler = 0;
+		parent.bind("touchstart",function(evt) {
+			window.clearTimeout(moveHandler);
+			if (parent.scrollTop() + parent.height() + threshold > parent.height()) {
+				x2 = x1 = evt.originalEvent.touches[0].pageX;
+				y2 = y1 = evt.originalEvent.touches[0].pageY;
+				parent.bind("touchmove", ontouchmove);
+				parent.bind("touchend", ontouchend);
 			}
-		};
+		});
+		
+		function ontouchmove(evt) {
+			x2 = evt.originalEvent.touches[0].pageX;
+			y2 = evt.originalEvent.touches[0].pageY;
+			if(y2 - y1 < -80 && Math.abs(x1 - x2) < 60) {
+				onscrollend();
+				ontouchend();
+			}
+		}
+		
+		function ontouchend() {
+			parent.unbind("touchmove", ontouchmove);
+			parent.unbind("touchend", ontouchend);
+		}
+		
+		return this;
+	}
+	window.endScroll = function(selector) {
+		var parent = $(".mui-content").length == 0 ? $(document.body) : $(".mui-content");
+		if(selector) {
+			parent = $(selector);
+		}
+		
+		if(window.__scrollHandler > 0) {
+			window.clearTimeout(window.__scrollHandler);
+			window.__scrollHandler = 0;
+		}
+		parent.data("isScrollInBuzy", false);
+		$(".yyg-up-refresh", selector).hide();
 	}

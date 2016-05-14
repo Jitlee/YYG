@@ -175,8 +175,10 @@
 			<ul>
 				<if condition="$data.prizeno gt 0">
 					<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">计算结果</span></li>
+					<li class="Product_DetT"><span>商品详情</span></li>
+				<else/>
+				<li class="Product_DetT DetailsTCur"><span class="DetailsTCur">商品详情</span></li>
 				</if>
-				<li class="Product_DetT"><span>商品详情</span></li>
 				<li id="liUserBuyAll" class="All_RecordT"><span class="">所有参与记录</span></li>
 				<!--<li class="Single_ConT"><span class="">晒单</span></li>-->
 			</ul>
@@ -190,12 +192,12 @@
 	<!-- 结算结果 -->
 	<div id="jieguo" class="AllRecordCon divContent">
 		<iframe id="iframea_jieguo" g_src="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}"  src="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}" 
-			style="width:930px; border:none;height:600px" frameborder="0" scrolling="no"></iframe></div>
+			style="width:930px; border:none;height:810px" frameborder="0" scrolling="no"></iframe></div>
 			
     <!-- 计算结果 -->
    	</if>
 	<!-- 商品内容 -->
-	<div class="Product_Con divContent"  style="display: none;">{$data.content}</div>
+	<div class="Product_Con divContent" <if condition="$data.prizeno gt 0"> style="display: none;"</if>>{$data.content}</div>
     <!-- 商品内容 -->
     
     <!-- 购买记录20条 -->

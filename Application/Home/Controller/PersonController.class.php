@@ -45,6 +45,7 @@ class PersonController extends CommonController {
 		
 		$this->assign('data', $userinfo);
 		$this->assign('pmcount', $this->getPaimaiUnfixedCount());
+		$this->assign('pid', 'me');
 		$this->display();
     }
 	

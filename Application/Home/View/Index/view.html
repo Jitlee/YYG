@@ -94,7 +94,7 @@
 </div>
 
 <div class="yyg-body">
-	<div class="swiper-outter" data-bind="visible: goods() && goods().status < 2">
+	<div class="swiper-outter" id="swiper">
 		<div class="swiper-container swiper-loop">
 		    <div class="swiper-wrapper">
 		    	<foreach name="images" item="image">
@@ -263,6 +263,12 @@
 						window.setTimeout(query, Math.max(goods.lasttime - goods.now, 3000) + 3000);
 					} else if(goods.status < 2 && Number(goods.jishijiexiao) > 0) {
 						window.setTimeout(query, Math.max(goods.end - goods.now, 3000) + 3000);
+					}
+					
+					if(goods.status < 2) {
+						$("#swiper").show();
+					} else {
+						$("#swiper").hide();
 					}
 				}
 				window.closeLoading()

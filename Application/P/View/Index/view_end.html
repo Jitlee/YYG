@@ -101,45 +101,48 @@
 		    	</tr>
 	    </table>
     </div>
-    <br />
-    <table>
-    		<tr>
-    			<td>如何计算?</td>
-    			<td style="padding-left: 15px"><span class="var">变化数值</span>是取下面公式的余数</td>
-    		</tr>
-    		<tr>
-			<td>
-			    <table class="prize-calc-table">
-				    	<tr>
-				    		<td style="padding-left: 5px" class="r">{$data['prizecode'] + 10000001}</td>
-				    		<td class="prize-calc-split" rowspan="2">=</td>
-				    		<td class="r">10000001</td>
-				    		<td class="prize-calc-split" rowspan="2">+</td>
-				    		<td style="padding-right: 5px" class="r">{$data['prizecode']}</td>
-				    	</tr>
-				    	<tr>
-				    		<td style="padding-left: 5px">本期幸运号码</td>
-				    		<td>&nbsp;&nbsp;固定数值&nbsp;&nbsp;</td>
-				    		<td style="padding-right: 5px" class="var">&nbsp;&nbsp;变化数值&nbsp;&nbsp;</td>
-				    	</tr>
-			    </table>
-			</td>
-			<td>
-			    <table class="prize-calc-table" style="margin-left: 15px;">
-				    	<tr>
-				    		<td style="padding-left: 5px" class="r">{$data['prizeno']}</td>
-				    		<td class="prize-calc-split" rowspan="2">%</td>
-				    		<td style="padding-right: 5px" class="r">{$data.canyurenshu}</td>
-				    	</tr>
-				    	<tr>
-				    		<td style="padding-left: 5px">购买时间求和</td>
-				    		<td style="padding-right: 5px">&nbsp;&nbsp;参与人数&nbsp;&nbsp;</td>
-				    	</tr>
-			    </table>
-			</td>
+</if>
+<if condition="$data.prizeno gt 0">
+<br />
+<table>
+		<tr>
+			<td>如何计算?</td>
+			<td style="padding-left: 8px"><span class="var">变化数值</span>是取下面公式的余数</td>
 		</tr>
-	</table>
-<elseif condition="$data.prizeid gt 0"/>
+		<tr>
+		<td>
+		    <table class="prize-calc-table">
+			    	<tr>
+			    		<td style="padding-left: 3px" class="r">{$data['prizecode'] + 10000001}</td>
+			    		<td class="prize-calc-split" rowspan="2">=</td>
+			    		<td class="r">10000001</td>
+			    		<td class="prize-calc-split" rowspan="2">+</td>
+			    		<td style="padding-right: 3px" class="r">{$data['prizecode']}</td>
+			    	</tr>
+			    	<tr>
+			    		<td style="padding-left: 3px">本期幸运号码</td>
+			    		<td>&nbsp;&nbsp;固定数值&nbsp;&nbsp;</td>
+			    		<td style="padding-right: 3px" class="var">&nbsp;&nbsp;变化数值&nbsp;&nbsp;</td>
+			    	</tr>
+		    </table>
+		</td>
+		<td>
+		    <table class="prize-calc-table" style="margin-left: 5px;">
+			    	<tr>
+			    		<td style="padding-left: 3px" class="r">{$data['prizeno']}</td>
+			    		<td class="prize-calc-split" rowspan="2">%</td>
+			    		<td style="padding-right: 3px" class="r">{$data.canyurenshu}</td>
+			    	</tr>
+			    	<tr>
+			    		<td style="padding-left: 3px">购买时间求和</td>
+			    		<td style="padding-right: 3px">&nbsp;&nbsp;参与人数&nbsp;&nbsp;</td>
+			    	</tr>
+		    </table>
+		</td>
+	</tr>
+</table>
+</if>
+<if condition="$data.goumaicishu gt 0 and $data.prizeuid eq 0">
 	<div class="Pro_GetPrize">		
 		<div class="GetPrize">				    
 			<dl>
@@ -155,7 +158,7 @@
 	<div id="divBuy" class="Det_button">
 		<a href="javascript:void(0);" class="Det_Shopbut_exit">已结束</a>					
 	</div>
-<else/>
+<elseif condition="$data.goumaicishu eq 0"/>
 <div class="Immediate">
 	<span style="left:10px;right:0px;">很遗憾，本期没有人参与</span>
 </div>

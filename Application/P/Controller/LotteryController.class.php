@@ -72,14 +72,14 @@ class LotteryController extends CommonController {
 		$mdb = M('MiaoshaRecord');
 		$pageSize = 14;
 		$filter = array(
-			'r.gid'		=> $gid,
-			'r.qishu'		=> $qishu
+			'r.prize_gid'		=> $gid,
+			'r.prize_qishu'		=> $qishu
 		);
 		$list = $mdb->field("r.gid,r.qishu,r.mid,ms.time,ms.count,ms.ms,m.title
 			,(HOUR(ms.time)*10000000+MINUTE(ms.time)*100000+SECOND(ms.time)*1000+ms) prizeno
 			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
 			->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")
-			->join("inner join __MIAOSHA__ m on r.gid = m.gid")
+			->join("inner join __MIAOSHA__ m on ms.gid = m.gid")
 			->join("inner join __MEMBER__ u on u.uid = ms.uid")
 			->where($filter)->order('ms.time desc')->page($pageNo, $pageSize)->select();
 		$num = 0;
@@ -97,7 +97,10 @@ class LotteryController extends CommonController {
 			$this->assign('list', $list);
 			$num = count($list);
 			
-			$total = $mdb->join("r inner join __MEMBER_MIAOSHA__ ms on ms.id = r.mid")->where($filter)->count();
+			$total = $mdb->where(array(
+				'prize_gid'		=> $gid,
+				'prize_qishu'		=> $qishu
+			))->count();
 			
 			$pageCount = ceil($total / $pageSize);
 			$this->assign('pageSize', $pageSize);

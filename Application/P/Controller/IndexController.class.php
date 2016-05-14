@@ -127,7 +127,7 @@ class IndexController extends CommonController {
 		$data = $db->field($field)->find($gid);
 		$data['max'] = $data['current'] = $data['qishu'] = intval($data['qishu']);
 		$qs = intval($data['qishu']);
-		if($qishu == 0 || $qs == $qishu) {
+		if(($qishu == 0 || $qs == $qishu) && (int)$data['status'] < 3) {
 			// 上期获得者
 			if($qs > 1) {
 				$data['lastprizer'] = $this->getPrizer($gid, $qs - 1);
@@ -139,12 +139,11 @@ class IndexController extends CommonController {
 		// 历史
 		$db = M('MiaoshaHistory');
 		$map['gid'] = $gid;
-		$map['qishu'] = $qishu;
+		$map['qishu'] = $qishu == 0 ? $qs : $qishu;
 		$history = $db
 			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,content,prizeno,
 				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
 			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
-		
 		// 获取当情期
 		$mdb = M('miaosha');
 		$mmap['gid'] = $gid;

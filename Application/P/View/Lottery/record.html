@@ -1,4 +1,41 @@
-
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="__CSS__/comm.css" />
+		<style type="text/css">
+			body {
+				padding:0 10px;
+			}
+			.yyg-record-table{
+				width: 100%;
+				border: 0;
+				font-size: 12px;
+				table-layout: fixed;
+				text-align: left;
+			}
+			
+			.yyg-record-table th {
+				background-color: #eee;
+				color: #666;
+				border: 0;
+				margin: 0;
+				height: 30px;
+				line-height: 30px;
+			    padding-left: 10px;
+			}
+			.yyg-record-table td{
+				height: 45px;
+				line-height: 45px;
+			    border-bottom:1px dashed #eee;
+			    color: #333;
+			    padding-left: 10px;
+			}
+			
+		</style>
+	</head>
+	<body>
 		<style type="text/css">
 			body {
 				padding:0 10px;
@@ -80,23 +117,25 @@
 			<div class="pagesx">
 				<ul id="Page_Ul">
 					<li id="Page_Total">{$total}条</li>
-					<li id="Page_One"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/1">首页</a></li>
+					<li id="Page_One"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/1">首页</a></li>
 					<if condition="$pageNo gt 1">
-				        <li id="Page_Prev"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageNo - 1}">上一页</a></li>
+				        <li id="Page_Prev"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/{$pageNo - 1}">上一页</a></li>
 				  	</if>
 					<if condition="$pageNo gt 1">
 					  <for start="$minPageNo" end="$pageNo">
-					    		<li class="Page_Num"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
+					    		<li class="Page_Num"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
 						</for>
 					</if>
 					<li class="Page_This">{$pageNo}</li>
 					<for start="$pageNo+1" end="$maxPageNo+1">
-				    		<li class="Page_Num"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
+				    		<li class="Page_Num"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/{$i}">{$i}</a></li>
 					</for>
 					<if condition="$pageNo lt $pageCount">
-				        <li id="Page_Next"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageNo + 1}">下一页</a></li>
+				        <li id="Page_Next"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/{$pageNo + 1}">下一页</a></li>
 				  	</if>
-					<li id="Page_End"><a href="{:U('Index/record', '', '')}/{$gid}/{$qishu}/{$pageCount}">尾页</a></li>
+					<li id="Page_End"><a href="{:U('Lottery/r', '', '')}/{$gid}/{$qishu}/{$pageCount}">尾页</a></li>
 				</ul>
 			</div>
 		</if>
+	</body>
+</html>
