@@ -13,7 +13,7 @@ function config($key)
 
 function get_user_open_id() {
 	$openId=session('openid').'';
-			
+
 	if(strlen($openId)>10) {
 		return $openId.'';
 	} else {

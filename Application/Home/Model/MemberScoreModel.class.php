@@ -1,5 +1,5 @@
 <?php
-namespace P\Model;
+namespace Home\Model;
 use Think\Model;
 class MemberScoreModel extends Model{
     
@@ -33,7 +33,7 @@ class MemberScoreModel extends Model{
 					//3  写入提现记录
 					$dbcash = M('member_score');
 					$newitem['uid']=  session("_uid");
-					$newitem['time']= date('y-m-d-h-i-s');
+					$newitem['time']= date('y-m-d-H-i-s');
 					$newitem['scoresource']= $addType;
 					$newitem['score']= $score;
 					
@@ -58,11 +58,11 @@ class MemberScoreModel extends Model{
 				$result["msg"]='用户不存在。';
 			}
 			else
-			{ 		
+			{
 				//3  写入记录
 				$dbcash = M('member_score');
 				$newitem['uid']=  $uid;
-				$newitem['time']= date('y-m-d-h-i-s');
+				$newitem['time']= date('y-m-d-H-i-s');
 				$newitem['scoresource']= $addType;
 				$newitem['score']= $score;
 				
@@ -73,7 +73,8 @@ class MemberScoreModel extends Model{
 				else 
 				{
 					$result["msg"]='数据错误';
-				} 				 
+				} 
+				 
 			} 
 			return $result;
 	}
@@ -88,8 +89,8 @@ class MemberScoreModel extends Model{
 			else
 			{
 				//1. 扣减member数据  2. 写入钱包记录  3  写入提现记录	手费费				
-				$score= floatval($score);			
-				$Userscore=floatval($dbmember['score']);
+				$score= (int)$score;			
+				$Userscore=(int)$dbmember['score'];
 				$reScore	=	$Userscore + $score;
 				if($reScore<0)
 				{
@@ -104,20 +105,7 @@ class MemberScoreModel extends Model{
 						$udb->save($dbmember);					
 					}					
 					//3  写入记录
-					$dbcash = M('member_score');
-					$newitem['uid']=  $uid;
-					$newitem['time']= date('y-m-d-h-i-s');
-					$newitem['scoresource']= $addType;
-					$newitem['score']= $score;
-					
-					$dbcash->create($newitem);
-					if($dbcash->add() != false) {
-						$result["status"]=1;
-					} 
-					else 
-					{
-						$result["msg"]='数据错误';
-					} 
+					$this->AddScoreRecord($uid,$addType,$score);
 				}
 			} 
 			return $result;

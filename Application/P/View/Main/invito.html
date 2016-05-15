@@ -1,0 +1,64 @@
+<link href="__CSS__/style.css" rel="stylesheet" type="text/css" />
+<link href="__CSS__/demo.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__JS__/jquery.Validform.min.js"></script>
+<script type="text/javascript" src="__JS__/passwordStrength-min.js"></script>
+<script type="text/javascript">
+$(function(){		
+	var demo=$(".login_ConInput").Validform({
+		tiptype:2,
+		usePlugin:{
+			passwordstrength:{
+				minLen:6,
+				maxLen:20,
+				trigger:function(obj,error){
+					if(error){
+						obj.parent().next().find(".Validform_checktip").show();
+						obj.parent().next().find(".passwordStrength").hide();
+					}else{
+						obj.parent().next().find(".Validform_checktip").hide();
+						obj.parent().next().find(".passwordStrength").show();	
+					}
+				}
+			}
+		}
+
+	});	
+	
+	$("#btnSubmit").click(function() {	
+		if($("#mobile").val().length!=11){ 
+				return false;
+		}
+		if($("#userpassword2").val().length <6 || $("#password").val()!=$("#userpassword2").val()){ 
+			return false;
+		}
+		var self = $("form");
+		$.post("{:U('Main/register','','')}", self.serialize(), success, "json");
+		return false;
+	});
+	
+	function success(data) {
+		if (data.status) {
+			window.location.href = "{:U('Main/mobilecheck','','')}";
+		} else {
+			alert(data.msg);
+		}
+	}
+})
+</script>
+<div class="login_layout">
+	<div class="login_title">
+		<h2>玩转壹圆购物</h2>
+		<ul class="login_process">
+			<li class="login_processCur">
+				<a id="hylinkLoginPage" class="blue Fb" href="{:U('Main/register', '', '')}">
+					立即注册
+				</a>
+			</li>
+		</ul>
+	</div>
+	 
+	<div>
+		<img src="__IMG__/other/yqpcto.jpg" width="980" border="0" alt="">
+	</div>
+ 
+</div>

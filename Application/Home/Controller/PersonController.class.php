@@ -144,7 +144,13 @@ class PersonController extends CommonController {
 	
 	public function yaoqingmain()
 	{
+		/****分享与定位***/
+		$wxm= new WxUserInfo();
+		$signPackage=$wxm->getSignPackage();			 
+		$this->assign('signPackage', $signPackage);
+		
 		$this->assign('title', '邀请好友');
+		$this->assign('uid', session("_uid"));
 		$this->display();
 	}
 	
@@ -160,7 +166,6 @@ class PersonController extends CommonController {
 	{
 		$db = M('member');
 		$filter['yaoqing'] = session("_uid");
-		
 		$list =$db					
 		->where($filter)
 		->page($pageNum, $pageSize)

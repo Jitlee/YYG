@@ -72,6 +72,27 @@ public function forgetPassword(){
 	layout(true);
 	$this->display();
 }
+
+public function invito($fromid=0){
+	
+	
+	//如果有邀请添加积分
+//	$yaoqing=18;
+//	if($yaoqing>0)
+//	{
+//		$yaoqinguser=$m->getByYaoqing($yaoqing);
+//		if($yaoqinguser)
+//		{
+//			//添加积分				
+//			$mscore = D('P/MemberScore');			
+//			$resultr = $mscore->AddScore($yaoqing,'邀请赠送积分。',100);
+//		}
+//	}
+
+	session("invitefriendto",$fromid);
+	$this->assign('title', '壹圆购物-邀请注册');
+	$this->display();	
+}
 	
 public function Reg($yaoqing=null){
 		if(IS_POST) {
@@ -100,13 +121,13 @@ public function Reg($yaoqing=null){
 				 
 				if(!$records)
 				{
-					$openid=get_user_open_id(); 
+					//$openid=get_user_open_id(); 
 					
-					$_POST['img']='tx/211274314672928.jpg';
+					$_POST['img']='/Public/Home/images/tx/211274314672928.jpg';
 					$_POST['score']=100;
 					$_POST['login_time'] =date('y-m-d-H-i-s');
 					$_POST['time'] =date('y-m-d-H-i-s');
-					$_POST['openid'] =$openid;
+					//$_POST['openid'] =$openid;
 					
 					$db->create();
 					if($db->add() != false) {
@@ -114,18 +135,29 @@ public function Reg($yaoqing=null){
 						$result["status"]=1;
 						session("_uid", $records['uid']);
 						session('wxUserinfo', $records);
-						//如果有邀请添加积分		
 						
-						$msdata = array(
-							'uid'			=> $records['uid'],
-							'scoresource'	=> '注册',
-							'score'			=> 100,
-						);
-						$msdb = M('MemberScore');
-						if($msdb->add($msdata) === FALSE) {
-							return 106; // 增加消费纪录流水失败
-						}				
-					} 
+						
+//						$msdata = array(
+//							'uid'			=> $records['uid'],
+//							'scoresource'	=> '注册',
+//							'score'			=> 100,
+//						);
+//						$msdb = M('MemberScore');
+//						if($msdb->add($msdata) === FALSE) {
+//							return 106; // 增加消费纪录流水失败
+//						}				
+						$mscore = D('Home/MemberScore');
+						$muid=(int)$records['uid'];
+						$resultr = $mscore->AddScoreRecord($muid,'注册赠送积分。',100);	
+						
+						//如果有邀请添加积分
+						$yaoqing=$_POST['yaoqing'];
+						if($yaoqing>0)
+						{															
+//							$mscore = D('Home/MemberScore');
+							$resultr = $mscore->AddScore($yaoqing,'邀请赠送积分。',100);							
+						}
+					}
 					else 
 					{
 						$result["msg"]='数据错误';
@@ -137,8 +169,11 @@ public function Reg($yaoqing=null){
 				}
 				$this->ajaxReturn($result);
 		} else {
+			
+			$invitefriendto=(int)session("invitefriendto");	   
+			
 			$this->assign('title', '新用户注册');
-			$this->assign('yaoqing', $yaoqing);
+			$this->assign('yaoqing', $invitefriendto);
 			$this->display();
 		}
 	}
@@ -220,6 +255,11 @@ public function LoginAuth($openid,$imgurl,$username)
 		$data['username']=$username;
 		$data['reg_key'] = $openid;
 		$data['openid'] = $wxopenid;
+		$invitefriendto=(int)session("invitefriendto");	  
+		if($invitefriendto >0)
+		{
+			$data['yaoqing'] = $invitefriendto;
+		}
 		if($db->add($data) == false) {
 			$this->error('数据错误');
 		}

@@ -1,0 +1,51 @@
+<div class="nav">
+	
+</div>
+<table id="listTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>手机号</th>
+			<th>参数1</th>
+			<th>参数2</th>
+			
+			
+			<th>时间</th>
+			<th>发送中状态</th>			
+			<th>类型</th>
+			<th>发送信息</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="data" item="good">
+		<tr>
+			<td>{$good.mobile}</td>
+			<td>{$good.par1}</td>
+			<td>{$good.par2}</td>
+			
+			
+			<td>{$good.msgtime}</td>
+			
+			<td>
+				<if condition = "$good.status eq '0'" >未发送</if>
+				 <if condition = "$good.status eq '99'" >发送成功</if>
+				 <if condition = "$good.status eq '1'" >失败</if>
+			</td>
+			
+			<td>
+				<if condition = "$good.msgtype eq 'zjdx'" >中奖</if>
+				 <if condition = "$good.msgtype eq 'kddx'" >快递</if>
+				 <if condition = "$good.msgtype eq 'hd'" >活动</if>
+			</td>
+			<td>{$good.errormsg}</td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$(function(){
+		 
+		
+		 
+	});
+</script>

@@ -12,15 +12,20 @@ class VerifycodeController extends Controller {
 		$db = M('member');
 		$f['mobile'] = $mobile;
 		$records = $db->where($f)->find();
-		if(!$records)
+		if($records)
 		{
-			$mcode = D('Home/Verifycode');
-			$rs=$mcode->Send($mobile);	
+			if($records['mobilecode']!='1111')
+			{
+				$result["msg"]='手机号已经注册。';
+				$rs["msg"]="手机号已注册.";	
+	 
+				$this->ajaxReturn($rs);
+				return;		
+			}				 
 		}
-		else
-		{
-			$rs["msg"]="手机号已注册.";	
-		}
+		
+		$mcode = D('Home/Verifycode');
+		$rs=$mcode->Send($mobile);	 
 		$this->ajaxReturn($rs);
 	}
 	

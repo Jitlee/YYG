@@ -27,39 +27,14 @@ $(function(){
 <div class="referrals_box">
 	<div class="W-left fl">
 		<h4><i></i></h4>
-		<div id="referDocument" class="process-box">
-			<ul class="process">
-				<li class="p-1">
-					<div class="process_con S01 hidden">
-						<span><em>◆</em><s>◆</s></span>
-						您每邀请一位好友成功参与购物即可获得100积分。
-					</div>
-				</li>
-				<li class="p-2">
-					<div class="process_con S02 hidden">
-						<span><em>◆</em><s>◆</s></span>
-						经您邀请的所有好友，成功参与购物后，您都可以获得6%的现金奖赏，并且永久有效。
-					</div>				    
-				</li>
-				<li class="p-3">
-					<div class="process_con S03 hidden">
-						<span><em>◆</em><s>◆</s></span>
-						您每邀请一位好友成功参与购物，就可获得一个超级礼包抽奖机会；邀请越多，获奖机率就越大，快快告诉你QQ、MSN、人人、开心、微博上的朋友吧；具体活动详情请关注购物圈中活动专区。
-					</div>				    
-				</li>
-				<li class="p-4">
-					<div class="process_con S04 hidden">
-						<span><em>◆</em><s>◆</s></span>
-						每月成功邀请好友数量最多的前10000名好友，都可获得（<a href="{G_WEB_PATH}">{G_WEB_PATH}</a>） “宝马3系”“购物码”一个，若邀请好友数量相同，则以邀请时间先后顺序为准。把宝马开回家的可能就是您哦！
-					</div>
-				</li>
-			</ul>
-		</div>
+		 
 		<div class="referrals_banner">
-			<ul>
+			<img src="__IMG__/other/yqpc.jpg" width="700" border="0" alt="">
+			
+			<!--<ul>
 			<li><img src="__IMG__/referrals_01.jpg" border="0" alt=""></li>
 			<li><img src="__IMG__/referrals_02.jpg" border="0" alt=""></li>
-			</ul>
+			</ul>-->
 		</div>
 		<if condition="$Think.session.loginstatus eq 0">
 			<div class="login_reg">
@@ -76,9 +51,8 @@ $(function(){
 		    <div class="Invitation-C1">
 			    <p class="fs14">这是您的专属邀请链接，请通过 MSN 或 QQ 发送给您的好友</p>
 			    <div class="">
-			    <textarea disabled="disabled" name="copyShareText" id="fe_text" class="textarea">我刚发现一个很好很好玩的网站，1元就能买IPhone 4S哦，快去看看吧！
-					{:config("web_path")}{:U('Main/register', '', '')}/{:session("_uid")}
-			    </textarea>
+			    <textarea disabled="disabled" name="copyShareText" id="fe_text" class="textarea">我刚发现一个很好很好玩的网站，1元就能买IPhone 6S哦，快去看看吧！
+{:config("web_path")}{:U('Main/invito', '', '')}/{:session("_uid")}</textarea>
 			    </div>			   
 				
 		    </div>

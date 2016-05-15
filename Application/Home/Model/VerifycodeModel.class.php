@@ -56,7 +56,57 @@ class VerifycodeModel extends BaseModel{
 		}
 		return $rs;
 	}
+	
+	/*快递*/
+	public function Sendkd($mobile,$par1,$par2)
+	{
+		$this->SendMessageByTemplate($mobile,$par1,$par2,'23832');
+	}
+	/*宣传*/
+	public function SendXC($mobile,$par1,$par2)
+	{
+		$this->SendMessageByTemplate($mobile,$par1,$par2,'23579');
+	}
+	
+	/*中奖金*/
+	public function SendZJ($mobile,$par1,$par2)
+	{
+		$this->SendMessageByTemplate($mobile,$par1,$par2,'23831');
+	}
 
+	public function SendMessageByTemplate($mobile,$par1,$par2,$templateId)
+	{
+		$rs= array("status" => -1);
+		
+		$options['accountsid']=C('MSG.accountsid');		
+		$options['token']=C('MSG.token');		
+		//初始化 $options必填
+		$ucpass = new Ucpaas($options);
+		$appId = C('MSG.appId');		
+		$to = $mobile;
+		//$templateId ='23832';// C('MSG.templateId');
+		$param=$par1.','.$par2;
+		
+		//echo $param;
+	 	$result=$ucpass->templateSMS($appId,$to,$templateId,$param);
+		//echo dump($result);
+		$r=json_decode($result,TRUE);
+		if($r)
+		{
+			$code=$r["resp"]["respCode"];
+			if($code=='000000')
+			{
+				$rs["status"]=0;
+			}
+			else
+			{
+				//echo dump($r);
+				$rs["msg"]="发送失败.".$code;
+			}
+		}
+		return $rs;
+	}
+	
 	 
 	public function Insert($mobile,$code)
 	{ 

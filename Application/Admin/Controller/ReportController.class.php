@@ -53,8 +53,7 @@ class ReportController extends CommonController {
 		$this->display();
 	}
 
-	public function buylistadminsend($gid, $qishu) {
-		 
+	public function buylistadminsend($gid, $qishu) { 
 		$filter = " yyg_miaosha_history.gid=$gid and  yyg_miaosha_history.qishu=$qishu";
 		 // 分页
 		$Model = M('miaosha_history');
@@ -73,8 +72,6 @@ class ReportController extends CommonController {
 			
 		$this->assign('address',$add);
 		$this->assign('data',$list[0]);// 模板变量赋值
-		
-		
 		 
 		$this->assign('title', '发货');
 		$this->assign('pid', 'report');
@@ -99,12 +96,42 @@ class ReportController extends CommonController {
 		$add["postcode"]=$postcode;
 		$add["postcompany"]=$postcompany;
 		
+		
 		if ($db ->save($add) ) {			
 			$rd["status"]=1;
-		} 
+		}		
+		
+		$par1=$postcode;
+		$par2=$postcompany;
+		$puid=$add["prizeuid"];
+		
+		$dbmem = M('member');
+		$datamem['uid'] = $puid;
+		$member = $dbmem->where($datamem)->find();
+		$mobile=$member["mobile"];
+		
+		$datamsg = array();
+		$datamsg["par1"] = $postcode;
+		$datamsg["par2"] = $postcompany;
+		$datamsg["mobile"] = $mobile; 
+		$datamsg["msgtype"] = "kddx";		
+		$datamsg["msgtime"] = date('Y-m-d H:i:s');
+		$datamsg["status"] = 99;
+				
+		$msg = D("Home/Verifycode");
+		$rs=$msg->Sendkd($mobile,$postcode,$postcompany);
+		if($rs["status"] !=0)	
+		{
+			$datamsg["errormsg"] = $rs["msg"];	
+		}
+		
+		//写入发送短信
+		$msg = M('message');
+		$msg->add($datamsg); 
+		
+		//添加发送记录		
 		$this->ajaxReturn($rd, "JSON");
 		//$this->display("buylistadminsend");
-		 
 	}
 	/**
 	 * 充值记录

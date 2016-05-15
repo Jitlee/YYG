@@ -1,0 +1,88 @@
+begin
+	declare _error integer default false;  
+	declare _done int default false; -- 异常标记
+	declare _gid int; -- 秒杀id
+	declare _qishu int; -- 期数
+	declare _maxqishu int; -- 最大期数
+	declare _canyurenshu int; -- 参与认输
+	declare _zongrenshu int; -- 总人数
+	declare _prizeCode int; -- 中奖码
+	declare _prizeUid int; -- 中奖用户uid
+	declare _prizeId int; -- 中奖云购码id
+	declare _prizeno bigint(20) unsigned; -- 中奖云购码id
+	declare _prizeIndex bigint(20) unsigned; -- 中奖计算码
+	declare _mmid int; -- 购买纪录id
+	
+	-- 查询所有status=2(或jishijiexiao+createTime<当前时间)的商品
+	declare _cur cursor for select gid,qishu,maxqishu, canyurenshu, zongrenshu from yyg_miaosha where 
+		(status = 2 and date_add(now(), interval -170 second) > lastTime);
+	
+	declare continue handler for not found set _done = true;
+	declare continue handler for sqlexception begin
+		set _error = true;
+		GET DIAGNOSTICS CONDITION 1 @sqlstate = RETURNED_SQLSTATE,
+		@errno = MYSQL_ERRNO, @text = MESSAGE_TEXT;
+		-- get diagnostics condition 1 @sqlstate = returned_sqlstate, @errno = mysql_errno, @text = message_text;
+		select @sqlstate, @errno, @text;
+	end;
+
+	update yyg_miaosha set status=2,lastTime=now() where status < 2 and ((jishijiexiao > 0 and date_add(now(),interval -jishijiexiao hour) > time) or shengyurenshu = 0);
+
+	open _cur;
+	read_loop: loop
+		fetch next from _cur into _gid, _qishu, _maxqishu, _canyurenshu, _zongrenshu;
+
+		if _done then
+			leave read_loop;
+		end if;
+
+		start transaction; -- 开启事务
+		-- 1. 查询该商品前100条的销售记录时间（不足取所有100补齐）计算中奖结果（计算公式略）
+		-- select SUM(HOUR(time)+MINUTE(time)+SECOND(time)+MICROSECOND(time)) into _prizeIndex from yyg_member_miaosha where gid = _gid order by id desc limit 100;
+		select SUM(HOUR(time)*10000000+MINUTE(time)*100000+SECOND(time)*1000+ms) into _prizeIndex from yyg_member_miaosha order by id desc limit 100;
+
+		set _prizeno = _prizeIndex;
+		-- 1.1 保存购买纪录
+		-- insert into yyg_miaosha_record (gid, qishu, mid) select gid, _qishu,id from yyg_member_miaosha where gid = _gid order by id desc limit 100;
+		insert into yyg_miaosha_record (gid, qishu, mid, prize_gid, prize_qishu) select gid, qishu,id, _gid, _qishu from yyg_member_miaosha order by id desc limit 100;
+
+		-- 2. 根据中奖码查找中奖用户
+		set _prizeId = 0, _prizeCode = 0, _prizeUid = 0;
+		if _canyurenshu > 0 then
+			set _prizeIndex = _prizeIndex % _canyurenshu;
+			select id, mid, pcode, uid into _prizeId, _mmid, _prizeCode, _prizeUid from yyg_miaosha_code where gid = _gid and qishu = _qishu and mid > 0 and uid > 0 order by pcode asc limit _prizeIndex, 1; 
+		end if;
+		
+		-- 3. 归档秒杀历史
+		insert into yyg_miaosha_history(gid, cid, bid, title, subtitle, description, thumb, content, qishu, maxqishu, money, danjia, zongrenshu, canyurenshu, shengyurenshu, type, renqi, tuijian, baoyou, sort, jishijiexiao, time, xiangou, goumaicishu,lasttime, end_time, status, prizecode, prizeuid, prizeId, prizeCount, prizeno)
+			select gid, cid, bid, title, subtitle, description, thumb, content, qishu, maxqishu, money, danjia, zongrenshu, canyurenshu, shengyurenshu, type, renqi, tuijian, baoyou, sort, jishijiexiao, time, xiangou, goumaicishu,lasttime, now(), 3 status, _prizeCode prizecode, _prizeUid prizeuid, _prizeId prizeId
+				, (select count(*) from yyg_miaosha_code where gid = _gid and qishu = _qishu and uid = _prizeUid and _prizeUid > 0) prizecount, _prizeno from yyg_miaosha where gid = _gid;
+		 
+		-- 插入中奖数据
+		INSERT INTO `yyg_message` (`gid`,`qishu`,`prizeUid`,`status`) VALUES (_gid, _qishu, _prizeUid, '0');
+		
+
+		-- 4. 创建中奖订单(没有)
+
+		-- 5. 判断当前期数是否为最大期数
+		if _qishu = _maxqishu then
+			-- a. 修改miaoshaStatus=3
+			update yyg_miaosha set status = 3 where gid = _gid;
+		else
+			-- b1. 修改qishu = qishu + 1, miaoshaStatus=0,canyurenshu=0,shengyurenshu=zongrenshu,createTime=当前时间
+			update yyg_miaosha set status = 0, qishu = qishu + 1, canyurenshu = 0, shengyurenshu = zongrenshu, time = now(),goumaicishu=0,lasttime=null where gid = _gid;
+			-- b2. 重新生成新的云购码(废弃)
+			-- insert into yyg_miaosha_code (gid, qishu, pcode) select gid, qishu + 1, pcode from yyg_miaosha_code where gid = _gid and qishu = _qishu order by id;
+			-- call p_create_miaosha_code(_gid, _qishu, _zongrenshu);
+		end if;
+
+		if _error then
+			rollback;
+		else
+			commit;
+		end if;
+		set _error = false;
+		
+	end loop;
+	close _cur;
+end

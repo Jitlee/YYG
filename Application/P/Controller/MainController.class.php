@@ -14,26 +14,35 @@ class MainController extends Controller {
 			$result["msg"]="操作成功。";
 			if(!$records)
 			{
-				$_POST['img']='tx/211274314672928.jpg';
+				$_POST['img']='/Public/Home/images/tx/211274314672928.jpg';
 				$_POST['mobilecode']='1111';
 				$_POST['score']=100;
 				//$_POST['username']=$_POST['mobile'];
 				$_POST['login_time'] =date('y-m-d-H-i-s');
-				$_POST['time'] =date('y-m-d-H-i-s');	
+				$_POST['time'] =date('y-m-d-H-i-s');
+//				$invitefriendto=session("invitefriendto");
+//				if($invitefriendto)
+//				{
+//					$_POST['yaoqing']=$invitefriendto;
+//				}	
 				$db->create();
 				if($db->add() != false) {
 					session('registerMobile', $_POST['mobile']);
 					$result["status"]=1;
+					$records = $db->where($data)->find();
 					
-					$msdata = array(
-						'uid'			=> $records['uid'],
-						'scoresource'	=> '注册',
-						'score'			=> 100,
-					);
-					$msdb = M('MemberScore');
-					if($msdb->add($msdata) === FALSE) {
-						return 106; // 增加消费纪录流水失败
-					}		
+//					$msdata = array(
+//						'uid'			=> $records['uid'],
+//						'scoresource'	=> '注册',
+//						'score'			=> 100,
+//					);
+//					$msdb = M('MemberScore');
+//					if($msdb->add($msdata) === FALSE) {
+//						return 106; // 增加消费纪录流水失败
+//					}	
+					$mscore = D('P/MemberScore');
+					$muid=(int)$records['uid'];
+					$resultr = $mscore->AddScoreRecord($muid,'注册赠送积分。',100);	
 				}
 				else 
 				{
@@ -54,10 +63,12 @@ class MainController extends Controller {
 					$result["msg"]='手机号已经注册。';		
 				}
 			}
-			$this->ajaxReturn($result);	
+			$this->ajaxReturn($result,"JSON");	
     	} else  {
+    		$invitefriendto=(int)session("invitefriendto"); 
+//  		echo '$invitefriendto='.$invitefriendto;
 	    	$this->assign('title', '壹圆购物');
-			$this->assign('yaoqing', $yaoqing);
+			$this->assign('yaoqing', $invitefriendto);
 			
 			$this->display();
 		}
@@ -105,9 +116,10 @@ class MainController extends Controller {
 						$yaoqinguser=$m->getByYaoqing($yaoqing);
 						if($yaoqinguser)
 						{
-							//添加晒单积分				
+							//添加积分				
 							$mscore = D('P/MemberScore');
-							$resultr = $mscore->AddScore($yaoqinguser["uid"],'邀请赠送积分。',100);
+							$yquid=(int)$yaoqing;
+							$resultr = $mscore->AddScore($yquid,'邀请赠送积分。',100);
 						}
 					}
 					$result["status"]=1;
@@ -198,6 +210,11 @@ class MainController extends Controller {
 		$this->redirect('Index/index');
 	}
 		
+	public function invito($fromid=0){
+		session("invitefriendto",$fromid);
+		$this->assign('title', '壹圆购物-邀请注册');
+		$this->display();	
+	}
 		
 		
 public function findpassword(){

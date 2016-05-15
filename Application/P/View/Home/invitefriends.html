@@ -9,11 +9,12 @@
             
 		        <div id="divInvited" class="success-invitation gray02"  >
 			        <p>复制链接邀请好友拿四重大礼！ <a target="_blank" href="{:U('Help/pleasereg','','')}" class="blue">详情&gt;&gt;</a></p>
-			        <span><b></b><input id="txtInfo"  style="width:500px;height:20px; " disabled="disabled" value="1元就能买IPhone 5S、笔记本电脑、单反哦，全场1元，快去看看吧！ 
-			        	{:config("web_path")}{:U('Main/register', '', '')}/{:session("_uid")}" onpaste="return false" type="text"></span>
+			        <span><b></b><input id="txtInfo"   style="width:500px;height:40px; " disabled="disabled" 
+			        	value="1元就能买IPhone 6S、笔记本电脑、单反哦，全场1元，快去看看吧！{:config("web_path")}{:U('Main/invito', '', '')}/{:session("_uid")}" 
+			        	onpaste="return false" type="text"></span>
 				  <div class="d_clip_copy"></div>
-				   <div id="d_clip_container" style="position:relative;">									
-					<div id="d_clip_button" class="bluebut" style="text-align:center;margin-top:24px"  >复制</div>
+				   <div id="d_clip_container" style="position:relative;   right: 100px;">									
+					<div id="d_clip_button" class="bluebut" style="text-align:right;margin-top:24px"  >复制</div>
 				</div>
 		        </div>
 		    

@@ -51,8 +51,9 @@
 		
 	$(function() {		
 		$("form").submit(function() {
-			var self = $(this);
-			$.post('{$action}', self.serialize(), success, "json");
+			var self = $(this);			
+			$("#reg").attr("disabled", true);
+			$.post("{:U('Public/reg','','')}", self.serialize(), success, "json");			
 			return false;
 			function success(data) {
 				if (data.status) {
