@@ -56,7 +56,7 @@ class JiexiaoController extends Controller {
 				->order('status asc,'. $order)
 				->page($pageNum, $pageSize)
 				->field('m.gid,m.title,m.qishu,m.thumb,m.money,m.danjia, m.shengyurenshu, m.canyurenshu, m.jishijiexiao,mh.end_time
-					, if(m.status < 2 and m.shengyurenshu = 0, 2, m.status) status, unix_timestamp() now
+					, if(m.status < 2 and m.shengyurenshu = 0, 2, m.status) status, unix_timestamp() *1000 now
 					, unix_timestamp(date_add(m.time, interval m.jishijiexiao hour))*1000 end
 					,unix_timestamp(date_add(m.lastTime, interval 3 minute))*1000 lasttime
 					, prizeid, prizeuid, prizecode, prizecount,
