@@ -443,7 +443,7 @@ class PayController extends Controller {
 		$mdb = M('Miaosha');
 		$good = $mdb->find($cart['good']['gid']);
 		
-		if(intval($good['status']) == 2 || intval($good['shengyurenshu']) == 0) {
+		if(intval($good['status']) == 2 || intval($good['status']) == 3 || intval($good['shengyurenshu']) == 0) {
 			return 201;  // 商品已经完结
 		}
 		

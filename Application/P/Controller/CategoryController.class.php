@@ -36,7 +36,7 @@ class CategoryController extends CommonController {
 		
 		$mdb = M('Miaosha');
 		$mmap = array(
-			'status'		=> array('neq', 2)
+			'status'		=> array('lt', 2)
 		);
 		if($cid > 0) {
 			$mmap['cid'] = $cid;
