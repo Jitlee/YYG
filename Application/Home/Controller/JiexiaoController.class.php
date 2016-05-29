@@ -132,7 +132,7 @@ class JiexiaoController extends Controller {
 			'm.gid'		=> $gid,
 			'm.qishu'		=> $qishu
 		);
-		$data = $mdb->field("gid,qishu,title,end_time,prizecode,prizeuid,prizeid,prizecount,prizeno,canyurenshu
+		$data = $mdb->field("gid,qishu,title,end_time,prizecode,prizeuid,prizeid,prizecount,prizeno,canyurenshu,m.zongrenshu
 			,INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),'****') username, u.img userimg")
 			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")
 			->where($filter)->find();

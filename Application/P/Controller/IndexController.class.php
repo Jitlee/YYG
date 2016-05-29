@@ -142,7 +142,7 @@ class IndexController extends CommonController {
 		$map['qishu'] = $qishu == 0 ? $qs : $qishu;
 		$history = $db
 			->field('gid,title,qishu,thumb,m.money,danjia,status, canyurenshu, end_time, goumaicishu, prizeid, prizeuid, prizecode, prizecount,content,prizeno,
-				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg')
+				INSERT(u.username,ROUND(CHAR_LENGTH(u.username) / 2),ROUND(CHAR_LENGTH(u.username) / 4),\'****\') username, u.img userimg,m.zongrenshu')
 			->join("m left join __MEMBER__ u on u.uid = m.prizeuid")->where($map)->find();
 		// 获取当情期
 		$mdb = M('miaosha');

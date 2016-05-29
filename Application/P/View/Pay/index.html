@@ -100,7 +100,7 @@
 			 <li id="liPayByPoints" class="point_out">
 			 		<span class="payment_List_Lc">
 						<input type="checkbox" class="input_choice" id="scoreCheckBox" name="shop_score" value="1"></input>
-						使用福分抵扣现金：您的福分({$account._score})本次消费最多可抵扣现金
+						使用积分抵扣现金：您的积分({$account._score})本次消费最多可抵扣现金
 						<span class="orange Fb">{:min($account['score'] / 100, $total)}</span>元
                    	</span>
                     <p class="payment_List_Rc">福分支付：<span id="pay_score" class="orange F20">0</span> 元</p>
@@ -108,7 +108,7 @@
              <else/>
               <li id="liPayByPoints" class="point_out point_gray">
 					<span class="payment_List_Lc">
-						<input type="checkbox" class="input_choice" disabled="disabled"/>使用福分抵扣现金：您的福分({$account._score})本次消费最多可抵扣现金
+						<input type="checkbox" class="input_choice" disabled="disabled"/>使用积分抵扣现金：您的积分({$account._score})本次消费最多可抵扣现金
 						<span class="orange Fb">{$account['score'] / 100}</span><span>元</span>
 					</span>
               </li>
