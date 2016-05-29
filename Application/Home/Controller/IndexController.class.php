@@ -17,7 +17,7 @@ class IndexController extends Controller {
 		$cdb = M('Category');
 		$categories = $cdb->page(1,8)->select();
 		$this->assign('allCategories', $categories);
-		
+		add_renci();
 		$this->display();
     }
 	

@@ -56,11 +56,12 @@ class HomeController extends CommonController {
 		$filter['yyg_member_miaosha.uid'] = session("_uid");  
 		
 		$list =$Model
-		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid ")			
+		->join("yyg_miaosha m ON yyg_member_miaosha.gid=m.gid and yyg_member_miaosha.`qishu` =m.`qishu`  ")	
+		->join(" left join yyg_miaosha_history mh ON mh.qishu=m.qishu and mh.`gid` =m.gid  ")
 		->where($filter)
 		->page($pageNum, $pageSize)
-		->field("yyg_member_miaosha.`qishu` <m.qishu as IsEnd,title,thumb,danjia,status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu, canyurenshu, zongrenshu,shengyurenshu
-		,type,jishijiexiao,yyg_member_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
+		->field("mh.qishu >0 as IsEnd,m.title,m.thumb,m.danjia,m.status,yyg_member_miaosha.gid, yyg_member_miaosha.qishu,m.canyurenshu,m.zongrenshu,m.shengyurenshu
+		,m.type,m.jishijiexiao,yyg_member_miaosha.time,yyg_member_miaosha.uid,yyg_member_miaosha.count")
 		->order('yyg_member_miaosha.time desc')
 		->select();
 		 

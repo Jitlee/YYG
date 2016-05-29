@@ -60,7 +60,7 @@ class IndexController extends CommonController {
 		if(!empty($records)) {
 			$this->assign('records', $records);
 		}
-		
+		add_renci();
 		$jijiagns = $gdb->where('status < 3 and jishijiexiao>0')->order('time desc')
 			->field($field)->page(1,8)->select();
 //		echo $gdb->getLastSql();
