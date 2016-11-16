@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>首金竞猜</title>
+        <link rel="stylesheet" href="../css/frozen.css">
+        <link rel="stylesheet" href="../css/OG_gussing.css">
+    </head>
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>胜平负/过关</h1>
+            <img class="img_menus" src="images/more.png">
+        </header>
+        <footer class="ui-footer ui-footer-btn">
+        </footer>
+        <div>helooooooooooooooooooooooooooooooooooooooooooo</div>
+</body>
+</html>

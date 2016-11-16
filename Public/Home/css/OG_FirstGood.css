@@ -1,0 +1,162 @@
+ .img_menus{
+    display: block;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    margin-top: -15px;
+    width:30px;
+    height:30px;
+ }
+.FG_title_msg{
+	width: 100%;
+	height: 35px;
+	background: #014f35;
+	margin-top: 45px;
+	line-height: 35px;
+}
+.FG_title_msg img{
+	width: 20px;
+	height: 20px;
+	padding-left: 10px;
+	margin-top: 8px;
+	float: left;
+}
+.FG_title_msg span{
+	color: #d7df00;
+	float:left; 
+	padding:0px 5px;
+}
+.FG_yuce{
+	width: 100%;
+	height: 150px;
+	background: #091c16;
+	border-bottom: 1px solid #014f35;
+}
+.FG_yuce_jinzhu{
+	box-sizing:border-box;
+	padding: 10px 10px;
+	color: #056c34;
+	font-size: 18px;
+	width: 100%;
+	height: 20px;
+}
+.FG_yuce_msg{
+	box-sizing:border-box;
+	width: 100%;
+	height: 130px;
+	padding:30px 20px;
+}
+.FG_yuce_msg ul{
+	list-style: none;
+}
+.FG_yuce_msg li{
+	margin-left: 3%;
+	width: 30%;
+	height: 50px;
+	float: left;
+}
+.FG_yuce_msg_ture{
+	width: 60%;
+	height: 50%;
+	border-radius: 5px;
+	background:#10a64f;
+	color: #091c16;
+}
+.FG_yuce_msg_flase{
+	width: 60%;
+	height: 50%;
+	border-radius: 5px;
+	border:1px solid #10a64f;
+	color: #10a64f
+}
+.FG_yuce_msg span{
+	margin-left:5px;
+	color: #d7df00;
+	font-size: 14px;
+}
+.FG_yuce_msg2{
+	box-sizing:border-box;
+	width: 100%;
+	height: 130px;
+	padding:30px 20px;
+}
+.FG_yuce_msg2 ul{
+	list-style: none;
+}
+.FG_yuce_msg2 li{
+	margin-left: 3%;
+	width: 30%;
+	height: 50px;
+	float: left;
+}
+.FG_yuce_jc_name{
+	font-size: 16px;
+	width: 60%;
+	height: 60%;
+	color: #10a64f
+}
+.FG_yuce_jc_bili{
+	margin-left: 4px;
+	width: 40%;
+	height: 25px;
+	background: #091c16;
+	border-radius: 20px;
+	border:1px solid #056c34;
+	color: #056c34;
+}
+.FG_yuce_yazhu{
+	box-sizing:border-box;
+	padding: 15px 10px;
+	color: #056c34;
+	font-size: 18px;
+	width: 100%;
+	height: 15px;
+}
+.FG_yuce_yuedu{
+	box-sizing:border-box;
+	padding: 20px 20px;
+	color: #056c34;
+	font-size: 18px;
+	width: 100%;
+	height: 20px;
+}
+.FG_yuce_yuedu span{
+	box-sizing:border-box;
+	padding: 0px 5px;
+}
+.FG_yuce_yuedu img{
+	float:left;
+	width:14px;
+	height:14px;
+	margin-left:20%;
+	margin-top:3px;
+}
+.FG_yuce_yudongbi{
+	color: #d7df00;
+	margin-left:10px;
+	margin-right: 10px;
+}
+.FG_yuce_yudongbi_bt{
+	color: #d7df00;
+	margin-left:10px;
+	margin-right: 10px;
+	border :1px solid #056c34;
+	width:60px;
+	border-radius:5px;
+}
+.queren{
+	width: 30%;
+	height: 40px;
+	border-radius: 5px;
+	background: #c5b501;
+	margin-left: 10%;
+	color:#123e2d;
+}
+.quxiao{
+	width: 30%;
+	height: 40px;
+	border-radius: 5px;
+	background: #10a64f;
+	margin-left: 20%;
+	color: white;
+}

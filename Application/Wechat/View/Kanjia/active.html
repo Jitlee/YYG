@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="__CSS__/kanjia.css">
+<script type="text/javascript" src="/Public/js/jquery-1.3.2.min.js?v1"></script>
+<!-- <script type="text/javascript" src="/Public/js/layer/layer.js"></script> -->
+<title>壹易购物邀你喝午后奶茶</title>
+<style type="text/css">
+	.test p{
+		text-align: left;
+		color:#fff;
+	}
+	input{
+            border:1px solid #ddd;
+            border-radius: 4px;
+            font-size: #c4c4c4;
+            font-size: 15px;
+            text-indent: 10px;
+            font-family: 微软雅黑;
+            line-height: 38px;
+            /*min-height: 293px;*/
+        }
+     .layer{
+        max-width: 60%;
+        left:20%;
+        position: fixed;
+        top:50%;
+        z-index: 1000;
+        background: url('/Public/images/shade2.png');
+        color:#fff;
+        right:20%;
+        text-align: center;
+        border-radius: 6px;
+        padding: 15px;
+        font-size: 15px;
+        display: none;
+    }
+    .under_reg{
+            height: 100%;
+            width: 100%;
+            position:fixed;
+            top:0;
+            left:0;
+            background: url(/Public/images/shade.png);
+            /*filter:alpha(opacity=80);  
+            -moz-opacity:0.8;  
+            -khtml-opacity: 0.8;  
+            opacity: 0.8;*/
+            z-index: 999;
+            display: none;
+        }
+     .under_reg p{
+     }
+</style>
+</head>
+<body style="background:#8ac2e5;font-family:微软雅黑">
+	<div style="width:100%;">
+		<img src="__IMG__/naicha/zhuce.png" style="width:100%;height:60%">
+	</div>
+	<div style="width:100%;text-align:center;height:10%">
+		<button style="width:70%;height:50px;color:white;background:#239744;border-radius:15px;border:none;font-size:20px;font-family:微软雅黑" class="bangkan">注册</button>
+	</div>
+	<div style="width:100%;text-align:center;height:5%;font-size:20px;margin-top: 10px;font-family:微软雅黑">
+		活动规则
+	</div>
+	<div style="width:100%;text-align:center;height:10%;font-size:20px;font-family:微软雅黑">
+		<img src="__IMG__/naicha/xiala.png" id="xiala" style="width:40px;height:20px;margin-top: 10px;">
+		<div style="width:100%;display:none" id="guize">
+		<div class="test" style="width:90%;margin-left:6%;font-size:14px;">
+			<P>1、点击注册,在此页面注册获取您的专属链接</P>
+			<P>2、此活动的赠品为怡宝午後奶茶一箱（15瓶口味随机）</P>
+			<P>3、老用户可发起活动，邀请新用户助力</P>
+			<P>4、奖品数量根据实时库存进行调整</P>
+			<P>5、中奖产品将在中奖后7个工作日内发出</P>
+			<P>6、一经发现恶意参与活动者本公司有权取消其资格</P>
+			<P style="text-align:left" id="here"></P>
+		</div>
+		</div>
+	</div>
+	<!-- 底部 二维码-->
+        <div class="under_reg" id="bk">
+            <div style="width:80%;height:58%;min-height: 300px;background:#fff;bottom:15%;position:absolute;left:10%;border-radius:8px;">
+                <div style="color:#4D9962;font-size:20px;text-align:center;margin-top:10px;font-family:微软雅黑;">
+                注册<div id="bangkan_close" style="position:absolute;right:8px;top:8px;"><img style="width:20px;" src="__IMG__/reg_close.png"></div>
+                </div>
+                <div style="width:76%;margin-left:auto;margin-right:auto;margin-top:6%;">
+                    <input type="text" style="width:100%;height:35px;" placeholder="手机号码" name="mobile" id="mobile">
+                </div>
+                <div style="width:76%;margin-left:auto;margin-right:auto;margin-top:2%;">
+                    <input type="password" style="width:100%;height:35px;" placeholder="密码" name="password">
+                </div>
+                <div style="width:76%;margin-left:auto;margin-right:auto;margin-top:2%;">
+                    <input type="password" name="password2" style="width:100%;height:35px;" placeholder="重复密码">
+                </div>
+                <div style="width:76%;margin-left:auto;margin-right:auto;margin-top:2%;">
+                    <div style="width:52%;" class="float_l">
+                        <input type="text" style="width:100%;height:30px;" placeholder="" name="yzm">
+                        <input type="hidden" name="nickname" value="{$user_info.nickname}">
+                        <input type="hidden" name="kj_id" value="{$_GET['kj_id']}" >
+                    </div>
+                    <div id="get_code" style="width:41%;background:#70A6CA;text-align:center;height:35px;line-height:38px;color:#fff;font-family:微软雅黑;font-size:14px;border-radius:8px;" class="float_r">
+                        获取验证码
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                <div id="reg" style="width:57%;height:11.7%;background:#4C9961;margin:14% auto 0 auto;color:#fff;font-size:20px;
+                line-height:200%;text-align:center;border-radius:8px;">
+                    确认
+                </div>
+            </div>
+        </div>
+         <div class="under_reg" id="qr_shade">
+         	<div style="width:100%;height:100%;margin-top:-500px;" id="qr_code">
+         		<div style="width:1px;height:30%;margin-left:auto;margin-right:auto;background:#fff;"></div>
+				<div style="width:80%;margin:0 auto auto auto;min-height:50%;background:#fff;border-radius:4px;text-align:center;font-family:微软雅黑;">
+					<br>
+					<div>关注“壹易购物”公众号</div>
+					<div>获取您的专属链接吧</div>
+					<img src="/Public/images/qrcode.jpg" width="80%">
+				</div>
+			</div>
+         </div>
+        <div class="layer"></div>
+
+</body>
+<!-- <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script> -->
+<script type="text/javascript">
+	$('#xiala').click(function(){	
+		if($('#guize').css("display")=="none")
+		{
+			$('#guize').css("display","block");
+			$('#xiala').attr("src","__IMG__/naicha/shangla.png");
+			document.getElementById('here').scrollIntoView();
+		}
+		else
+		{
+			$('#guize').css("display","none");
+			$('#xiala').attr("src","__IMG__/naicha/xiala.png");
+		}
+
+	});
+	// function zhuce(){
+	// 	$('#zhuce').css("background-color","red");
+	// }
+	// $('#zhuce').bind('click',function(){
+	// 	alert("hello");
+	// });
+	function checkTel(tel){
+         var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+         if (reg.test(tel)) {
+              return true;
+         }else{
+            mylayer('手机号码格式错误');
+            // mylayer('手机号码格式错误');
+              return false;
+         };
+    }
+    $('#reg').click(function(){
+        var mobile=$('#mobile').val();
+        if(!checkTel(mobile)){
+            return false;
+        }
+        var yzm=$("input[name=yzm]").val();
+        var password=$("input[name=password]").val();
+        var password2=$("input[name=password2]").val();
+        var nickname=$("input[name=nickname]").val();
+        var kj_id=$("input[name=kj_id]").val();
+        if(mobile==""){
+            $("input[name=mobile]").focus();
+            mylayer("请输入验证码");
+            return false;
+        }
+        if(yzm==""){
+            $("input[name=yzm]").focus();
+            mylayer("请输入验证码");
+            return false;
+        }
+        if(password==""){
+            $("input[name=password]").focus();
+            mylayer("请输入密码");
+            return false;
+        }
+        if(password2==""){
+            $("input[name=password]").focus();
+            mylayer("请输入重复密码");
+            return false;
+        }
+        if(password!=password2){
+            $("input[name=password]").focus();
+            mylayer("两次密码不一致");
+            return false;
+        }
+        if(password.length<6){
+            $("input[name=password]").focus();
+            mylayer("密码不能少于6位");
+            return false;
+        }
+        $.post("{:U('faqi_reg')}",{kj_id:kj_id,openid:'',mobile:mobile,yzm:yzm,password:password,nickname:nickname},function(data){
+            if(data.status){
+                mylayer(data.info,3000);
+                show_qr();
+                total+=3;
+                a();
+                // if(data.url){
+                //     setTimeout(function(){
+                //         window.location.href=data.url;
+                //     },3000);
+                // }
+            }
+            else{
+                mylayer(data.info);
+            }
+        },'json');
+    });
+    var btn_status=1;
+    $('#get_code').click(function(){
+        var mobile=$('#mobile').val();
+        if(mobile.length<11){
+            mylayer('请输入正确的手机号码');
+            return false;
+        }
+        if(btn_status==0){
+            return false;
+        }
+        if(btn_status==1){
+            btn_status=0;
+        }
+        
+        $.post("{:U('/Home/Verifycode/Send')}?mobile="+mobile,null,function(data){
+            if (data && data.status==1) {
+                mylayer("验证码已发送");
+                $('#get_code').css('disabled',true);
+                $('#get_code').css('background','#949494');
+                var i = 60;
+                var senda=$("#get_code");
+                    $('#get_code').css('background',"#949494");
+                    // $('#get_code').addClass('disabled');
+                    var time1=setInterval(function(){
+                        if(i>0){
+                            senda.html('重发('+i+")");
+                            i--;
+                            senda.attr("disabled", "disabled");
+                        }
+                        else
+                        {
+                            senda.html('重新发送');
+                            senda.removeAttr("disabled");
+                            $('#get_code').css('background',"#e56a0c");
+                            // $('#btngetverycode').removeClass("disabled");
+                            btn_status=1;
+                            clearInterval(time1);
+                        }
+                },1000);
+
+            }
+            else{
+                mylayer('您是老用户,只能发起活动哦~');
+                show_qr();
+                // setTimeout(function(){
+                //     window.location.href="{:U('/Home')}";
+                // },3000);
+                btn_status=1;
+            }
+        },'json');
+    });
+   
+    $('.bangkan').click(function(){
+        $('#bk').show();
+    });
+    $('#bangkan_close').click(function(){
+        $('#bk').hide();
+    });
+    var con="";
+    var time=2500;
+    function mylayer(con,time2){
+    	if(!time2){
+    		time2=2500;
+    	}
+        $('.layer').html(con);
+        $('.layer').show('2000');
+        setTimeout(function(){
+            $('.layer').hide();
+        },time2);
+    };
+    // show_qr();
+    function show_qr(){
+    	$('#bk').hide();
+    	$('#qr_shade').show();
+    	$('#qr_code').animate({marginTop:'0px'},1000);
+    };
+</script>
+</html>

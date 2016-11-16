@@ -1,0 +1,131 @@
+<header class="mui-bar mui-bar-nav">
+    <button class="mui-btn mui-btn-link mui-btn-nav mui-pull-left" onclick="window.history.go(-1)">
+        <span class="mui-icon mui-icon-left-nav" ></span>
+        返回
+    </button>
+    <h1 class="mui-title">{$title}</h1>
+</header>
+<hr class="mui-content" style="margin-top:0px;">
+
+    <h5 name="yj">
+    <div style="text-align:center;">
+        &nbsp;&nbsp;佣金余额<em>:</em>¥<span id ="ye" style="color: red">{$total_tx}</span>&nbsp;(累计收入¥{$total_yj})
+    </div>
+    <div style="width:100%;text-align:center">
+        <button type="button" style="background:#e56a0c;
+        border-radius:25px;
+        color:white;
+        width:30%;
+        margin-top:10px;
+        margin-left:auto;
+        margin-right: auto" 
+        onclick="zhuanru()">转入账号
+        </button>
+        <button class="tixian" type="button" style="background:#e56a0c;
+        border-radius:25px;
+        color:white;
+        width:30%;
+        margin-top:10px;
+        margin-left:auto;
+        margin-right: auto;
+        margin-left:10px;" 
+        >提现
+        </button>
+        <h6>提示:佣金余额超过100元后才能提现喔！</h6>
+    </div>
+    </h5>
+    <hr>
+    <h5 style="position: relative;" class="yyg-cell-left">用户名
+        <span style="font-family: SimSun;margin-left: 80px">消费金额*比例=佣金(元)</span>
+        <span class="yyg-cell-right yyg-right-margin">时间&nbsp;&nbsp;</span></h5>
+    <ul id="recrodList" class="mui-table-view">
+        <foreach name="yj" item="item">
+            <li class="mui-table-view-cell">
+					<span class="username" style="font-size: small;font-family:SimSun;width: 33%;float: left;font-family:微软雅黑;">
+								  <if condition="$item.username eq NULL">
+                                      {$item.mobile}
+                                      <else/> {$item.username}
+                                  </if>
+					</span>
+                <div style="font-size: small;font-family:微软雅黑;text-align:center;width: 33%;float: left" >{$item.xiaofei}*{$item.bili}=<span style="color: #f60">{$item.yongjin}</span>
+                </div>
+                <div style="font-size: small;float: right;width: 33%;text-align: right">
+                    <span style="">{$item.time}</span>
+                </div>
+
+
+              </foreach>
+            </li>
+    </ul>
+
+</div>
+
+<script src="__JS__/jquery.touchSwipe.min.js"></script>
+<script>
+    function zhuanru(){
+
+                var yj = $('#ye').text();
+                $.post("{:U('yongjingyue')}",{yj:yj},function(data)
+                {
+                    // alert(data);
+                    if(data)
+                    {
+                        alert("转入￥"+data+"成功");
+                        $('#ye').text('0');
+                    }   
+                    else
+                    {
+                        alert("转入失败");
+                    }
+                });
+    }
+    $(function() {
+        var pageNum = 2;
+//		var goodList = $("#recrodList").swipe({
+//			swipeUp: onscrollend,
+//			threshold: 100,
+//			allowPageScroll: "vertical"
+//		});
+//
+//		$(window).bind("scroll", onscrollend);
+//
+//		function onscrollend() {
+//			if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+//     			console.info("滚动到底了");
+//     			page();
+//			}
+//		}
+        window.onScrollEnd(page);
+
+        var recrodList = $("#recrodList");
+        var template = $("li:first-child", recrodList);
+        function page()
+        {
+            $.get("{:U('Person/yaoqinglistRecord', '', '')}/20/" + pageNum, null, function(list) {
+                if(list && list.length > 0)
+                {
+                    ++pageNum;
+                    $.each(list, function() {
+                        var item = template.clone();
+                        $(".username", item).text(this.username);
+                        $(".time", item).text(this.time);
+                        recrodList.append(item);
+                    });
+                }
+                window.endScroll();
+            });
+        }
+    });
+    $('.tixian').click(function(){
+    	var ye={$total_tx};
+    	if(ye > 100)
+    	{
+    		alert('提现功能即将上线，请密切关注~');
+    	}
+    	else
+    	{
+    		alert('佣金余额超过100元后才能提现喔~~~');
+    	}
+        
+    });
+</script>

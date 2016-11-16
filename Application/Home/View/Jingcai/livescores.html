@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>竞猜足球比分直播</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+    </head>
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>竞猜足球比分直播</h1>
+            <img class="img_menus" src="__IMG__/more.png">
+        </header>
+    <style type="text/css">
+        .banchang{
+            color:#d7df00;
+            width:30%;
+            height: 30px;
+            background:#143d2f;
+            margin-left:36%;
+            text-align:center;
+            margin-top:5px;
+            line-height: 200%;
+        }
+        .neirong{
+            width:100%;
+            height:80%;
+        }
+        .yaliqiong{
+            height: 30%;
+            width:100%;
+            background:#091c16;
+            border: 1px solid #10a64f;
+            border-radius:30px;
+            line-height: 180%;
+        }
+        .neirong1{
+            width:28%;
+            height:100%;
+            float:left;
+            margin-top:2%;
+            margin-left:4%;
+            color:white;
+            }
+        .img1{
+            width:30px;
+            height:30px;
+            float:left;
+            margin-left:21%;
+/*            box-shadow:0 0 5px #10a64f;*/
+            /*border-radius:30px;*/
+        }
+        .img2{
+            width:30px;
+            height:30px;
+            float:left;
+/*            box-shadow:0 0 5px #10a64f;*/
+            border-radius:30px;
+        }         
+    </style>
+<!--         <footer class="ui-footer ui-footer-btn">
+        </footer> -->
+        <section class="ui-container">
+            <section id="tab">
+                <div class="daohang">
+                    <ul>
+                    <li>比赛直播</li>
+                    <li>赛事开奖</li>
+                    <li>投注记录</li>
+                    <li>玩法介绍</li>
+                    </ul>
+                          
+                </div>
+                <div class="demo-item">
+                    <div class="demo-block">
+                        <div class="ui-tab">
+                            <ul class="ui-tab-nav ui-border-b" style="font-size:17px;">
+                                <li>全部</li>
+                                <li>未开赛</li>
+                                <li>进行中</li>
+                                <li>已完场</li>
+                            </ul>
+                            <ul class="ui-tab-content" style="width:300%;">
+                                <li>
+                                        <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                        <foreach name="match" item="vo">
+                                                <li  class="ui-border-t mid_{$vo.m_id}" style="height:120px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                <div class="youyisai"  style="margin-top:10px;">
+                                                    <span style="font-size:14px;" class="youyisai_1">{$vo.l_cn_abbr}</span>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span style="font-size:14px;" class="youyisai_2">{$vo.match_num}</span>
+                                                    </div>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span class="youyisai_2">{$vo.time_cn}</span>
+                                                    <P class="status" style="color:#d7df00">
+                                                    <switch name="vo.status">
+                                                        <case value="Playing">进行中</case>
+                                                        <case value="Played">已结束</case>
+                                                        <case value="Fixture">未开赛</case>
+                                                    </switch>
+                                                    </P>
+                                                    </div>
+                                                </div>
+                                                <div class="xinxi">
+                                                    <div style="width:90%;height:30px;">
+                                                        <div  class="banchang">半场:{$vo.hts_h}:{$vo.hts_a}</div>
+                                                    </div>
+                                                    <div class="neirong">
+                                                        <div class="neirong1"> 
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:25%;height:26px;">{$vo.h_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                                <span style="color:#10a64f;margin-left:5px;float:left">67%
+                                                                </span>
+                                                                <img src="__IMG__/like.png" style="float:right;height:100%;margin-right:-1px;">
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:30%;height:100%;float:left;text-align:center">
+                                                            <div class="quanchang" style="color:#d7df00;margin-top:5px;">{$vo.fs_h}:{$vo.fs_a}
+                                                            </div>
+                                                            <div style="width:40px;height:40px;color:#10a64f;border-radius:50%;border:1px solid #10a64f;line-height:250%;margin-left:25%;">
+                                                                侃球
+                                                            </div>
+                                                        </div>
+                                                        <div class="neirong1" style="margin-left:-8px;">
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:20%;height:26px;">    
+                                                            {$vo.a_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                            <img src="__IMG__/like.png" style="float:left;height:100%;margin-left:-1px;">
+                                                            <span style="color:#10a64f;margin-right:5px;float:right">67%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:10%;height:100%;float:left">
+                                                            <div>
+                                                                <img src="__IMG__/next.png" style="width:25px;height:25px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </li>           
+                                        </foreach>
+                                                                           
+                                        </ul>
+                                </li>
+                                <li> <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                        <foreach name="fixture" item="vo">
+                                                <li  class="ui-border-t mid_{$vo.m_id}" style="height:120px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                <div class="youyisai"  style="margin-top:10px;">
+                                                    <span style="font-size:14px;" class="youyisai_1">{$vo.l_cn_abbr}</span>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span style="font-size:14px;" class="youyisai_2">{$vo.match_num}</span>
+                                                    </div>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span class="youyisai_2">{$vo.time_cn}</span>
+                                                    <P class="status" style="color:#d7df00">
+                                                    <switch name="vo.status">
+                                                        <case value="Playing">进行中</case>
+                                                        <case value="Played">已结束</case>
+                                                        <case value="Fixture">未开赛</case>
+                                                    </switch>
+                                                    </P>
+                                                    </div>
+                                                </div>
+                                                <div class="xinxi">
+                                                    <div style="width:90%;height:30px;">
+                                                        <div  class="banchang">半场:{$vo.hts_h}:{$vo.hts_a}</div>
+                                                    </div>
+                                                    <div class="neirong">
+                                                        <div class="neirong1"> 
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:25%;height:26px;">{$vo.h_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                                <span style="color:#10a64f;margin-left:5px;float:left">67%
+                                                                </span>
+                                                                <img src="__IMG__/like.png" style="float:right;height:100%;margin-right:-1px;">
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:30%;height:100%;float:left;text-align:center">
+                                                            <div class="quanchang" style="color:#d7df00;margin-top:5px;">{$vo.fs_h}:{$vo.fs_a}
+                                                            </div>
+                                                            <div style="width:40px;height:40px;color:#10a64f;border-radius:50%;border:1px solid #10a64f;line-height:250%;margin-left:25%;">
+                                                                侃球
+                                                            </div>
+                                                        </div>
+                                                        <div class="neirong1" style="margin-left:-8px;">
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:20%;height:26px;">    
+                                                            {$vo.a_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                            <img src="__IMG__/like.png" style="float:left;height:100%;margin-left:-1px;">
+                                                            <span style="color:#10a64f;margin-right:5px;float:right">67%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:10%;height:100%;float:left">
+                                                            <div>
+                                                                <img src="__IMG__/next.png" style="width:25px;height:25px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </li>           
+                                        </foreach>
+                                                                           
+                                        </ul></li>
+                                <li>
+
+                                    <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                        <foreach name="playing" item="vo">
+                                                <li class="ui-border-t" style="height:120px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                <div class="youyisai"  style="margin-top:10px;">
+                                                    <span style="font-size:14px;" class="youyisai_1">{$vo.l_cn_abbr}</span>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span style="font-size:14px;" class="youyisai_2">{$vo.match_num}</span>
+                                                    </div>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span class="youyisai_2">{$vo.time_cn}</span>
+                                                    <P style="color:#d7df00">
+                                                    <switch name="vo.status">
+                                                        <case value="Playing">进行中</case>
+                                                        <case value="Played">已结束</case>
+                                                        <case value="Fixture">未开赛</case>
+                                                    </switch>
+                                                    </P>
+                                                    </div>
+                                                </div>
+                                                <div class="xinxi">
+                                                    <div style="width:90%;height:30px;">
+                                                        <div class="banchang">半场:{$vo.hts_h}:{$vo.hts_a}</div>
+                                                    </div>
+                                                    <div class="neirong">
+                                                        <div class="neirong1"> 
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:25%;height:26px;">{$vo.h_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                                <span style="color:#10a64f;margin-left:5px;float:left">67%
+                                                                </span>
+                                                                <img src="__IMG__/like.png" style="float:right;height:100%;margin-right:-1px;">
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:30%;height:100%;float:left;text-align:center">
+                                                            <div style="color:#d7df00;margin-top:5px;">{$vo.fs_h}:{$vo.fs_a}
+                                                            </div>
+                                                            <div style="width:40px;height:40px;color:#10a64f;border-radius:50%;border:1px solid #10a64f;line-height:250%;margin-left:25%;">
+                                                                侃球
+                                                            </div>
+                                                        </div>
+                                                        <div class="neirong1" style="margin-left:-8px;">
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:20%;height:26px;">    
+                                                            {$vo.a_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                            <img src="__IMG__/like.png" style="float:left;height:100%;margin-left:-1px;">
+                                                            <span style="color:#10a64f;margin-right:5px;float:right">67%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:10%;height:100%;float:left">
+                                                            <div>
+                                                                <img src="__IMG__/next.png" style="width:25px;height:25px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </li>           
+                                        </foreach>
+                                                                           
+                                        </ul>
+                                </li>
+                                <li>
+
+                                     <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                        <foreach name="played" item="vo">
+                                                <li  class="ui-border-t mid_{$vo.m_id}" style="height:120px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                <div class="youyisai"  style="margin-top:10px;">
+                                                    <span style="font-size:14px;" class="youyisai_1">{$vo.l_cn_abbr}</span>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span style="font-size:14px;" class="youyisai_2">{$vo.match_num}</span>
+                                                    </div>
+                                                    <div style="width:100%;text-align:center">
+                                                    <span class="youyisai_2">{$vo.time_cn}</span>
+                                                    <P class="status" style="color:#d7df00">
+                                                    <switch name="vo.status">
+                                                        <case value="Playing">进行中</case>
+                                                        <case value="Played">已结束</case>
+                                                        <case value="Fixture">未开赛</case>
+                                                    </switch>
+                                                    </P>
+                                                    </div>
+                                                </div>
+                                                <div class="xinxi">
+                                                    <div style="width:90%;height:30px;">
+                                                        <div  class="banchang">半场:{$vo.hts_h}:{$vo.hts_a}</div>
+                                                    </div>
+                                                    <div class="neirong">
+                                                        <div class="neirong1"> 
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:25%;height:26px;">{$vo.h_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                                <span style="color:#10a64f;margin-left:5px;float:left">67%
+                                                                </span>
+                                                                <img src="__IMG__/like.png" style="float:right;height:100%;margin-right:-1px;">
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:30%;height:100%;float:left;text-align:center">
+                                                            <div class="quanchang" style="color:#d7df00;margin-top:5px;">{$vo.fs_h}:{$vo.fs_a}
+                                                            </div>
+                                                            <div style="width:40px;height:40px;color:#10a64f;border-radius:50%;border:1px solid #10a64f;line-height:250%;margin-left:25%;">
+                                                                侃球
+                                                            </div>
+                                                        </div>
+                                                        <div class="neirong1" style="margin-left:-8px;">
+                                                            <div style="font-size:16px;text-align:center;" style="margin-left:20%;height:26px;">    
+                                                            {$vo.a_cn_abbr}</div>
+                                                            <div class="yaliqiong">
+                                                            <img src="__IMG__/like.png" style="float:left;height:100%;margin-left:-1px;">
+                                                            <span style="color:#10a64f;margin-right:5px;float:right">67%</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="width:10%;height:100%;float:left">
+                                                            <div>
+                                                                <img src="__IMG__/next.png" style="width:25px;height:25px;">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                </li>           
+                                        </foreach>
+                                                                           
+                                        </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <script class="demo-script">
+                    
+                    </script>
+                </div>
+            </section>
+        </section>
+        <script src="/Public/Home/lib/zepto.min.js"></script>
+        <script src="__JS__/jquery-1.11.2.min.js"></script>
+        <script src="__JS__/frozen.js"></script>
+        <script>
+        (function (){
+            var tab = new fz.Scroll('.ui-tab', {
+                role: 'tab',
+            });
+            /* 滑动开始前 */
+            tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+                console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+            })
+        })();
+        $('.img_menus').click(function(){
+            $('.daohang').slideToggle();
+        });
+        setInterval(update,5000);
+        function update(){
+            $.get('{:U('get_match_update')}','',function(data){
+                data=JSON.parse(data);
+                for(i in data){
+                    $('.mid_'+data[i]['m_id']+' .banchang').text("半场:"+data[i]['hts_h']+":"+data[i]['hts_a']+"");
+                    $('.mid_'+data[i]['m_id']+' .quanchang').text(""+data[i]['fs_h']+":"+data[i]['fs_a']+"");
+                    var status="进行中";
+                    if(data[i]['status']=="Playing"){
+                        status="进行中";
+                    }
+                    if(data[i]['status']=="Played"){
+                        status="已结束";
+                    }
+                    if(data[i]['status']=="Fixture"){
+                        status="未开赛";
+                    }
+                    $('.mid_'+data[i]['m_id']+' .status').text(status);
+                    console.log(data[i]);
+                }
+            });
+        }
+        </script>
+    </body>
+</html

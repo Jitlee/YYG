@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{$CONF['mallTitle']}后台管理中心</title>
+      <link href="__PUBLIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="__ROOT__/Apps/Admin/View/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+      <!--[if lt IE 9]>
+      <script src="__PUBLIC__/js/html5shiv.min.js"></script>
+      <script src="__PUBLIC__/js/respond.min.js"></script>
+      <![endif]-->
+      <script src="__PUBLIC__/js/jquery.min.js"></script>
+      <script src="__PUBLIC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+      <script src="__PUBLIC__/js/common.js"></script>
+      <script src="__PUBLIC__/plugins/plugins/plugins.js"></script>
+      <script src="__PUBLIC__/plugins/layer/layer.min.js"></script>
+      
+      <style type="text/css">
+		#preview{border:1px solid #cccccc; background:#CCC;color:#fff; padding:5px; display:none; position:absolute;}
+	  
+	    .rtc-tab-box{width:100%; height:auto; margin:0px auto;}
+		.rtc-tab-nav{margin:0; padding:0; height:35px; line-height:24px;position: relative;top:2px;left:3px;}
+		.rtc-tab-nav li{cursor:pointer;float:left; margin:0 0px; list-style:none; border:1px solid #ddd; border-bottom:none; height:34px; width:120px; 
+				text-align:center; background:#eeeeee;color:#000000; padding-top:5px ;}
+		.rtc-tab-nav .on{background:#ffffff;color:#000000;border-bottom:0 none;}
+   		.rtc-tab-content{padding:5px;width:99%; height:auto; border:1px solid #ddd;}
+	  </style> 
+   </head>
+   <body class="rtc-page">
+   		<div id='tab' class="rtc-tab-box">
+			<ul class="rtc-tab-nav">
+		    	<li> <a href='{:U("Admin/Kanjia/ffindex","","")}/{$kjcode}'>砍价设置</a></li>
+		        <li><a href='{:U("Admin/Kanjia/ffcanyu","","")}/{$kjcode}'>参与活动者列表</a> </li>
+		        <li class="on"><a >中奖用户</a></li>
+		   </ul>
+		</div>
+		<div style="float:left;margin-bottom: 10px;">
+		<a class="btn btn-success glyphicon glyphicon-plus add">添加中奖用户</a>
+		</div>
+		
+		<div style="clear:both;"></div>
+		<table class="table table-hover table-striped table-bordered rtc-list">
+				<tr>
+					<th width="70px">序号</th>
+					<th>中奖昵称</th>
+					<th>手机号</th>
+					<th>中奖时间</th>
+					<th>奖品</th>
+					<th >操作</th>
+				</tr>
+				<tbody>
+					<volist name="list" id="vo" key="k">
+						<tr>
+						<td>{$k}</td>
+						<td>{$vo.nickname}</td>
+						<td>{$vo.phone}</td>
+						<td>{$vo.time|date="Y-m-d H:i:s",###}</td>
+						<td>
+							<if condition="$vo['havesendprize'] == '0' ">
+								<a zj_id="{$vo.zj_id}" nickname="{$vo.nickname}" class="btn btn-info sendprize">发送奖品</a>	
+	               			<else/>已发放</if>
+													
+						</td>
+						<td width="150px">
+							<a zj_id="{$vo.zj_id}" nickname="{$vo.nickname}" class="btn btn-info edit">编辑</a>	
+							<a class="btn btn-danger del" zj_id={$vo.zj_id} style="margin-left: 10px;">删除</a>
+						</td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+		 
+		<script type="text/javascript">
+			$('.add').click(function(){
+				layer.open({
+				  type: 1,
+				  title:"添加中奖用户",
+				  scrollbar: false,
+				  skin: 'layui-layer-rim', //加上边框
+				  area: ['300px', '180px'], //宽高
+				  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><label class="col-sm-4 control-label">中奖昵称</label><input name="type" type="hidden" value="2"><input name="nickname" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入中奖昵称"></div></form><a style="width:100px;" class="btn btn-success" onclick="add()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+				});
+			});
+			function add(){
+				var nickname=$('input[name=nickname]').val();
+				var type={$kjcode};
+				if(nickname==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				$.post("{:U('zhongjian_add')}",{nickname:nickname,type:type},function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			}
+			function cancel(){
+				layer.closeAll();
+			}
+			
+			
+			$('.edit').click(function(){
+		
+				var nickname=$(this).attr('nickname');
+				var zj_id=$(this).attr('zj_id');
+				layer.open({
+				  type: 1,
+				  title:"修改中奖用户",
+				  scrollbar: false,
+				  skin: 'layui-layer-rim', //加上边框
+				  area: ['300px', '180px'], //宽高
+				  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><input name="zj_id" type="hidden" value="'+zj_id+'"><label class="col-sm-4 control-label">中奖昵称</label><input name="nickname" value="'+nickname+'" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="昵称"></div></form><a style="width:100px;" class="btn btn-success" onclick="edit()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+				});
+			});
+			function edit(){
+				var zj_id=$('input[name=zj_id]').val();
+				var nickname=$('input[name=nickname]').val();
+				if(nickname==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				$.post("{:U('zhongjian_edit')}",{zj_id:zj_id,nickname:nickname},function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			}
+			
+			
+			$('.sendprize').click(function(){
+				var _zj_id=$(this).attr('zj_id');
+				var nickname=$(this).attr('nickname');
+				layer.confirm('您确定要给【'+nickname+'】【<span style="color:red">发送奖品</span>】?',{
+					title:'温馨提醒',
+					btn:['确定','取消'],
+					},function(){
+						layer.load();
+						$.post("{:U('sendprize')}",{zj_id:_zj_id},function(data){
+							layer.closeAll('loading');
+							if(data.status){
+								layer.msg(data.info,{icon:1});
+								setTimeout(function(){
+									window.location.reload(0);
+								},5000);
+							}
+							else{
+								layer.msg(data.info,{icon:0});
+							}
+						});
+					},
+					function(){
+						layer.closeAll();
+					}
+				);
+			});
+		
+			$('.del').click(function(){
+				var zj_id=$(this).attr('zj_id');
+				layer.confirm('您确定要【<span style="color:red">删除</span>】?',{
+					title:'温馨提醒',
+					btn:['确定','取消'],
+					},function(){
+						layer.load();
+						$.post("{:U('kanzhong_del')}",{zj_id:zj_id},function(data){
+							layer.closeAll('loading');
+							if(data.status){
+								layer.msg(data.info,{icon:1});
+								setTimeout(function(){
+									window.location.reload(0);
+								},1000);
+							}
+							else{
+								layer.msg(data.info,{icon:0});
+							}
+						});
+					},
+					function(){
+						layer.closeAll();
+					}
+				);
+			});
+		</script>
+
+   </body>
+</html>

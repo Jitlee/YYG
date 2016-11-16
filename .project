@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>TEST_APP</name>
+	<name>LeiFenWan</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -20,4 +20,15 @@
 		<nature>com.aptana.projects.webnature</nature>
 		<nature>com.aptana.editor.php.phpNature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>0</id>
+			<name></name>
+			<type>26</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-node_modules</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="/Public/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/Public/js/layer/layer.js"></script>
+<title>订单支付</title>
+<style type="text/css">
+body{
+	padding:0;
+	margin:0;
+	font-family:'微软雅黑';
+	background: #eee;
+}
+</style>
+<script type="text/javascript">
+var order_sn = "{$res['order_sn']}";
+var order_amount="{$res['order_amount']}";
+
+//调用微信JS api 支付
+function jsApiCall(){
+	WeixinJSBridge.invoke(
+		'getBrandWCPayRequest',
+		<?php echo $jsApiParameters; ?>,
+		function(res){
+			//如果支付成功
+			if (res.err_msg == 'get_brand_wcpay_request:ok') {
+				//支付成功后跳转的地址
+				location.href = '{:U("success")}'+"?total="+order_amount;
+			}else if (res.err_msg == 'get_brand_wcpay_request:cancel') {
+				alert('请尽快完成支付哦！');
+				setTimeout(function(){
+					window.history.go(-1);
+				},1000);
+			}else if (res.err_msg == 'get_brand_wcpay_request:fail') {
+				alert('支付失败');
+				setTimeout(function(){
+					window.history.go(-1);
+				},1000);
+			}else {
+				alert('意外错误');
+				setTimeout(function(){
+					window.history.go(-1);
+				},1000);
+			}
+			//WeixinJSBridge.log(res.err_msg);
+			//alert(res.err_code+res.err_desc+res.err_msg);
+			/*if (res.err_msg == 'get_brand_wcpay_request:ok') {
+				alert('支付成功');
+			}else {
+				alert('取消支付');
+			}*/
+		}
+	);
+}
+function callpay(){
+	if (typeof WeixinJSBridge == "undefined"){
+	    if( document.addEventListener ){
+	        document.addEventListener('WeixinJSBridgeReady', jsApiCall, false);
+	    }else if (document.attachEvent){
+	        document.attachEvent('WeixinJSBridgeReady', jsApiCall); 
+	        document.attachEvent('onWeixinJSBridgeReady', jsApiCall);
+	    }
+	}else{
+	    jsApiCall();
+	}
+}
+</script>
+</head>
+<body>
+<!--头部开始-->
+<!-- <div class="flowpay">
+	<div style="width:100%;height:50px;box-shadow:0 0 10px #888;text-align:center;font-size:22px;font-family:'微软雅黑';line-height:50px;background:#3c4245;color:white;">选择支付方式</div>
+	<div style="height:100px;margin-top:50px;font-size:20px;text-align:center;">
+		本次订单需支付：<strong class="price" style="font-size:24px;color:red;">{$res['order_amount']}</strong>&nbsp;元 
+	</div>
+	<div class="pay" style="line-height:50px;font-size:22px;margin-left:auto;margin-right:auto;width:80%;height:50px;background:#e2350d;border-radius:6px;color:white;text-align:center;" value="微信支付">
+			<a type="button" >确认支付</a>
+	</div>
+</div> -->
+<!--尾结束-->
+</body>
+<script type="text/javascript">
+	callpay();
+</script>
+</html>

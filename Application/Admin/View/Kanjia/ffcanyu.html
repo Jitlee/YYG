@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{$CONF['mallTitle']}后台管理中心</title>
+      <link href="__PUBLIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="__ROOT__/Apps/Admin/View/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+      <!--[if lt IE 9]>
+      <script src="__PUBLIC__/js/html5shiv.min.js"></script>
+      <script src="__PUBLIC__/js/respond.min.js"></script>
+      <![endif]-->
+      <script src="__PUBLIC__/js/jquery.min.js"></script>
+      <script src="__PUBLIC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+      <script src="__PUBLIC__/js/common.js"></script>
+      <script src="__PUBLIC__/plugins/plugins/plugins.js"></script>
+      
+      <style type="text/css">
+		#preview{border:1px solid #cccccc; background:#CCC;color:#fff; padding:5px; display:none; position:absolute;}
+	  
+	    .rtc-tab-box{width:100%; height:auto; margin:0px auto;}
+		.rtc-tab-nav{margin:0; padding:0; height:35px; line-height:24px;position: relative;top:2px;left:3px;}
+		.rtc-tab-nav li{cursor:pointer;float:left; margin:0 0px; list-style:none; border:1px solid #ddd; border-bottom:none; height:34px; width:120px; 
+				text-align:center; background:#eeeeee;color:#000000; padding-top:5px ;}
+		.rtc-tab-nav .on{background:#ffffff;color:#000000;border-bottom:0 none;}
+   		.rtc-tab-content{padding:5px;width:99%; height:auto; border:1px solid #ddd;}
+	  </style> 
+	  <script type="text/javascript">
+	  	function del(id){
+		   Plugins.confirm({title:'信息提示',content:'您确定要【<span style="color:red">删除</span>】该砍价参与信息吗?',okText:'确定',cancelText:'取消',okFun:function(){
+			   Plugins.closeWindow();
+			   Plugins.waitTips({title:'信息提示',content:'正在操作，请稍后...'});
+			   $.post("{:U('Admin/Kanjia/kanjiaitemdel')}",{kjid:id},function(data,textStatus){
+						var json = RTC.toJson(data);
+						if(json.status=='1'){
+							Plugins.setWaitTipsMsg({content:'操作成功',timeout:1000,callback:function(){
+							   location.reload();
+							}});
+						}else{
+							Plugins.closeWindow();
+							Plugins.Tips({title:'信息提示',icon:'error',content:'操作失败!',timeout:1000});
+						}
+					});
+		   }});
+	   }
+	  </script>
+   </head>
+	<body class="rtc-page">
+		<div id='tab' class="rtc-tab-box">
+			<ul class="rtc-tab-nav">
+		    	<li> <a href='{:U("Admin/Kanjia/ffindex","","")}/{$kjcode}'>砍价设置</a></li>
+		        <li  class="on"><a href='{:U("Admin/Kanjia/ffcanyu","","")}/{$kjcode}'>参与活动者列表</a> </li>
+		        <li><a href='{:U("Admin/Kanjia/ffzhongjiang","","")}/{$kjcode}'>中奖用户</a></li>
+		   </ul>
+		</div>
+		<div>
+		<table class="table table-hover table-striped table-bordered rtc-list">
+				<tr>
+					<th width="70px">序号</th>
+					<th>参与者微信id</th>
+					<th>参与者注册id</th>
+					<th>昵称</th>
+					<th>已砍金额</th>
+					<th>总金额</th>
+					<th>剩余金额</th>
+					<th>帮砍次数</th>
+					<th>剩余比例</th>
+					<th>开始时间</th>
+					<th>操作</th>
+				</tr>
+				<tbody>
+					<volist name="list" id="vo" key="k">
+						<tr>
+						<td>{$k}</td>
+						<td>{$vo.wx_id}</td>						
+						<td style="text-align: center;">{$vo.uid}</td>
+						<td>{$vo.nickname}</td>
+						<td style="text-align: center;">{$vo["money"]-$vo["shengyumoney"]}</td>
+						<td>{$vo.money}</td>
+						<td>{$vo.shengyumoney}</td>
+						<td>{$vo.count}</td>
+						<td>{$vo.shengyubili}</td>
+						<td>{$vo.time|date="Y-m-d H:i:s",###}</td>	
+						<td> 
+							<if condition="$vo['candel'] == 1 ">
+									<a class="btn btn-default glyphicon glyphicon-trash" onclick="javascript:del({$vo['kj_id']})">刪除</a>
+							</if>							
+						</td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+		</div>
+		<div style="text-align: center;">
+			<if condition="$pageCount gt 0"> 
+				<nav>
+				  <ul class="pagination">
+				  	<if condition="$minPageNum gt 1">
+				    <li>
+				      <a href="__ACTION__/{$kjcode}/{$pageSize}/{$minPageNum-1}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				  	<else/>
+				    <li class="disabled">
+				      <span aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </span>
+				    </li>
+				  	</if>
+				  	<if condition="$pageNum gt 1">
+					  <for start="$minPageNum" end="$pageNum">
+					    		<li><a href="__ACTION__/{$kjcode}/{$pageSize}/{$i}">{$i}</a></li>
+						</for>
+					</if>
+					<li class="active"><a>{$pageNum}</a></li>
+				  <for start="$pageNum+1" end="$maxPageNum"  comparison="elt">
+				    		<li><a href="__ACTION__/{$kjcode}/{$pageSize}/{$i}" >{$i}</a></li>
+					</for>
+					<if condition="$maxPageNum lt $pageCount AND $maxPageNum gt 0">
+				    <li>
+				      <a href="__ACTION__/{$kjcode}/{$pageSize}/{$maxPageNum}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  	<else/>
+				    <li class="disabled">
+				      <span aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </span>
+				    </li>
+				  	</if>
+				  </ul>
+				</nav>
+			</if>
+		</div>
+   </body>
+</html>

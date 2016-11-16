@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{$CONF['mallTitle']}后台管理中心</title>
+      <link href="__PUBLIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="__ROOT__/Apps/Admin/View/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+      <!--[if lt IE 9]>
+      <script src="__PUBLIC__/js/html5shiv.min.js"></script>
+      <script src="__PUBLIC__/js/respond.min.js"></script>
+      <![endif]-->
+      <script src="__PUBLIC__/js/jquery.min.js"></script>
+      <script src="__PUBLIC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+      <script src="__PUBLIC__/js/common.js"></script>
+      <script src="__PUBLIC__/plugins/plugins/plugins.js"></script>
+      <script src="__PUBLIC__/plugins/layer/layer.min.js"></script> 
+      
+      <style type="text/css">
+		#preview{border:1px solid #cccccc; background:#CCC;color:#fff; padding:5px; display:none; position:absolute;}
+	  
+	    .rtc-tab-box{width:100%; height:auto; margin:0px auto;}
+		.rtc-tab-nav{margin:0; padding:0; height:35px; line-height:24px;position: relative;top:2px;left:3px;}
+		.rtc-tab-nav li{cursor:pointer;float:left; margin:0 0px; list-style:none; border:1px solid #ddd; border-bottom:none; height:34px; width:120px; 
+				text-align:center; background:#eeeeee;color:#000000; padding-top:5px ;}
+		.rtc-tab-nav .on{background:#ffffff;color:#000000;border-bottom:0 none;}
+   		.rtc-tab-content{padding:5px;width:99%; height:auto; border:1px solid #ddd;}
+	  </style> 
+   </head>
+	<body class="rtc-page">
+		
+	   	<div id='tab' class="rtc-tab-box">
+			<ul class="rtc-tab-nav">
+		    	<li class="on">砍价设置</li>		        
+		        <li><a href='{:U("Admin/Kanjia/ffcanyu","","")}/{$kjcode}'>参与活动者列表</a> </li>
+		        <li><a href='{:U("Admin/Kanjia/ffzhongjiang","","")}/{$kjcode}'>中奖用户</a></li>
+		   </ul>
+		</div>
+		<div class="rtc-tab-content" style='width:99%;margin-bottom: 10px;'>	
+			<div style="float:left;margin-bottom: 10px;">
+			<a class="btn btn-success glyphicon glyphicon-plus add">添加警戒线</a>
+			<a class="btn btn-box glyphicon glyphicon-plus" href='{:U("Home/Wxmsg/test","",'')}/{$kjcode}' target="_blank">测试砍价</a>
+			 
+			</div>
+			
+			<div style="clear:both;"></div>
+			<table class="table table-hover table-striped table-bordered rtc-list">
+				<tr>
+					<th width="70px">序号</th>
+					<th>已砍比例（%）</th>
+					<th>随机范围</th>
+					<th >备注</th>
+					<th >操作</th>
+				</tr>
+				<tbody>
+					<volist name="list" id="vo" key="k">
+						<tr>
+						<td>{$k}</td>
+						<td>{$vo.kjr_yikan}</td>
+						<td>{$vo.kjr_min}——{$vo.kjr_max}</td>
+						<td>{$vo.kjr_beizhu}</td>
+						<td width="150px"><a kjr_yikan="{$vo.kjr_yikan}" kjr_min={$vo.kjr_min} kjr_max={$vo.kjr_max} kir_beizhu="{$vo.kir_beizhu}" kjr_id="{$vo.kjr_id}" class="btn btn-info edit">编辑</a><a class="btn btn-danger del" kjr_id={$vo.kjr_id} style="margin-left: 10px;">删除</a></td>
+					</tr>
+					</volist>
+				</tbody>
+			</table>
+		</div>
+		<script type="text/javascript">
+			$('.add').click(function(){
+				layer.open({
+				  type: 1,
+				  title:"添加砍价规则",
+				  scrollbar: false,
+				  skin: 'layui-layer-rim', //加上边框
+				  area: ['450px', '350px'], //宽高
+				  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><label class="col-sm-4 control-label">已砍比例(%)</label><input name="type" type="hidden" value="2"><input name="yikan" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入已砍线"></div><div class="form-group"><label class="col-sm-4 control-label">最小值</label><input name="min" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入随机最小金额"></div><div class="form-group"><label class="col-sm-4 control-label">最大值</label><input name="max" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入随机最大金额"></div><div class="form-group"><label class="col-sm-4 control-label">备注(选)</label><input type="textarea" placeholder="备注可选填" name="beizhu" style="width: 150px" class="col-sm-4 form-control"></div></form><a style="width:100px;" class="btn btn-success" onclick="add()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+				});
+			});
+			function add(){
+				var yikan=$('input[name=yikan]').val();
+				var min=$('input[name=min]').val();
+				var max=$('input[name=max]').val();
+				var beizhu=$('input[name=beizhu]').val();
+				var type={$kjcode};
+				if(yikan==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				if(min==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				if(max==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				$.post("{:U('kanjia_add')}",{kjr_yikan:yikan,kjr_min:min,kjr_max:max,kjr_beizhu:beizhu,type:type},function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			}
+			function cancel(){
+				layer.closeAll();
+			}
+			
+			$('.edit').click(function(){
+				var kjr_yikan=$(this).attr('kjr_yikan');
+				var kjr_min=$(this).attr('kjr_min');
+				var kjr_max=$(this).attr('kjr_max');
+				// var kjr_beizhu=$(this).attr('kjr_beizhu');
+				var kjr_id=$(this).attr('kjr_id');
+				layer.open({
+				  type: 1,
+				  title:"添加等级",
+				  scrollbar: false,
+				  skin: 'layui-layer-rim', //加上边框
+				  area: ['400px', '350px'], //宽高
+				  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><input name="kjr_id" type="hidden" value="'+kjr_id+'"><label class="col-sm-4 control-label">已砍比例%</label><input name="kjr_yikan" value="'+kjr_yikan+'" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入已砍比例"></div><div class="form-group"><label class="col-sm-4 control-label">最小值</label><input value="'+kjr_min+'" name="kjr_min" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入最小金额"></div><div class="form-group"><label class="col-sm-4 control-label">最大值</label><input value="'+kjr_max+'" name="kjr_max" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入最大金额"></div><div class="form-group"><label class="col-sm-4 control-label">备注(选)</label><input type="textarea" value="" placeholder="备注可选填" name="kjr_beizhu" style="width: 150px" class="col-sm-4 form-control"></div></form><a style="width:100px;" class="btn btn-success" onclick="edit()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+				});
+			});
+			function edit(){
+				var kjr_id=$('input[name=kjr_id]').val();
+				var kjr_yikan=$('input[name=kjr_yikan]').val();
+				var kjr_min=$('input[name=kjr_min]').val();
+				var kjr_max=$('input[name=kjr_max]').val();
+				var kjr_beizhu=$('input[name=kjr_beizhu]').val();
+				if(kjr_yikan==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				if(kjr_min==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				if(kjr_max==""){
+					layer.msg('请输入完整信息',{icon:0});
+					return false;
+				}
+				$.post("{:U('kanjia_edit')}",{kjr_id:kjr_id,kjr_yikan:kjr_yikan,kjr_min:kjr_min,kjr_beizhu:kjr_beizhu,kjr_max:kjr_max},function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			}
+		
+			$('.del').click(function(){
+				var kjr_id=$(this).attr('kjr_id');
+				layer.confirm('您确定要【<span style="color:red">删除</span>】?',{
+					title:'温馨提醒',
+					btn:['确定','取消'],
+					},function(){
+						layer.load();
+						$.post("{:U('del')}",{kjr_id:kjr_id},function(data){
+							layer.closeAll('loading');
+							if(data.status){
+								layer.msg(data.info,{icon:1});
+								setTimeout(function(){
+									window.location.reload(0);
+								},1000);
+							}
+							else{
+								layer.msg(data.info,{icon:0});
+							}
+						});
+					},
+					function(){
+						layer.closeAll();
+					}
+				);
+			});
+		</script>
+   </body>
+</html>

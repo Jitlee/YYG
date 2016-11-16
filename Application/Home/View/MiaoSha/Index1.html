@@ -1,0 +1,449 @@
+<style type="text/css">
+	.mui-scroll-wrapper{
+		overflow: auto;
+	}
+	
+	.mui-slider-indicator {
+		background-color: #fff;
+	}
+	
+	.yyg-bar-nav {
+		display:flex;
+		line-height: 40px;
+		text-align: center;
+		border-bottom:solid 1px #D5D5D5;
+	}
+	
+	.yyg-bar-nav a{
+		color:#999;
+	}
+	
+	.yyg-bar-nav-primary {
+		width: 90px;
+		border-right:solid 1px #D5D5D5;
+	}
+	
+	.yyg-bar-nav-btn {
+		flex:1;
+		-webkit-flex:1;
+		-ms-flex:1;
+		-moz-flex:1;
+		-o-flex:1;
+	}
+	
+	.yyg-bar-nav-btn.yyg-active {
+		color: #db3652;
+	}
+	
+	.yyg-goods-list-item {
+		background-color: #fff;
+	}
+	.yyg-goods-media {
+		background:none;
+		position: relative;
+	}
+	
+	.yyg-goods-media span {
+		color:rgba(171,171,171,1);
+		margin:0 2px;
+	}
+	
+	.yyg-goods-media r{
+		font-size: 20px;
+	}
+	
+	p.yyg-content-title {
+		color:#333;
+		font-size:14px;
+	}
+	
+	.yyg-list-price {
+		position: relative;
+		
+	}
+	
+	.yyg-right {
+		display:block;
+		position: absolute;
+		top:50%;
+		right:5px;
+		text-align: right;
+		transform: translateY(-50%);
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		-moz-transform: translateY(-50%);
+		-o-transform: translateY(-50%);
+	}
+	
+	.yyg-list-buy{
+		background-color:rgba(255,102,0,1);
+		color:#fff!important;
+	    height: 18px;
+	    line-height: 18px;
+	    border-radius: 9px 0 0 9px;
+	    font-size:12px;
+	    padding-right:5px;
+	    padding-left:5px;
+	}
+	
+	.yyg-list-buy-sts {
+		display: inline-block;
+		background-position:50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-image: url(__IMG__/sts.png);
+		width:11px;
+		height:11px;
+		vertical-align: middle;
+	}
+	
+	.yyg-del {
+		text-decoration: line-through;
+	}
+	
+	.yyg-goods-list-item hr {
+		border: none;
+		border-top: 1px dotted rgba(252,226,198,1);
+	}
+	
+	.yyg-category {
+		position: fixed;
+		background: rgba(0,0,0,0.2);
+		width:100%;
+		height:100%;
+		display:none;
+		z-index: 99;
+	}
+	.yyg-category-left {
+		display: block;
+		width:40%;
+		background-color: #ddd;
+		height:360px;
+		padding: 0;
+		margin: 0;
+		float:left;
+		overflow: auto;
+	}
+	
+	.yyg-category-left li {
+		width:100%;
+		text-align: center;
+		color:#999;
+		line-height: 45px;
+		padding: 0;
+		margin: 0;
+	}
+	
+	.yyg-category-left li.yyg-active {
+		color:#333;
+		background-color:#fff;
+	}
+	
+	.yyg-category-right {
+		display: block;
+		width:60%;
+		height:360px;
+		background-color:#fff;
+		padding: 0;
+		margin: 0;
+		float:left;
+	}
+	
+	#buttonCategoy i:before{
+		content:"\e608";
+	}
+	
+	#buttonCategoy.yyg-active i:before{
+		content:"\e609";
+	}
+	
+	.yyg-category.yyg-active {
+		display:block;
+	}
+	
+	.yyg-category-right li {
+		width:100%;
+		color:#333;
+		line-height: 45px;
+		display: table;
+	}
+	
+	.yyg-category-right li span {
+		color:#333;
+		display: table-cell;
+		width:70%;
+		padding-left:10px;
+	}
+	
+	.yyg-category-right li label {
+		color:#999;
+		display: table-cell;
+		width:30%;
+		text-align: right;
+		padding-right:10px;
+	}
+	
+</style>
+<div id="slider" class="mui-slider">
+	<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-negative">
+		<a class="mui-control-item" href="#itemall">全部商品</a>
+		<a class="mui-control-item" href="#itemjiexiao">即将揭晓</a>
+		<a class="mui-control-item" href="#itemshare">晒单分享</a>
+	</div>
+	<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+	<div class="mui-slider-group">
+		<div id="itemall" class="mui-slider-item mui-control-content mui-active">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<div id="goodNav" class="yyg-bar-nav">
+						<a id="buttonCategoy" type="0" href="javascript:void(0);" class="yyg-bar-nav-primary "><span>商品分类</span><i class="iconfont"></i></a>
+						<a type="1" href="javascript:void(0);" class="yyg-bar-nav-btn yyg-active">人气</a>
+						<a type="2" href="javascript:void(0);" class="yyg-bar-nav-btn">最新</a>
+						<a type="3" href="javascript:void(0);" class="yyg-bar-nav-btn">剩余人次</a>
+						<a type="4" href="javascript:void(0);" class="yyg-bar-nav-btn">总需人次</a>
+					</div>
+					
+					<div id="goodCategories" class="yyg-category">
+						<ul class="yyg-category-left">
+							
+						</ul>
+						<ul class="yyg-category-right">
+							
+						</ul>
+					</div>
+					<ul id="goodList" class="yyg-goods-list">
+					</ul>
+					
+					<li id="goodTemplate" class="mui-hidden yyg-goods-list-item">
+						<a href="">
+							<div>
+								<div class="yyg-goods-img-container">
+									<img class="yyg-goods-img" src="" />
+								</div>
+								<div class="yyg-goods-media">
+									<p class="yyg-content-title"></p>
+									<hr />
+									<div class="yyg-list-price">
+										<span>¥<r>1</r></span><span class="yyg-del">¥</span><span class="yyg-del money">19</span>
+										<span class="yyg-right yyg-list-buy"><i class="yyg-list-buy-sts"></i>去抢购</span>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</div>
+			</div>
+		</div>
+		<div id="itemjiexiao" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					2
+				</div>
+			</div>
+		</div>
+		<div id="itemshare" class="mui-slider-item mui-control-content">
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					3
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="__JS__/mui.min.js"></script>
+<script type="text/javascript">
+	mui.init()
+	$(function(){
+		$(".mui-control-content").height($(window).height() - 132);
+//		$('.mui-scroll-wrapper').scroll({
+//			indicators: true //是否显示滚动条
+//		});
+				
+		var slideNumber = 1;
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			slideNumber = e.detail.slideNumber;
+			switch(slideNumber) {
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				default:
+					break;
+			}
+		});
+		
+		$(".mui-scroll-wrapper").bind("scroll", onscrollend)/*.swipe({
+			swipeUp: onscrollend,
+			threshold: 100,
+			allowPageScroll: "vertical"
+		})*/;
+		
+		function onscrollend() {
+			if ($(this).scrollTop() + $(this).height() == $(this).children().height()) {
+       			console.info("滚动到底了");
+       			switch(slideNumber) {
+					case 1:
+						pageAll();
+						break;
+					case 2:
+						pageJiexiao();
+						break;
+					case 3:
+						pageShare();
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		
+		// 全部商品翻页
+		var pageNum = 0;
+		var goodList = $("#goodList");
+		var goodTemplate = $("#goodTemplate");
+		var orderType = 1;
+		function pageAll(clear) {
+			if(clear) {
+				pageNum = 0;
+			}
+			$.get("{:U('pageAll', '', '')}/8/" + (++pageNum), {
+				type: orderType,
+				cid: goodCid,
+				bid: goodBid,
+			}, function(list) {
+				if(clear) {
+					goodList.html("");
+				}
+	       		$.each(list, function() {
+	       			var item = goodTemplate.clone().removeClass("mui-hidden").removeAttr("id");
+	       			$("a", item).attr("href", "__CONTROLLER__/" + this.gid);
+	       			$("img", item).attr("src", this.thumb);
+	       			$("p", item).text(this.title);
+	       			$("span.money", item).text(this.money);
+	       			$("r", item).text(this.danjia);
+	       			goodList.append(item);
+	       		});
+	       });
+		}
+		pageAll();
+		
+		var goodNav = $("#goodNav").on("touchend", "a.yyg-bar-nav-btn", function() {
+			var $this = $(this);
+			if($this.hasClass("yyg-active")) {
+				return;
+			}
+			$("a.yyg-active", goodNav).removeClass("yyg-active");
+			$this.addClass("yyg-active");
+			orderType = $this.attr("type");
+			pageAll(true);
+		});
+		var goodCategories = $("#goodCategories");
+		var categories = null;
+		var buttonCategoy = $("#buttonCategoy").click(function(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			buttonCategoy.toggleClass("yyg-active");
+			goodCategories.toggleClass("yyg-active");
+			if(!categories) {
+				$.get("{:U('category', '', '')}", null, function(list){
+					categories = list;
+					$.each(list, function(index) {
+						$("<li>").text(this.name)
+							.attr("index", index)
+							.attr("cid", this.cid)
+							.appendTo(ulCategories);
+					});
+					
+					if(categories.length > 0) {
+						categories[0].brands = [{
+							name: "全部商品",
+							bid: 0,
+							count: categories[0].count
+						}];
+						oncategory.call($("li:first", ulCategories)[0]);
+					}
+				});
+			}
+			
+			if(buttonCategoy.hasClass("yyg-active")) {
+				window.addEventListener("click", onclosecategory);
+			} else {
+				window.removeEventListener("click", onclosecategory);
+			}
+		});
+		function onclosecategory() {
+			buttonCategoy.toggleClass("yyg-active");
+			goodCategories.toggleClass("yyg-active");
+			console.log("自动关闭");
+		}
+		
+		
+		var ulCategories = $(".yyg-category-left", goodCategories)
+			.on("touchend", "li", oncategory);
+			
+		function oncategory() {
+			var $this = $(this);
+			if($this.hasClass("yyg-active")) {
+				return;
+			}
+			var index = Number($this.attr("index"));
+			var cid = $this.attr("cid");
+			$("li.yyg-active", ulCategories).removeClass("yyg-active");
+			$this.addClass("yyg-active");
+			if(categories[index].brands) {
+				ulBrands.html("");
+				renderBrands(categories[index].brands, cid);
+			} else {
+				$.get("{:U('brands', '', '')}/" + cid, null, function(list){
+					categories[index].brands = list;
+					ulBrands.html("");
+					renderBrands(categories[index].brands, cid);
+				});
+			}
+		}
+		
+		function renderBrands(brands, cid) {
+			$.each(brands, function(index) {
+				var li = $("<li>").attr("index", index).attr("bid", this.bid).attr("cid", cid);
+				var span = $("<span>").text(this.name);
+				var label = $("<label>").text("(" + this.count + ")");
+				li.append(span);
+				li.append(label);
+				ulBrands.append(li);
+			});
+		}
+		
+		var goodCid = 0;
+		var goodBid = 0;
+		var ulBrands = $(".yyg-category-right", goodCategories).on("touchend", "li", function(evt){
+			var $this = $(this);
+			evt.stopPropagation();
+			evt.preventDefault();
+			buttonCategoy.toggleClass("yyg-active");
+			goodCategories.toggleClass("yyg-active");
+			if($this.hasClass("yyg-active")) {
+				return false;
+			}
+			var needRefresh = $("li.yyg-active", ulBrands).removeClass("yyg-active").length > 0;
+			$this.addClass("yyg-active");
+			
+			goodCid = $this.attr("cid");
+			goodBid = $this.attr("bid");
+			var name = $("span", $this).text();
+			if(name == "全部") {
+				name = $("li[cid='" + goodCid + "']", ulCategories).text();
+			}
+			$("span", buttonCategoy).text(name);
+			
+			if(needRefresh) {
+				pageAll(true);
+			}
+			
+			return false;
+		});
+		
+		
+	});
+</script>

@@ -1,0 +1,47 @@
+<div class="nav">
+	<a type="button" href="{:U('fan')}" id="fan1" class="btn btn-default navbar-btn">直接粉丝数排序</a>
+	<a type="button" href="{:U('fan2')}" id="fan2" class="btn btn-default navbar-btn">总粉丝数排序</a>
+</div>
+<script type="text/javascript">
+$('#fan{$sort}').addClass('active');
+</script>
+<table id="listTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>序号</th>
+			<th>UID</th>
+			<th>用户名</th>
+			<th>邮箱</th>
+			<th>手机</th>
+			<th>金额</th>
+			<th>等级</th>
+			<th>直接粉丝数</th>
+			<if condition="$sort eq 2">
+				<th>总粉丝数</th>
+			</if>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="item" key="k">
+			<tr>
+				<td>{$k+1}</td>
+				<td>{$item.uid}</td>
+				<td>{$item.username}</td>
+				<td>{$item.email}</td>
+				<td>{$item.mobile}</td>
+				<td>{$item.money}</td>
+				<td>{$item.rank_name}</td>
+				<td>{$item.num}</td>
+				
+				<if condition="$sort eq 2">
+					<td>{$item.total}</td>
+				</if>
+				
+			</tr>
+		</foreach>
+	</tbody>
+</table>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	
+</script>

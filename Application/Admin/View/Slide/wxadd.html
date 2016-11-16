@@ -1,0 +1,73 @@
+<form class="form-horizontal" role="form" method="post" data-toggle="validator">
+	<present name="data.id">
+		<input type="hidden" name="id" value="{$data.id}" /> 
+	</present>
+	<div class="form-group">
+		<label for="inputName" class="col-sm-2 control-label">名称</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="name" id="inputName" placeholder="请输入幻灯片名称" value="{$data.name}" required>
+			<input type="hidden" name="type" value="2">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="inputLink" class="col-sm-2 control-label">链接</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" name="link" id="inputLink" placeholder="请输入幻灯片的链接" value="{$data.link}" required>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="imageButton" class="col-sm-2 control-label">图片</label>
+		<div class="col-sm-10">
+			<input class="hidden" id="inputThumb" name="img" value="{$data.img}" />
+			<button id="imageButton" type="button" class="btn btn-default">上传图片</button>
+			<br />
+			<img src="{$data.img|default='__IMG__/favicon.png'}" class="img-thumbnail" style="max-width: 500px;" alt="" />
+		</div>
+	</div>
+	<div class="form-group">
+		<p id="checkTips" class="check-tips text-danger"></p>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-primary"> 提交 </button>
+			<a class="btn btn-default" href="{:U('index','','')}"> 取消 </a>
+		</div>
+	</div>
+</form>
+<include file="Public:upload" />
+<script type="text/javascript">
+	 //表单提交
+	$(document).ajaxStart(function() {
+		$("button:submit").attr("disabled", true);
+	}).ajaxStop(function() {
+		$("button:submit").attr("disabled", false);
+	});
+	 //刷新验证码
+	$(function() {
+		var imageButton = $("#imageButton").click(function(){
+			UI.upload("上传图片", {
+				ok: function(files) {
+					if (files.length > 0) {
+						var url = files[0].url;
+						$("img", imageButton.parent()).attr("src", url);
+						$("input", imageButton.parent()).val(url);
+					}
+				}
+			});
+		});
+		
+		$("form").submit(function() {
+			var self = $(this);
+			$.post('{$action}', self.serialize(), success, "json");
+			return false;
+	
+			function success(data) {
+				if (data.status) {
+					window.location.href = "{:U('wxindex')}";
+				} else {
+					$("#checkTips").text(data.info);
+				}
+			}
+		});
+	});
+	</script>

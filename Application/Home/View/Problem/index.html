@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>了解壹易购物</title>
+    <meta content="app-id=518966501" name="apple-itunes-app" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    <link href="http://mskin.1yyg.com/v21/weixin/CSS/comm.css?v=130715" rel="stylesheet" type="text/css" />
+    <link href="http://mskin.1yyg.com/v21/weixin/CSS/help.css?v=151105" rel="stylesheet" type="text/css" />
+    
+</head>
+<body fnav="1">
+    <div class="wrapper">
+        <div class="help-inner">
+            <ul class="icon-list clearfix">
+                <li>
+                    <span class="icon tel"></span>
+                    <p class="gray9">唯一官方客服热线</p>
+                    <p class="gray6">0755-6159-7816</p>
+                </li>
+                <li>
+                    <span class="icon qq"></span>
+                    <p class="gray9">唯一官方客服QQ</p>
+                    <p class="gray6">376867727</p>
+                </li>
+            </ul>
+            <dl class="q-list marginB">
+                <dt><span class="icon question"></span>常见问题</dt>
+                <volist name="list" id="vo" key="k">
+                	<dd><a href="{:U("Problem/problemdetails","","")}?t={$vo.pid}">{$vo.title}<i></i></a></dd>
+                </volist>
+               
+            </dl>
+            <br />
+            <br />
+            <br />
+             
+        </div>
+        
+ 
+
+    </div>
+</body>
+<script>
+ 
+		var shareData = {
+		    title: '了解壹易购物',
+	        desc: '1元实现你的汽车梦、手机、数码,尽在壹易购物',
+	        link: 'http://yiyigw.cn/index.php/Home/Problem/index',
+	        imgUrl: 'http://yiyigw.cn/Public/images/logo.jpg'
+		};
+	 
+		var signPackage=new Object(); 
+		signPackage.appId='{$signPackage.appId}';
+		signPackage.timestamp={$signPackage.timestamp};
+		signPackage.nonceStr='{$signPackage.nonceStr}';
+		signPackage.signature='{$signPackage.signature}';
+	
+	</script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="__JS__/wxjsapi.js"></script>
+</html>

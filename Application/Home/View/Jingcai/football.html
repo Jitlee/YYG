@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>{$title}</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+        <style type="text/css">
+        .active{
+            background: #10a64f;
+            color:#fff;
+        }
+        </style>
+    </head>
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>胜平负/过关</h1>
+            <img class="img_menus" src="__IMG__/more.png">
+        </header>
+        <footer class="ui-footer ui-footer-btn">
+<!--             <ul class="ui-tiled ui-border-t">
+                <li data-href="index.html" class="ui-border-r"><div>基础样式</div></li>
+                <li data-href="ui.html" class="ui-border-r"><div>UI组件</div></li>
+                <li data-href="js.html"><div>JS插件</div></li>
+            </ul> -->
+         <div class="dibu_muens" style="font-size:14px;">
+            <button style="background:#10a64f" class="clear">清除</button>
+            <span>至少选择：2场|已选：</span><span style="color:#c5a50b" id="yixuan">0</span>场
+            <button style="background:#c5b50a" class="confirm">确认</button>
+         </div>
+        </footer>
+        <section class="ui-container">
+            <section id="tab">
+                <div class="daohang">
+                    <ul>
+                    <li>比赛直播</li>
+                    <li>赛事开奖</li>
+                    <li>投注记录</li>
+                    <li>玩法介绍</li>
+                    </ul>
+                          
+                </div>
+                <div class="demo-item">
+                    <div class="demo-block">
+                        <div class="ui-tab">
+                            <ul class="ui-tab-nav ui-border-b" style="font-size:18px;">
+                                <li class="current feirangqiu_click">非让球</li>
+                                <li class="rangqiu_click">让球</li>
+                                <!-- <li>非让球/让球</li> -->
+                            </ul>
+                            <p class="ui-txt-white" style="background:#014F35;font-size:14px;height:30px;line-height:250%;padding-left:10px">最近共{$count}场比赛</p>
+                            <ul class="ui-tab-content" style="width:300%;">
+                                <li>
+                                        <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                            <volist name="list" id="vo">
+                                                <li class="ui-border-t" style="height:100px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                    <div class="youyisai">
+                                                        <div style="font-size:14px;width:100%;padding:0px;margin:0;text-align:center;">
+                                                            <span class="youyisai_1" style="font-size:14px;">{$vo.l_cn_abbr}</span>
+                                                        </div>
+                                                        <div style="width:100%;text-align:center">
+                                                        <span style="font-size:14px;" class="youyisai_2">{$vo.number}</span>
+                                                        </div>
+                                                        <div style="width:100%;text-align:center">
+                                                        <span style="font-size:14px;" class="youyisai_2">{$vo.begin_time||date="h:i",###}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="xinxi">
+                                                    <!-- background:#091c16 -->
+                                                    <div class="rangqiu">
+                                                    <div class="rangqiu_text">让球</div>
+                                                        <div class="rangqiu_about"><span>0</span>
+                                                    </div>
+                                                    </div>
+                                                    <div class="main_info">
+                                                    <div class="mian_info_msg">
+                                                        <span>{$vo.team1}</span>VS<span>{$vo.team2}</span>
+                                                    </div>
+                                                    <div class="mian_meuns">
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:h:{$vo.win}" class="mian_meuns_info_flase choic"><span>胜:{$vo.win}</span>
+                                                        </div>
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:d:{$vo.ping}" class="mian_meuns_info_flase choic"><span>平:{$vo.ping}</span>
+                                                        </div>
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:a:{$vo.lost}" class="mian_meuns_info_flase choic"><span>负:{$vo.lost}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </ul>
+                                </li>
+                                <li>
+                                    <ul class="ui-list  ui-border-tb" style="background:#11261f;width:100%;">
+                                            <volist name="list" id="vo">
+                                                <li class="ui-border-t" style="height:100px;border-bottom:1px solid #1e644c;padding:0;margin:0;">
+                                                    <div class="youyisai">
+                                                        <div style="font-size:14px;width:100%;padding:0px;margin:0;text-align:center;">
+                                                            <span class="youyisai_1" style="font-size:14px;">{$vo.l_cn_abbr}</span>
+                                                        </div>
+                                                        <div style="width:100%;text-align:center">
+                                                        <span style="font-size:14px;" class="youyisai_2">{$vo.number}</span>
+                                                        </div>
+                                                        <div style="width:100%;text-align:center">
+                                                        <span style="font-size:14px;" class="youyisai_2">{$vo.begin_time||date="h:i",###}</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="xinxi">
+                                                    <!-- background:#091c16 -->
+                                                    <div class="rangqiu" style="width:20%;">
+                                                    <div class="rangqiu_text" style="height:46px;font-size:16px;">让球</div>
+                                                        <div class="rangqiu_about"><span>{$vo.rangqiu}</span>
+                                                    </div>
+                                                    </div>
+                                                    <div class="main_info" style="width:80%;">
+                                                    <div class="mian_info_msg">
+                                                        <span>{$vo.team1}</span>VS<span>{$vo.team2}</span>
+                                                    </div>
+                                                    <div class="mian_meuns">
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:h:{$vo.rang_win}" class="mian_meuns_info_flase choic"><span>胜:{$vo.rang_win}</span>
+                                                        </div>
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:d:{$vo.rang_ping}" class="mian_meuns_info_flase choic"><span>平:{$vo.rang_ping}</span>
+                                                        </div>
+                                                        <div choic_id="{$vo.jcp_id}" choic="{$vo.jcp_id}:a:{$vo.rang_lost}" class="mian_meuns_info_flase choic"><span>负:{$vo.rang_lost}</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </volist>
+                                        </ul>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
+                    <script class="demo-script">
+                    
+                    </script>
+                </div>
+            </section>
+        </section>
+        <form method="post" action="confirm">
+        <input type="hidden" id="chs" name="chs" value="">
+       <input type="hidden" name="type" value="1">
+        </form>
+        <script src="/Public/Home/lib/zepto.min.js"></script>
+        <script src="__JS__/jquery-1.11.2.min.js"></script>
+        <script src="__JS__/frozen.js"></script>
+        <script src="/Public/js/layer/layer.js"></script>
+        <script>
+        (function (){
+            var tab = new fz.Scroll('.ui-tab', {
+                role: 'tab',
+            });
+            /* 滑动开始前 */
+            tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+                console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+            })
+        })();
+        $('.img_menus').click(function(){
+            $('.daohang').slideToggle();
+        });
+        
+        var chs=new Array();
+        var choic=new Array();
+        var i=0;
+        var type=1;
+        $('.choic').each(function(){
+            var choic_id=$(this).attr('choic_id');
+            chs[choic_id]=new Array();
+        });
+        $('.choic').click(function(){
+            $(this).toggleClass('active');
+            var value=$(this).attr('choic');
+            var choic_id=$(this).attr('choic_id');
+            if(chs[choic_id].indexOf(value)==-1){
+                chs[choic_id].push(value);
+                i++;
+                // alert('不在数组');
+            }
+            else{
+                chs[choic_id].splice(chs[choic_id].indexOf(value),1);
+                i--;
+                // alert('在数组');
+            }
+            $('#yixuan').text(i);
+            $('#chs').val(chs);
+            console.log(chs);
+        });
+        $('.clear').click(function(){
+            chs=[];
+            i=0;
+            $('#yixuan').text(i);
+            $('.choic').removeClass('active');
+        });
+        $('.rangqiu_click').click(function(){
+            layer.msg('切换模式会清除之前的记录');
+            type=2;
+            chs=[];
+            i=0;
+            $('#yixuan').text(i);
+            $('.choic').removeClass('active');
+            $('input[name=type]').val("2");
+        });
+        $('.feirangqiu_click').click(function(){
+            layer.msg('切换模式会清除之前的记录');
+            type=1;
+            chs=[];
+            i=0;
+            $('#yixuan').text(i);
+            $('.choic').removeClass('active');
+            $('input[name=type]').val("1");
+        });
+        $('.confirm').click(function(){
+            if(i<2){
+                layer.msg('请至少选择两个场次',{icon:0});
+                return false;
+            }
+            $.post('{:U('check_login')}','',function(data){
+                if(data.status==1){
+                    $('form').submit();  
+                }
+                else{
+                    layer.msg(data.info,{icon:0,area:['auto','']});
+                    if(data.url){
+                        setTimeout(function(){
+                            window.location.href=data.url;
+                        },2000);
+                    }
+                    return false;
+                }
+            });
+
+            // alert($('input[name=type]').val());
+            
+        });
+        </script>
+    </body>
+</html

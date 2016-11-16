@@ -1,0 +1,50 @@
+<div class="nav">
+	<a type="button" href="{:U('add','','')}" class="btn btn-primary navbar-btn">添加分类</a>
+</div>
+<table id="slideTable" class="table table-bordered">
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>名称</th>
+			<th>链接</th>
+			<th style="width:130px">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+		<foreach name="list" item="slide">
+		<tr>
+			<td>{$slide.id}</td>
+			<td>{$slide.name}</td>
+			<td>{$slide.link}</td>
+			<td id="{$slide.id}">
+				<a type="button" class="edit btn btn-warning btn-sm" href='{:U('edit','','')}/{$slide.id}'>编辑</a>
+				<button type="button" class="delete btn btn-danger btn-sm">删除</button>
+			</td>
+		</tr>
+		</foreach>
+	</tbody>
+</table>
+<script type="text/javascript">
+	$(function(){
+		$("#slideTable").on("click",".delete", function(evt) {
+			var ths = $(this);
+			var id = ths.parent().attr("id");
+			var tr = ths.closest("tr");
+			UI.confirm("是否删除", {
+				ok: function() {
+					remove(tr, id);
+				}
+			});
+		});
+		
+		function remove(tr, id) {
+			$.post("{:U('remove','','')}/" + id, null, function(data) {
+				if(data.status) {
+					tr.remove();
+				} else {
+					$("#tips").text(data.info);
+				}
+			}, "json");
+		}
+	});
+</script>

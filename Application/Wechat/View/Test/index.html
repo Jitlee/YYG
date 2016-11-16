@@ -1,0 +1,424 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" href="__CSS__/kanjia.css">
+<script type="text/javascript" src="/Public/js/jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="/Public/js/layer/layer.js"></script>
+<title><if condition="$user_info['type'] eq 1">0元砍iphone6s<else/>5万积分等你来拿</if></title>
+</head>
+<style type="text/css">
+	canvas{
+		margin-top: 0px;
+		border-radius: 15px;
+		width: 250px;
+			}
+</style>
+<body>
+<header>
+<if condition="$user_info['type'] eq 1">
+	<div><img src="__IMG__/header.png" width="100%"></div>
+</if>
+<if condition="$user_info['type'] eq 2">
+	<div><img src="__IMG__/header2.png" width="100%"></div>
+</if>
+	<div class="top"><img src="__IMG__/active.png" width="100%"></div>
+</header>
+	<div class="small" style="text-align:center;width:100%;">
+	<span>即日起—2016-7.15</span>
+	</div>
+	<div class="small" style="text-align:center;width:100%; font-size:16px;margin-top:8px;">
+		数量有限,先到先得
+	</div>
+	<div class="shengyutaishu">
+	<if condition="$user_info['type'] eq 1">
+		<span>剩余台数：{$shengyutaishu}台</span>
+	</if>
+	<if condition="$user_info['type'] eq 2">
+		<span>剩余名额：{$shengyutaishu}名</span>
+	</if>
+	</div>
+	<div class="who">
+		<div class="who_img"><img src="{$user_info.headimgurl}"></div>
+		<div class="notice"><img src="__IMG__/notice.gif" width="100%"></div>
+		<div class="who_name">
+			<span class=""><b style="color:#47A1D5;">{$user_info.nickname}</b></span>
+			<br>
+			<span style="color:red;">请你砍ta一刀，往死里砍吧！</span>
+		</div>
+	</div>
+	<div class="jindutiao">
+		<div style="width:{$bl}%;background:#F92F19;height:100%;margin-left:-1px;"></div>
+	</div>
+	<if condition="$user_info['type'] eq 1">
+		<div style="width:220px;margin-right:auto;margin-left:auto;margin-top:5px;">
+			<div class="float_l big">已砍：<span class="red">{$yikan}元</span></div>
+			<div class="float_r big">总金额：<span class="red">{$user_info.money}元</span></div>
+		</div> 
+	</if>
+	<if condition="$user_info['type'] eq 2">
+		<div style="width:220px;margin-right:auto;margin-left:auto;margin-top:5px;">
+			<div class="float_l big">已砍：<span class="red">{$yikan}</span></div>
+			<div class="float_r big">总金额：<span class="red">{$user_info.money}</span></div>
+		</div> 
+	</if>
+	<div class="clear"></div>
+	<div class="rule_div">
+		<div><img src="__IMG__/l_hand.png" width="80%"></div>
+		<div id="rule"><img src="__IMG__/rule.png" height="100%"></div>
+		<div><img src="__IMG__/r_hand.png" width="80%"></div>
+	</div>
+	<div class="btn">
+		<div class="button kanjia" style="background:#DB3D3E;"><span>我要参与</span></div>
+		<div class="button bangkan" style="margin-left:25px;background:#47A1D5;"><span>帮ta砍价</span></div>
+	</div>
+	<div class="clear"></div>
+	<div class="hr"></div>
+	<div style="width:100%;text-align:center;margin-top:10px;">
+		<span>目前共有<span style="color:#f60;">&nbsp;{$bangkan_count}&nbsp;</span>位好友砍掉{$yikan}元</span>
+	</div>
+	<div class="tabs">
+		<div class="tab1 active">谁砍过</div>
+		<div class="tab2">英雄榜</div>
+	</div>
+	<div class="clear"></div>
+	<div class="content">
+		<div id="con1" class="con">
+			<notempty name="bangkan_info">
+				<volist name="bangkan_info" id="list">
+					<div>
+						<div class="head"><img src="{$list.headimgurl}" style="width:63px;height:63px;border-radius:63px;"></div>
+						<div class="name">
+							<div class="u_name">{$list.nickname}</div>
+							<div class="time">{$list.bk_time|date="Y-m-d H:i",###}</div>
+						</div>
+						<div class="money">-{$list.bk_money}元</div>
+						<div class="hr2"></div>
+					</div>
+				</volist>
+			<else />
+			<div style="text-align:center;font-size:16px;color:#999;font-family:'微软雅黑';margin-top:20px;">暂时无人帮砍哦~请继续加油吧</div>
+			</notempty>
+		</div>
+		<div id="con2" class="con">
+			<notempty name="zhongjiang">
+				<volist name="zhongjiang" id="list" key="k">
+					<div>
+						<div class="head2"><img src="__IMG__/head{$user_info.type}/h{$k}.jpg" style="width:43px;height:43px;border-radius:43px;"></div>
+						<div class="name2">
+							{$list.nickname}
+						</div>
+						<div class="time2">{$list.time|date="Y-m-d H:i",###}</div>
+						<div class="hr2"></div>
+					</div>
+				</volist>
+			<else/>
+			<div style="text-align:center;font-size:16px;color:#999;font-family:'微软雅黑';margin-top:20px;">还没有人领奖呢！赶紧加把劲</div>
+			</notempty>
+		</div>
+	</div>
+	<div class="copyright">
+		—本次活动解释权归广州壹元夺宝网络科技有限公司所有—
+	</div>
+
+	<div class="shade" style="position:fixed;width:100%;height:100%;top:0px;background:url('__IMG__/shade.png');background-repeat:repeat;">
+		<!-- 底部 微信二维码-->
+		<div class="under under_kanjia" id="kanjia">
+			<div id="kanjia_close" style="position:fixed;margin-top:-40px;width:40px;height:40px;"><img width="100%" src="__IMG__/close.png"></div>
+			<div class="" style="margin-top:10px;">长按图片，关注微信公众号进行砍价</div>
+			<if condition="$user_info['type'] eq 1">
+					<div style="width:200px;margin:10px auto 0px auto;"><img src="/Public/images/kj1.jpg" width="100%"></div>
+			</if>
+			<if condition="$user_info['type'] eq 2">
+					<div style="width:200px;margin:10px auto 0px auto;"><img src="/Public/images/kj2.jpg" width="100%"></div>
+			</if>
+		</div>
+		<!-- 底部 二维码-->
+		<div class="under2 under_bangkan" id="bangkan">
+			<div style="color:red;float:right;" id="bangkan_close">关闭</div>
+			<div style="margin-top:5px;line-height:40px;">
+				<div style="width:90%;">
+					<label style="width:30%;float:left;">手机号:</label>
+					<input style="width:60%;float:left;" type="text" name="mobile" id="mobile" placeholder="输入手机号码">
+				</div>
+				<div style="clear:both;"></div>
+				<div style="width:90%;line-height:40px;">
+					<label style="width:30%;float:left;">验证码:</label>
+					<input style="width:40%;float:left;" type="text" name="yzm" placeholder="输入验证码">
+					<a id="get_code" style="width:30%;float:left;font-size:14px;line-height:25px;background:#47A1D5;border-radius:5px;height:25px;color:#fff;margin-top:5px;">获取验证码</a>
+				</div>
+				<div style="clear:both;"></div>
+				<div style="width:90%;line-height:40px;">
+					<label style="width:30%;float:left;">密码:</label>
+					<input style="width:60%;float:left;" placeholder="密码" type="password" name="password">
+				</div>
+				<div style="clear:both;"></div>
+				<div style="width:90%;line-height:40px;">
+					<label style="width:30%;float:left;">昵称:</label>
+					<input style="width:60%;float:left;" type="text" name="nickname" placeholder="输入昵称">
+					<input style="width:60%;float:left;" type="hidden" name="kj_id" value="{$_GET['kj_id']}" >
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+			<div id="reg" style="margin-top:20px;background:#47A1D5;width:90%;border-radius:5px;color:#fff;margin-left:auto;margin-right:auto;height:40px;line-height:40px;font-size:18px;">注册帮ta砍两次</div>
+			<div id="noreg" style="width:90%;border-radius:5px;color:#999;margin-left:auto;margin-right:auto;height:40px;line-height:40px;font-size:12px;"><a>不，我只要帮ta砍一次</a></div>
+		</div>
+		<div class="under under_bangkan" id="bangkan2">
+			<div id="bangkan_close2" style="position:fixed;margin-top:-40px;width:100%;text-align:right;height:40px;"><img width="40px" src="__IMG__/close_r.png"></div>
+			<div style="clear:both;"></div>
+			<div class="" style="margin-top:10px;">长按识别二维码砍ta吧！</div>
+			<div style="width:200px;margin:10px auto 0px auto;"><img src="{$user_info.qr_url}" width="100%"></div>
+		</div>
+		<!-- 底部 二维码-->
+		<div class="under_rule">
+			<div id="rule_close" style="float:right;width:30px;height:30px;margin-right:20px;margin-top:5px;"></div>
+			<div style="clear:both;"></div>
+			<div style="padding:10px;width:100%;height:100%;">
+				<p style="width:90%; font-size:15px;"><b style="font-size:16px;">活动细则</b><br>
+			 &nbsp;&nbsp;1.关注公众号“壹易购物”菜单栏点击“我要砍价”即可开启砍价之路。<br>
+	         &nbsp;&nbsp;2.分享让朋友帮砍，最高至“0”元即可把奖品带回家，奖品有限，先到先得。<br>
+	         &nbsp;&nbsp;3.点击“我要帮砍”扫描二维码点击关注，即可帮砍成功，帮砍者也会获得100积分的奖励，可直接购买商品。<br>
+	         &nbsp;&nbsp;4.奖品有限，先到先得，送完即止。<br>
+				</p>
+			</div>
+		</div>
+
+	</div>
+</body>
+<script type="text/javascript">
+var openid="{$openid}";
+	function checkTel(tel){
+		 var reg = /^0?1[3|4|5|8][0-9]\d{8}$/;
+		 if (reg.test(tel)) {
+		      return true;
+		 }else{
+		 	alert('手机号码格式错误');
+		      return false;
+		 };
+    }
+	$('#reg').click(function(){
+		var mobile=$('#mobile').val();
+		if(!checkTel(mobile)){
+			return false;
+		}
+		var yzm=$("input[name=yzm]").val();
+		var password=$("input[name=password]").val();
+		var nickname=$("input[name=nickname]").val();
+		var kj_id=$("input[name=kj_id]").val();
+		if(mobile==""){
+			$("input[name=mobile]").focus();
+			alert("请输入验证码");
+			return false;
+		}
+		if(yzm==""){
+			$("input[name=yzm]").focus();
+			alert("请输入验证码");
+			return false;
+		}
+		if(password==""){
+			$("input[name=password]").focus();
+			alert("请输入密码");
+			return false;
+		}
+		if(nickname==""){
+			$("input[name=nickname]").focus();
+			alert("请输入昵称");
+			return false;
+		}
+		if(password.length<6){
+			$("input[name=password]").focus();
+			alert("密码不能少于6位");
+			return false;
+		}
+		$.post("{:U('kj_reg')}",{kj_id:kj_id,openid:openid,mobile:mobile,yzm:yzm,password:password,nickname:nickname},function(data){
+			if(data.status){
+				alert('注册成功');
+				$('#bangkan').html('<span style="color:#f60;">下一步，关注公众号砍他</span><img src="{$user_info.qr_url}" width="100%">');
+			}
+			else{
+				alert(data.info);
+			}
+		},'json');
+	});
+	var btn_status=1;
+	$('#get_code').click(function(){
+		if(btn_status==0){
+			return false;
+		}
+		if(btn_status==1){
+			btn_status=0;
+		}
+		var mobile=$('#mobile').val();
+		if(mobile.length<11){
+			alert("请输入正确的手机号码");
+			return false;
+		}
+		
+		$.post("{:U('/Home/Verifycode/Send')}?mobile="+mobile,null,function(data){
+			if (data && data.status==1) {
+				alert("验证码已发送");
+				$('#get_code').css('disabled',true);
+				$('#get_code').css('background','#949494');
+				var i = 60;
+				var senda=$("#get_code");
+					$('#get_code').css('background',"#949494");
+					// $('#get_code').addClass('disabled');
+					var time1=setInterval(function(){
+						if(i>0){
+							senda.html('重发('+i+")");
+							i--;
+							senda.attr("disabled", "disabled");
+						}
+						else
+						{
+							senda.html('重新发送');
+							senda.removeAttr("disabled");
+							$('#get_code').css('background',"#e56a0c");
+							// $('#btngetverycode').removeClass("disabled");
+							btn_status=1;
+							clearInterval(time1);
+						}
+				},1000);
+
+			}
+			else{
+				alert(data.msg);
+				btn_status=1;
+			}
+		},'json');
+	});
+	$('#noreg').click(function(){
+		$('#bangkan2').show();
+		$('#bangkan').hide();
+	});
+	$('.shade').hide();
+	$('#con2').hide();
+	$('.tab1').click(function(){
+		$('#con1').show();
+		$('#con2').hide();
+		$(this).addClass('active');
+		$('.tab2').removeClass('active');
+	});
+	$('.tab2').click(function(){
+		$('#con2').show();
+		$('#con1').hide();
+		$(this).addClass('active');
+		$('.tab1').removeClass('active');
+	});
+	$('.kanjia').click(function(){
+		$('#bangkan').hide();
+		$('.shade').show();
+		// $('#kanjia').slideDown();
+		$('#kanjia').show();
+	});
+	$('#kanjia_close').click(function(){
+		$('.shade').hide();
+		// $('#kanjia').slideUp();
+		$('#kanjia').hide();
+	});
+	$('.bangkan').click(function(){
+		$('#kanjia').hide();
+		$('.shade').show();
+		$('#bangkan').show();
+		$('#bangkan2').hide();
+	});
+	$('#bangkan_close').click(function(){
+		$('.shade').hide();
+		$('#bangkan').hide();
+	});
+	$('#bangkan_close2').click(function(){
+		$('.shade').hide();
+		$('#bangkan2').hide();
+	});
+	$('.under_rule').hide();
+	$('#rule').click(function(){
+		$('.shade').show();
+		$('.under_rule').show();
+	});
+	$('#rule_close').click(function(){
+		$('.shade').hide();
+		$('.under_rule').hide();
+	});
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+<if condition="$user_info['type'] eq 1">
+	wx.config({
+    // debug: true, 
+    appId: '{$signPackage.appId}',
+        timestamp: {$signPackage.timestamp},
+        nonceStr: '{$signPackage.nonceStr}',
+        signature: '{$signPackage.signature}',
+       jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+          ]
+      });             
+    wx.ready(function () {
+          // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+        wx.checkJsApi({
+          jsApiList: [
+            'getNetworkType',
+            'previewImage',
+             'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+          ],            
+        });
+      var shareData = {
+        title: '都来帮我砍价吧，苹果6S就快到手了',
+        desc: '0元抢购苹果6S   128GB 只要砍价的人多,手机免费送,送完即止--壹易购物',
+        link: "{:U('kanjia',array('kj_id'=>$_GET['kj_id']))}",
+        imgUrl: 'http://www.yiyigw.cn/Public/images/kj.png', 
+      };
+      wx.onMenuShareAppMessage(shareData);
+      wx.onMenuShareTimeline(shareData);
+      wx.onMenuShareQQ(shareData);
+      wx.onMenuShareWeibo(shareData);
+    });
+    <else/>
+    wx.config({
+    // debug: true, 
+    appId: '{$signPackage.appId}',
+        timestamp: {$signPackage.timestamp},
+        nonceStr: '{$signPackage.nonceStr}',
+        signature: '{$signPackage.signature}',
+       jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+          ]
+      });             
+    wx.ready(function () {
+          // 1 判断当前版本是否支持指定 JS 接口，支持批量判断
+        wx.checkJsApi({
+          jsApiList: [
+            'getNetworkType',
+            'previewImage',
+             'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo'
+          ],            
+        });
+      var shareData = {
+        title: '都来帮我砍价吧，5万积分就快到手了',
+        desc: '5万积分等你来抢！！快来帮我砍！！！--壹易购物',
+        link: "{:U('kanjia',array('kj_id'=>$_GET['kj_id']))}",
+        imgUrl: 'http://www.yiyigw.cn/Public/images/kj2.png', 
+      };
+      wx.onMenuShareAppMessage(shareData);
+      wx.onMenuShareTimeline(shareData);
+      wx.onMenuShareQQ(shareData);
+      wx.onMenuShareWeibo(shareData);
+    });
+</if>
+    
+</script>
+</html>

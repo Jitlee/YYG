@@ -1,0 +1,108 @@
+@charset "utf-8";
+body{
+	margin:0;
+	padding:0;
+	font-size:62.5%;
+	background: #fff;
+	font-family: "微软雅黑";
+}
+a:link,a:visited{
+ text-decoration:none;  /*超链接无下划线*/
+}
+a:hover{
+ text-decoration:underline;  /*鼠标放上去有下划线*/
+}
+a{
+	color:#e56a0c;
+}
+header{
+	font-size:2.0rem;
+	padding:0 18px 0 15px;
+	height:50px;
+	line-height: 60px;
+	color:#e56a0c;
+	font-weight: 500;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.logo{
+	width: 30%;
+	text-align: center;
+	/*background:#555;*/
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 20px;
+}
+.logo img{
+	width: 100%;
+}
+.form{
+	margin-top: 32px;
+	width: 100%;
+}
+.form-ctrl{
+	width: 68%;
+	height:40px;
+	border-bottom: 1px solid #949494;
+	line-height: 35px;
+	color: #949494;
+	margin-top: 20px;
+}
+.middle{
+	margin-left: auto;
+	margin-right: auto;
+}
+.form-input{
+	height:80%;
+	border:0px;
+	font-size: 2rem;
+	margin-left: 10px;
+	padding: 0px;
+	margin-top: 5px;
+	width: 80%;
+	font-weight:500;
+}
+.loginbtn{
+	background: #e56a0c;
+	height:50px;
+	width:82%;
+	border-radius: 25px;
+	margin-top: 32px;
+	color: #fff;
+	text-align: center;
+	line-height: 50px;
+}
+.loginbtn button{
+	font-size: 2.2rem;
+	color:#fff;
+	background: none;
+	border:0px;
+	width: 100%;
+}
+.reg {
+	text-align: center;
+	color:#5DACCD;
+	font-size: 1.8rem;
+	margin-top: 15px;
+}
+.reg a{
+	color:#e56a0c;
+}
+.hr{
+	width:80%;
+	text-align: center;
+	border-bottom: 1px solid #949494;
+	line-height: 40px;
+	height:20px;
+	color: #949494;
+	font-size: 1.6rem;
+	margin-top: 50px;
+}
+.hr span{
+	background: #fff;
+	padding:8px;
+}

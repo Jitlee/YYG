@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>无厘头竞猜</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+    </head>
+    <style type="text/css">
+        .wei_radio{
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            /*background: url("__IMG__/point.png");
+            background-size: 100% 100%;*/
+            border: 1px solid #10a64f;
+            float: left;
+            margin-right: 2px;
+        }
+        .active{
+            background: url("__IMG__/point.png");
+            background-size: 100% 100%;
+        }
+        .choic{
+            /*width: 30%;*/
+            /*float: left;*/
+            margin-right: 5px;
+            line-height: 15px;
+            height: 30px;
+        }
+    </style>
+    <body>
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>无厘头竞猜<a href="{:U('index')}" style="line-height:60px;float:right;font-size:8px;"><img src="__IMG__/home.png" height="25px"></a></h1>
+<!--             <img class="img_menus" src="images/more.png"> -->
+
+        </header>
+        
+        <footer class="ui-footer ui-footer-btn">
+         <div class="dibu_muens">
+            <span>至少选择：2场|已选：</span><span style="color:#c5a50b" id="number">0</span>场
+            <button style="background:#c5b50a" class="confirm">确认</button>
+         </div>
+        </footer>
+        <div style="margin-top:45px;">
+            <ul style="width:100%;color:#10a64f;" class="msg">
+                <volist name="list" id="vo" key="k">
+                    <li>
+                    <div style="margin-left:10px;padding-top:20px;font-size:18px;padding-bottom:16px;">Q{$k}:{$vo.subtitle}</div>
+                       <div class="ui-form ui-border-t" style="background:none;width:90%;margin-left:auto;margin-right:auto;">
+                                <foreach name="vo.xx" item="xx">
+                                    <div class="choic" jco_id="{$vo.jco_id}">
+                                    <div class="wei_radio" xx_id="{$xx.id}" xx_pl="{$xx.xx_pl}"></div>
+                                    <span>{$xx.xx_title}<small style="float:right;font-size:14px;color:#d7df00;">赔率：{$xx.xx_pl}</small></span>
+                                </div>
+                                </foreach>
+                                <div style="clear:both;height:20px;"></div>                                                       
+                        </div>
+                </li>
+                </volist>
+                
+            </ul>
+            <div style="height:60px;width:100%;">
+        </div>
+        <!-- <script src="/Public/Home/js/zepto.min.js"></script> -->
+        <script src="__JS__/jquery-1.11.2.min.js"></script>
+        <script src="/Public/js/layer/layer.js"></script>
+        <!-- <script src="__JS__/frozen.js"></script> -->
+        <form action="buy_other_confirm" method="post">
+            <input style="display:none;" type="text" name="select" value=''>
+        </form>
+    </body>
+    <script>
+    var number=0;
+    var select=new Array();
+    var pl=new Array();
+    var length='';
+       $(".msg li:even").css("background","#143d2f");
+       $('.wei_radio').click(function(){
+        var parent=$(this).parent().attr('jco_id');
+        var choic=$(this).attr('xx_id');
+        var xx_pl=$(this).attr('xx_pl');
+        if(select[parent]==choic){
+            delete select[parent];
+            delete pl[parent];
+        }
+        else{
+            select[parent]=choic;
+            pl[parent]=xx_pl;
+        }
+        $(this).toggleClass('active');
+        $(this).parent().parent().find('.wei_radio').addClass('active');
+        $(this).removeClass('active');
+        $(this).parent().parent().find('.wei_radio').toggleClass('active');
+        if($(this).attr('select')==1){
+            $(this).attr('select',0);
+            $(this).removeClass('active');
+            $(this).parent().parent().attr('select',0);
+        }
+        else{
+            $(this).parent().parent().find('.wei_radio').attr('select',0);
+            $(this).attr('select',1);
+            $(this).parent().parent().attr('select',1);
+        }
+        console.log(count(select));
+        length=count(select);
+        $('#number').text(length);
+       });
+       $('.confirm').click(function(){
+            if(length<2){
+                layer.msg('请至少选择两个场次',{icon:0});
+                return false;
+            }   
+            $('input[name=select]').val(select);
+            $('form').submit();
+            // $.post("{:U('buy_other')}",{select:select},function(data){
+            // });
+        });
+    </script>
+    <script type="text/javascript">
+        function count(o){
+                var t = typeof o;
+                if(t == 'string'){
+                        return o.length;
+                }else if(t == 'object'){
+                        var n = 0;
+                        for(var i in o){
+                                n++;
+                        }
+                        return n;
+                }
+                return false;
+        }
+    </script>
+</html>

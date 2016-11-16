@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>确认投注</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <!-- <link rel="stylesheet" href="../css/OG_gussing.css"> -->
+        <link rel="stylesheet" href="__CSS__/OG_FirstGood.css">
+    <style type = "text/css">
+        .checkbox_1{
+            background: blue;
+        }
+        .shuru{
+            width:80px;
+            background: #091c16;
+            border: 1px solid #10a64f;
+            border-radius: 5px;
+            text-align: center;
+            margin-left:10px;
+            color: #d7df00;
+        }
+        .weizi{
+            position: relative;
+            color:#10a64f;
+            width:90%;
+            height:30px;
+            margin-left:20px;
+            margin-top:10px;
+            font-size:20px;
+        }
+
+    </style>
+    </head>
+    <body>
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>确认投注</h1>
+        </header>
+         <section class="ui-container">
+            <section id="tab">
+                <div class="weizi">过关方式</div>
+                <div style="width:100%;border-bottom:1px solid #10a64f">
+                    <ul class="ui-list ui-list-text ui-list-radio ui-border-tb">
+                        <li class="ui-border-t" style="float:left">
+                            <label class="ui-checkbox-s" for="radio">
+                                <input type="radio" name="radio" checked >
+                            </label>
+                            <p style="color:#10a64f">{$k}串1&nbsp;赔率:{$pl}</p>
+                        </li>
+                    </ul>
+                </div>
+                <div style="clear:both;"></div>
+                <div style="width:100%;height:40px;border-bottom:1px solid #10a64f">
+                <div class="weizi">投倍数:
+                    <input type="text" class="shuru" id="beishu" name="beishu" value="1">
+                        <span style="font-size:14px;margin-left:5px;">最高9999倍</span>
+                </div>
+                </div>
+                <div style="width:100%;height:100px;border-bottom:1px solid #10a64f">
+                    <div style="font-size:15px;" class="weizi">总投倍数:
+                        <span id="total_zhu" style="color:#d7df00;margin-left:5px;margin-right:20px;">1注</span>
+                        投注金币：
+                        <span id="total_money" style="color:#d7df00;">200币</span>
+                    </div>
+                    <div class="weizi">预计奖金:
+                        <span id="yujijiangjin" style="color:#d7df00;margin-left:5px;margin-right:20px;">{$pl*200}币</span>
+                        <!-- <span style="font-size:14px">明细</span> -->
+                    </div>
+                </div>
+                <div class = "FG_yuce_yuedu">
+            <img src="__IMG__/勾选.png"><span style="float:left;font-size:14px;padding:0px 5px;">我已阅读并同意《竞猜协议》</span></div>
+            <div style="text-align:center;margin-top:20px;height:40px;">
+                <button style="width:80%;height:40px;color:#143d2f;background:#c4b509;border-radius:5px;font-size:20px;" class="queren">确定投注</button>
+            </div>
+            </section>
+        </section>
+        </body>
+        <script type="text/javascript" src="__JS__/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="/Public/js/layer/layer.js"></script>
+        <script type="text/javascript">
+        var pl={$pl};
+        var fangshi=0;
+        var number=1;
+        var select="{$select}";
+        $('#beishu').bind('input propertychange', function() {
+            var value=this.value;
+            if(pl==0){
+                layer.msg('请先选择一个过关方式');
+                $(this).val(0);
+                return false;
+            }
+            if (value.indexOf('.') != "-1") { 
+            value=value.replace(/[\.]/, ''); 
+            $(this).val(value);
+            this.focus(); 
+            return false;
+            } 
+            if (isNaN(Number(this.value))) { 
+                this.value = ($.trim(this.value)).replace(/[\D]/, ''); 
+                this.focus(); 
+                return false;
+            }
+            var yujijiangjin=value*200*pl;
+            number=value;
+            $('#yujijiangjin').text(yujijiangjin.toFixed(2));
+            $('#total_money').text(value*200);
+            $('#total_zhu').text(value+'注');
+        }); 
+        $('.queren').click(function(){
+            layer.load(1);
+            $.post('{:U('buy_other')}',{number:number,select:select},function(data){
+                layer.close('loading');
+                if(data.status){
+                    layer.msg(data.info,{icon:1,area:['80%','']});
+                    if(data.url){
+                        setTimeout(function(){
+                            window.location.href=data.url;
+                        },2000);
+                    }
+                }else{
+                    layer.msg(data.info,{icon:0,area:['80%','']});
+                    if(data.url){
+                        setTimeout(function(){
+                            window.location.href=data.url;
+                        },2000);
+                    }
+                }
+
+            });
+        });
+        </script>
+</html>

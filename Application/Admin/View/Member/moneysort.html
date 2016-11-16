@@ -1,0 +1,176 @@
+<taglib name="html" />	
+<div>
+	<a class="btn btn-default" <if condition="S('moneysort') eq 'money'">style="background:#FFE4B5;"</if> href="{:U('moneysort')}?map=money">按余额</a>
+	<a class="btn btn-default" <if condition="S('moneysort') eq 'score'">style="background:#FFE4B5;"</if>  href="{:U('moneysort')}?map=score">按积分</a>
+	<a class="btn btn-default" <if condition="S('moneysort') eq 'jingyan'">style="background:#FFE4B5;"</if>  href="{:U('moneysort')}?map=jingyan">按经验</a>
+	<a class="btn btn-default" <if condition="S('moneysort') eq 'level'">style="background:#FFE4B5;"</if>  href="{:U('moneysort')}?map=level">按等级</a>
+</div>
+<hr>
+<content>
+<div style="clear:both;"></div>
+	<table class="table table-bordered table-hover">
+		<tr>
+			<th width="70px">序号</th>
+			<th>昵称</th>
+<!-- 			<th>等级提成</th> -->
+			<th>手机号码</th>
+			<th>余额</th>
+			<th>积分</th>
+			<th>经验值</th>
+			<th>等级</th>
+			<th>注册时间</th>
+			<th>最后登陆时间</th>
+		</tr>
+		<tbody>
+			<volist name="list" id="vo" key="k">
+				<tr>
+				<td>{$k}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.mobile}</td>
+				<td>{$vo.money}</td>
+				<td>{$vo.score}</td>
+				<td>{$vo.jingyan}</td>
+				<td>{$vo.rank_name}</td>
+				<td>{$vo.time}</td>
+				<td>{$vo.login_time}</td>
+			</tr>
+			</volist>
+		</tbody>
+	</table>
+</content>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$('.add').click(function(){
+		layer.open({
+		  type: 1,
+		  title:"添加等级",
+		  scrollbar: false,
+		  skin: 'layui-layer-rim', //加上边框
+		  area: ['300px', '350px'], //宽高
+		  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><label class="col-sm-4 control-label">等级名称</label><input name="rank_name" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入等级名称"></div><div class="form-group"><label class="col-sm-4 control-label">要求人数</label><input name="rank_renshu" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入要求人数"></div><div class="form-group"><label class="col-sm-4 control-label">要求金额</label><input name="rank_money" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入要求金额"></div><div class="form-group"><label class="col-sm-4 control-label">备注(选)</label><input type="textarea" placeholder="备注可选填" name="beizhu" style="width: 150px" class="col-sm-4 form-control"></div></form><a style="width:100px;" class="btn btn-success" onclick="add()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+		});
+	});
+	function add(){
+		var rank_name=$('input[name=rank_name]').val();
+		var rank_value=$('input[name=rank_value]').val();
+		var beizhu=$('input[name=beizhu]').val();
+		var rank_renshu=$('input[name=rank_renshu]').val();
+		var rank_money=$('input[name=rank_money]').val();
+		if(rank_name==""){
+			layer.msg('请输入完整信息',{icon:0});
+		}
+		// if(rank_value<0){
+		// 	layer.msg('提成不能小于0',{icon:0});
+		// }
+		// if(rank_value>15){
+		// 	layer.msg('提成不能大于15',{icon:0});
+		// }
+		$.post("{:U('rank_add')}",{rank_name:rank_name,rank_value:rank_value,beizhu:beizhu,rank_renshu:rank_renshu,rank_money:rank_money},function(data){
+			if(data.status){
+				layer.msg(data.info,{icon:1});
+				setTimeout(function(){
+					window.location.reload(0);
+				},1000);
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+		});
+	}
+	function cancel(){
+		layer.closeAll();
+	}
+	
+	$('.edit').click(function(){
+		var rank_name=$(this).attr('rank_name');
+		var rank_value=$(this).attr('rank_value');
+		var beizhu=$(this).attr('beizhu');
+		var rank_renshu=$(this).attr('rank_renshu');
+		var rank_money=$(this).attr('rank_money');
+		var rank_id=$(this).attr('rank_id');
+		layer.open({
+		  type: 1,
+		  title:"添加等级",
+		  scrollbar: false,
+		  skin: 'layui-layer-rim', //加上边框
+		  area: ['300px', '350px'], //宽高
+		  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><input name="rank_id" type="hidden" value="'+rank_id+'"><label class="col-sm-4 control-label">等级名称</label><input name="rank_name" value="'+rank_name+'" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入等级名称"></div><div class="form-group"><label class="col-sm-4 control-label">要求人数</label><input value="'+rank_renshu+'" name="rank_renshu" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入要求人数"></div><div class="form-group"><label class="col-sm-4 control-label">要求金额</label><input value="'+rank_money+'" name="rank_money" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入要求金额"></div><div class="form-group"><label class="col-sm-4 control-label">备注(选)</label><input type="textarea" value="'+beizhu+'" placeholder="备注可选填" name="beizhu" style="width: 150px" class="col-sm-4 form-control"></div></form><a style="width:100px;" class="btn btn-success" onclick="edit()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+		});
+	});
+	function edit(){
+		var rank_id=$('input[name=rank_id]').val();
+		var rank_name=$('input[name=rank_name]').val();
+		var rank_value=$('input[name=rank_value]').val();
+		var beizhu=$('input[name=beizhu]').val();
+		var rank_renshu=$('input[name=rank_renshu]').val();
+		var rank_money=$('input[name=rank_money]').val();
+		if(rank_name==""){
+			layer.msg('请输入完整信息',{icon:0});
+		}
+		// if(rank_value<0){
+		// 	layer.msg('提成不能小于0',{icon:0});
+		// }
+		// if(rank_value>15){
+		// 	layer.msg('提成不能大于15',{icon:0});
+		// }
+		$.post("{:U('rank_edit')}",{rank_id:rank_id,rank_name:rank_name,rank_value:rank_value,beizhu:beizhu,rank_renshu:rank_renshu,rank_money:rank_money},function(data){
+			if(data.status){
+				layer.msg(data.info,{icon:1});
+				setTimeout(function(){
+					window.location.reload(0);
+				},1000);
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+		});
+	}
+	$('.save').click(function(){
+		var s1=$('select[name=s1]').val();
+		var s2=$('select[name=s2]').val();
+		var s3=$('select[name=s3]').val();
+		var arr=new Array();
+		arr.push(s1);
+		arr.push(s2);
+		arr.push(s3);
+		layer.load();
+		$.post("{:U('save')}",{arr:arr},function(data){
+			layer.closeAll('loading');
+			if(data.status){
+				layer.msg(data.info,{icon:1});
+				setTimeout(function(){
+					window.location.reload(0);
+				},1000);
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+		});
+	});
+
+	$('.del').click(function(){
+		var rank_id=$(this).attr('rank_id');
+		layer.confirm('您确定要【<span style="color:red">删除</span>】?',{
+			title:'温馨提醒',
+			btn:['确定','取消'],
+			},function(){
+				layer.load();
+				$.post("{:U('del')}",{id:rank_id},function(data){
+					layer.closeAll('loading');
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			},
+			function(){
+				layer.closeAll();
+			}
+		);
+	});
+</script>

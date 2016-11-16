@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>西甲</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+
+    <style type="text/css">
+        .Info_header{
+            color:#a28900;
+            height:50px;
+            border:0;
+            font-size: 15px;
+        }
+        .Info_body{
+            font-size: 13px;
+            height: 50px;
+            border:0;
+        }
+        .tupian{
+            width: 30px;
+            height: 30px;
+            vertical-align:middle;
+            margin-top: 10px;
+        }
+        .zhandui{
+            float:left;
+            line-height:60px;
+        }
+        .zhandui_info{
+            float:left;
+            height:50px;
+            line-height:50px;
+            text-indent:6px;
+        }
+    </style>
+
+    </head>
+    <body style="background:#efefef;">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>西甲积分榜</h1>
+        </header>
+        <section class="ui-container">
+            <section id="tab">
+                    <div class="demo-block">
+                        <div class="ui-tab" style="background:#efefef;">
+                            <ul class="ui-tab-nav ui-border-b" style="font-size:18px">
+                                <li>2015赛季</li>
+                            </ul>
+                            <ul class="ui-tab-content">
+                                <li>
+                                    <table class="ui-table ui-border-tb">
+                                        <thead>
+                                        <tr class="Info_header" style="border-bottom:1px solid #eee;">
+                                        <th>排名</th>
+                                        <th>球队</th>
+                                        <th>胜</th>
+                                        <th>平</th>
+                                        <th>负</th>
+                                        <th>进球</th>
+                                        <th>丢球</th>
+                                        <th>积分</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <foreach name="match" item="vo">
+                                            <tr class="Info_body" style="border-bottom:1px solid #eee;">
+                                            <td>{$vo[0]}</td>
+                                            <td>
+                                            <div class="zhandui_info">{$vo[1]}</div>
+                                            </td>
+                                            <td>{$vo[3]}</td>
+                                            <td>{$vo[4]}</td>
+                                            <td>{$vo[5]}</td>
+                                            <td>{$vo[6]}</td>
+                                            <td>{$vo[7]}</td>
+                                            <td>{$vo[9]}</td>
+                                            </tr>
+                                        </foreach>
+                                        </tbody>
+                                    </table>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                    <script class="demo-script">
+                    
+                    </script>
+                </div>
+            </section>
+        </section>
+        <script src="/Public/Home/lib/zepto.min.js"></script>
+        <script src="__JS__/frozen.js"></script>
+        <script>
+        (function (){
+            var tab = new fz.Scroll('.ui-tab', {
+                role: 'tab',
+            });
+            /* 滑动开始前 */
+            tab.on('beforeScrollStart', function(fromIndex, toIndex) {
+                console.log(fromIndex,toIndex);// from 为当前页，to 为下一页
+            })
+        })();
+        </script>
+        </body>
+</html>

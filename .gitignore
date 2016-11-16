@@ -1,8 +1,6 @@
 Application/Common/Conf/*
 *.log
-
 *.log
-
 *.log
 task
 ThinkPHP/Library/Vendor/jubaopay/*
@@ -12,3 +10,4 @@ Application/Runtime/Cache/*
 Application/Runtime/Data/task.xml
 Uploads/*
 Application/Runtime/Data/renci.xml
+ThinkPHP/Library/Vendor/phpqrcode/cache/*

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{$CONF['mallTitle']}后台管理中心</title>
+      <link href="__PUBLIC__/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="__ROOT__/Apps/Admin/View/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+      <link rel="stylesheet" href="__ROOT__/Apps/Admin/View/css/daterangepicker/daterangepicker-bs3.css">
+      <link href="__ROOT__/Apps/Admin/View/css/upload.css" rel="stylesheet" type="text/css" />
+      
+      
+      <script src="__PUBLIC__/js/jquery.min.js"></script>
+      <script src="__PUBLIC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+      <script src="__ROOT__/Apps/Admin/View/js/daterangepicker.js"></script>
+      <script src="__PUBLIC__/js/common.js"></script>
+      <script src="__PUBLIC__/plugins/plugins/plugins.js"></script>
+      <script src="__PUBLIC__/plugins/formValidator/formValidator-4.1.3.js"></script>
+      <script type="text/javascript" src="__ROOT__/Apps/Admin/View/js/upload.js"></script>
+      
+   </head>
+   <script>
+   var ThinkPHP = window.Think = {
+	        "ROOT"   : "__ROOT__"
+	}
+   var filetypes = ["gif","jpg","png","jpeg"];
+   $(function () {
+	   $.formValidator.initConfig({
+		   theme:'Default',mode:'AutoTip',formID:"myform",debug:true,submitOnce:true,onSuccess:function(){
+				   edit();
+			       return false;
+			},onError:function(msg){
+		}});
+	   
+	   $("#kjcode").formValidator({empty:false,onFocus:"活动编号"}).inputValidator({min:2,onError: "活动编号"});
+	   $("#money").formValidator({empty:false,onFocus:"请输入砍价金额,不能有小数"}).inputValidator({min:1,onError: "请输入砍价金额,不能有小数"});
+	   $("#prizenum").formValidator({empty:false,onFocus:"奖品数量"}).inputValidator({min:1,onError: "奖品数量"});
+	   
+   });
+    
+    
+			
+   function edit(){
+	   var params = {};
+	    
+	   params.kjid = $('#kjid').val();
+	   params.kjname = $('#kjname').val();
+	   
+	   params.kjcode = $('#kjcode').val();
+	   params.money = $('#money').val();
+	   params.prizenum = $('#prizenum').val();
+      
+	   params.prizetype = $('#prizetype').val();
+	   params.prizeid = $('#prizeid').val();
+	   
+	   params.reg_title = $('#reg_title').val();
+	   params.reg_description = $('#reg_description').val();
+	   params.reg_imgurltype= $('#reg_imgurltype').val();
+	   params.reg_imgurl = $('#reg_imgurl').val();
+	   
+	   params.news_title = $('#news_title').val();
+	   params.news_description = $('#news_description').val();
+	   params.news_imgurltype= $('#news_imgurltype').val();
+	   params.news_imgurl = $('#news_imgurl').val();
+	   
+	   params.share_title = $('#share_title').val();
+	   params.share_description = $('#share_description').val();
+	   params.share_imgurl = $('#share_imgurl').val();
+	   
+	   params.havekants = $('#havekants').val();
+	   params.overts = $('#overts').val();
+	  
+	   Plugins.waitTips({title:'信息提示',content:'正在提交数据，请稍后...'});
+		$.post("{:U('Admin/Kanjia/paraeditsave')}",params,function(data,textStatus){
+			var json = RTC.toJson(data);
+			if(json.status=='1'){
+				Plugins.setWaitTipsMsg({ content:'操作成功',timeout:1000,callback:function(){
+				   location.href='{:U("Admin/Kanjia/paralist")}';
+				}});
+			}else{
+				Plugins.closeWindow();
+				Plugins.Tips({title:'信息提示',icon:'error',content:'操作失败!'+data.msg,timeout:1000});
+			}
+		});
+   }
+   </script>
+   <style type="text/css">
+   	 .rtc-url{ min-width: 600px;}
+   	 .titledesc{ min-width: 600px;}
+   	 .rtc-ipt{ width: 60%; float: left;}
+   </style>
+   <body class="rtc-page">
+   		 
+       <form name="myform" method="post" id="myform" autocomplete="off">
+       	
+       	<input type="hidden" id='kjid' class="form-control rtc-ipt" value='{$object.kjid}' maxLength='25'/>
+        <table class="table table-hover table-striped table-bordered rtc-form"> 
+           <tr>
+             <th width='120' align='right'>活动编号<font color='red'>*</font>：</th>
+             <td><input type='text' id='kjcode' class="form-control rtc-ipt" value='{$object.kjcode}' maxLength='2'/>(2位数字,10-99之间)</td>
+           </tr>
+           <tr>
+             <th width='120' align='right'>活动名称<font color='red'>*</font>：</th>
+             <td><input type='text' id='kjname' class="form-control rtc-ipt" value='{$object.kjname}' maxLength='25'/>(1-4位数字)</td>
+           </tr>
+           <tr>
+             <th align='right'>活动金额<font color='red'>*</font>：</th>
+             <td><input type='text' id='money' class="form-control rtc-ipt" value='{$object.money}' maxLength='25'/>(整数)</td>
+           </tr>
+           <tr>
+             <th align='right'>奖品数量<font color='red'>*</font>：</th>
+             <td><input type='text' id='prizenum' class="form-control rtc-ipt" value='{$object.prizenum}' maxLength='25'/>(整数)</td>
+           </tr>
+           <tr>
+	           <th align='right'>奖品类型<font color='red'>*</font>：</th>
+	           <td>
+	             <select id='prizetype'>
+	                <option value=''>请选择</option>
+	                <option value='kq' <if condition="$object['prizetype'] == 'kq' ">selected</if>>卡券</option>
+	                <option value='other' <if condition="$object['prizetype'] == 'other' ">selected</if>>其它</option>
+	             </select>
+	           </td>
+           </tr>
+          
+           <!--<tr>
+             <th align='right'>关联卡券</th>
+             <td>
+             	<select id="prizeid" name="prizeid">
+             		<option  value="">==请选择卡券==</option>
+	             	 <volist name="tickets" id="vo" key='i'>
+	             		<option value="{$vo['ticketID']}"  <if condition="$object['prizeid'] == $vo['ticketID'] ">selected</if> >{$vo['title']}</option>
+	             	</volist>               
+             	</select>
+             </td>
+           </tr>-->
+            <tr>
+           		<td colspan="2"> 未注册消息</td>
+           </tr>
+            <tr>
+             <th align='right'>标题：</th>
+             <td>
+             <input type='text' id='reg_title' class="form-control rtc-ipt titledesc" value='{$object.reg_title}'/>
+             </td>
+           </tr>
+           <tr>
+             <th align='right'>描述：</th>
+             <td>
+             <input type='text' id='reg_description' class="form-control rtc-ipt titledesc" value='{$object.reg_description}'/>
+             </td>
+           </tr>
+           <tr>
+	           <th align='right'>图片类型<font color='red'>*</font>：</th>
+	           <td>
+	             <select id='reg_imgurltype'>
+	                <option value='net' <if condition="$object['reg_imgurltype'] == 'net' ">selected</if>>网络</option>
+	                <option value='local' <if condition="$object['reg_imgurltype'] == 'local' ">selected</if>>本地</option>
+	             </select>
+	           </td>
+           </tr>
+           <tr>
+             <th align='right'>图片地址：</th>
+             <td>
+             <input type='text' id='reg_imgurl' class="form-control rtc-ipt rtc-url" value='{$object.reg_imgurl}'/>
+             </td>
+           </tr>
+           <tr>
+           		<td colspan="2"> 参与提示消息</td>
+           </tr>
+           <tr>
+             <th align='right'>标题：</th>
+             <td>
+             <input type='text' id='news_title' class="form-control rtc-ipt titledesc" value='{$object.news_title}'/>
+             </td>
+           </tr>
+           <tr>
+             <th align='right'>描述：</th>
+             <td>
+             <input type='text' id='news_description' class="form-control rtc-ipt titledesc" value='{$object.news_description}'/>
+             </td>
+           </tr>
+           <tr>
+	           <th align='right'>图片类型<font color='red'>*</font>：</th>
+	           <td>
+	             <select id='news_imgurltype'>
+	                <option value='net' <if condition="$object['news_imgurltype'] == 'net' ">selected</if>>网络</option>
+	                <option value='local' <if condition="$object['news_imgurltype'] == 'local' ">selected</if>>本地</option>
+	             </select>
+	           </td>
+           </tr>
+           <tr>
+             <th align='right'>图片地址：</th>
+             <td>
+             <input type='text' id='news_imgurl' class="form-control rtc-ipt rtc-url" value='{$object.news_imgurl}'/>
+             </td>
+           </tr>
+           <tr>
+           		<td colspan="2"> 分享配置</td>
+           </tr>
+           <tr>
+             <th align='right'>标题：</th>
+             <td>
+             <input type='text' id='share_title' class="form-control rtc-ipt titledesc" value='{$object.share_title}'/>
+             </td>
+           </tr>
+           <tr>
+             <th align='right'>描述：</th>
+             <td>
+             <input type='text' id='share_description' class="form-control rtc-ipt titledesc" value='{$object.share_description}'/>
+             </td>
+           </tr>          
+           <tr>
+             <th align='right'>图片地址：</th>
+             <td>
+             <input type='text' id='share_imgurl' class="form-control rtc-ipt rtc-url" value='{$object.share_imgurl}'/>
+             </td>
+           </tr>
+           <tr>
+           		<td colspan="2"> 其它设置</td>
+           </tr>
+           <tr>
+             <th align='right'>已经帮砍提示：</th>
+             <td>
+             <input type='text' id='havekants' class="form-control rtc-ipt titledesc" value='{$object.havekants}'/>
+             </td>
+           </tr>
+           
+           <tr>
+             <th align='right'>活动结束提示：</th>
+             <td>
+             <input type=' ' id='overts'  class="form-control rtc-ipt titledesc" value='{$object.overts}'/>
+             </td>
+           </tr>
+           
+           <tr>
+             <td colspan='2' style='padding-left:250px;'>
+                 <button type="submit" class="btn btn-success">保&nbsp;存</button>
+                 <button type="button" class="btn btn-primary" onclick='javascript:location.href="{:U('Admin/Kanjia/paralist')}"'>返&nbsp;回</button>
+             </td>
+           </tr>
+        </table>
+       </form>
+   </body>
+</html>

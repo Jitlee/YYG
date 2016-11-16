@@ -1,0 +1,58 @@
+<taglib name="html" />	
+<div>
+	<label>选择日期：</label>
+	<input type="date" name="date" value="{$buydate}">
+	<label>昵称</label>
+	<input type="text" name="keyword" value="{$keyword}" placeholder="输入昵称或手机号码">
+	<a class="btn btn-default yue" <if condition="S('buytype') eq 'money'">style="background:#FF7256;color:white;color:white;"</if>>按余额</a>
+	<a class="btn btn-default score"<if condition="S('buytype') eq 'score'">style="background:#FF7256;color:white;"</if>>按积分</a>
+	<a class="btn btn-default third" <if condition="S('buytype') eq 'third'">style="background:#FF7256;color:white;"</if>>按第三方支付</a>
+
+</div>
+<hr>
+<content>
+<div style="clear:both;"></div>
+	<table class="table table-bordered table-hover">
+		<tr>
+			<th width="70px">序号</th>
+			<th>昵称</th>
+<!-- 			<th>等级提成</th> -->
+			<th>手机号码</th>
+			<th>消费余额</th>
+			<th>消费积分</th>
+			<th>第三方消费</th>
+			<th>注册时间</th>
+		</tr>
+		<tbody>
+			<volist name="list" id="vo" key="k">
+				<tr>
+				<td>{$k}</td>
+				<td>{$vo.username}</td>
+				<td>{$vo.mobile}</td>
+				<td>{$vo.mmoney}</td>
+				<td>{$vo.sscore}</td>
+				<td>{$vo.tthird}</td>
+				<td>{$vo.reg_time}</td>
+			</tr>
+			</volist>
+		</tbody>
+	</table>
+</content>
+<include file="Public:pager"/>
+<script type="text/javascript">
+	$('.yue').click(function(){
+		var date=$('input[name=date]').val();
+		var keyword=$('input[name=keyword]').val();
+		window.location.href="{:U('buysort')}"+"?type=money&date="+date+"&keyword="+keyword;
+	});
+	$('.score').click(function(){
+		var date=$('input[name=date]').val();
+		var keyword=$('input[name=keyword]').val();
+		window.location.href="{:U('buysort')}"+"?type=score&date="+date+"&keyword="+keyword;
+	});
+	$('.third').click(function(){
+		var date=$('input[name=date]').val();
+		var keyword=$('input[name=keyword]').val();
+		window.location.href="{:U('buysort')}"+"?type=third&date="+date+"&keyword="+keyword;
+	});
+</script>

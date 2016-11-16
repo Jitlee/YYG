@@ -1,0 +1,165 @@
+<taglib name="html" />	
+<content>
+<hr>
+	<div style="float: left;">
+	<p style="text-indent: 2em;">进程状态：
+	<span style="color:red;">
+	<if condition="$auto_status eq 1">执行中<else/>未开启</if>
+	</span>
+	</p>
+	<p style="text-indent: 2em;">开启时间：<span style="color:red;">
+	<empty name="auto_time">----<else />{$auto_time|date="Y-m-d h:i:s",###}</empty></span>
+	</p>
+	</div>
+	<div style="float: left;line-height: 50px;"><button style="margin-left:20px;" class="btn btn-success start">开启</button><button style="margin-left:10px;" class="btn btn-warning stop">暂停</button><!-- <button style="margin-left:10px;" class="btn btn-danger exit">结束进程</button> --></div>
+	<form class="form-inline" style="line-height: 50px;">
+	<div style="float:left;margin-left: 100px;" class="form-form-group"><lable>最高比例：</lable>
+	<input onkeypress="keyPress()" name="auto_bl" style="width:50px;" class="form-control" type="text" value="{$auto_bl}">% <a class="btn btn-info save_bl">保存</a></div>
+	</form>
+	<div style="clear:both;"></div>
+	<hr>
+	
+<hr>
+</content>
+<down>
+	<p>商品列表：</p>
+	<table class="table table-bordered table-hover">
+		<tr>
+			<th width="100px">商品图片</th>
+			<th>商品名称</th>
+			<th width="50px">期数</th>
+			<th width="50px">进度</th>
+	<!-- 		<th width="100px">下单情况</th> -->
+			<th width="50px">小号购买金额</th>
+			<th>当前比例</th>
+			<th width="50px">操作</th>
+		</tr>
+		<tbody>
+			<!-- <tr>
+				<td><img width="100%" src="http://dingyue.nosdn.127.net/am4WsMwSlsZ0RqO5dmdGMEuuhpV0ZwoIfieV2OEu0g6z71458696418089.jpg"></td>
+				<td>iphone6sdsdsdsdsdsdsdsdsds</td>
+				<td>2/100</td>
+				<td>500/6000</td>
+				<td><button class="btn btn-info">停止下单</button></td>
+			</tr> -->
+			<volist name="list" id="vo">
+				<tr id="auto_{$vo.gid}" <if condition="$vo['xiaohao_status'] eq 1">style="color:red;"</if>>
+				<td><img width="100%" src="{$vo.thumb}"></td>
+				<td>{$vo.title}</td>
+				<td>{$vo.qishu}/{$vo.maxqishu}</td>
+				<td>{$vo.canyurenshu}/{$vo.zongrenshu}</td>
+				<td>{$vo.xiaohao_money}</td>
+				<!-- <td><if condition="$vo['xiaohao_status'] eq 1">已完成<else/>下单中</if></td> -->
+				<td>{$vo.bl}%</td>
+				<td><button gid="{$vo.gid}" class="btn btn-info out_auto">停止下单</button></td>
+			</tr>
+			</volist>
+		</tbody>
+	</table>
+</down>
+<script type="text/javascript">
+	$('.start').click(function(){
+		layer.confirm('你确定要<span style="color:red">【开启】</span>进程吗？',{
+			btn:['确定','取消']},
+			function(){
+				$.post("{:U('start')}",'',function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+								window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			},
+			function(){
+				layer.closeAll();
+			}
+		
+		);
+	});
+	$('.stop').click(function(){
+		layer.confirm('你确定要<span style="color:red">【暂停】</span>进程吗？',{
+			btn:['确定','取消']},
+			function(){
+				$.post("{:U('stop')}",'',function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+								window.location.reload(0);
+						},1000);
+						
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			},
+			function(){
+				layer.closeAll();
+			}
+		
+		);
+	});
+	$('.exit').click(function(){
+		layer.confirm('你确定要<span style="color:red">【结束】</span>进程吗？',{
+			btn:['确定','取消']},
+			function(){
+				$.post("{:U('auto_exit')}",'',function(data){
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+								window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			},
+			function(){
+				layer.closeAll();
+			}
+		
+		);
+	});
+	$('.exit').mouseover(function(){
+		layer.tips('谨慎操作', '.exit');
+	});
+	$('.out_auto').click(function(){
+		var gid=$(this).attr('gid');
+		layer.load(0);
+		$.post('{:U("out_auto")}',{gid:gid},function(data){
+			if(data.status){
+				$('#auto_'+gid).hide();
+				layer.msg(data.info,{icon:1});
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+			layer.closeAll('loading');
+		});
+	});
+	$('.save_bl').click(function(){
+		var auto_bl=$('input[name=auto_bl]').val();
+		$.post("{:U('save_bl')}",{auto_bl:auto_bl},function(data){
+			if(data.status){
+				layer.msg(data.info,{icon:1});
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+		});
+	});
+	function keyPress() {    
+     var keyCode = event.keyCode;    
+     if ((keyCode >= 48 && keyCode <= 57))    
+	    {    
+	         event.returnValue = true;    
+	     } else {    
+	           event.returnValue = false;    
+	    }    
+ 	}
+</script>

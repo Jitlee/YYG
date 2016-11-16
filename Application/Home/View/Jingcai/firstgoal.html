@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>首金竞猜</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_FirstGood.css">
+        <style type="text/css">
+        .gundongtiao{
+            background: url('__IMG__/gundongtiao.png');
+            background-repeat: no-repeat;
+        }
+        .active{
+            background: #10a64f;
+            color:#fff;
+        }
+        .beishu{
+            border: 0;
+            width: 100%;
+            background: none;
+            text-align: center;
+            color: #fff;
+        }
+        </style>
+    </head>
+    <body ontouchstart="">
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>{$list.title}</h1>
+            <img class="img_menus" src="__IMG__/more.png">
+        </header>
+        <div class="FG_title_msg"><img src="__IMG__/jiangbei.png">
+        <span>{$list.subtitle}</span>
+        </div>
+        <div class="FG_yuce">
+            <div class = "FG_yuce_jinzhu">预测金主</div>
+            <div class="FG_yuce_msg"><ul>
+                <volist name="choic" id='vo'>
+                    <li><button choic_id="{$vo.id}" pl="{$vo.xx_pl}" class="FG_yuce_msg_flase xx">{$vo.xx_title}</button><span>{$vo.xx_pl}</span></li>
+                </volist>
+                </ul>
+            </div>
+        </div>
+        <div class="FG_yuce">
+            <div class = "FG_yuce_jinzhu">竞猜比例</div>
+            <div class="FG_yuce_msg2"><ul>
+                <volist name="choic" id='vo'>
+                    <li><span class ="FG_yuce_jc_name" style="font-size:14px;">{$vo.xx_title}</span><button style="background-size:{$vo.bl}% 100%;" class="FG_yuce_jc_bili gundongtiao"><a style="color:#fff;font-size:10px;">{$vo.bl}%</a></button></li>
+                </volist>
+                </ul>
+            </div>
+        </div>
+        <div class ="FG_yuce" style="border-bottom:none">
+            <div class = "FG_yuce_yazhu" >投注数:<button class="FG_yuce_yudongbi_bt"><input id="beishu" class="beishu" type="text" name="beishu" value="0"></button><span style="font-size:14px;">最高99999倍</span></div>
+            <div class = "FG_yuce_yazhu" >总投注数:<span class="FG_yuce_yudongbi" id="total">0</span>注</div>
+            <div class = "FG_yuce_yazhu" >投注金额:<span class="FG_yuce_yudongbi" id="money">0</span>运动币</div>
+            <div class = "FG_yuce_yuedu">
+            <img src="__IMG__/gouxuan.png"><span style="float:left;font-size:14px;padding:0px 5px;">我已阅读并同意《竞猜协议》</span></div>
+            <div class = "FG_yuce_yazhu"> 
+                <button class="queren">确认</button>
+                <button class="quxiao">取消</button>
+            </div>
+        </div>
+</body>
+<script type="text/javascript" src="__JS__/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/Public/js/layer/layer.js"></script>
+<script type="text/javascript">
+var choic;
+var number=1;
+var pl=0;
+$('.xx').click(function(){
+    $('.xx').removeClass('active');
+    $(this).addClass('active');
+    choic=$(this).attr('choic_id');
+    pl=$(this).attr('pl');
+    $('#beishu').val(1);
+    $('#total').text(1);
+    $('#money').text(1*200);
+    console.log(choic,pl);
+});
+$('#beishu').bind('input propertychange', function() {
+    var value=this.value;
+    if(pl==0){
+        layer.msg('请先选择一个竞猜选项');
+        $(this).val(0);
+        return false;
+    }
+    if (value.indexOf('.') != "-1") { 
+    value=value.replace(/[\.]/, ''); 
+    $(this).val(value);
+    this.focus(); 
+    return false;
+    } 
+    if (isNaN(Number(this.value))) { 
+        this.value = ($.trim(this.value)).replace(/[\D]/, ''); 
+        this.focus(); 
+        return false;
+    }
+    $('#total').text(value);
+    number=value;
+    $('#money').text(value*200);
+});
+$('.quxiao').click(function(){
+    window.location.href="{:U('index')}";
+});
+$('.queren').click(function(){
+    $.post('{:U('buy_first')}',{choic:choic,number:number},function(data){
+        if(data.status){
+            layer.msg(data.info,{icon:1,area:['80%','']});
+            setTimeout(function(){
+                    window.location.reload();
+                },2000);
+        }else{
+            layer.msg(data.info,{icon:0,area:['80%','']});
+            if(data.url){
+                setTimeout(function(){
+                    window.location.href=data.url;
+                },2000);
+            }
+        }
+    });
+});
+</script>
+</html>

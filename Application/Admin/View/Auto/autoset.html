@@ -1,0 +1,94 @@
+<taglib name="html" />	
+<content>
+<div style="float:left;margin-bottom: 10px;">
+<a class="btn btn-success add">添加规则</a>
+</div>
+
+<div style="clear:both;"></div>
+	<table class="table table-bordered table-hover">
+		<tr>
+			<th width="70px">序号</th>
+			<th>时间段</th>
+			<th>随机范围（份数）</th>
+			<th>随机间隔（秒）</th>
+			<th>操作</th>
+		</tr>
+		<tbody>
+			<volist name="list" id="vo" key="k">
+				<tr>
+				<td>{$k}</td>
+				<td>{$vo.time1}--{$vo.time2}</td>
+				<td>{$vo.count1}--{$vo.count2}</td>
+				<td>{$vo.hz1}--{$vo.hz2}</td>
+				<td width="200px"><a class="btn btn-danger del" did={$vo.id} style="margin-left: 10px;">删除</a></td>
+			</tr>
+			</volist>
+		</tbody>
+	</table>
+</content>
+<script type="text/javascript">
+	$('.add').click(function(){
+		layer.open({
+		  type: 1,
+		  title:"添加规则",
+		  scrollbar: false,
+		  skin: 'layui-layer-rim', //加上边框
+		  area: ['300px', '450px'], //宽高
+		  content: '<div style="width:90%;text-align:center;margin-top:20px;"><form class="form-horizontal"><div class="form-group"><label class="col-sm-4 control-label">时间段1</label><input name="type" type="hidden" value="1"><input name="time1" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="格式：07:10:20"></div><div class="form-group"><label class="col-sm-4 control-label">时间段2</label><input name="time2" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="格式：23:59:59""></div><div class="form-group"><label class="col-sm-4 control-label">最小份数</label><input name="count1" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入随机最小份数"></div><div class="form-group"><label class="col-sm-4 control-label">最大份数</label><input name="count2" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入随机最大份数"></div><div class="form-group"><label class="col-sm-4 control-label">最小秒数</label><input name="hz1" type="text" style="width:150px" class="col-sm-4 form-control" placeholder="输入随机最小秒数"></div><div class="form-group"><label class="col-sm-4 control-label">最大秒数</label><input type="textarea" placeholder="输入随机最大秒数" name="hz2" style="width: 150px" class="col-sm-4 form-control"></div></form><a style="width:100px;" class="btn btn-success" onclick="add()">确定</a>&nbsp;&nbsp;<a style="width:100px;" class="btn btn-default" onclick="cancel()">取消</a></div>',
+		});
+	});
+	function add(){
+		var time1=$('input[name=time1]').val();
+		var time2=$('input[name=time2]').val();
+		var count1=$('input[name=count1]').val();
+		var count2=$('input[name=count2]').val();
+		var hz1=$('input[name=hz1]').val();
+		var hz2=$('input[name=hz2]').val();
+		if(time1==""||time2==""||count1==""||count2==""||hz1==""||hz2==""){
+			layer.msg('请输入完整信息',{icon:0});
+			return false;
+		}
+		
+		$.post("{:U('autorule_add')}",{time1:time1,time2:time2,count1:count1,count2:count2,hz1:hz1,hz2:hz2},function(data){
+			if(data.status){
+				layer.msg(data.info,{icon:1});
+				setTimeout(function(){
+					window.location.reload(0);
+				},1000);
+			}
+			else{
+				layer.msg(data.info,{icon:0});
+			}
+		});
+	}
+	function cancel(){
+		layer.closeAll();
+	}
+	
+	
+	$('.del').click(function(){
+		var id=$(this).attr('did');
+		layer.confirm('您确定要【<span style="color:red">删除</span>】?',{
+			title:'温馨提醒',
+			btn:['确定','取消'],
+			},function(){
+				layer.load();
+				$.post("{:U('autoset_del')}",{id:id},function(data){
+					layer.closeAll('loading');
+					if(data.status){
+						layer.msg(data.info,{icon:1});
+						setTimeout(function(){
+							window.location.reload(0);
+						},1000);
+					}
+					else{
+						layer.msg(data.info,{icon:0});
+					}
+				});
+			},
+			function(){
+				layer.closeAll();
+			}
+		);
+	});
+</script>

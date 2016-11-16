@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link href="http://mskin.1yyg.com/v21/weixin/CSS/comm.css?v=130715" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="__CSS__/help.css">
+	</head>
+	<body>
+	    <div class="wrapper">
+	        <div class="learnCon">
+	            <ul>
+	                <li class="pic1"></li>
+	                <li class="pic2"></li>
+	                <li class="pic3"></li>
+	                <li class="pic4"></li>
+	            </ul>
+	            <dl>
+	                <dt><i></i>壹易购物规则</dt>
+	                <dd>
+	                    <p><em></em>每件商品参考市场价平分成相应“等份”，每份1元，1份对应1个购物码。</p>
+	                </dd>
+	                <dd>
+	                    <p><em></em>同一件商品可以购买多次或一次购买多份。</p>
+	                </dd>
+	                <dd>
+	                    <p><em></em>当一件商品所有“等份”全部售出后计算出“幸运购物码”，拥有“幸运购物码”者即可获得此商品。</p>
+	                </dd>
+	            </dl>
+	            <dl>
+	                <dt><i></i>幸运购物码计算方式</dt>
+	                <dd>
+	                    <p><em></em>取该商品最后购买时间前网站所有商品100条购买时间记录。</p>
+	                </dd>
+	                <dd>
+	                    <p><em></em>时间按时、分、秒、毫秒依次排列组成一组数值。</p>
+	                </dd>
+	                <dd>
+	                    <p><em></em>将这100组数值之和除以商品总需参与人次后取余数，余数加上10,000,001即为“幸运购物码”。</p>
+	                </dd>
+	            </dl>
+	            <s></s>
+	        </div>
+		</div>
+	</body>
+	<script>
+ 
+		var shareData = {
+		    title: '30秒了解壹易购物',
+	        desc: '1元实现你的汽车梦,尽在壹易购物',
+	        link: 'http://yiyigw.cn/index.php/Home/About/about',
+	        imgUrl: 'http://yiyigw.cn/Public/images/logo.jpg'
+		};
+	 
+		var signPackage=new Object(); 
+		signPackage.appId='{$signPackage.appId}';
+		signPackage.timestamp={$signPackage.timestamp};
+		signPackage.nonceStr='{$signPackage.nonceStr}';
+		signPackage.signature='{$signPackage.signature}';
+	
+	</script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+	<script src="__JS__/wxjsapi.js"></script>
+
+</html>

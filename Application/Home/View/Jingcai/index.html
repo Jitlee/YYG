@@ -1,0 +1,73 @@
+
+		<link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+		<link href="__CSS__/aoyunhui.css" rel="stylesheet" type="text/css" />
+		<style type="text/css">
+
+		</style>
+<div style="width:100%;">
+ <div class="main_window" style="height:50px;line-height:50px;padding-bottom:0px;">
+ 	<div style="float:left;width:20%;padding-left:5px;">
+ 	<empty name="uid">
+ 	<a style="color:#fff;font-weight:bold;" href="{:U('Public/login')}">领取金币</a>
+	<else /><a href="#"><span><img style="vertical-align:middle;" class="user_image" src="{$img}"></img></span></a>
+ 	</empty>
+		
+ 	</div>
+ 	<div style="float:left;width:60%;text-align:center;height:100%;font-size:26px;font-family:微软雅黑;color:#fff;">
+ 		竞彩
+ 	</div>
+ 	<div style="float:right;width:20%;text-align:right;padding-right:5px;height:100%;">
+ 		<a href="#"><span style="font-size:20px;font-family:微软雅黑;color:white;">发现</span></a>
+ 	</div>
+ </div>
+<div class="carousel-image carousel-image2" id="scroll_img">
+              <div>
+              <foreach name="lunbotu" item="lunbotu">
+  					<a target="_blank" href="{$lunbotu.url}"><img src="{$lunbotu.img}" /></a>
+              </foreach>
+             
+              </div>
+              <span class="carousel-num"></span>
+ </div>
+
+ <div class="main_meuns" style="height:50px;">
+ 	<div class="main_meuns_text active">
+		<a href="{:U('livescores')}"><img src="__IMG__/bfzb.png"><span style="color:#10a64f;">比分直播</span></a>
+ 	</div>
+ 	<div class="main_meuns_text active">
+		<a href="{:U('match_data')}"><img src="__IMG__/sszl.png"><span style="color:#10a64f;">赛事资料</span></a>
+ 	</div>
+ </div>
+ <div class = "main_list">
+ 	<ul>
+ 		<foreach name="menu" item="menu">
+  			<li style="border-bottom:none;box-shadow:0 0.1px 0.1px #fff;">
+  				<img style="margin-top:8px;" src="{$menu.img}">
+		 		<div class = "liststyle" style="margin-top:8px;">
+		 		<a href="{$menu.url}"><span class ="big_title">{$menu.title}</span>
+		 		<br>
+		 		<span class = "little_title">{$menu.subtitle}</span></a>
+		 		</div>
+		 		<div class="li_liststyle">
+		 			<img src="__IMG__/next.png">
+		 		</div>
+	 		</li>
+      	</foreach>
+ 	</ul>
+ </div>
+</div>
+<script type="text/javascript" src="__JS__/jquery-1.11.2.min.js"></script>
+<script src="__JS__/jquery.rotate.min.js"></script>
+<script type="text/javascript" src="__JS__/carousel-image.js"></script>
+<script >
+   function initFontSize() {
+    };
+    initFontSize();
+		$('.carousel-image2').CarouselImage({
+			num :$('.carousel-image2 .carousel-num'),
+			repeat:true
+		});
+
+</script>
+

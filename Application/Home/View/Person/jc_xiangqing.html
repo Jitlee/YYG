@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="format-detection" content="telephone=no">
+        <title>记录详情页</title>
+        <link rel="stylesheet" href="__CSS__/frozen.css">
+        <link rel="stylesheet" href="__CSS__/OG_gussing.css">
+         <style type="text/css">
+            .one{
+               background: #143d2f;
+               font-size: 18px;
+               line-height: 220%;
+               width:40%;
+               height:100%;
+               float:left;
+               text-align:center;
+               color: #10a64f
+            }
+            .two{
+               font-size: 18px;
+               line-height: 220%;
+               width:20%;
+               height:100%;
+               float:left;
+               text-align:center;
+               color: #10a64f
+            }
+         </style>
+    </head>
+    <body>
+        <header class="ui-header ui-header-positive ui-border-b">
+            <i class="ui-icon-return" onclick="history.back()"></i><h1>记录详情页</h1>
+        </header>
+         <section class="ui-container">
+            <section id="tab">
+                <!-- <div style="width:100%;height:100px;border-bottom:1px solid #10a64f">
+                    <div style="margin-top:20px;width:80%;height:40px;margin-left:10%">
+                        <div class="one">杨丽琼</div>
+                        <div class="two">VS</div>
+                        <div class="one">杨丽琼</div>
+                    </div>
+                    <div style="margin-top:10px;width:100%;height:20px;">
+                    <div style="width:20%;height:30px;margin-left:40%;color:#10a64f;">
+                        <div style="width:60%;border-right:1px solid #091c16;border-top-left-radius:20px;border-bottom-left-radius:20px;background:#014f35;text-indent:10px;float:left;margin-top:5px;">让球</div>
+                        <div style="width:38%;border-top-right-radius:20px;border-bottom-right-radius:20px;background:#014f35;text-indent:10px;float:left;text-indent:5px;color:#d7df00;margin-top:5px;">-1</div>
+                    </div>
+                    </div>
+                </div> -->
+                <div style="width:100%;height:50px;">
+                    
+                         <table class="ui-table ui-border-tb">
+                                <thead>
+                                        <tr class="Info_header" style="color:#10a64f">
+                                        <th>竞猜结果</th>
+                                        <th>中奖可得奖金</th>
+                                        <!-- <th>半场比分</th>
+                                        <th>全场比分</th> -->
+                                        </tr>
+                                </thead>
+                                        <tbody>
+                                        <tr class="Info_body" style="color:#d7df00">
+                                        <td>
+                                        <switch name="jc_result">
+                                            <case value="1">胜</case>
+                                            <case value="0">负</case>
+                                            <case value="2">未揭晓</case>
+                                            <default>未揭晓</default>
+                                        </switch></td>
+                                        <td>{$total_money}</td>
+                                     <!--    <td>3:0</td>
+                                        <td>5:0</td> -->
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                </div> 
+                <hr>
+                <table class="ui-table ui-border-tb">
+                                <thead>
+                                        <tr class="Info_header" style="color:#10a64f">
+                                        <th>竞猜标题</th>
+                                        <th>正确选项</th>
+                                        <th>您的选项</th>
+                                        <th>结果</th>
+                                        </tr>
+                                </thead>
+                                        <tbody>
+                                        <volist name="list" id="vo">
+                                          <tr class="Info_body" style="color:#d7df00">
+                                          <td style="text-align:left;width:40%;padding:2px;">{$vo.subtitle}</td>
+                                          <td>
+                                            <notempty name="vo.end_choic">
+                                              {$vo.right}
+                                              <else/>未揭晓
+                                            </notempty>
+                                          </td>
+                                          <td>{$vo.xx_title}</td>
+                                          <td><notempty name="vo.end_choic">
+                                              {$vo.is_right}
+                                              <else/>未揭晓
+                                            </notempty></td>
+                                          </tr>
+                                        </volist>
+                                        </tbody>
+                                    </table>
+            </section>
+        </section>
+        </body>
+</html>
